@@ -31,6 +31,12 @@ void Scene::setAmbiantLight(AmbiantLight* i)
   ambiantLight_ = i;
 }
 
+Pixel Scene::castRay(size_t camIndex)
+{
+  Pixel p(0,0,0,0,0,0);
+  return p;
+}
+
 std::ostream& operator<<(std::ostream& os, const Scene& s)
 {
   os << "++++++++++++++ Scene ++++++++++++++\n";

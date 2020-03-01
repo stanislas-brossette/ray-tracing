@@ -26,10 +26,12 @@ Pixel Sphere::intersect(const LightRay& lr, bool& contact, double& dist) const
   // Compute dist between light ray and sphere center
   double t = (lr.dir_.dot(lr.origin_ - center_))/lr.dir_.norm();
   Vector3 closestPoint = lr.origin_ - (lr.dir_ * t);
-  dist = (closestPoint - center_).norm();
-  if(dist < radius_)
+  double orthogDist = (closestPoint - center_).norm();
+  if(orthogDist < radius_ and orthogDist > 0)
   {
     contact = true;
+    double circleRadius = std::sqrt(radius_*radius_ - orthogDist*orthogDist);
+    dist = std::abs(t) - circleRadius;
     return Pixel(lr.px_, lr.py_, 1, color_.r_, color_.g_, color_.b_);
   }
   else

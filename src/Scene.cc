@@ -42,28 +42,48 @@ Pixel Scene::castRay(size_t camIndex)
 
   double minContactDist = 999999999999;
   size_t minContactDistIndex = 0;
+  LightRay minContactDistLr2;
+  Pixel minContactPixel;
+  bool minContact = false;
+
+  //Does the primary light ray contact with an item?
   for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
   {
     contact = false;
     distance = 0.0;
 
-    pixels[itemIndex] = items_[itemIndex]->intersect(lr, contact, distance);
-    //if(contact)
-    //{
-    //  std::cout << "Contact with item " << itemIndex << std::endl;
-    //  std::cout << lr.describe() << std::endl;
-    //  std::cout << "dist: " << distance << std::endl;
-    //}
+    LightRay lr2;
+
+    pixels[itemIndex] = items_[itemIndex]->intersect(lr, lr2, contact, distance);
 
     if(contact && distance < minContactDist)
     {
+      minContact = contact;
       minContactDist = distance;
       minContactDistIndex = itemIndex;
-      //std::cout << "minContactDist: " << minContactDist << std::endl;
-      //std::cout << "minContactDistIndex: " << minContactDistIndex << std::endl;
+      minContactDistLr2 = lr2;
+      minContactPixel = pixels[itemIndex];
     }
   }
-  return pixels[minContactDistIndex];
+
+  //Does the secondary light ray contact with a light source?
+  if(minContact)
+  {
+    Pixel pixelLightSource;
+    bool touchedLightSource;
+    for (size_t lsIndex = 0; lsIndex < lightSources_.size(); lsIndex++)
+    {
+      Pixel tmpPixel = lightSources_[lsIndex]->intersect(minContactDistLr2, contact, distance);
+      if(contact)
+      {
+        minContactPixel.r_ = 255;
+        minContactPixel.g_ = 255;
+        minContactPixel.b_ = 255;
+      }
+    }
+  }
+
+  return minContactPixel;
 }
 
 std::ostream& operator<<(std::ostream& os, const Scene& s)

@@ -1,5 +1,12 @@
 #include "Vector3.hh"
 
+Vector3::Vector3()
+  : x_(0),
+    y_(0),
+    z_(0)
+{
+}
+
 Vector3::Vector3(double x, double y, double z)
   : x_(x),
     y_(y),

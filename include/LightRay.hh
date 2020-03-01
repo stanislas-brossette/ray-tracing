@@ -7,6 +7,7 @@
 class LightRay
 {
 public:
+  LightRay ();
   LightRay (Vector3 origin, Vector3 dir, double px, double py);
   virtual ~LightRay ();
   std::string describe() const;

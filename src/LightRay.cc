@@ -1,5 +1,13 @@
 #include "LightRay.hh"
 
+LightRay::LightRay()
+  : origin_(),
+    dir_(),
+    px_(0),
+    py_(0)
+{
+}
+
 LightRay::LightRay(Vector3 origin, Vector3 dir, double px, double py)
   : origin_(origin),
     dir_(dir),

@@ -1,8 +1,9 @@
 #include "Sphere.hh"
 
-Sphere::Sphere(const Vector3& c, double r)
-  : center_(c),
-    radius_(r)
+Sphere::Sphere(const Vector3& center, double radius, const Vector3RGB& color)
+  : center_(center),
+    radius_(radius),
+    color_(color)
 {
 }
 
@@ -14,8 +15,9 @@ std::string Sphere::describe() const
 {
   std::stringstream ss;
   ss << "=== Sphere ===\n";
-  ss << "c: " << center_ << "\n";
-  ss << "r: " << radius_;
+  ss << "center: " << center_ << "\n";
+  ss << "radius: " << radius_ << "\n";
+  ss << "color: " << color_ << "\n";
   return ss.str();
 }
 

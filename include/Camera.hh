@@ -10,7 +10,7 @@
 class Camera
 {
 public:
-  Camera (const Vector3& pos, const Vector3& dir, int fovX, int fovY);
+  Camera (const Vector3& pos, const Vector3& dir, int fovX, int fovY, int resX, int resY);
   virtual ~Camera ();
   std::string describe() const;
   LightRay castRandomRay() const;
@@ -19,4 +19,6 @@ public:
   Vector3 dir_;
   int fovX_;
   int fovY_;
+  int resX_;
+  int resY_;
 };

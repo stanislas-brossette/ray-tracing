@@ -12,6 +12,7 @@ public:
   Sphere(const Vector3& center, double radius, const Vector3RGB& color);
   virtual ~Sphere ();
   std::string describe() const;
+  bool intersect(const LightRay&) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Sphere& s);
 

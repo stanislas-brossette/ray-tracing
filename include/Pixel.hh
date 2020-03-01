@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <sstream>
+#include <string>
 
 class Pixel
 {
@@ -12,4 +14,6 @@ public:
   int r_;
   int g_;
   int b_;
+
+  std::string describe() const;
 };

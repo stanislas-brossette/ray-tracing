@@ -5,12 +5,14 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 
+#include "Pixel.hh"
+
 class Window
 {
 public:
   Window ();
   Window (int resX, int resY);
-  void render();
+  void render(const Pixel& p);
   ~Window ();
 
 private:

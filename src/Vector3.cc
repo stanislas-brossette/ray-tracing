@@ -24,6 +24,29 @@ void Vector3::normalize()
   z_ = z_ / n;
 }
 
+double Vector3::dot(const Vector3& v) const
+{
+  return (x_*v.x_ + y_*v.y_ + z_*v.z_);
+}
+
+Vector3 Vector3::operator+(const Vector3& v) const
+{
+  Vector3 res(x_+v.x_, y_+v.y_, z_+v.z_);
+  return res;
+}
+
+Vector3 Vector3::operator-(const Vector3& v) const
+{
+  Vector3 res(x_-v.x_, y_-v.y_, z_-v.z_);
+  return res;
+}
+
+Vector3 Vector3::operator*(const double& d) const
+{
+  Vector3 res(d*x_, d*y_, d*z_);
+  return res;
+}
+
 Vector3 Vector3::rotateX(double theta) const
 {
   double theta_rad = theta * M_PI / 180;

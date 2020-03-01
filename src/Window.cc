@@ -31,22 +31,15 @@ Window::Window(int resX, int resY):
     }
 }
 
-void Window::render()
+void Window::render(const Pixel& p)
 {
   // Clear screen
-  SDL_RenderClear(renderer_);
+  //SDL_RenderClear(renderer_);
 
   // Draw
-  SDL_SetRenderDrawColor(renderer_, 0x00, 0x00, 0x00, 0x00);
-
-  for (size_t i = 0; i < resX_; i++)
-  {
-    for (size_t j = 0; j < resY_; j++)
-    {
-      SDL_SetRenderDrawColor(renderer_, i%255, j%255, 0, 255);
-      SDL_RenderDrawPoint(renderer_, i, j);
-    }
-  }
+  std::cout << "Rendering " << p.describe() << std::endl;
+  SDL_SetRenderDrawColor(renderer_, p.a_, p.r_, p.g_, p.b_);
+  SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
 
 	// Render to screen
 	SDL_RenderPresent(renderer_);

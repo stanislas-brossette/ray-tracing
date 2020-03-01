@@ -8,10 +8,12 @@
 
 int main(void)
 {
-  Window myWindow(500, 500);
+  int resX = 500;
+  int resY = 500;
+  Window myWindow(resX, resY);
   Scene myScene;
 
-  Camera cam(Vector3(0,0,0), Vector3(0,1,0), 10, 10);
+  Camera cam(Vector3(0,0,0), Vector3(0,1,0), 120, 120, resX, resY);
 
   AmbiantLight al(0.2, Vector3RGB(255,255,255));
 
@@ -29,10 +31,10 @@ int main(void)
   std::cout << myScene << std::endl;
 
   int iter = 0;
-  while(iter < 100)
+  while(iter < 100000)
   {
-    myScene.castRay(0);
-    myWindow.render();
+    Pixel p = myScene.castRay(0);
+    myWindow.render(p);
     std::cout << iter << std::endl;
     iter++;
   }

@@ -33,6 +33,8 @@ void Scene::setAmbiantLight(AmbiantLight* i)
 
 Pixel Scene::castRay(size_t camIndex)
 {
+  LightRay lr = cameras_[camIndex]->castRandomRay();
+  std::cout << "Casting Ray: " << lr.describe() << std::endl;
   Pixel p(0,0,0,0,0,0);
   return p;
 }

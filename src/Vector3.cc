@@ -24,6 +24,33 @@ void Vector3::normalize()
   z_ = z_ / n;
 }
 
+Vector3 Vector3::rotateX(double theta) const
+{
+  double theta_rad = theta * M_PI / 180;
+  double s = std::sin(theta_rad);
+  double c = std::cos(theta_rad);
+  Vector3 rotV(x_, c*y_-s*z_, s*y_+c*z_);
+  return rotV;
+}
+
+Vector3 Vector3::rotateY(double theta) const
+{
+  double theta_rad = theta * M_PI / 180;
+  double s = std::sin(theta_rad);
+  double c = std::cos(theta_rad);
+  Vector3 rotV(c*x_+s*z_, y_, -s*x_+c*z_);
+  return rotV;
+}
+
+Vector3 Vector3::rotateZ(double theta) const
+{
+  double theta_rad = theta * M_PI / 180;
+  double s = std::sin(theta_rad);
+  double c = std::cos(theta_rad);
+  Vector3 rotV(c*x_-s*y_, s*x_+c*y_, z_);
+  return rotV;
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector3& v)
 {
   os << "[" << v.x_ << "," << v.y_ << "," << v.z_ << "]";

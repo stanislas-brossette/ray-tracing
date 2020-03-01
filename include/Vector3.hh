@@ -11,6 +11,10 @@ public:
   double norm() const;
   void normalize();
 
+  Vector3 rotateX(double theta) const;
+  Vector3 rotateY(double theta) const;
+  Vector3 rotateZ(double theta) const;
+
   double x_;
   double y_;
   double z_;

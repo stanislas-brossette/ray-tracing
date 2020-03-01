@@ -11,7 +11,7 @@ int main(void)
   Window myWindow(500, 500);
   Scene myScene;
 
-  Camera cam(Vector3(0,0,0), Vector3(0,1,0), 180, 180);
+  Camera cam(Vector3(0,0,0), Vector3(0,1,0), 10, 10);
 
   AmbiantLight al(0.2, Vector3RGB(255,255,255));
 
@@ -31,6 +31,7 @@ int main(void)
   int iter = 0;
   while(iter < 100)
   {
+    myScene.castRay(0);
     myWindow.render();
     std::cout << iter << std::endl;
     iter++;

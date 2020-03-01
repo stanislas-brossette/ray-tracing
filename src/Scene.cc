@@ -48,19 +48,19 @@ Pixel Scene::castRay(size_t camIndex)
     distance = 0.0;
 
     pixels[itemIndex] = items_[itemIndex]->intersect(lr, contact, distance);
-    if(contact)
-    {
-      std::cout << "Contact with item " << itemIndex << std::endl;
-      std::cout << lr.describe() << std::endl;
-      std::cout << "dist: " << distance << std::endl;
-    }
+    //if(contact)
+    //{
+    //  std::cout << "Contact with item " << itemIndex << std::endl;
+    //  std::cout << lr.describe() << std::endl;
+    //  std::cout << "dist: " << distance << std::endl;
+    //}
 
     if(contact && distance < minContactDist)
     {
       minContactDist = distance;
       minContactDistIndex = itemIndex;
-      std::cout << "minContactDist: " << minContactDist << std::endl;
-      std::cout << "minContactDistIndex: " << minContactDistIndex << std::endl;
+      //std::cout << "minContactDist: " << minContactDist << std::endl;
+      //std::cout << "minContactDistIndex: " << minContactDistIndex << std::endl;
     }
   }
   return pixels[minContactDistIndex];

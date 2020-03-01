@@ -11,6 +11,19 @@ Vector3::~Vector3()
 {
 }
 
+double Vector3::norm() const
+{
+  return std::sqrt(x_*x_ + y_*y_ + z_*z_);
+}
+
+void Vector3::normalize()
+{
+  double n = norm();
+  x_ = x_ / n;
+  y_ = y_ / n;
+  z_ = z_ / n;
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector3& v)
 {
   os << "[" << v.x_ << "," << v.y_ << "," << v.z_ << "]";

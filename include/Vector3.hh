@@ -1,11 +1,15 @@
 #pragma once
 #include <iostream>
+#include <cmath>
 
 class Vector3
 {
 public:
   Vector3 (double, double, double);
   virtual ~Vector3 ();
+
+  double norm() const;
+  void normalize();
 
   double x_;
   double y_;

@@ -20,8 +20,8 @@ LightRay Camera::castRandomRay() const
   int randX = std::rand();
   int randY = std::rand();
 
-  double randXfov = double(randX % fovX_) - double(fovX_) / 2;
-  double randZfov = double(randY % fovY_) - double(fovY_) / 2;
+  double randXfov = double(randX % (fovX_*10))/10.0 - double(fovX_) / 2;
+  double randZfov = double(randY % (fovY_*10))/10.0 - double(fovY_) / 2;
   std::cout << "randXfov: " << randXfov << std::endl;
   std::cout << "randZfov: " << randZfov << std::endl;
   std::cout << "dir_ before rotation: " << dir_ << std::endl;
@@ -34,6 +34,7 @@ LightRay Camera::castRandomRay() const
   double randYpixel = (randZfov + double(fovY_)/2)*double(resY_)/double(fovY_);
 
   std::cout << "pos_:" << pos_ << std::endl;
+  std::cout << "pixel: " << randXpixel << ", " << randYpixel << std::endl;
   LightRay lr(pos_, rotV, randXpixel, randYpixel);
   return lr;
 }

@@ -34,26 +34,28 @@ void Scene::setAmbiantLight(AmbiantLight* ambiantLight)
 Pixel Scene::castRay(size_t camIndex)
 {
   LightRay lr = cameras_[camIndex]->castRandomRay();
-  std::cout << "Casting Ray: " << lr.describe() << std::endl;
+
   bool contact = false;
+  double distance = 0.0;
+
+  std::vector<Pixel> pixels(items_.size());
+
+  double minContactDist = 0;
+  size_t minContactDistIndex = 0;
   for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
   {
-    std::cout << "Handling item " << itemIndex << std::endl;
-    std::cout << items_[itemIndex]->describe() << std::endl;
-    contact = contact or items_[itemIndex]->intersect(lr);
+    contact = false;
+    distance = 0.0;
+
+    pixels[itemIndex] = items_[itemIndex]->intersect(lr, contact, distance);
+
+    if(itemIndex == 0 or (contact && distance < minContactDist))
+    {
+      minContactDist = distance;
+      minContactDistIndex = itemIndex;
+    }
   }
-  if(contact)
-  {
-    std::cout << "INTERSECT" << std::endl;
-    Pixel p(lr.px_,lr.py_,1,255,0,0);
-    return p;
-  }
-  else
-  {
-    std::cout << "NOPE" << std::endl;
-    Pixel p(lr.px_,lr.py_,1,0,255,0);
-    return p;
-  }
+  return pixels[minContactDistIndex];
 }
 
 std::ostream& operator<<(std::ostream& os, const Scene& s)

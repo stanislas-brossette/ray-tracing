@@ -5,6 +5,7 @@
 
 #include "Item.hh"
 #include "Vector3.hh"
+#include "Pixel.hh"
 
 class Sphere : public Item
 {
@@ -12,7 +13,7 @@ public:
   Sphere(const Vector3& center, double radius, const Vector3RGB& color);
   virtual ~Sphere ();
   std::string describe() const;
-  bool intersect(const LightRay&) const;
+  Pixel intersect(const LightRay& lr, bool& contact, double& distance) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Sphere& s);
 

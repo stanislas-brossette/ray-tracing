@@ -37,8 +37,7 @@ void Window::render(const Pixel& p)
   //SDL_RenderClear(renderer_);
 
   // Draw
-  std::cout << "Rendering " << p.describe() << std::endl;
-  SDL_SetRenderDrawColor(renderer_, p.a_, p.r_, p.g_, p.b_);
+  SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
   SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
 
 	// Render to screen

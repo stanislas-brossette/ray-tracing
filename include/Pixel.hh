@@ -6,6 +6,7 @@
 class Pixel
 {
 public:
+  Pixel();
   Pixel(int x, int y, int a, int r, int g, int b);
   ~Pixel();
   int x_;

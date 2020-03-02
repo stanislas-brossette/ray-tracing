@@ -54,6 +54,24 @@ Vector3 Vector3::operator*(const double& d) const
   return res;
 }
 
+bool Vector3::operator==(const Vector3& v) const
+{
+  if(v.x_ == x_ and v.y_ == y_ and v.z_ == z_)
+    return true;
+  else
+    return false;
+}
+
+bool Vector3::isApprox(const Vector3& v, double prec) const
+{
+  if((std::abs(v.x_ - x_) <= prec)
+      and (std::abs(v.y_ - y_) <= prec)
+      and (std::abs(v.z_ - z_) <= prec))
+    return true;
+  else
+    return false;
+}
+
 Vector3 Vector3::rotateX(double theta) const
 {
   double theta_rad = theta * M_PI / 180;

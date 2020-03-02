@@ -17,6 +17,8 @@ public:
   Vector3 operator+(const Vector3&) const;
   Vector3 operator-(const Vector3&) const;
   Vector3 operator*(const double&) const;
+  bool operator==(const Vector3&) const;
+  bool isApprox(const Vector3&, double prec) const;
 
   Vector3 rotateX(double theta) const;
   Vector3 rotateY(double theta) const;

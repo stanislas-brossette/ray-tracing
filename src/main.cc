@@ -35,7 +35,7 @@ int main(void)
   std::cout << myScene << std::endl;
 
   int iter = 0;
-  while(iter < 1000000)
+  while(iter < 100000)
   {
     Pixel p = myScene.castRay(0);
     myWindow.render(p);

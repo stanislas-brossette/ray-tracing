@@ -3,13 +3,6 @@ project (RayTracing)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 
-include_directories(include)
-#set(SOURCES src/main.cc src/Snake.cc)
-
-file(GLOB SOURCES "src/*.cc")
-
-add_executable(${PROJECT_NAME} ${SOURCES})
-
 find_package (Threads)
 find_package(Curses REQUIRED)
 find_package(SDL2 REQUIRED)
@@ -17,18 +10,70 @@ find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
-include_directories(${CURSES_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR})
-include_directories(${SDL2_TTF_INCLUDE_DIRS})
-include_directories(${SDL2_MIXER_INCLUDE_DIRS})
-include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+include_directories(SYSTEM ${CURSES_INCLUDE_DIRS})
+include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
+include_directories(SYSTEM ${SDL2_TTF_INCLUDE_DIRS})
+include_directories(SYSTEM ${SDL2_MIXER_INCLUDE_DIRS})
+include_directories(SYSTEM ${SDL2_IMAGE_INCLUDE_DIRS})
 
-target_link_libraries(${CMAKE_PROJECT_NAME} ${CURSES_LIBRARIES})
-target_link_libraries(${CMAKE_PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${CMAKE_PROJECT_NAME}
+set(WARN_FULL "-Wall -Wextra -Weffc++ -pedantic -pedantic-errors \
+               -Wcast-align -Wcast-qual -Wfloat-equal -Wformat=2 \
+               -Wformat-nonliteral -Wformat-security -Wformat-y2k \
+               -Wimport -Winit-self -Winvalid-pch -Wlong-long \
+               -Wmissing-field-initializers -Wmissing-format-attribute \
+               -Wmissing-noreturn -Wpacked -Wpointer-arith \
+               -Wredundant-decls -Wshadow -Wstack-protector \
+               -Wstrict-aliasing=2 -Wswitch-default -Wswitch-enum \
+               -Wunreachable-code -Wunused -Wunused-parameter"
+)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g ${WARN_FULL}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -DNDEBUG ${WARN_FULL} -Wno-deprecated-declarations -Wno-unused-parameter -Wfatal-errors")
+
+option(CMAKE_BUILD_TYPE "Choose the type of build." Release)
+
+# Building Library
+set(SRC
+    "${CMAKE_SOURCE_DIR}/src/AmbiantLight.cc"
+    "${CMAKE_SOURCE_DIR}/src/Camera.cc"
+    "${CMAKE_SOURCE_DIR}/src/Item.cc"
+    "${CMAKE_SOURCE_DIR}/src/LightRay.cc"
+    "${CMAKE_SOURCE_DIR}/src/LightSource.cc"
+    "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
+    "${CMAKE_SOURCE_DIR}/src/Scene.cc"
+    "${CMAKE_SOURCE_DIR}/src/Sphere.cc"
+    "${CMAKE_SOURCE_DIR}/src/Vector3.cc"
+    "${CMAKE_SOURCE_DIR}/src/Window.cc"
+    )
+add_library(${PROJECT_NAME} STATIC ${SRC})
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${PROJECT_NAME}
 	${SDL2_LIBRARY}
 	${SDL2_TTF_LIBRARIES}
 	${SDL2_IMAGE_LIBRARIES}
 	${SDL2_MIXER_LIBRARIES}
 	${EXTRA_LIBS}
 )
+
+# Building executable
+set(SRC_EXEC
+    "${SRC}"
+    "${CMAKE_SOURCE_DIR}/src/main.cc"
+    )
+add_executable(${PROJECT_NAME}Main ${SRC_EXEC})
+target_include_directories(${PROJECT_NAME}Main PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(${PROJECT_NAME}Main ${CURSES_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}Main ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${PROJECT_NAME}Main
+	${SDL2_LIBRARY}
+	${SDL2_TTF_LIBRARIES}
+	${SDL2_IMAGE_LIBRARIES}
+	${SDL2_MIXER_LIBRARIES}
+	${EXTRA_LIBS}
+)
+
+# Build unit tests
+add_subdirectory("unit")

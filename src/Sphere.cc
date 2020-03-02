@@ -1,9 +1,10 @@
 #include "Sphere.hh"
 
-Sphere::Sphere(const Vector3& center, double radius, const Vector3RGB& color)
+Sphere::Sphere(const Vector3& center, double radius, const Vector3RGB& color, double rugosity)
   : center_(center),
     radius_(radius),
-    color_(color)
+    color_(color),
+    rugosity_(rugosity)
 {
 }
 
@@ -39,9 +40,9 @@ Pixel Sphere::intersect(const LightRay& lr, LightRay& lr2, bool& contact, double
     lr2.dir_ = lr.dir_ - normal * (2 * lr.dir_.dot(normal));
 
     //Randomize lr2
-    double randX = 0.0001*(double(std::rand()%1000)-500);
-    double randY = 0.0001*(double(std::rand()%1000)-500);
-    double randZ = 0.0001*(double(std::rand()%1000)-500);
+    double randX = rugosity_*(double(std::rand()%1000)-500);
+    double randY = rugosity_*(double(std::rand()%1000)-500);
+    double randZ = rugosity_*(double(std::rand()%1000)-500);
     lr2.dir_.x_ += randX;
     lr2.dir_.y_ += randY;
     lr2.dir_.z_ += randZ;

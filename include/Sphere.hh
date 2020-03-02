@@ -10,7 +10,7 @@
 class Sphere : public Item
 {
 public:
-  Sphere(const Vector3& center, double radius, const Vector3RGB& color);
+  Sphere(const Vector3& center, double radius, const Vector3RGB& color, double rugosity = 0);
   virtual ~Sphere ();
   std::string describe() const;
   Pixel intersect(const LightRay& lr, LightRay& lr2, bool& contact, double& distance) const;
@@ -20,5 +20,6 @@ public:
   Vector3 center_;
   double radius_;
   Vector3RGB color_;
+  double rugosity_;
 };
 

@@ -17,7 +17,7 @@ Window::Window(int resX, int resY):
     Uint32 flags = SDL_WINDOW_SHOWN;
 
     // Set up window
-    window_ = SDL_CreateWindow("RayCasting", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY, flags);
+    window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY, flags);
     if(!window_) {
         std::cerr << SDL_GetError() << std::endl;
     }

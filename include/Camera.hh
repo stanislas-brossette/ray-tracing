@@ -5,18 +5,18 @@
 #include <cstdlib>
 
 #include "Vector3.hh"
+#include "Frame3.hh"
 #include "LightRay.hh"
 
 class Camera
 {
 public:
-  Camera (const Vector3& pos, const Vector3& dir, int fovX, int fovY, int resX, int resY);
+  Camera (const Frame3& frame, int fovX, int fovY, int resX, int resY);
   virtual ~Camera ();
   std::string describe() const;
   LightRay castRandomRay() const;
 
-  Vector3 pos_;
-  Vector3 dir_;
+  Frame3 frame_;
   int fovX_;
   int fovY_;
   int resX_;

@@ -60,21 +60,12 @@ target_link_libraries(${PROJECT_NAME}
 
 # Building executable
 set(SRC_EXEC
-    "${SRC}"
     "${CMAKE_SOURCE_DIR}/src/main.cc"
     )
 add_executable(${PROJECT_NAME}Main ${SRC_EXEC})
 target_include_directories(${PROJECT_NAME}Main PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-target_link_libraries(${PROJECT_NAME}Main ${CURSES_LIBRARIES})
-target_link_libraries(${PROJECT_NAME}Main ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${PROJECT_NAME}Main
-	${SDL2_LIBRARY}
-	${SDL2_TTF_LIBRARIES}
-	${SDL2_IMAGE_LIBRARIES}
-	${SDL2_MIXER_LIBRARIES}
-	${EXTRA_LIBS}
-)
+target_link_libraries(${PROJECT_NAME}Main ${PROJECT_NAME})
 
 # Build unit tests
 add_subdirectory("unit")

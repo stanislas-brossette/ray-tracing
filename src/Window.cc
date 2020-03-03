@@ -4,7 +4,8 @@ Window::Window():
   window_(nullptr),
   renderer_(nullptr),
   resX_(10),
-  resY_(10)
+  resY_(10),
+  renderCounter_(0)
 {
 }
 
@@ -40,8 +41,13 @@ void Window::render(const Pixel& p)
   SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
   SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
 
-	// Render to screen
-	SDL_RenderPresent(renderer_);
+  // Render to screen
+  renderCounter_++;
+  if(renderCounter_ >= 10000)
+  {
+    renderCounter_ = 0;
+    SDL_RenderPresent(renderer_);
+  }
 }
 
 Window::~Window()

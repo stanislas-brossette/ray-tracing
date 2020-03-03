@@ -20,5 +20,6 @@ private:
   SDL_Renderer *renderer_;
   int resX_;
   int resY_;
+  int renderCounter_;
 };
 

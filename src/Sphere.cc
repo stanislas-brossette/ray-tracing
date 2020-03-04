@@ -1,7 +1,13 @@
 #include "Sphere.hh"
 
-Sphere::Sphere(const Frame& f, double radius)
-  : f_(f),
+Sphere::Sphere()
+  : Geometry(),
+    radius_(1.0)
+{
+}
+
+Sphere::Sphere(const Frame3& f, double radius)
+  : Geometry(f),
     radius_(radius)
 {
 }
@@ -10,7 +16,7 @@ Sphere::~Sphere()
 {
 }
 
-std::string describe() const
+std::string Sphere::describe() const
 {
   std::stringstream ss;
   ss << "=== Sphere ===\n";
@@ -19,11 +25,25 @@ std::string describe() const
   return ss.str();
 }
 
-bool intersect(const LightRay& lr, Vector3& point, Vector3& normal) const
+bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
   // Compute dist between light ray and sphere center
-  double t = (lr.dir_.dot(lr.origin_ - f_.o_))/lr.dir_.norm();
-  Vector3 closestPoint = lr.origin_ - (lr.dir_ * t);
+  double lrDirNorm = lr.dir_.norm();
+  if(std::abs(lrDirNorm - 1) > 1e-9)
+    std::cout << "Warning: the direction of lr is not normalized" << std::endl;
+  double t = -(lr.dir_.dot(lr.origin_ - f_.o_))/lrDirNorm;
+  Vector3 closestPoint = lr.origin_ + (lr.dir_ * t);
   double orthogDist = (closestPoint - f_.o_).norm();
+  bool impact = false;
+  if(orthogDist <= radius_)
+  {
+    double circleRadius = std::sqrt(radius_*radius_ - orthogDist*orthogDist);
+    dist = t - circleRadius;
+    impactPoint = lr.origin_ + lr.dir_ * dist;
+    normal = impactPoint - f_.o_;
+    normal.normalize();
+    impact = true;
+  }
+  return impact;
 }
 

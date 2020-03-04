@@ -2,17 +2,13 @@
 
 LightRay::LightRay()
   : origin_(),
-    dir_(),
-    px_(0),
-    py_(0)
+    dir_()
 {
 }
 
-LightRay::LightRay(Vector3 origin, Vector3 dir, double px, double py)
+LightRay::LightRay(Vector3 origin, Vector3 dir)
   : origin_(origin),
-    dir_(dir),
-    px_(px),
-    py_(py)
+    dir_(dir)
 {
 }
 
@@ -25,7 +21,6 @@ std::string LightRay::describe() const
   std::stringstream ss;
   ss << "=== LightRay ===\n";
   ss << "origin: " << origin_ << "\n";
-  ss << "dir: " << dir_ << "\n";
-  ss << "pixel: " << px_ << ", " << py_;
+  ss << "dir: " << dir_;
   return ss.str();
 }

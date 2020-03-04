@@ -26,7 +26,7 @@ LightRay Camera::castRandomRay() const
   double randXpixel = (randXfov + double(fovX_)/2)*double(resX_)/double(fovX_);
   double randYpixel = (randZfov + double(fovY_)/2)*double(resY_)/double(fovY_);
 
-  LightRay lr(frame_.o_, rotV, randXpixel, randYpixel);
+  LightRay lr(frame_.o_, rotV);
   return lr;
 }
 

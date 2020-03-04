@@ -5,6 +5,11 @@ Geometry::Geometry()
 {
 }
 
+Geometry::Geometry(const Frame3& f)
+  : f_(f)
+{
+}
+
 Geometry::~Geometry()
 {
 }

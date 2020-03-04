@@ -17,3 +17,18 @@ Material::Material (const Vector3RGB color, double rugosity, double refIndex, bo
     lightIntensity_(lightIntensity)
 {
 }
+
+Material::~Material()
+{
+}
+
+std::string Material::describe() const
+{
+    std::stringstream ss;
+    ss << "color: " << color_ << "\n";
+    ss << "rugosity: " << rugosity_ << "\n";
+    ss << "refractionIndex: " << refractionIndex_ << "\n";
+    ss << "lightEmitter: " << lightEmitter_ << "\n";
+    ss << "lightIntensity: " << lightIntensity_;
+    return ss.str();
+}

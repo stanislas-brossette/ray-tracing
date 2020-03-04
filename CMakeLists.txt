@@ -37,6 +37,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Camera.cc"
     "${CMAKE_SOURCE_DIR}/src/Frame3.cc"
     "${CMAKE_SOURCE_DIR}/src/Geometry.cc"
+    "${CMAKE_SOURCE_DIR}/src/Item.cc"
     "${CMAKE_SOURCE_DIR}/src/LightRay.cc"
     "${CMAKE_SOURCE_DIR}/src/Material.cc"
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"

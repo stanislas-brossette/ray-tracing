@@ -1,9 +1,8 @@
 #include "Scene.hh"
 
 Scene::Scene()
-  : //items_(),
-    cameras_()//,
-    //lightSources_()
+  : items_(),
+    cameras_()
 {
 }
 
@@ -11,20 +10,15 @@ Scene::~Scene()
 {
 }
 
-//void Scene::addItem(Item* item)
-//{
-//  items_.push_back(item);
-//}
+void Scene::addItem(Item* item)
+{
+  items_.push_back(item);
+}
 
 void Scene::addCamera(Camera* cam)
 {
   cameras_.push_back(cam);
 }
-
-//void Scene::addLightSource(LightSource* lightSource)
-//{
-//  lightSources_.push_back(lightSource);
-//}
 
 void Scene::setAmbiantLight(AmbiantLight* ambiantLight)
 {
@@ -95,11 +89,8 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
   for(size_t camIndex = 0; camIndex < s.cameras_.size(); ++camIndex)
     os << s.cameras_[camIndex]->describe() << std::endl;
 
-  //for(size_t lsIndex = 0; lsIndex < s.lightSources_.size(); ++lsIndex)
-  //  os << s.lightSources_[lsIndex]->describe() << std::endl;
-
-  //for(size_t itemIndex = 0; itemIndex < s.items_.size(); ++itemIndex)
-  //  os << s.items_[itemIndex]->describe() << std::endl;
+  for(size_t itemIndex = 0; itemIndex < s.items_.size(); ++itemIndex)
+    os << s.items_[itemIndex]->describe() << std::endl;
 
   os << "+++++++++++++++++++++++++++++++++++";
 }

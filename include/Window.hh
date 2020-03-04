@@ -12,7 +12,8 @@ class Window
 public:
   Window ();
   Window (int resX, int resY);
-  void render(const Pixel& p);
+  void addPixel(const Pixel& p);
+  void render();
   ~Window ();
 
 private:

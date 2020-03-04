@@ -10,6 +10,7 @@ public:
   Frame3 (const Vector3& o, const Vector3& vx, const Vector3& vy, const Vector3& vz);
   //Translations and rotations are always made w.r.t the world frame
   void translate(const Vector3& v);
+  void translate(double x, double y, double z);
   //angle is given in degrees
   //rotate is always done around the origin of the frame, which therefore does not move with rotate
   void rotate(const Vector3& axis, double angle);

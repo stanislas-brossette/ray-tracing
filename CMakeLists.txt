@@ -43,6 +43,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"
     "${CMAKE_SOURCE_DIR}/src/Sphere.cc"
+    "${CMAKE_SOURCE_DIR}/src/utils.cc"
     "${CMAKE_SOURCE_DIR}/src/Vector3.cc"
     "${CMAKE_SOURCE_DIR}/src/Window.cc"
     )

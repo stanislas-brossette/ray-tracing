@@ -16,7 +16,7 @@ public:
   void addItem(Item* i);
   void addCamera(Camera* c);
   void setAmbiantLight(AmbiantLight* al);
-  Pixel castRay(size_t camIndex);
+  Pixel castRandomRay(size_t camIndex);
 
   AmbiantLight* ambiantLight_;
   std::vector<Item*> items_;

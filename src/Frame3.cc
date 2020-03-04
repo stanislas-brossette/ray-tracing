@@ -25,6 +25,12 @@ void Frame3::translate(const Vector3& v)
   o_ = o_ + v;
 }
 
+void Frame3::translate(double x, double y, double z)
+{
+  Vector3 v(x, y, z);
+  translate(v);
+}
+
 void Frame3::rotate(const Vector3& axis, double theta)
 {
   //normalize axis

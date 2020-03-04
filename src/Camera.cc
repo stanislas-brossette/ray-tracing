@@ -1,33 +1,43 @@
 #include "Camera.hh"
+#include "utils.hh"
 
-Camera::Camera(const Frame3& frame, int fovX, int fovY, int resX, int resY)
+Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
   : frame_(frame),
     fovX_(fovX),
     fovY_(fovY),
-    resX_(resX),
-    resY_(resY)
+    resX_(resX)
 {
+    focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
+    resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
 }
 
 Camera::~Camera()
 {
 }
 
-LightRay Camera::castRandomRay() const
+Vector3 Camera::pixelToDir(const Pixel& px) const
+{
+    Vector3 dir;
+
+    double dx = double(px.x_) - double(resX_)/2;
+    double dy = double(px.y_) - double(resY_)/2;
+    dir.x_ = dx;
+    dir.y_ = focalDist_;
+    dir.z_ = dy;
+    dir.normalize();
+
+    return dir;
+}
+
+void Camera::castRandomRay(LightRay& lr, Pixel& px) const
 {
   int randX = std::rand();
   int randY = std::rand();
+  px.x_ = randX % resX_;
+  px.y_ = randY % resY_;
 
-  double randXfov = double(randX % (fovX_*10))/10.0 - double(fovX_) / 2;
-  double randZfov = double(randY % (fovY_*10))/10.0 - double(fovY_) / 2;
-  Vector3 rotV = frame_.vy_.rotateX(randXfov);
-  rotV = rotV.rotateZ(randZfov);
-
-  double randXpixel = (randXfov + double(fovX_)/2)*double(resX_)/double(fovX_);
-  double randYpixel = (randZfov + double(fovY_)/2)*double(resY_)/double(fovY_);
-
-  LightRay lr(frame_.o_, rotV);
-  return lr;
+  lr.origin_ = frame_.o_;
+  lr.dir_ = pixelToDir(px);
 }
 
 std::string Camera::describe() const

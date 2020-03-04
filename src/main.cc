@@ -1,54 +1,64 @@
 #include <iostream>
+#include "Vector3.hh"
+#include "Frame3.hh"
 #include "Scene.hh"
-//#include "Item.hh"
+#include "Item.hh"
 #include "Sphere.hh"
-//#include "LightSource.hh"
 #include "Camera.hh"
 #include "Window.hh"
 
 int main(void)
 {
-  //int resX = 1800;
-  //int resY = 1000;
-  //Window myWindow(resX, resY);
-  //Scene myScene;
-  //Frame3 f;
+  int resX = 1000;
+  int fovX = 160;
+  int fovY = 160;
+  Scene myScene;
+  Frame3 f;
 
-  //Camera cam(f, 180, 100, resX, resY);
+  Camera cam(f, fovX, fovY, resX);
 
-  //AmbiantLight al(0.2, Vector3RGB(255,255,255));
+  Window myWindow(cam.resX_, cam.resY_);
 
-  //LightSource ls0(Vector3(4,-2,4), 0.6, 1.2, Vector3RGB(255, 0, 0));
+  AmbiantLight al(0.2, Vector3RGB(255,255,255));
 
-  //double rugosity = 0.0003;
+  Material mls(Vector3RGB(255, 255, 255), 0, 0, true, 1);
+  Material ms0(Vector3RGB(255, 0, 0), 0, 0, false, 0);
+  Material ms1(Vector3RGB(0, 255, 0), 0, 0, false, 0);
+  Material ms2(Vector3RGB(0, 0, 255), 0, 0, false, 0);
 
-  //Sphere s(Vector3(0.0, 3.0, 0.0), 1.5, Vector3RGB(0, 255, 0), rugosity);
-  //Sphere s0(Vector3(0.01, 1.99, 0.1), 0.5, Vector3RGB(0, 255, 0), rugosity);
-  //Sphere s1(Vector3(-1, 2.02, 0.5), 0.7, Vector3RGB(0, 0, 255), rugosity);
-  //Sphere s2(Vector3(-0.02, 2, -1.25), 0.5, Vector3RGB(255, 0, 0), rugosity);
-  //Sphere s3(Vector3(1.0, 4, 2.75), 0.7, Vector3RGB(120, 120, 0), rugosity);
-  //Sphere s4(Vector3(1.0, 3, -2.0), 0.5, Vector3RGB(0, 120, 120), rugosity);
+  Frame3 fls, fs0, fs1, fs2;
+  fls.translate(4, -2, 4);
+  fs0.translate(0.01, 1.99, 0.1);
+  fs1.translate(-1, 2.02, 0.5);
+  fs2.translate(-0.02, 2, -1.25);
 
-  //myScene.addCamera(&cam);
-  //myScene.setAmbiantLight(&al);
-  //myScene.addLightSource(&ls0);
-  //myScene.addItem(&s);
-  //myScene.addItem(&s0);
-  //myScene.addItem(&s1);
-  //myScene.addItem(&s2);
-  //myScene.addItem(&s3);
-  //myScene.addItem(&s4);
+  Sphere gsls(fls, 1.5);
+  Sphere gs0(fs0, 1.5);
+  Sphere gs1(fs1, 0.5);
+  Sphere gs2(fs2, 0.7);
 
-  //std::cout << myScene << std::endl;
+  Item ls(&gsls, &mls);
+  Item s0(&gs0, &ms0);
+  Item s1(&gs1, &ms1);
+  Item s2(&gs2, &ms2);
 
-  //int iter = 0;
-  //while(iter < 10000000)
-  //{
-  //  Pixel p = myScene.castRay(0);
-  //  myWindow.render(p);
-  //  if(iter % 100000 ==0)
-  //    std::cout << iter << std::endl;
-  //  iter++;
-  //}
+  myScene.addCamera(&cam);
+  myScene.setAmbiantLight(&al);
+  myScene.addItem(&ls);
+  myScene.addItem(&s0);
+  myScene.addItem(&s1);
+  myScene.addItem(&s2);
+
+  std::cout << myScene << std::endl;
+
+  int iter = 0;
+  while(iter < 10000000)
+  {
+    Pixel p = myScene.castRandomRay(0);
+    myWindow.addPixel(p);
+    if(iter % 100000 ==0)
+        myWindow.render();
+    iter++;
+  }
   return 0;
 }

@@ -7,18 +7,23 @@
 #include "Vector3.hh"
 #include "Frame3.hh"
 #include "LightRay.hh"
+#include "Pixel.hh"
 
 class Camera
 {
 public:
-  Camera (const Frame3& frame, int fovX, int fovY, int resX, int resY);
+  Camera (const Frame3& frame, double fovX, double fovY, int resX);
   virtual ~Camera ();
   std::string describe() const;
-  LightRay castRandomRay() const;
+  void castRandomRay(LightRay& lr, Pixel& px) const;
+  Vector3 pixelToDir(const Pixel& px) const;
 
   Frame3 frame_;
-  int fovX_;
-  int fovY_;
+  double fovX_;
+  double fovY_;
   int resX_;
   int resY_;
+
+private:
+  double focalDist_;
 };

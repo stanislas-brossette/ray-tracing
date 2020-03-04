@@ -25,59 +25,46 @@ void Scene::setAmbiantLight(AmbiantLight* ambiantLight)
   ambiantLight_ = ambiantLight;
 }
 
-Pixel Scene::castRay(size_t camIndex)
+Pixel Scene::castRandomRay(size_t camIndex)
 {
-  //LightRay lr = cameras_[camIndex]->castRandomRay();
+  LightRay lr;
+  Pixel pix;
+  cameras_[camIndex]->castRandomRay(lr, pix);
+  pix.a_ = 0;
+  pix.r_ = 0;
+  pix.g_ = 0;
+  pix.b_ = 0;
 
-  //bool contact = false;
-  //double distance = 0.0;
+  Vector3 impactPoint;
+  Vector3 impactNormal;
+  double impactDist = 1e9;
+  size_t impactItemIndex = 0;
+  bool impact = false;
 
-  //std::vector<Pixel> pixels(items_.size());
-
-  //double minContactDist = 999999999999;
-  //size_t minContactDistIndex = 0;
-  //LightRay minContactDistLr2;
-  //Pixel minContactPixel;
-  //bool minContact = false;
-
-  ////Does the primary light ray contact with an item?
-  //for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
-  //{
-  //  contact = false;
-  //  distance = 0.0;
-
-  //  LightRay lr2;
-
-  //  pixels[itemIndex] = items_[itemIndex]->intersect(lr, lr2, contact, distance);
-
-  //  if(contact && distance < minContactDist)
-  //  {
-  //    minContact = contact;
-  //    minContactDist = distance;
-  //    minContactDistIndex = itemIndex;
-  //    minContactDistLr2 = lr2;
-  //    minContactPixel = pixels[itemIndex];
-  //  }
-  //}
-
-  ////Does the secondary light ray contact with a light source?
-  //if(minContact)
-  //{
-  //  Pixel pixelLightSource;
-  //  bool touchedLightSource;
-  //  for (size_t lsIndex = 0; lsIndex < lightSources_.size(); lsIndex++)
-  //  {
-  //    Pixel tmpPixel = lightSources_[lsIndex]->intersect(minContactDistLr2, contact, distance);
-  //    if(contact)
-  //    {
-  //      minContactPixel.r_ = 255;
-  //      minContactPixel.g_ = 255;
-  //      minContactPixel.b_ = 255;
-  //    }
-  //  }
-  //}
-  //return minContactPixel;
-  return Pixel();
+  //Does the primary light ray contact with an item?
+  for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+  {
+      Vector3 tmpPoint;
+      Vector3 tmpNormal;
+      double tmpDist;
+      bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
+      if (tmpImpact && tmpDist < impactDist)
+      {
+          impact = true;
+          impactPoint = tmpPoint;
+          impactNormal = tmpNormal;
+          impactDist = tmpDist;
+          impactItemIndex = itemIndex;
+      }
+  }
+  if (impact)
+  {
+      pix.a_ = 1.0;
+      pix.r_ = items_[impactItemIndex]->material_->color_.r_;
+      pix.g_ = items_[impactItemIndex]->material_->color_.g_;
+      pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+  }
+  return pix;
 }
 
 std::ostream& operator<<(std::ostream& os, const Scene& s)

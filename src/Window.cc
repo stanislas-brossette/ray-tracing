@@ -32,22 +32,16 @@ Window::Window(int resX, int resY):
     }
 }
 
-void Window::render(const Pixel& p)
+void Window::addPixel(const Pixel& p)
 {
-  // Clear screen
-  //SDL_RenderClear(renderer_);
-
-  // Draw
   SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
   SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
+}
 
+void Window::render()
+{
   // Render to screen
-  renderCounter_++;
-  if(renderCounter_ >= 10000)
-  {
-    renderCounter_ = 0;
-    SDL_RenderPresent(renderer_);
-  }
+  SDL_RenderPresent(renderer_);
 }
 
 Window::~Window()

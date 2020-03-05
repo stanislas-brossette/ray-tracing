@@ -51,11 +51,22 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
       if (tmpImpact && tmpDist < impactDist)
       {
-          impact = true;
-          impactPoint = tmpPoint;
-          impactNormal = tmpNormal;
-          impactDist = tmpDist;
-          impactItemIndex = itemIndex;
+          if (items_[itemIndex]->material_->lightEmitter_)
+          {
+              pix.a_ = int(255*items_[itemIndex]->material_->lightIntensity_);
+              pix.r_ = items_[itemIndex]->material_->color_.r_;
+              pix.g_ = items_[itemIndex]->material_->color_.g_;
+              pix.b_ = items_[itemIndex]->material_->color_.b_;
+              return pix;
+          }
+          else
+          {
+              impact = true;
+              impactPoint = tmpPoint;
+              impactNormal = tmpNormal;
+              impactDist = tmpDist;
+              impactItemIndex = itemIndex;
+          }
       }
   }
   if (impact)
@@ -79,6 +90,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
           {
               double cosAngle = 0;
               bool inHalfSpace = item->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+              //Need to check if the diffusion light ray is intercepted by another object, that would cast a shadow
               if(inHalfSpace)
               {
                   pix.a_ += int(255*cosAngle);

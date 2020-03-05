@@ -12,7 +12,7 @@ void testRender(const Scene& myScene, Window& myWindow, const std::string& s)
 {
   myWindow.clear();
   int iter = 0;
-  while(iter < 10000000)
+  while(iter < 8000000)
   {
     Pixel p = myScene.castRandomRay(0);
     myWindow.addPixel(p);
@@ -47,7 +47,7 @@ TEST(ManoTests, Visu1SpheresTest)
   Frame3 fls, fs0;
   fs0.translate( 0.0, 2.0, 0.0);
 
-  Sphere gsls(fls, 0.5);
+  Sphere gsls(fls, 0.1);
   Sphere gs0(fs0, 0.5);
 
   Item ls(&gsls, &mls);
@@ -58,19 +58,19 @@ TEST(ManoTests, Visu1SpheresTest)
   myScene.addItem(&ls);
   myScene.addItem(&s0);
 
-  ls.geometry_->f_.setOriginPos( 0.0, 2.0, 4.0);
+  ls.geometry_->f_.setOriginPos( 0.0, 1.3, 1.0);
   s0.material_->color_ = Vector3RGB(255, 0, 0);
   testRender(myScene, myWindow, "You should see 1 red sphere lit from the top. Correct [y/n]?");
 
-  ls.geometry_->f_.setOriginPos( 0.0, 2.0, -4.0);
+  ls.geometry_->f_.setOriginPos( 0.0, 1.3, -1.0);
   s0.material_->color_ = Vector3RGB(0, 255, 0);
   testRender(myScene, myWindow, "You should see 1 green sphere lit from the bottom. Correct? [y/n]");
 
-  ls.geometry_->f_.setOriginPos( 4.0, 2.0, 0.0);
+  ls.geometry_->f_.setOriginPos( 1.0, 1.3, 0.0);
   s0.material_->color_ = Vector3RGB(0, 0, 255);
   testRender(myScene, myWindow, "You should see 1 blue sphere lit from the right. Correct? [y/n]");
 
-  ls.geometry_->f_.setOriginPos( -4.0, 2.0, 0.0);
+  ls.geometry_->f_.setOriginPos( -1.0, 1.3, 0.0);
   s0.material_->color_ = Vector3RGB(255, 20, 150);
   testRender(myScene, myWindow, "You should see 1 pink sphere lit from the left. Correct? [y/n]");
 }

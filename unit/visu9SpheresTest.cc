@@ -20,7 +20,7 @@ TEST(ManoTests, Visu9SpheresTest)
 
   Window myWindow(cam.resX_, cam.resY_);
 
-  AmbiantLight al(0.2, Vector3RGB(255,255,255));
+  AmbiantLight al(0.02, Vector3RGB(255,255,255));
 
   Material mls(Vector3RGB(255, 255, 255), 0, 0, true, 1);
   Material ms0(Vector3RGB(255, 0, 0), 0, 0, false, 0);

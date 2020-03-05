@@ -102,7 +102,6 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       }
 
 
-
       /*************************
       *  specular reflection  *
       *************************/
@@ -113,6 +112,14 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       //pix.g_ = items_[impactItemIndex]->material_->color_.g_;
       //pix.b_ = items_[impactItemIndex]->material_->color_.b_;
   }
+  if(pix.a_ > 255)
+      pix.a_ = 255;
+  if(pix.r_ > 255)
+      pix.r_ = 255;
+  if(pix.g_ > 255)
+      pix.g_ = 255;
+  if(pix.b_ > 255)
+      pix.b_ = 255;
   return pix;
 }
 

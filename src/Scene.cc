@@ -2,7 +2,8 @@
 
 Scene::Scene()
   : items_(),
-    cameras_()
+    cameras_(),
+    ambiantLight_()
 {
 }
 
@@ -20,12 +21,12 @@ void Scene::addCamera(Camera* cam)
   cameras_.push_back(cam);
 }
 
-void Scene::setAmbiantLight(AmbiantLight* ambiantLight)
+void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
 {
   ambiantLight_ = ambiantLight;
 }
 
-Pixel Scene::castRandomRay(size_t camIndex)
+Pixel Scene::castRandomRay(size_t camIndex) const
 {
   LightRay lr;
   Pixel pix;
@@ -62,7 +63,7 @@ Pixel Scene::castRandomRay(size_t camIndex)
       /*******************
       *  Ambiant light  *
       *******************/
-      pix.a_ = int(255*0.01);
+      pix.a_ = int(255*ambiantLight_.alpha_);
       pix.r_ = items_[impactItemIndex]->material_->color_.r_;
       pix.g_ = items_[impactItemIndex]->material_->color_.g_;
       pix.b_ = items_[impactItemIndex]->material_->color_.b_;
@@ -80,7 +81,7 @@ Pixel Scene::castRandomRay(size_t camIndex)
               bool inHalfSpace = item->isInHalfSpace(impactPoint, impactNormal, cosAngle);
               if(inHalfSpace)
               {
-                  pix.a_ = int(255*cosAngle);
+                  pix.a_ += int(255*cosAngle);
                   pix.r_ = items_[impactItemIndex]->material_->color_.r_;
                   pix.g_ = items_[impactItemIndex]->material_->color_.g_;
                   pix.b_ = items_[impactItemIndex]->material_->color_.b_;
@@ -107,7 +108,7 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
 {
   os << "++++++++++++++ Scene ++++++++++++++\n";
 
-  os << s.ambiantLight_->describe() << std::endl;
+  os << s.ambiantLight_.describe() << std::endl;
 
   for(size_t camIndex = 0; camIndex < s.cameras_.size(); ++camIndex)
     os << s.cameras_[camIndex]->describe() << std::endl;

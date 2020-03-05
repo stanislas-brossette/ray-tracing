@@ -8,7 +8,7 @@
 #include "Camera.hh"
 #include "Window.hh"
 
-TEST(ManoTests, VisualisationTest)
+TEST(ManoTests, Visu9SpheresTest)
 {
   int resX = 1000;
   int fovX = 100;
@@ -68,7 +68,7 @@ TEST(ManoTests, VisualisationTest)
   Item s8(&gs8, &ms8);
 
   myScene.addCamera(&cam);
-  myScene.setAmbiantLight(&al);
+  myScene.setAmbiantLight(al);
   myScene.addItem(&ls);
   myScene.addItem(&s0);
   myScene.addItem(&s1);
@@ -80,10 +80,10 @@ TEST(ManoTests, VisualisationTest)
   myScene.addItem(&s7);
   myScene.addItem(&s8);
 
-  //std::cout << myScene << std::endl;
+  std::cout << myScene << std::endl;
 
   int iter = 0;
-  while(iter < 20000000)
+  while(iter < 10000000)
   {
     Pixel p = myScene.castRandomRay(0);
     myWindow.addPixel(p);

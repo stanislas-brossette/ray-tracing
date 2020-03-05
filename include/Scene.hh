@@ -15,10 +15,10 @@ public:
   virtual ~Scene ();
   void addItem(Item* i);
   void addCamera(Camera* c);
-  void setAmbiantLight(AmbiantLight* al);
-  Pixel castRandomRay(size_t camIndex);
+  void setAmbiantLight(const AmbiantLight& al);
+  Pixel castRandomRay(size_t camIndex) const;
 
-  AmbiantLight* ambiantLight_;
+  AmbiantLight ambiantLight_;
   std::vector<Item*> items_;
   std::vector<Camera*> cameras_;
 

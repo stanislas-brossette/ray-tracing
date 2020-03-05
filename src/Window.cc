@@ -37,7 +37,7 @@ Window::Window(int resX, int resY):
 void Window::addPixel(const Pixel& p)
 {
   SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
-  SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
+  SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
 }
 
 void Window::clear()

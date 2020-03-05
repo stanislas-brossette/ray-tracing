@@ -104,6 +104,13 @@ std::ostream& operator<<(std::ostream& os, const Vector3& v)
   os << "[" << v.x_ << "," << v.y_ << "," << v.z_ << "]";
 }
 
+Vector3RGB::Vector3RGB()
+  : r_(255),
+    g_(255),
+    b_(255)
+{
+}
+
 Vector3RGB::Vector3RGB(int r, int g, int b)
   : r_(r),
     g_(g),

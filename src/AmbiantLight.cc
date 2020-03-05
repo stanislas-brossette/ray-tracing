@@ -1,7 +1,13 @@
 #include "AmbiantLight.hh"
 
-AmbiantLight::AmbiantLight (double r, const Vector3RGB& v)
-  : ratio_(r),
+AmbiantLight::AmbiantLight()
+  : alpha_(0),
+    rgb_()
+{
+}
+
+AmbiantLight::AmbiantLight (double a, const Vector3RGB& v)
+  : alpha_(a),
     rgb_(v)
 {
 }
@@ -14,7 +20,7 @@ std::string AmbiantLight::describe() const
 {
   std::stringstream ss;
   ss << "=== AmbiantLight ===\n";
-  ss << "ratio: " << ratio_ << "\n";
+  ss << "alpha: " << alpha_ << "\n";
   ss << "rgb: " << rgb_;
   return ss.str();
 }

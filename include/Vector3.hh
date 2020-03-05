@@ -33,6 +33,7 @@ public:
 class Vector3RGB
 {
 public:
+  Vector3RGB ();
   Vector3RGB (int, int, int);
   virtual ~Vector3RGB ();
 

@@ -67,7 +67,7 @@ int main(void)
   Item s8(&gs8, &ms8);
 
   myScene.addCamera(&cam);
-  myScene.setAmbiantLight(&al);
+  myScene.setAmbiantLight(al);
   myScene.addItem(&ls);
   myScene.addItem(&s0);
   myScene.addItem(&s1);

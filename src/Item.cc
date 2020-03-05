@@ -15,6 +15,12 @@ bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, 
   return geometry_->intersect(incident, point, normal, dist);
 }
 
+bool Item::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const
+{
+  bool inHS = geometry_->isInHalfSpace(point, normal, cosAngle);
+  return inHS;
+}
+
 std::string Item::describe() const
 {
   std::stringstream ss;

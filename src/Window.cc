@@ -27,6 +27,8 @@ Window::Window(int resX, int resY):
     flags = 0;
     flags |= SDL_RENDERER_ACCELERATED;
     renderer_ = SDL_CreateRenderer(window_, -1, flags);
+    SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+
     if(renderer_ == nullptr) {
         std::cerr << SDL_GetError() << std::endl;
     }

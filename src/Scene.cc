@@ -59,10 +59,46 @@ Pixel Scene::castRandomRay(size_t camIndex)
   }
   if (impact)
   {
-      pix.a_ = 1.0;
+      /*******************
+      *  Ambiant light  *
+      *******************/
+      pix.a_ = int(255*0.01);
       pix.r_ = items_[impactItemIndex]->material_->color_.r_;
       pix.g_ = items_[impactItemIndex]->material_->color_.g_;
       pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+
+      /************************
+      *  diffuse reflection  *
+      ************************/
+      //Is there a light source in the half plane (impactPoint impactNormal)
+      for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+      {
+          Item* item = items_[itemIndex];
+          if (item->material_->lightEmitter_)
+          {
+              double cosAngle = 0;
+              bool inHalfSpace = item->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+              if(inHalfSpace)
+              {
+                  pix.a_ = int(255*cosAngle);
+                  pix.r_ = items_[impactItemIndex]->material_->color_.r_;
+                  pix.g_ = items_[impactItemIndex]->material_->color_.g_;
+                  pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+              }
+          }
+      }
+
+
+
+      /*************************
+      *  specular reflection  *
+      *************************/
+      //What is next in the path of the light ray (diffuse reflection from object or light source
+
+      //pix.a_ = 1.0;
+      //pix.r_ = items_[impactItemIndex]->material_->color_.r_;
+      //pix.g_ = items_[impactItemIndex]->material_->color_.g_;
+      //pix.b_ = items_[impactItemIndex]->material_->color_.b_;
   }
   return pix;
 }

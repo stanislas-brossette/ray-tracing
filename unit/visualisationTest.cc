@@ -35,15 +35,15 @@ TEST(ManoTests, VisualisationTest)
 
   Frame3 fls, fs0, fs1, fs2, fs3, fs4, fs5, fs6, fs7, fs8;
   fls.translate(4, -4, 4);
-  fs0.translate( 0.0, 1.8, 0.0);
-  fs1.translate( 1.0, 1.8, 0.0);
-  fs2.translate( 0.0, 1.8, 1.0);
-  fs3.translate(-1.0, 1.8, 0.0);
-  fs4.translate( 0.0, 1.8, -1.0);
-  fs5.translate( 1.0, 1.8, 1.0);
-  fs6.translate( 1.0, 1.8, -1.0);
-  fs7.translate(-1.0, 1.8, 1.0);
-  fs8.translate(-1.0, 1.8, -1.0);
+  fs0.translate( 0.0, 2.0, 0.0);
+  fs1.translate( 1.2, 2.0, 0.0);
+  fs2.translate( 0.0, 2.0, 1.2);
+  fs3.translate(-1.2, 2.0, 0.0);
+  fs4.translate( 0.0, 2.0, -1.2);
+  fs5.translate( 1.2, 2.0, 1.2);
+  fs6.translate( 1.2, 2.0, -1.2);
+  fs7.translate(-1.2, 2.0, 1.2);
+  fs8.translate(-1.2, 2.0, -1.2);
 
   Sphere gsls(fls, 1.5);
   Sphere gs0(fs0, 0.5);

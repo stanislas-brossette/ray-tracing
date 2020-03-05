@@ -35,7 +35,7 @@ bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal
   Vector3 closestPoint = lr.origin_ + (lr.dir_ * t);
   double orthogDist = (closestPoint - f_.o_).norm();
   bool impact = false;
-  if(orthogDist <= radius_)
+  if(orthogDist <= radius_ && t > 0)
   {
     double circleRadius = std::sqrt(radius_*radius_ - orthogDist*orthogDist);
     dist = t - circleRadius;

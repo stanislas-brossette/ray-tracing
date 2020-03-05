@@ -1,3 +1,4 @@
+#include <gtest/gtest.h>
 #include <iostream>
 #include "Vector3.hh"
 #include "Frame3.hh"
@@ -7,11 +8,11 @@
 #include "Camera.hh"
 #include "Window.hh"
 
-int main(void)
+TEST(ManoTests, VisualisationTest)
 {
-  int resX = 1500;
-  int fovX = 120;
-  int fovY = 80;
+  int resX = 1000;
+  int fovX = 100;
+  int fovY = 100;
   Scene myScene;
   Frame3 f;
 
@@ -25,35 +26,35 @@ int main(void)
   Material ms0(Vector3RGB(255, 0, 0), 0, 0, false, 0);
   Material ms1(Vector3RGB(0, 255, 0), 0, 0, false, 0);
   Material ms2(Vector3RGB(0, 0, 255), 0, 0, false, 0);
-  Material ms3(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
-  Material ms4(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
-  Material ms5(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
-  Material ms6(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
-  Material ms7(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
-  Material ms8(Vector3RGB(std::rand()%255, std::rand()%255, std::rand()%255), 0, 0, false, 0);
+  Material ms3(Vector3RGB(255, 125, 255), 0, 0, false, 0);
+  Material ms4(Vector3RGB(255, 255, 0), 0, 0, false, 0);
+  Material ms5(Vector3RGB(125, 255, 125), 0, 0, false, 0);
+  Material ms6(Vector3RGB(0, 125, 255), 0, 0, false, 0);
+  Material ms7(Vector3RGB(125, 255, 255), 0, 0, false, 0);
+  Material ms8(Vector3RGB(255, 125, 0), 0, 0, false, 0);
 
   Frame3 fls, fs0, fs1, fs2, fs3, fs4, fs5, fs6, fs7, fs8;
   fls.translate(4, -4, 4);
-  fs0.translate(0.0, 2.0, 0.0);
-  fs1.translate(1.0, 2.0, 0.0);
-  fs1.translate(0.0, 2.0, 1.0);
-  fs3.translate(-1.0, 2.0, 0.0);
-  fs4.translate(0.0, 2.0, -1.0);
-  fs5.translate(1.0, 2.0, 1.0);
-  fs6.translate(-1.0, 2.0, 1.0);
-  fs7.translate(-1.0, 2.0, -1.0);
-  fs8.translate(1.0, 2.0, -1.0);
+  fs0.translate( 0.0, 1.8, 0.0);
+  fs1.translate( 1.0, 1.8, 0.0);
+  fs2.translate( 0.0, 1.8, 1.0);
+  fs3.translate(-1.0, 1.8, 0.0);
+  fs4.translate( 0.0, 1.8, -1.0);
+  fs5.translate( 1.0, 1.8, 1.0);
+  fs6.translate( 1.0, 1.8, -1.0);
+  fs7.translate(-1.0, 1.8, 1.0);
+  fs8.translate(-1.0, 1.8, -1.0);
 
   Sphere gsls(fls, 1.5);
-  Sphere gs0(fs0, 1.0);
-  Sphere gs1(fs1, 1.0);
-  Sphere gs2(fs2, 1.0);
-  Sphere gs3(fs3, 1.0);
-  Sphere gs4(fs4, 1.0);
-  Sphere gs5(fs5, 1.0);
-  Sphere gs6(fs6, 1.0);
-  Sphere gs7(fs7, 1.0);
-  Sphere gs8(fs8, 1.0);
+  Sphere gs0(fs0, 0.5);
+  Sphere gs1(fs1, 0.5);
+  Sphere gs2(fs2, 0.5);
+  Sphere gs3(fs3, 0.5);
+  Sphere gs4(fs4, 0.5);
+  Sphere gs5(fs5, 0.5);
+  Sphere gs6(fs6, 0.5);
+  Sphere gs7(fs7, 0.5);
+  Sphere gs8(fs8, 0.5);
 
   Item ls(&gsls, &mls);
   Item s0(&gs0, &ms0);
@@ -79,10 +80,10 @@ int main(void)
   myScene.addItem(&s7);
   myScene.addItem(&s8);
 
-  std::cout << myScene << std::endl;
+  //std::cout << myScene << std::endl;
 
   int iter = 0;
-  while(iter < 30000000)
+  while(iter < 20000000)
   {
     Pixel p = myScene.castRandomRay(0);
     myWindow.addPixel(p);
@@ -90,5 +91,10 @@ int main(void)
         myWindow.render();
     iter++;
   }
-  return 0;
+
+  std::cout << "You should see 9 sheres of same size\nCorrect?" << std::endl;
+  char answer;
+  std::cin >> answer;
+  ASSERT_TRUE(answer == 'y');
 }
+

@@ -14,6 +14,7 @@ public:
   Window (int resX, int resY);
   void addPixel(const Pixel& p);
   void render();
+  void clear();
   ~Window ();
 
 private:

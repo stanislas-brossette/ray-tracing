@@ -38,6 +38,11 @@ void Window::addPixel(const Pixel& p)
   SDL_RenderDrawPoint(renderer_, p.x_, p.y_);
 }
 
+void Window::clear()
+{
+  SDL_RenderClear(renderer_);
+}
+
 void Window::render()
 {
   // Render to screen

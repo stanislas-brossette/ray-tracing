@@ -41,6 +41,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/LightRay.cc"
     "${CMAKE_SOURCE_DIR}/src/Material.cc"
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
+    "${CMAKE_SOURCE_DIR}/src/Plane.cc"
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"
     "${CMAKE_SOURCE_DIR}/src/Sphere.cc"
     "${CMAKE_SOURCE_DIR}/src/utils.cc"

@@ -24,5 +24,4 @@ public:
   virtual ~Frame3 ();
 
   Vector3 o_, vx_, vy_, vz_;
-
 };

@@ -34,18 +34,18 @@ TEST(ManoTests, Visu9SpheresTest)
   Material ms8(Vector3RGB(255, 125, 0), 0, 0, false, 0);
 
   Frame3 fls, fs0, fs1, fs2, fs3, fs4, fs5, fs6, fs7, fs8;
-  fls.translate(4, -4, 4);
-  fs0.translate( 0.0, 2.0, 0.0);
-  fs1.translate( 1.2, 2.0, 0.0);
-  fs2.translate( 0.0, 2.0, 1.2);
-  fs3.translate(-1.2, 2.0, 0.0);
-  fs4.translate( 0.0, 2.0, -1.2);
-  fs5.translate( 1.2, 2.0, 1.2);
-  fs6.translate( 1.2, 2.0, -1.2);
-  fs7.translate(-1.2, 2.0, 1.2);
-  fs8.translate(-1.2, 2.0, -1.2);
+  fls.translate(0.0, 2.0, 0.0);
+  fs0.translate( 0.0, 2.5, 0.0);
+  fs1.translate( 1.2, 2.5, 0.0);
+  fs2.translate( 0.0, 2.5, 1.2);
+  fs3.translate(-1.2, 2.5, 0.0);
+  fs4.translate( 0.0, 2.5, -1.2);
+  fs5.translate( 1.2, 2.5, 1.2);
+  fs6.translate( 1.2, 2.5, -1.2);
+  fs7.translate(-1.2, 2.5, 1.2);
+  fs8.translate(-1.2, 2.5, -1.2);
 
-  Sphere gsls(fls, 1.5);
+  Sphere gsls(fls, 0.2);
   Sphere gs0(fs0, 0.5);
   Sphere gs1(fs1, 0.5);
   Sphere gs2(fs2, 0.5);
@@ -70,7 +70,7 @@ TEST(ManoTests, Visu9SpheresTest)
   myScene.addCamera(&cam);
   myScene.setAmbiantLight(al);
   myScene.addItem(&ls);
-  myScene.addItem(&s0);
+  //myScene.addItem(&s0);
   myScene.addItem(&s1);
   myScene.addItem(&s2);
   myScene.addItem(&s3);

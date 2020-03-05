@@ -50,7 +50,7 @@ bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal
 bool Sphere::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const
 {
     // v = OC - r.normal
-    Vector3 v = f_.o_ - point - normal*radius_;
+    Vector3 v = f_.o_ - point;// - normal*radius_;
     v.normalize();
     cosAngle = v.dot(normal);
     bool inHalfSpace = (cosAngle > 0);

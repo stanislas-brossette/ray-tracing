@@ -139,15 +139,15 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                   }
               }
           }
+          if(not inShadow)
+          {
+              pix.a_ += pixIfNotInShadow.a_;
+              pix.r_ = pixIfNotInShadow.r_;
+              pix.g_ = pixIfNotInShadow.g_;
+              pix.b_ = pixIfNotInShadow.b_;
+          }
       }
 
-      if(not inShadow)
-      {
-          pix.a_ += pixIfNotInShadow.a_;
-          pix.r_ = pixIfNotInShadow.r_;
-          pix.g_ = pixIfNotInShadow.g_;
-          pix.b_ = pixIfNotInShadow.b_;
-      }
 
 
       /*************************

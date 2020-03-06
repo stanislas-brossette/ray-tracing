@@ -68,33 +68,33 @@ TEST(ManoTests, VisuPlaneSphereTest)
   Item s2(&gs2, &ms2);
 
   Frame3 fpBottom;
-  Material mpBottom(Vector3RGB(0, 255, 0), 0, 0, false, 0);
+  Material mpBottom(Vector3RGB(80, 80, 80), 0, 0, false, 0);
   fpBottom.translate( 0.0, 2.0, -0.5);
   Plane gpBottom(fpBottom);
   Item pBottom(&gpBottom, &mpBottom);
 
   Frame3 fpTop;
-  Material mpTop(Vector3RGB(0, 0, 255), 0, 0, false, 0);
+  Material mpTop(Vector3RGB(80, 80, 80), 0, 0, false, 0);
   fpTop.translate( 0.0, 2.0, 0.5);
   Plane gpTop(fpTop);
   Item pTop(&gpTop, &mpTop);
 
   Frame3 fpBack;
-  Material mpBack(Vector3RGB(0, 255, 255), 0, 0, false, 0);
+  Material mpBack(Vector3RGB(80, 80, 80), 0, 0, false, 0);
   fpBack.translate( 0.0, 3.0, 0.0);
   fpBack.rotate(Vector3(1.0, 0.0, 0.0), 90);
   Plane gpBack(fpBack);
   Item pBack(&gpBack, &mpBack);
 
   Frame3 fpRight;
-  Material mpRight(Vector3RGB(50, 55, 55), 0, 0, false, 0);
+  Material mpRight(Vector3RGB(80, 80, 80), 0, 0, false, 0);
   fpRight.translate( 3.0, 0.0, 0.0);
   fpRight.rotate(Vector3(0.0, 1.0, 0.0), 90);
   Plane gpRight(fpRight);
   Item pRight(&gpRight, &mpRight);
 
   Frame3 fpLeft;
-  Material mpLeft(Vector3RGB(50, 55, 55), 0, 0, false, 0);
+  Material mpLeft(Vector3RGB(80, 80, 80), 0, 0, false, 0);
   fpLeft.translate( -3.0, 0.0, 0.0);
   fpLeft.rotate(Vector3(0.0, 1.0, 0.0), 90);
   Plane gpLeft(fpLeft);
@@ -112,7 +112,7 @@ TEST(ManoTests, VisuPlaneSphereTest)
   myScene.addItem(&pLeft);
   myScene.addItem(&pRight);
 
-  testRender2(myScene, myWindow, "You should see 1 red sphere lit from the top. Correct [y/n]?");
+  testRender2(myScene, myWindow, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
 
   //ls.geometry_->f_.setOriginPos( 0.0, 1.3, -1.0);
   //s0.material_->color_ = Vector3RGB(0, 255, 0);

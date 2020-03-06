@@ -42,7 +42,7 @@ bool Plane::intersect(const LightRay& lr, Vector3& point, Vector3& normal, doubl
 
   if(impact)
   {
-    dist = (f_.o_ - lr.origin_).dot(normal)/(lr.dir_.dot(normal));
+    dist = std::abs((f_.o_ - lr.origin_).dot(normal)/(lr.dir_.dot(normal)));
     point = lr.origin_ + lr.dir_ * dist;
   }
   return impact;

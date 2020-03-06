@@ -18,7 +18,9 @@ std::string Plane::describe() const
 {
   std::stringstream ss;
   ss << "=== Plane ===\n";
-  ss << f_.describe();
+  ss << "origin: " << f_.o_ << "\n";
+  ss << "normal: " << f_.vz_ << "\n";
+
   return ss.str();
 }
 
@@ -40,8 +42,8 @@ bool Plane::intersect(const LightRay& lr, Vector3& point, Vector3& normal, doubl
 
   if(impact)
   {
-    double l = (f_.o_ - lr.origin_).dot(normal)/(lr.dir_.dot(normal));
-    point = lr.origin_ + lr.dir_ * l;
+    dist = (f_.o_ - lr.origin_).dot(normal)/(lr.dir_.dot(normal));
+    point = lr.origin_ + lr.dir_ * dist;
   }
   return impact;
 }

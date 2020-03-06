@@ -85,15 +85,17 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       //Is there a light source in the half plane (impactPoint impactNormal)
       for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
       {
-          Item* item = items_[itemIndex];
-          if (item->material_->lightEmitter_)
+          Item* lsItem = items_[itemIndex];
+          if (lsItem->material_->lightEmitter_)
           {
               double cosAngle = 0;
-              bool inHalfSpace = item->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+              bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+              double distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
               //Need to check if the diffusion light ray is intercepted by another object, that would cast a shadow
               if(inHalfSpace)
               {
-                  pix.a_ += int(255*cosAngle);
+                  double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
+                  pix.a_ += int(255*cosAngle*distReductionFactor);
                   pix.r_ = items_[impactItemIndex]->material_->color_.r_;
                   pix.g_ = items_[impactItemIndex]->material_->color_.g_;
                   pix.b_ = items_[impactItemIndex]->material_->color_.b_;

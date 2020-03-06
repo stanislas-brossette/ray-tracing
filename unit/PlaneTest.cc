@@ -11,9 +11,10 @@
 
 void testRender2(const Scene& myScene, Window& myWindow, const std::string& s)
 {
+  std::cout << myScene << std::endl;
   myWindow.clear();
   int iter = 0;
-  while(iter < 15000000)
+  while(iter < 5000000)
   {
     Pixel p = myScene.castRandomRay(0);
     myWindow.addPixel(p);
@@ -43,7 +44,7 @@ TEST(ManoTests, VisuPlaneSphereTest)
   AmbiantLight al(0.02, Vector3RGB(255,255,255));
 
   Frame3 fls;
-  Material mls(Vector3RGB(255, 255, 255), 0, 0, true, 1);
+  Material mls(Vector3RGB(255, 255, 255), 0, 0, true, 0.6);
   Sphere gsls(fls, 0.1);
   Item ls(&gsls, &mls);
   ls.geometry_->f_.setOriginPos( 0.7, 1.0, -0.4);
@@ -80,10 +81,24 @@ TEST(ManoTests, VisuPlaneSphereTest)
 
   Frame3 fpBack;
   Material mpBack(Vector3RGB(0, 255, 255), 0, 0, false, 0);
-  fpBack.translate( 0.0, 4.0, 0.0);
-  fpBack.rotate(Vector3(1.0, 0.0, 0.0), -1.5);
+  fpBack.translate( 0.0, 3.0, 0.0);
+  fpBack.rotate(Vector3(1.0, 0.0, 0.0), 90);
   Plane gpBack(fpBack);
   Item pBack(&gpBack, &mpBack);
+
+  Frame3 fpRight;
+  Material mpRight(Vector3RGB(50, 55, 55), 0, 0, false, 0);
+  fpRight.translate( 3.0, 0.0, 0.0);
+  fpRight.rotate(Vector3(0.0, 1.0, 0.0), 90);
+  Plane gpRight(fpRight);
+  Item pRight(&gpRight, &mpRight);
+
+  Frame3 fpLeft;
+  Material mpLeft(Vector3RGB(50, 55, 55), 0, 0, false, 0);
+  fpLeft.translate( -3.0, 0.0, 0.0);
+  fpLeft.rotate(Vector3(0.0, 1.0, 0.0), 90);
+  Plane gpLeft(fpLeft);
+  Item pLeft(&gpLeft, &mpLeft);
 
   myScene.addCamera(&cam);
   myScene.setAmbiantLight(al);
@@ -91,9 +106,11 @@ TEST(ManoTests, VisuPlaneSphereTest)
   myScene.addItem(&s0);
   myScene.addItem(&s1);
   myScene.addItem(&s2);
+  myScene.addItem(&pTop);
+  myScene.addItem(&pBack);
   myScene.addItem(&pBottom);
-  //myScene.addItem(&pTop);
-  //myScene.addItem(&pBack);
+  myScene.addItem(&pLeft);
+  myScene.addItem(&pRight);
 
   testRender2(myScene, myWindow, "You should see 1 red sphere lit from the top. Correct [y/n]?");
 

@@ -13,7 +13,7 @@ void testRender(const Scene& myScene, double resX, double resY, const std::strin
 {
   Window myWindow(resX, resY);
   int iter = 0;
-  while(iter < 8000000)
+  while(iter < 6000000)
   {
     Pixel p = myScene.castRandomRay(0);
     myWindow.addPixel(p);

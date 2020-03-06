@@ -57,6 +57,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
               pix.r_ = items_[itemIndex]->material_->color_.r_;
               pix.g_ = items_[itemIndex]->material_->color_.g_;
               pix.b_ = items_[itemIndex]->material_->color_.b_;
+              // Need to check occlusion
               return pix;
           }
           else
@@ -69,6 +70,8 @@ Pixel Scene::castRandomRay(size_t camIndex) const
           }
       }
   }
+
+  //Compute illumination
   if (impact)
   {
       /*******************
@@ -83,6 +86,10 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       *  diffuse reflection  *
       ************************/
       //Is there a light source in the half plane (impactPoint impactNormal)
+      Pixel pixIfNotInShadow;
+      bool needToCheckShadow = false;
+      LightRay lrImpactToLightSource;
+      double distImpactToLightSource;
       for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
       {
           Item* lsItem = items_[itemIndex];
@@ -90,17 +97,56 @@ Pixel Scene::castRandomRay(size_t camIndex) const
           {
               double cosAngle = 0;
               bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
-              double distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
+              distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
+              lrImpactToLightSource.origin_ = impactPoint;
+              lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
+              lrImpactToLightSource.dir_.normalize();
+
               //Need to check if the diffusion light ray is intercepted by another object, that would cast a shadow
               if(inHalfSpace)
               {
-                  double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
-                  pix.a_ += int(255*cosAngle*distReductionFactor);
-                  pix.r_ = items_[impactItemIndex]->material_->color_.r_;
-                  pix.g_ = items_[impactItemIndex]->material_->color_.g_;
-                  pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+                  needToCheckShadow = true;
+                  //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
+                  double distReductionFactor = 1/(distImpactToLightSource+1);
+                  //double distReductionFactor = 1/std::pow(distImpactToLightSource+1,2);
+                  pixIfNotInShadow.a_ = int(255*cosAngle*distReductionFactor);
+                  pixIfNotInShadow.r_ = items_[impactItemIndex]->material_->color_.r_;
+                  pixIfNotInShadow.g_ = items_[impactItemIndex]->material_->color_.g_;
+                  pixIfNotInShadow.b_ = items_[impactItemIndex]->material_->color_.b_;
+                  break;
               }
           }
+      }
+
+      bool inShadow = false;
+      size_t shadowingItemIndex = 0;
+      if(needToCheckShadow)
+      {
+          for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
+          {
+              Vector3 tmpPoint;
+              Vector3 tmpNormal;
+              double tmpDist;
+              Item* item = items_[shadItemIndex];
+              if((not item->material_->lightEmitter_) and (not (shadItemIndex == impactItemIndex)))
+              {
+                  bool tmpImpact = item->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
+                  if (tmpImpact && tmpDist < distImpactToLightSource)
+                  {
+                      shadowingItemIndex = shadItemIndex;
+                      inShadow = true;
+                      break;
+                  }
+              }
+          }
+      }
+
+      if(not inShadow)
+      {
+          pix.a_ += pixIfNotInShadow.a_;
+          pix.r_ = pixIfNotInShadow.r_;
+          pix.g_ = pixIfNotInShadow.g_;
+          pix.b_ = pixIfNotInShadow.b_;
       }
 
 

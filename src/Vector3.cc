@@ -99,6 +99,18 @@ Vector3 Vector3::rotateZ(double theta) const
     return rotV;
 }
 
+void Vector3::addNoise(double rugosity)
+{
+    int randSeed = 10000;
+    double randX = rugosity*(double(std::rand()%randSeed)/(randSeed/2)-1);
+    double randY = rugosity*(double(std::rand()%randSeed)/(randSeed/2)-1);
+    double randZ = rugosity*(double(std::rand()%randSeed)/(randSeed/2)-1);
+    x_ += randX;
+    y_ += randY;
+    z_ += randZ;
+    normalize();
+}
+
 Vector3 Vector3::symmetrize(const Vector3& n) const
 {
     Vector3 res(n*2 + *this);

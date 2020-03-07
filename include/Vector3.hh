@@ -25,6 +25,7 @@ public:
     Vector3 rotateZ(double theta) const;
 
     Vector3 symmetrize(const Vector3& n) const;
+    void addNoise(double val);
 
     double x_;
     double y_;

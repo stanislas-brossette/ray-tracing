@@ -29,7 +29,7 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
 Pixel Scene::castRandomRay(size_t camIndex) const
 {
     LightRay lr;
-    Pixel pix, ambiantPix, diffuseRefPix, specRefPix;
+    Pixel pix, ambiantPix, diffuseRefPix, specReflPix;
     cameras_[camIndex]->castRandomRay(lr, pix);
 
     Vector3 impactPoint;
@@ -40,19 +40,20 @@ Pixel Scene::castRandomRay(size_t camIndex) const
     //Does the primary light ray contact with an item?
     bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
 
-
     //Compute illumination
     if (impact)
     {
+        Item* impactItem = items_[impactItemIndex];
+
         /*************************************
         *  Direct impact with light source  *
         *************************************/
-        if (items_[impactItemIndex]->material_->lightEmitter_)
+        if (impactItem->material_->lightEmitter_)
         {
-            pix.a_ = int(255*items_[impactItemIndex]->material_->lightIntensity_);
-            pix.r_ = items_[impactItemIndex]->material_->color_.r_;
-            pix.g_ = items_[impactItemIndex]->material_->color_.g_;
-            pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+            pix.a_ = int(255*impactItem->material_->lightIntensity_);
+            pix.r_ = impactItem->material_->color_.r_;
+            pix.g_ = impactItem->material_->color_.g_;
+            pix.b_ = impactItem->material_->color_.b_;
             return pix;
         }
 
@@ -60,9 +61,10 @@ Pixel Scene::castRandomRay(size_t camIndex) const
         *  Ambiant light  *
         *******************/
         ambiantPix.a_ = int(255*ambiantLight_.alpha_);
-        ambiantPix.r_ = items_[impactItemIndex]->material_->color_.r_;
-        ambiantPix.g_ = items_[impactItemIndex]->material_->color_.g_;
-        ambiantPix.b_ = items_[impactItemIndex]->material_->color_.b_;
+        ambiantPix.r_ = impactItem->material_->color_.r_;
+        ambiantPix.g_ = impactItem->material_->color_.g_;
+        ambiantPix.b_ = impactItem->material_->color_.b_;
+        pix = pix + ambiantPix;
 
         /************************
         *  diffuse reflection  *
@@ -92,9 +94,9 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                     double distReductionFactor = 1/(distImpactToLightSource+1);
                     //double distReductionFactor = 1/std::pow(distImpactToLightSource+1,2);
                     pixIfNotInShadow.a_ = int(255*cosAngle*distReductionFactor);
-                    pixIfNotInShadow.r_ = items_[impactItemIndex]->material_->color_.r_;
-                    pixIfNotInShadow.g_ = items_[impactItemIndex]->material_->color_.g_;
-                    pixIfNotInShadow.b_ = items_[impactItemIndex]->material_->color_.b_;
+                    pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
+                    pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
+                    pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
 
                     bool inShadow = false;
                     size_t shadowingItemIndex = 0;
@@ -103,7 +105,8 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                         inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
                         if(not inShadow)
                         {
-                            diffuseRefPix = diffuseRefPix + pixIfNotInShadow;
+                            diffuseRefPix = pixIfNotInShadow;
+                            pix = pix + diffuseRefPix;
                         }
                     }
                 }
@@ -111,23 +114,38 @@ Pixel Scene::castRandomRay(size_t camIndex) const
         }
 
 
-
-
         /*************************
         *  specular reflection  *
         *************************/
-        //What is next in the path of the light ray (diffuse reflection from object or light source
+        if (impactItem->material_->reflectiveness_ > 0)
+        {
+            // Rugosity can be taken into account here
+            Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
+            lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
+            lrSpecRefDir.normalize();
+            LightRay lrSpecReflection(impactPoint, lrSpecRefDir);
+            Vector3 secImpactPoint;
+            Vector3 secImpactNormal;
+            double secImpactDist = 1e9;
+            size_t secImpactItemIndex = 0;
 
-        //pix.a_ = 1.0;
-        //pix.r_ = items_[impactItemIndex]->material_->color_.r_;
-        //pix.g_ = items_[impactItemIndex]->material_->color_.g_;
-        //pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+            //Does the primary light ray contact with an item?
+            bool secImpact = findFirstImpact(lrSpecReflection, secImpactItemIndex, secImpactPoint, secImpactNormal, secImpactDist);
+            Item* specReflItem = items_[secImpactItemIndex];
+            if (secImpact and specReflItem->material_->lightEmitter_)
+            {
+                double distReductionFactor = 1/std::sqrt(secImpactDist+1);
+                specReflPix.x_ = pix.x_;
+                specReflPix.y_ = pix.y_;
+                specReflPix.a_ = int(255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_);
+                specReflPix.r_ = specReflItem->material_->color_.r_;
+                specReflPix.g_ = specReflItem->material_->color_.g_;
+                specReflPix.b_ = specReflItem->material_->color_.b_;
+                pix = pix + specReflPix;
+            }
+        }
     }
 
-    pix = pix + ambiantPix;
-    pix = pix + diffuseRefPix;
-
-    pix.clamp();
     return pix;
 }
 

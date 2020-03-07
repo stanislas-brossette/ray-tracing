@@ -22,16 +22,16 @@ TEST(ManoTests, Visu9SpheresTest)
 
     AmbiantLight al(0.02, Vector3RGB(255,255,255));
 
-    Material mls(Vector3RGB(255, 255, 255), 0, 0, true, 1);
-    Material ms0(Vector3RGB(255, 0, 0), 0, 0, false, 0);
-    Material ms1(Vector3RGB(0, 255, 0), 0, 0, false, 0);
-    Material ms2(Vector3RGB(0, 0, 255), 0, 0, false, 0);
-    Material ms3(Vector3RGB(255, 125, 255), 0, 0, false, 0);
-    Material ms4(Vector3RGB(255, 255, 0), 0, 0, false, 0);
-    Material ms5(Vector3RGB(125, 255, 125), 0, 0, false, 0);
-    Material ms6(Vector3RGB(0, 125, 255), 0, 0, false, 0);
-    Material ms7(Vector3RGB(125, 255, 255), 0, 0, false, 0);
-    Material ms8(Vector3RGB(255, 125, 0), 0, 0, false, 0);
+    Material mls(Vector3RGB(255, 255, 255), 0.1, 0, 1, true, 1);
+    Material ms0(Vector3RGB(255, 0  , 0  ), 0.1, 0, 1, false, 0);
+    Material ms1(Vector3RGB(0  , 255, 0  ), 0.1, 0, 1, false, 0);
+    Material ms2(Vector3RGB(0  , 0  , 255), 0.1, 0, 1, false, 0);
+    Material ms3(Vector3RGB(255, 125, 255), 0.1, 0, 1, false, 0);
+    Material ms4(Vector3RGB(255, 255, 0  ), 0.1, 0, 1, false, 0);
+    Material ms5(Vector3RGB(125, 255, 125), 0.1, 0, 1, false, 0);
+    Material ms6(Vector3RGB(0  , 125, 255), 0.1, 0, 1, false, 0);
+    Material ms7(Vector3RGB(125, 255, 255), 0.1, 0, 1, false, 0);
+    Material ms8(Vector3RGB(255, 125, 0  ), 0.1, 0, 1, false, 0);
 
     Frame3 fls, fs0, fs1, fs2, fs3, fs4, fs5, fs6, fs7, fs8;
     fls.translate(0.0, 2.0, 0.0);

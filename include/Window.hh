@@ -10,18 +10,18 @@
 class Window
 {
 public:
-  Window ();
-  Window (int resX, int resY);
-  void addPixel(const Pixel& p);
-  void render();
-  void clear();
-  ~Window ();
+    Window ();
+    Window (int resX, int resY);
+    void addPixel(const Pixel& p);
+    void render();
+    void clear();
+    ~Window ();
 
 private:
-  SDL_Window *window_;
-  SDL_Renderer *renderer_;
-  int resX_;
-  int resY_;
-  int renderCounter_;
+    SDL_Window *window_;
+    SDL_Renderer *renderer_;
+    int resX_;
+    int resY_;
+    int renderCounter_;
 };
 

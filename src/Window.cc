@@ -1,19 +1,19 @@
 #include "Window.hh"
 
-Window::Window():
-  window_(nullptr),
-  renderer_(nullptr),
-  resX_(10),
-  resY_(10),
-  renderCounter_(0)
+Window::Window()
+    : window_(nullptr),
+      renderer_(nullptr),
+      resX_(10),
+      resY_(10),
+      renderCounter_(0)
 {
 }
 
-Window::Window(int resX, int resY):
-  window_(nullptr),
-  renderer_(nullptr),
-  resX_(resX),
-  resY_(resY)
+Window::Window(int resX, int resY)
+    : window_(nullptr),
+      renderer_(nullptr),
+      resX_(resX),
+      resY_(resY)
 {
     Uint32 flags = SDL_WINDOW_SHOWN;
 
@@ -36,23 +36,23 @@ Window::Window(int resX, int resY):
 
 void Window::addPixel(const Pixel& p)
 {
-  SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
-  SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
+    SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
+    SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
 }
 
 void Window::clear()
 {
-  SDL_RenderClear(renderer_);
+    SDL_RenderClear(renderer_);
 }
 
 void Window::render()
 {
-  // Render to screen
-  SDL_RenderPresent(renderer_);
+    // Render to screen
+    SDL_RenderPresent(renderer_);
 }
 
 Window::~Window()
 {
-  SDL_DestroyRenderer(renderer_);
-  SDL_DestroyWindow(window_);
+    SDL_DestroyRenderer(renderer_);
+    SDL_DestroyWindow(window_);
 }

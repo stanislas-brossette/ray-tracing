@@ -18,9 +18,9 @@ LightRay::~LightRay()
 
 std::string LightRay::describe() const
 {
-  std::stringstream ss;
-  ss << "=== LightRay ===\n";
-  ss << "origin: " << origin_ << "\n";
-  ss << "dir: " << dir_;
-  return ss.str();
+    std::stringstream ss;
+    ss << "=== LightRay ===\n";
+    ss << "origin: " << origin_ << "\n";
+    ss << "dir: " << dir_;
+    return ss.str();
 }

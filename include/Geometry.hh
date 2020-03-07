@@ -8,12 +8,12 @@
 class Geometry
 {
 public:
-  Geometry ();
-  Geometry (const Frame3& f);
-  virtual ~Geometry ();
-  virtual std::string describe() const = 0;
-  virtual bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const = 0;
-  virtual bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const = 0;
+    Geometry ();
+    Geometry (const Frame3& f);
+    virtual ~Geometry ();
+    virtual std::string describe() const = 0;
+    virtual bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const = 0;
+    virtual bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const = 0;
 
-  Frame3 f_;
+    Frame3 f_;
 };

@@ -6,15 +6,15 @@
 class Pixel
 {
 public:
-  Pixel();
-  Pixel(int x, int y, int a, int r, int g, int b);
-  ~Pixel();
-  int x_;
-  int y_;
-  int a_;
-  int r_;
-  int g_;
-  int b_;
+    Pixel();
+    Pixel(int x, int y, int a, int r, int g, int b);
+    ~Pixel();
+    int x_;
+    int y_;
+    int a_;
+    int r_;
+    int g_;
+    int b_;
 
-  std::string describe() const;
+    std::string describe() const;
 };

@@ -18,10 +18,10 @@ AmbiantLight::~AmbiantLight()
 
 std::string AmbiantLight::describe() const
 {
-  std::stringstream ss;
-  ss << "=== AmbiantLight ===\n";
-  ss << "alpha: " << alpha_ << "\n";
-  ss << "rgb: " << rgb_;
-  return ss.str();
+    std::stringstream ss;
+    ss << "=== AmbiantLight ===\n";
+    ss << "alpha: " << alpha_ << "\n";
+    ss << "rgb: " << rgb_;
+    return ss.str();
 }
 

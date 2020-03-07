@@ -113,40 +113,40 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                   pixIfNotInShadow.r_ = items_[impactItemIndex]->material_->color_.r_;
                   pixIfNotInShadow.g_ = items_[impactItemIndex]->material_->color_.g_;
                   pixIfNotInShadow.b_ = items_[impactItemIndex]->material_->color_.b_;
-                  break;
+
+                  bool inShadow = false;
+                  size_t shadowingItemIndex = 0;
+                  if(needToCheckShadow)
+                  {
+                      for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
+                      {
+                          Vector3 tmpPoint;
+                          Vector3 tmpNormal;
+                          double tmpDist;
+                          Item* shadowingItem = items_[shadItemIndex];
+                          if((not shadowingItem->material_->lightEmitter_) and (not (shadItemIndex == impactItemIndex)))
+                          {
+                              bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
+                              if (tmpImpact && tmpDist < distImpactToLightSource)
+                              {
+                                  shadowingItemIndex = shadItemIndex;
+                                  inShadow = true;
+                                  break;
+                              }
+                          }
+                      }
+                      if(not inShadow)
+                      {
+                          pix.a_ += pixIfNotInShadow.a_;
+                          pix.r_ = pixIfNotInShadow.r_;
+                          pix.g_ = pixIfNotInShadow.g_;
+                          pix.b_ = pixIfNotInShadow.b_;
+                      }
+                  }
               }
           }
       }
 
-      bool inShadow = false;
-      size_t shadowingItemIndex = 0;
-      if(needToCheckShadow)
-      {
-          for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
-          {
-              Vector3 tmpPoint;
-              Vector3 tmpNormal;
-              double tmpDist;
-              Item* item = items_[shadItemIndex];
-              if((not item->material_->lightEmitter_) and (not (shadItemIndex == impactItemIndex)))
-              {
-                  bool tmpImpact = item->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
-                  if (tmpImpact && tmpDist < distImpactToLightSource)
-                  {
-                      shadowingItemIndex = shadItemIndex;
-                      inShadow = true;
-                      break;
-                  }
-              }
-          }
-          if(not inShadow)
-          {
-              pix.a_ += pixIfNotInShadow.a_;
-              pix.r_ = pixIfNotInShadow.r_;
-              pix.g_ = pixIfNotInShadow.g_;
-              pix.b_ = pixIfNotInShadow.b_;
-          }
-      }
 
 
 

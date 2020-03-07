@@ -49,6 +49,12 @@ TEST(ManoTests, VisuPlaneSphereTest)
   Item ls(&gsls, &mls);
   ls.geometry_->f_.setOriginPos( 0.7, 1.0, -0.4);
 
+  Frame3 fls2;
+  Material mls2(Vector3RGB(255, 255, 255), 0, 0, true, 0.6);
+  Sphere gsls2(fls2, 0.1);
+  Item ls2(&gsls2, &mls2);
+  ls2.geometry_->f_.setOriginPos( 0.7, 2.6, -0.4);
+
   Frame3 fs0;
   Material ms0(Vector3RGB(255, 0, 0), 0, 0, false, 0);
   fs0.translate( 0.0, 2.0, 0.0);
@@ -103,6 +109,7 @@ TEST(ManoTests, VisuPlaneSphereTest)
   myScene.addCamera(&cam);
   myScene.setAmbiantLight(al);
   myScene.addItem(&ls);
+  myScene.addItem(&ls2);
   myScene.addItem(&s0);
   myScene.addItem(&s1);
   myScene.addItem(&s2);

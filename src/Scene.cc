@@ -53,12 +53,15 @@ Pixel Scene::castRandomRay(size_t camIndex) const
       {
           if (items_[itemIndex]->material_->lightEmitter_)
           {
-              pix.a_ = int(255*items_[itemIndex]->material_->lightIntensity_);
-              pix.r_ = items_[itemIndex]->material_->color_.r_;
-              pix.g_ = items_[itemIndex]->material_->color_.g_;
-              pix.b_ = items_[itemIndex]->material_->color_.b_;
               // Need to check occlusion
-              return pix;
+              if(not isIntercepted(lr, tmpDist, itemIndex))
+              {
+                  pix.a_ = int(255*items_[itemIndex]->material_->lightIntensity_);
+                  pix.r_ = items_[itemIndex]->material_->color_.r_;
+                  pix.g_ = items_[itemIndex]->material_->color_.g_;
+                  pix.b_ = items_[itemIndex]->material_->color_.b_;
+                  return pix;
+              }
           }
           else
           {
@@ -118,23 +121,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                   size_t shadowingItemIndex = 0;
                   if(needToCheckShadow)
                   {
-                      for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
-                      {
-                          Vector3 tmpPoint;
-                          Vector3 tmpNormal;
-                          double tmpDist;
-                          Item* shadowingItem = items_[shadItemIndex];
-                          if((not shadowingItem->material_->lightEmitter_) and (not (shadItemIndex == impactItemIndex)))
-                          {
-                              bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
-                              if (tmpImpact && tmpDist < distImpactToLightSource)
-                              {
-                                  shadowingItemIndex = shadItemIndex;
-                                  inShadow = true;
-                                  break;
-                              }
-                          }
-                      }
+                      inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
                       if(not inShadow)
                       {
                           pix.a_ += pixIfNotInShadow.a_;
@@ -169,6 +156,30 @@ Pixel Scene::castRandomRay(size_t camIndex) const
   if(pix.b_ > 255)
       pix.b_ = 255;
   return pix;
+}
+
+bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const
+{
+    bool inShadow = false;
+    size_t shadowingItemIndex = 0;
+    for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
+    {
+        Vector3 tmpPoint;
+        Vector3 tmpNormal;
+        double tmpDist;
+        Item* shadowingItem = items_[shadItemIndex];
+        if((not shadowingItem->material_->lightEmitter_) and (not (shadItemIndex == impactItemIndex)))
+        {
+            bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
+            if (tmpImpact && tmpDist < distImpactToLightSource)
+            {
+                shadowingItemIndex = shadItemIndex;
+                inShadow = true;
+                break;
+            }
+        }
+    }
+    return inShadow;
 }
 
 std::ostream& operator<<(std::ostream& os, const Scene& s)

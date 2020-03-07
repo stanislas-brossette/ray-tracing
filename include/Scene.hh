@@ -17,6 +17,7 @@ public:
   void addCamera(Camera* c);
   void setAmbiantLight(const AmbiantLight& al);
   Pixel castRandomRay(size_t camIndex) const;
+  bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const;
 
   AmbiantLight ambiantLight_;
   std::vector<Item*> items_;

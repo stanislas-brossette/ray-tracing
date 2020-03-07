@@ -10,6 +10,7 @@ public:
     Pixel(int x, int y);
     Pixel(int x, int y, int a, int r, int g, int b);
     ~Pixel();
+    Pixel operator+(const Pixel& p) const;
     void clamp();
     int x_;
     int y_;

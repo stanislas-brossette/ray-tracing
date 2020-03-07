@@ -53,3 +53,17 @@ void Pixel::clamp()
     if(b_ > 255)
         b_ = 255;
 }
+
+Pixel Pixel::operator+(const Pixel& p) const
+{
+    Pixel pRes;
+    pRes.x_ = x_;
+    pRes.y_ = y_;
+    pRes.a_ = a_ + p.a_;
+    double ratio = double(a_)/double(a_ + p.a_);
+    double ratioP = double(p.a_)/double(a_ + p.a_);
+    pRes.r_ = ratio*r_ + ratioP*p.r_;
+    pRes.g_ = ratio*g_ + ratioP*p.g_;
+    pRes.b_ = ratio*b_ + ratioP*p.b_;
+    return pRes;
+}

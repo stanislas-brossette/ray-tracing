@@ -29,12 +29,8 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
 Pixel Scene::castRandomRay(size_t camIndex) const
 {
     LightRay lr;
-    Pixel pix;
+    Pixel pix, ambiantPix, diffuseRefPix, specRefPix;
     cameras_[camIndex]->castRandomRay(lr, pix);
-    pix.a_ = 0;
-    pix.r_ = 0;
-    pix.g_ = 0;
-    pix.b_ = 0;
 
     Vector3 impactPoint;
     Vector3 impactNormal;
@@ -59,13 +55,14 @@ Pixel Scene::castRandomRay(size_t camIndex) const
             pix.b_ = items_[impactItemIndex]->material_->color_.b_;
             return pix;
         }
+
         /*******************
         *  Ambiant light  *
         *******************/
-        pix.a_ = int(255*ambiantLight_.alpha_);
-        pix.r_ = items_[impactItemIndex]->material_->color_.r_;
-        pix.g_ = items_[impactItemIndex]->material_->color_.g_;
-        pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+        ambiantPix.a_ = int(255*ambiantLight_.alpha_);
+        ambiantPix.r_ = items_[impactItemIndex]->material_->color_.r_;
+        ambiantPix.g_ = items_[impactItemIndex]->material_->color_.g_;
+        ambiantPix.b_ = items_[impactItemIndex]->material_->color_.b_;
 
         /************************
         *  diffuse reflection  *
@@ -106,10 +103,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
                         inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
                         if(not inShadow)
                         {
-                            pix.a_ += pixIfNotInShadow.a_;
-                            pix.r_ = pixIfNotInShadow.r_;
-                            pix.g_ = pixIfNotInShadow.g_;
-                            pix.b_ = pixIfNotInShadow.b_;
+                            diffuseRefPix = diffuseRefPix + pixIfNotInShadow;
                         }
                     }
                 }
@@ -129,6 +123,9 @@ Pixel Scene::castRandomRay(size_t camIndex) const
         //pix.g_ = items_[impactItemIndex]->material_->color_.g_;
         //pix.b_ = items_[impactItemIndex]->material_->color_.b_;
     }
+
+    pix = pix + ambiantPix;
+    pix = pix + diffuseRefPix;
 
     pix.clamp();
     return pix;
@@ -169,7 +166,6 @@ bool Scene::findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3
         bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
         if (tmpImpact && tmpDist < impactDist)
         {
-            impactItemIndex = itemIndex;
             impact = true;
             impactPoint = tmpPoint;
             impactNormal = tmpNormal;

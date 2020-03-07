@@ -99,6 +99,12 @@ Vector3 Vector3::rotateZ(double theta) const
     return rotV;
 }
 
+Vector3 Vector3::symmetrize(const Vector3& n) const
+{
+    Vector3 res(n*2 + *this);
+    return res;
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector3& v)
 {
     os << "[" << v.x_ << "," << v.y_ << "," << v.z_ << "]";

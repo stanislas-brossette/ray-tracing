@@ -18,6 +18,7 @@ public:
     void setAmbiantLight(const AmbiantLight& al);
     Pixel castRandomRay(size_t camIndex) const;
     bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const;
+    bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
 
     AmbiantLight ambiantLight_;
     std::vector<Item*> items_;

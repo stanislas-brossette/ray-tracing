@@ -7,8 +7,10 @@ class Pixel
 {
 public:
     Pixel();
+    Pixel(int x, int y);
     Pixel(int x, int y, int a, int r, int g, int b);
     ~Pixel();
+    void clamp();
     int x_;
     int y_;
     int a_;

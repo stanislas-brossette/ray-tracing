@@ -40,43 +40,25 @@ Pixel Scene::castRandomRay(size_t camIndex) const
     Vector3 impactNormal;
     double impactDist = 1e9;
     size_t impactItemIndex = 0;
-    bool impact = false;
 
     //Does the primary light ray contact with an item?
-    for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
-    {
-        Vector3 tmpPoint;
-        Vector3 tmpNormal;
-        double tmpDist;
-        bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
-        if (tmpImpact && tmpDist < impactDist)
-        {
-            if (items_[itemIndex]->material_->lightEmitter_)
-            {
-                // Need to check occlusion
-                if(not isIntercepted(lr, tmpDist, itemIndex))
-                {
-                    pix.a_ = int(255*items_[itemIndex]->material_->lightIntensity_);
-                    pix.r_ = items_[itemIndex]->material_->color_.r_;
-                    pix.g_ = items_[itemIndex]->material_->color_.g_;
-                    pix.b_ = items_[itemIndex]->material_->color_.b_;
-                    return pix;
-                }
-            }
-            else
-            {
-                impact = true;
-                impactPoint = tmpPoint;
-                impactNormal = tmpNormal;
-                impactDist = tmpDist;
-                impactItemIndex = itemIndex;
-            }
-        }
-    }
+    bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
+
 
     //Compute illumination
     if (impact)
     {
+        /*************************************
+        *  Direct impact with light source  *
+        *************************************/
+        if (items_[impactItemIndex]->material_->lightEmitter_)
+        {
+            pix.a_ = int(255*items_[impactItemIndex]->material_->lightIntensity_);
+            pix.r_ = items_[impactItemIndex]->material_->color_.r_;
+            pix.g_ = items_[impactItemIndex]->material_->color_.g_;
+            pix.b_ = items_[impactItemIndex]->material_->color_.b_;
+            return pix;
+        }
         /*******************
         *  Ambiant light  *
         *******************/
@@ -147,14 +129,8 @@ Pixel Scene::castRandomRay(size_t camIndex) const
         //pix.g_ = items_[impactItemIndex]->material_->color_.g_;
         //pix.b_ = items_[impactItemIndex]->material_->color_.b_;
     }
-    if(pix.a_ > 255)
-        pix.a_ = 255;
-    if(pix.r_ > 255)
-        pix.r_ = 255;
-    if(pix.g_ > 255)
-        pix.g_ = 255;
-    if(pix.b_ > 255)
-        pix.b_ = 255;
+
+    pix.clamp();
     return pix;
 }
 
@@ -180,6 +156,28 @@ bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
         }
     }
     return inShadow;
+}
+
+bool Scene::findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const
+{
+    bool impact = false;
+    for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+    {
+        Vector3 tmpPoint;
+        Vector3 tmpNormal;
+        double tmpDist;
+        bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
+        if (tmpImpact && tmpDist < impactDist)
+        {
+            impactItemIndex = itemIndex;
+            impact = true;
+            impactPoint = tmpPoint;
+            impactNormal = tmpNormal;
+            impactDist = tmpDist;
+            impactItemIndex = itemIndex;
+        }
+    }
+    return impact;
 }
 
 std::ostream& operator<<(std::ostream& os, const Scene& s)

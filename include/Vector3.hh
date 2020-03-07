@@ -24,6 +24,8 @@ public:
     Vector3 rotateY(double theta) const;
     Vector3 rotateZ(double theta) const;
 
+    Vector3 symmetrize(const Vector3& n) const;
+
     double x_;
     double y_;
     double z_;

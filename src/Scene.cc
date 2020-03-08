@@ -117,7 +117,6 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
         ambiantPix.r_ = impactItem->material_->color_.r_;
         ambiantPix.g_ = impactItem->material_->color_.g_;
         ambiantPix.b_ = impactItem->material_->color_.b_;
-        pix = pix + ambiantPix;
 
         /************************
         *  diffuse reflection  *
@@ -130,22 +129,22 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
         for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
         {
             Item* lsItem = items_[itemIndex];
+            double cosAngle = 0;
+            bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
             if (lsItem->material_->lightEmitter_)
             {
-                double cosAngle = 0;
-                bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
                 distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
                 lrImpactToLightSource.origin_ = impactPoint;
                 lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
                 lrImpactToLightSource.dir_.normalize();
 
-                //Need to check if the diffusion light ray is intercepted by another object, that would cast a shadow
+                //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
                 if(inHalfSpace)
                 {
                     needToCheckShadow = true;
                     //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
-                    double distReductionFactor = 1/(distImpactToLightSource+1);
-                    //double distReductionFactor = 1/std::pow(distImpactToLightSource+1,2);
+                    //double distReductionFactor = 1/(distImpactToLightSource+1);
+                    double distReductionFactor = 1/std::pow(distImpactToLightSource+1,3);
                     pixIfNotInShadow.a_ = int(255*cosAngle*distReductionFactor);
                     pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
                     pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
@@ -164,7 +163,16 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
                     }
                 }
             }
+            else
+            {
+                cosAngle = - lr.dir_.dot(impactNormal);
+                ambiantPix.a_ = int(255*cosAngle*ambiantLight_.alpha_);
+                ambiantPix.r_ = impactItem->material_->color_.r_;
+                ambiantPix.g_ = impactItem->material_->color_.g_;
+                ambiantPix.b_ = impactItem->material_->color_.b_;
+            }
         }
+        pix = pix + ambiantPix;
 
 
         /*************************

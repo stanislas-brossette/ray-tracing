@@ -6,9 +6,12 @@ cd build
 cmake ..  
 make  
 
-# test:
+# test(best to watch):
 cd build  
 ./unit/unit  
+
+# run main.cc:
+./RayTracingMain
 
 # filter tests:
 cd build  

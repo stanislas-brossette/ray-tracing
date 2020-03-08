@@ -16,7 +16,7 @@ void renderMainParallel(const Scene& myScene, Window& myWindow, const std::strin
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 5000000)
+    while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, 0, nPixPerRender);
@@ -26,6 +26,9 @@ void renderMainParallel(const Scene& myScene, Window& myWindow, const std::strin
     }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "duration Parallel = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;;
+    std::cout << s;
+    char answer;
+    std::cin >> answer;
 }
 
 void renderMainSerial(const Scene& myScene, Window& myWindow, const std::string& s)
@@ -135,8 +138,8 @@ int main(void)
     myScene.addItem(&pLeft);
     myScene.addItem(&pRight);
 
-    Window myWindowSerial(cam.resX_, cam.resY_);
-    renderMainSerial(myScene, myWindowSerial, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
+    //Window myWindowSerial(cam.resX_, cam.resY_);
+    //renderMainSerial(myScene, myWindowSerial, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
 
     Window myWindowParallel(cam.resX_, cam.resY_);
     renderMainParallel(myScene, myWindowParallel, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");

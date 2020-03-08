@@ -24,6 +24,7 @@ public:
     void renderParallel(std::vector<Pixel>& res, const size_t& camIndex, const size_t& nPoint) const;
     bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const;
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
+    double getDistReductionFactor(double dist) const;
 
     AmbiantLight ambiantLight_;
     std::vector<Item*> items_;

@@ -142,9 +142,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
                 if(inHalfSpace)
                 {
                     needToCheckShadow = true;
-                    //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
-                    //double distReductionFactor = 1/(distImpactToLightSource+1);
-                    double distReductionFactor = 1/std::pow(distImpactToLightSource+1,3);
+                    double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
                     pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
                     pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
                     pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
@@ -195,7 +193,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
             Item* specReflItem = items_[secImpactItemIndex];
             if (secImpact)
             {
-                double distReductionFactor = 1/std::sqrt(secImpactDist+1);
+                double distReductionFactor = getDistReductionFactor(secImpactDist+1);
                 if(specReflItem->material_->lightEmitter_)
                 {
                     specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
@@ -214,6 +212,15 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
         }
     }
     return;
+}
+
+double Scene::getDistReductionFactor(double dist) const
+{
+    //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
+    //double distReductionFactor = 1/(distImpactToLightSource+1);
+    //double distReductionFactor = 1/std::pow(distImpactToLightSource+1,2);
+    double distReductionFactor = 1/std::pow(dist+1,3);
+    return distReductionFactor;
 }
 
 bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const

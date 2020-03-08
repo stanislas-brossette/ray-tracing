@@ -193,12 +193,19 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
             //Does the primary light ray contact with an item?
             bool secImpact = findFirstImpact(lrSpecReflection, secImpactItemIndex, secImpactPoint, secImpactNormal, secImpactDist);
             Item* specReflItem = items_[secImpactItemIndex];
-            if (secImpact and specReflItem->material_->lightEmitter_)
+            if (secImpact)
             {
                 double distReductionFactor = 1/std::sqrt(secImpactDist+1);
+                if(specReflItem->material_->lightEmitter_)
+                {
+                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
+                }
+                else
+                {
+                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*ambiantLight_.alpha_;
+                }
                 specReflPix.x_ = pix.x_;
                 specReflPix.y_ = pix.y_;
-                specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
                 specReflPix.r_ = specReflItem->material_->color_.r_;
                 specReflPix.g_ = specReflItem->material_->color_.g_;
                 specReflPix.b_ = specReflItem->material_->color_.b_;

@@ -9,7 +9,7 @@
 #include "Camera.hh"
 #include "Window.hh"
 
-void testRender(const Scene& myScene, double resX, double resY, const std::string& s)
+void testRender(const Scene& myScene, double resX, double resY, const std::string& s, bool requireConfirm)
 {
     Window myWindow(resX, resY);
     int iter = 0;
@@ -24,9 +24,12 @@ void testRender(const Scene& myScene, double resX, double resY, const std::strin
     }
 
     std::cout << s;
-    char answer;
-    std::cin >> answer;
-    ASSERT_TRUE(answer == 'y');
+    if (requireConfirm)
+    {
+        char answer;
+        std::cin >> answer;
+        ASSERT_TRUE(answer == 'y');
+    }
 }
 
 TEST(ManoTests, Visu1SpheresTest)
@@ -67,18 +70,18 @@ TEST(ManoTests, Visu1SpheresTest)
 
     ls.geometry_->f_.setOriginPos( 0.0, 1.3, 1.0);
     s0.material_->color_ = Vector3RGB(255, 0, 0);
-    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 red sphere lit from the top. Correct [y/n]?");
+    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 red sphere lit from the top. Correct [y/n]?", false);
 
     ls.geometry_->f_.setOriginPos( 0.0, 1.3, -1.0);
     s0.material_->color_ = Vector3RGB(0, 255, 0);
-    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 green sphere lit from the bottom. Correct? [y/n]");
+    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 green sphere lit from the bottom. Correct? [y/n]", false);
 
     ls.geometry_->f_.setOriginPos( 1.0, 1.3, 0.0);
     s0.material_->color_ = Vector3RGB(0, 0, 255);
-    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 blue sphere lit from the right. Correct? [y/n]");
+    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 blue sphere lit from the right. Correct? [y/n]", false);
 
     ls.geometry_->f_.setOriginPos( -1.0, 1.3, 0.0);
     s0.material_->color_ = Vector3RGB(255, 20, 150);
-    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 pink sphere lit from the left. Correct? [y/n]");
+    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 pink sphere lit from the left. Correct? [y/n]", true);
 }
 

@@ -20,7 +20,7 @@ Pixel::Pixel (int x, int y)
 {
 }
 
-Pixel::Pixel (int x, int y, int a, int r, int g, int b)
+Pixel::Pixel (int x, int y, double a, double r, double g, double b)
   : x_(x),
     y_(y),
     a_(a),
@@ -52,6 +52,14 @@ void Pixel::clamp()
         g_ = 255;
     if(b_ > 255)
         b_ = 255;
+    if(a_ > 0)
+        a_ = 0;
+    if(r_ > 0)
+        r_ = 0;
+    if(g_ > 0)
+        g_ = 0;
+    if(b_ > 0)
+        b_ = 0;
 }
 
 Pixel Pixel::operator+(const Pixel& p) const
@@ -60,8 +68,8 @@ Pixel Pixel::operator+(const Pixel& p) const
     pRes.x_ = x_;
     pRes.y_ = y_;
     pRes.a_ = a_ + p.a_;
-    double ratio = double(a_)/double(a_ + p.a_);
-    double ratioP = double(p.a_)/double(a_ + p.a_);
+    double ratio = a_/(a_ + p.a_);
+    double ratioP = p.a_/(a_ + p.a_);
     pRes.r_ = ratio*r_ + ratioP*p.r_;
     pRes.g_ = ratio*g_ + ratioP*p.g_;
     pRes.b_ = ratio*b_ + ratioP*p.b_;

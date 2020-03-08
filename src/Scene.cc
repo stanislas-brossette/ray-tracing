@@ -103,7 +103,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
         *************************************/
         if (impactItem->material_->lightEmitter_)
         {
-            pix.a_ = int(255*impactItem->material_->lightIntensity_);
+            pix.a_ = 255*impactItem->material_->lightIntensity_;
             pix.r_ = impactItem->material_->color_.r_;
             pix.g_ = impactItem->material_->color_.g_;
             pix.b_ = impactItem->material_->color_.b_;
@@ -113,7 +113,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
         /*******************
         *  Ambiant light  *
         *******************/
-        ambiantPix.a_ = int(255*ambiantLight_.alpha_);
+        ambiantPix.a_ = 255*ambiantLight_.alpha_;
         ambiantPix.r_ = impactItem->material_->color_.r_;
         ambiantPix.g_ = impactItem->material_->color_.g_;
         ambiantPix.b_ = impactItem->material_->color_.b_;
@@ -145,7 +145,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
                     //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
                     //double distReductionFactor = 1/(distImpactToLightSource+1);
                     double distReductionFactor = 1/std::pow(distImpactToLightSource+1,3);
-                    pixIfNotInShadow.a_ = int(255*cosAngle*distReductionFactor);
+                    pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
                     pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
                     pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
                     pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
@@ -166,7 +166,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
             else
             {
                 cosAngle = - lr.dir_.dot(impactNormal);
-                ambiantPix.a_ = int(255*cosAngle*ambiantLight_.alpha_);
+                ambiantPix.a_ = 255*cosAngle*ambiantLight_.alpha_;
                 ambiantPix.r_ = impactItem->material_->color_.r_;
                 ambiantPix.g_ = impactItem->material_->color_.g_;
                 ambiantPix.b_ = impactItem->material_->color_.b_;
@@ -198,7 +198,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
                 double distReductionFactor = 1/std::sqrt(secImpactDist+1);
                 specReflPix.x_ = pix.x_;
                 specReflPix.y_ = pix.y_;
-                specReflPix.a_ = int(255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_);
+                specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
                 specReflPix.r_ = specReflItem->material_->color_.r_;
                 specReflPix.g_ = specReflItem->material_->color_.g_;
                 specReflPix.b_ = specReflItem->material_->color_.b_;

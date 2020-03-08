@@ -11,6 +11,44 @@ Scene::~Scene()
 {
 }
 
+void Scene::renderSerial(std::vector<Pixel>& res, const size_t& camIndex, const size_t& nPoints) const
+{
+    for (size_t i = 0; i < nPoints; i++)
+    {
+        castRandomRayInPlace(camIndex, res[i]);
+    }
+}
+
+void Scene::renderParallel(std::vector<Pixel>& res, const size_t& camIndex, const size_t& nPixToCompute) const
+{
+    int nPix = res.size();
+    int numThreads = std::thread::hardware_concurrency();
+
+    std::vector<int> pixPerThread(numThreads);
+    for (size_t i = 0; i < numThreads; i++)
+    {
+        pixPerThread[i] = nPix/numThreads;
+    }
+    pixPerThread[0] += nPix%numThreads;
+
+    std::vector<std::thread*> pool(numThreads, nullptr);
+
+    size_t index = 0;
+    for (size_t i = 0; i < numThreads; i++)
+    {
+        std::vector<Pixel> threadPix(pixPerThread[i]);
+        size_t beginIndex = index;
+        size_t endIndex = index + pixPerThread[i];
+        pool[i] = new std::thread(&Scene::castMultipleRandomRaysInPlace, this, camIndex, std::ref(res), beginIndex, endIndex);
+        index += pixPerThread[i];
+    }
+    for (size_t i = 0; i < numThreads; i++)
+    {
+        pool[i]->join();
+        delete pool[i];
+    }
+}
+
 void Scene::addItem(Item* item)
 {
     items_.push_back(item);
@@ -28,8 +66,23 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
 
 Pixel Scene::castRandomRay(size_t camIndex) const
 {
+    Pixel pix;
+    castRandomRayInPlace(camIndex, pix);
+    return pix;
+}
+
+void Scene::castMultipleRandomRaysInPlace(size_t camIndex, std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex) const
+{
+    for (size_t i = beginIndex; i < endIndex; i++)
+    {
+        castRandomRayInPlace(camIndex, vecPix[i]);
+    }
+}
+
+void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
+{
     LightRay lr;
-    Pixel pix, ambiantPix, diffuseRefPix, specReflPix;
+    Pixel ambiantPix, diffuseRefPix, specReflPix;
     cameras_[camIndex]->castRandomRay(lr, pix);
 
     Vector3 impactPoint;
@@ -54,7 +107,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
             pix.r_ = impactItem->material_->color_.r_;
             pix.g_ = impactItem->material_->color_.g_;
             pix.b_ = impactItem->material_->color_.b_;
-            return pix;
+            return;
         }
 
         /*******************
@@ -145,8 +198,7 @@ Pixel Scene::castRandomRay(size_t camIndex) const
             }
         }
     }
-
-    return pix;
+    return;
 }
 
 bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const

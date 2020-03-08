@@ -83,13 +83,14 @@ TEST(ManoTests, Visu9SpheresTest)
     std::cout << myScene << std::endl;
 
     int iter = 0;
+    int nPixPerRender = 100000;
     while(iter < 10000000)
     {
-        Pixel p = myScene.castRandomRay(0);
-        myWindow.addPixel(p);
-        if(iter % 100000 ==0)
-            myWindow.render();
-        iter++;
+        std::vector<Pixel> pixs(nPixPerRender);
+        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myWindow.addPixels(pixs);
+        myWindow.render();
+        iter+=nPixPerRender;
     }
 
     std::cout << "You should see 9 sheres of same size\nCorrect?" << std::endl;

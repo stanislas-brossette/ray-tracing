@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <vector>
 
 #include "Pixel.hh"
 
@@ -13,6 +14,7 @@ public:
     Window ();
     Window (int resX, int resY);
     void addPixel(const Pixel& p);
+    void addPixels(const std::vector<Pixel>& v);
     void render();
     void clear();
     ~Window ();

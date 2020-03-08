@@ -14,13 +14,14 @@ void testRender2(const Scene& myScene, Window& myWindow, const std::string& s)
     std::cout << myScene << std::endl;
     myWindow.clear();
     int iter = 0;
+    int nPixPerRender = 100000;
     while(iter < 10000000)
     {
-        Pixel p = myScene.castRandomRay(0);
-        myWindow.addPixel(p);
-        if(iter % 100000 ==0)
-            myWindow.render();
-        iter++;
+        std::vector<Pixel> pixs(nPixPerRender);
+        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myWindow.addPixels(pixs);
+        myWindow.render();
+        iter+=nPixPerRender;
     }
 
     std::cout << s;

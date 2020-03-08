@@ -13,13 +13,14 @@ void testRenderMultiLS(const Scene& myScene, double resX, double resY, const std
 {
     Window myWindow(resX, resY);
     int iter = 0;
+    int nPixPerRender = 100000;
     while(iter < 6000000)
     {
-        Pixel p = myScene.castRandomRay(0);
-        myWindow.addPixel(p);
-        if(iter % 100000 ==0)
-            myWindow.render();
-        iter++;
+        std::vector<Pixel> pixs(nPixPerRender);
+        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myWindow.addPixels(pixs);
+        myWindow.render();
+        iter+=nPixPerRender;
     }
 
     std::cout << s;

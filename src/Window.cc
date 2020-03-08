@@ -40,6 +40,15 @@ void Window::addPixel(const Pixel& p)
     SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
 }
 
+void Window::addPixels(const std::vector<Pixel>& v)
+{
+    for (size_t i = 0; i < v.size(); i++)
+    {
+        SDL_SetRenderDrawColor(renderer_, v[i].r_, v[i].g_, v[i].b_, v[i].a_);
+        SDL_RenderDrawPoint(renderer_, v[i].x_, resY_-v[i].y_);
+    }
+}
+
 void Window::clear()
 {
     SDL_RenderClear(renderer_);

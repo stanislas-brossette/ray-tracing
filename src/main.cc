@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+
 #include "Vector3.hh"
 #include "Frame3.hh"
 #include "Scene.hh"
@@ -8,23 +10,40 @@
 #include "Camera.hh"
 #include "Window.hh"
 
-void renderMain(const Scene& myScene, Window& myWindow, const std::string& s)
+void renderMainParallel(const Scene& myScene, Window& myWindow, const std::string& s)
 {
-    std::cout << myScene << std::endl;
     myWindow.clear();
     int iter = 0;
-    while(iter < 10000000)
+    int nPixPerRender = 100000;
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    while(iter < 5000000)
     {
-        Pixel p = myScene.castRandomRay(0);
-        myWindow.addPixel(p);
-        if(iter % 100000 ==0)
-            myWindow.render();
-        iter++;
+        std::vector<Pixel> pixs(nPixPerRender);
+        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myWindow.addPixels(pixs);
+        myWindow.render();
+        iter+=nPixPerRender;
     }
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "duration Parallel = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;;
+}
 
-    std::cout << s;
-    char answer;
-    std::cin >> answer;
+void renderMainSerial(const Scene& myScene, Window& myWindow, const std::string& s)
+{
+    myWindow.clear();
+    int iter = 0;
+    int nPixPerRender = 100000;
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    while(iter < 5000000)
+    {
+        std::vector<Pixel> pixs(nPixPerRender);
+        myScene.renderSerial(pixs, 0, nPixPerRender);
+        myWindow.addPixels(pixs);
+        myWindow.render();
+        iter+=nPixPerRender;
+    }
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "duration Serial = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;;
 }
 
 int main(void)
@@ -37,7 +56,6 @@ int main(void)
 
     Camera cam(f, fovX, fovY, resX);
 
-    Window myWindow(cam.resX_, cam.resY_);
 
     AmbiantLight al(0.02, Vector3RGB(255,255,255));
 
@@ -117,7 +135,11 @@ int main(void)
     myScene.addItem(&pLeft);
     myScene.addItem(&pRight);
 
-    renderMain(myScene, myWindow, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
+    Window myWindowSerial(cam.resX_, cam.resY_);
+    renderMainSerial(myScene, myWindowSerial, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
+
+    Window myWindowParallel(cam.resX_, cam.resY_);
+    renderMainParallel(myScene, myWindowParallel, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
 
     //ls.geometry_->f_.setOriginPos( 0.0, 1.3, -1.0);
     //s0.material_->color_ = Vector3RGB(0, 255, 0);

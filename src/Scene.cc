@@ -163,7 +163,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
             }
             else
             {
-                cosAngle = - lr.dir_.dot(impactNormal);
+                cosAngle = std::abs(- lr.dir_.dot(impactNormal));
                 ambiantPix.a_ = 255*cosAngle*ambiantLight_.alpha_;
                 ambiantPix.r_ = impactItem->material_->color_.r_;
                 ambiantPix.g_ = impactItem->material_->color_.g_;
@@ -256,7 +256,7 @@ bool Scene::findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3
         Vector3 tmpNormal;
         double tmpDist;
         bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
-        if (tmpImpact && tmpDist < impactDist)
+        if (tmpImpact && tmpDist < impactDist && tmpDist > 1e-9)
         {
             impact = true;
             impactPoint = tmpPoint;

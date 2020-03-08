@@ -216,9 +216,9 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
 
 double Scene::getDistReductionFactor(double dist) const
 {
-    //double distReductionFactor = 1/std::sqrt(distImpactToLightSource+1);
-    //double distReductionFactor = 1/(distImpactToLightSource+1);
-    //double distReductionFactor = 1/std::pow(distImpactToLightSource+1,2);
+    //double distReductionFactor = 1/std::sqrt(dist+1);
+    //double distReductionFactor = 1/(dist+1);
+    //double distReductionFactor = 1/std::pow(dist+1,2);
     double distReductionFactor = 1/std::pow(dist+1,3);
     return distReductionFactor;
 }

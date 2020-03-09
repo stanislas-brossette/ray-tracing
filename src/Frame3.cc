@@ -89,6 +89,18 @@ bool Frame3::isApprox(const Frame3& f, double prec)
         return false;
 }
 
+Vector3 Frame3::vecToWorld(const Vector3& v) const
+{
+    Vector3 res((vx_ * v.x_) + (vy_ * v.y_) + (vz_ * v.z_));
+    return res;
+}
+
+Vector3 Frame3::pointToWorld(const Vector3& v) const
+{
+    Vector3 res(o_ + (vx_ * v.x_) + (vy_ * v.y_) + (vz_ * v.z_));
+    return res;
+}
+
 std::string Frame3::describe() const
 {
     std::stringstream ss;

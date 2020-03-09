@@ -36,8 +36,8 @@ void Camera::castRandomRay(LightRay& lr, Pixel& px) const
     px.x_ = randX % resX_;
     px.y_ = randY % resY_;
 
-    lr.origin_ = frame_.o_;
-    lr.dir_ = pixelToDir(px);
+    lr.origin_ = frame_.pointToWorld(frame_.o_);
+    lr.dir_ = frame_.vecToWorld(pixelToDir(px));
 }
 
 std::string Camera::describe() const

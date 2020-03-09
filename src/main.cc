@@ -16,7 +16,7 @@ void renderMainParallel(const Scene& myScene, Window& myWindow, const std::strin
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 20000000)
+    while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, 0, nPixPerRender);
@@ -55,10 +55,12 @@ int main(void)
     int fovX = 110;
     int fovY = 100;
     Scene myScene;
-    Frame3 f;
 
-    Camera cam(f, fovX, fovY, resX);
-
+    Frame3 fCam;
+    fCam.translate(1,0.1,0.4);
+    fCam.rotate(Vector3(1,0,0), -10);
+    fCam.rotate(Vector3(0,0,1), 30);
+    Camera cam(fCam, fovX, fovY, resX);
 
     AmbiantLight al(0.05, Vector3RGB(246,243,255));
 

@@ -101,6 +101,19 @@ Vector3 Frame3::pointToWorld(const Vector3& v) const
     return res;
 }
 
+Vector3 Frame3::vecFromWorld(const Vector3& v) const
+{
+    Vector3 res(v.dot(vx_), v.dot(vy_), v.dot(vz_));
+    return res;
+}
+
+Vector3 Frame3::pointFromWorld(const Vector3& p) const
+{
+    Vector3 p2 = p - o_;
+    Vector3 res(p2.dot(vx_), p2.dot(vy_), p2.dot(vz_));
+    return res;
+}
+
 std::string Frame3::describe() const
 {
     std::stringstream ss;

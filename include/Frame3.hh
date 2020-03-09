@@ -25,6 +25,8 @@ public:
 
     Vector3 vecToWorld(const Vector3& v) const;
     Vector3 pointToWorld(const Vector3& v) const;
+    Vector3 vecFromWorld(const Vector3& v) const;
+    Vector3 pointFromWorld(const Vector3& v) const;
 
     Vector3 o_, vx_, vy_, vz_;
 };

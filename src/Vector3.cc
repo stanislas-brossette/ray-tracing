@@ -23,6 +23,11 @@ double Vector3::norm() const
     return std::sqrt(x_*x_ + y_*y_ + z_*z_);
 }
 
+double Vector3::squaredNorm() const
+{
+    return x_*x_ + y_*y_ + z_*z_;
+}
+
 void Vector3::normalize()
 {
     double n = norm();

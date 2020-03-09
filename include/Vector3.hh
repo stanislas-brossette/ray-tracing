@@ -10,6 +10,7 @@ public:
     virtual ~Vector3 ();
 
     double norm() const;
+    double squaredNorm() const;
     void normalize();
 
     double dot(const Vector3&) const;

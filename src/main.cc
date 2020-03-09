@@ -6,6 +6,7 @@
 #include "Scene.hh"
 #include "Item.hh"
 #include "Sphere.hh"
+#include "Cylinder.hh"
 #include "Plane.hh"
 #include "Camera.hh"
 #include "Window.hh"
@@ -37,7 +38,7 @@ void renderMainSerial(const Scene& myScene, Window& myWindow, const std::string&
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 5000000)
+    while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderSerial(pixs, 0, nPixPerRender);
@@ -106,6 +107,13 @@ int main(void)
     Sphere gs2(fs2, 0.2);
     Item s2(&gs2, &ms2);
 
+    Frame3 fCy0;
+    Material mCy0(Vector3RGB(255, 3, 4), 0, 0, 0, false, 0);
+    fCy0.translate( -0.2, 1.8, -0.8);
+    fCy0.rotate( Vector3(0.0, 1.0, 0.0), 70);
+    Cylinder gCy0(fCy0, 0.05);
+    Item cy0(&gCy0, &mCy0);
+
     Frame3 fpBottom;
     Material mpBottom(Vector3RGB(80, 81, 82), 0.1, 0, 0.2, false, 0);
     fpBottom.translate( 0.0, 4.0, -1.0);
@@ -148,6 +156,7 @@ int main(void)
     myScene.addItem(&s0);
     myScene.addItem(&s1);
     myScene.addItem(&s2);
+    myScene.addItem(&cy0);
     myScene.addItem(&pTop);
     myScene.addItem(&pBack);
     myScene.addItem(&pBottom);

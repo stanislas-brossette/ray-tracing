@@ -30,10 +30,13 @@ std::string Cylinder::describe() const
 bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
     bool impact = false;
-    // lr vectors will probs need to be rotated to get in the cylinders frame
-    double a = lr.dir_.x_*lr.dir_.x_ + lr.dir_.y_*lr.dir_.y_;
-    double b = lr.origin_.x_*lr.dir_.x_ + lr.origin_.y_*lr.dir_.y_;
-    double c = lr.origin_.x_*lr.origin_.x_ + lr.origin_.y_*lr.origin_.y_ - radius_*radius_;
+
+    Vector3 va = lr.origin_ - f_.o_ - f_.vz_ * (lr.origin_ - f_.o_).dot(f_.vz_);
+    Vector3 vb = lr.dir_ - f_.vz_ * (lr.dir_.dot(f_.vz_));
+    double a = vb.squaredNorm();
+    double b = 2*va.dot(vb);
+    double c = va.squaredNorm() - radius_*radius_;
+
     double d = b*b - 4*a*c;
     if (d >= 0)
     {
@@ -44,44 +47,31 @@ bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& norm
         return false;
     }
     double x0 = (-b+std::sqrt(d))/(2*a);
-    double x1 = (b+std::sqrt(d))/(2*a);
+    double x1 = (-b-std::sqrt(d))/(2*a);
 
-    Vector3 P0 = lr.origin_ + lr.dir_ * x0;
-    Vector3 P1 = lr.origin_ + lr.dir_ * x1;
-    double dist0 = P0.norm();
-    double dist1 = P1.norm();
-    if(dist0 <= dist1)
+    if(x0 < 0 and x1 < 0)
     {
-        dist = dist0;
-        impactPoint = P0;
+        return false;
+    }
+    else if(x0 <= x1 and x0 >= 0)
+    {
+        dist = x0;
+    }
+    else if(x1 <= x0 and x1 >= 0)
+    {
+        dist = x1;
     }
     else
     {
-        dist = dist1;
-        impactPoint = P1;
+        return false;
     }
-    normal = Vector3(radius_ * impactPoint.x_, radius_ * impactPoint.y_, 0);
-    return impact;
-    
 
-    // Compute dist between light ray and Cylinder center
-    //double lrDirNorm = lr.dir_.norm();
-    //if(std::abs(lrDirNorm - 1) > 1e-9)
-    //    std::cout << "Warning: the direction of lr is not normalized" << std::endl;
-    //double t = -(lr.dir_.dot(lr.origin_ - f_.o_))/lrDirNorm;
-    //Vector3 closestPoint = lr.origin_ + (lr.dir_ * t);
-    //double orthogDist = (closestPoint - f_.o_).norm();
-    //bool impact = false;
-    //if(orthogDist <= radius_ && t > 0)
-    //{
-    //    double circleRadius = std::sqrt(radius_*radius_ - orthogDist*orthogDist);
-    //    dist = t - circleRadius;
-    //    impactPoint = lr.origin_ + lr.dir_ * dist;
-    //    normal = impactPoint - f_.o_;
-    //    normal.normalize();
-    //    impact = true;
-    //}
-    //return impact;
+    impactPoint = lr.origin_ + lr.dir_ * dist;
+
+    impactPoint = impactPoint;
+    Vector3 impactPointInF = f_.pointFromWorld(impactPoint);
+    normal = f_.vecToWorld(Vector3(impactPointInF.x_/radius_, impactPointInF.y_/radius_, 0));
+    return impact;
 }
 
 bool Cylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const

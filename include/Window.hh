@@ -16,6 +16,7 @@ public:
     void addPixel(const Pixel& p);
     void addPixels(const std::vector<Pixel>& v);
     void render();
+    void renderConvolut();
     void clear();
     ~Window ();
 
@@ -25,5 +26,8 @@ private:
     int resX_;
     int resY_;
     int renderCounter_;
+    std::vector<std::vector<Pixel> > originalPixels_;
+    std::vector<std::vector<Pixel> > convolutPixels_;
+    int nPixels_;
 };
 

@@ -1,6 +1,5 @@
 #include "Cylinder.hh"
 
-
 Cylinder::Cylinder()
   : Geometry(),
     radius_(1.0)
@@ -39,15 +38,9 @@ bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& norm
     double b = 2*va.dot(vb);
     double c = va.squaredNorm() - radius_*radius_;
 
-    double d = b*b - 4*a*c;
-    if (d < 0) //No solution, the light ray does not impact the infinite cylinder
-    {
+    double x0, x1;
+    if(not solve2ndOrderEq(a, b, c, x0, x1))
         return false;
-    }
-
-    // a is always positive, so x0 < x1
-    double x0 = (-b-std::sqrt(d))/(2*a);
-    double x1 = (-b+std::sqrt(d))/(2*a);
 
     if(x0 < 0 and x1 < 0)
     {
@@ -61,8 +54,7 @@ bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& norm
         if(impactPointInF.z_ <= length_/2 and impactPointInF.z_ >= -length_/2)
         {
             normal = f_.vecToWorld(Vector3(impactPointInF.x_/radius_, impactPointInF.y_/radius_, 0));
-            impact = true;
-            return impact;
+            return true;
         }
         else
         {
@@ -73,14 +65,10 @@ bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& norm
             {
                 normal = f_.vecToWorld(Vector3(impactPointInF.x_/radius_, impactPointInF.y_/radius_, 0));
                 normal = normal * -1;
-                impact = true;
-                return impact;
+                return true;
             }
             else
-            {
-                impact = false;
-                return impact;
-            }
+                return false;
         }
     }
     else if(x1 >= 0)
@@ -92,15 +80,13 @@ bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& norm
         {
             normal = f_.vecToWorld(Vector3(impactPointInF.x_/radius_, impactPointInF.y_/radius_, 0));
             normal = normal * -1;
-            impact = true;
-            return impact;
+            return true;
         }
+        else
+            return false;
     }
     else
-    {
         return false;
-    }
-    return impact;
 }
 
 bool Cylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const

@@ -28,23 +28,35 @@ std::string Sphere::describe() const
 bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
     // Compute dist between light ray and sphere center
-    double lrDirNorm = lr.dir_.norm();
-    if(std::abs(lrDirNorm - 1) > 1e-9)
-        std::cout << "Warning: the direction of lr is not normalized" << std::endl;
-    double t = -(lr.dir_.dot(lr.origin_ - f_.o_))/lrDirNorm;
-    Vector3 closestPoint = lr.origin_ + (lr.dir_ * t);
-    double orthogDist = (closestPoint - f_.o_).norm();
-    bool impact = false;
-    if(orthogDist <= radius_ && t > 0)
+    Vector3 va = lr.origin_ - f_.o_;
+
+    double a = lr.dir_.squaredNorm();
+    double b = 2*va.dot(lr.dir_);
+    double c = va.squaredNorm() - radius_*radius_;
+    double x0, x1;
+    if(not solve2ndOrderEq(a, b, c, x0, x1))
+        return false;
+
+    if(x0 < 0 and x1 < 0)
+        return false;
+    else if(x0 >= 0)
     {
-        double circleRadius = std::sqrt(radius_*radius_ - orthogDist*orthogDist);
-        dist = t - circleRadius;
+        dist = x0;
         impactPoint = lr.origin_ + lr.dir_ * dist;
         normal = impactPoint - f_.o_;
         normal.normalize();
-        impact = true;
+        return true;
     }
-    return impact;
+    else if(x1 >= 0)
+    {
+        dist = x1;
+        impactPoint = lr.origin_ + lr.dir_ * dist;
+        normal = f_.o_ - impactPoint - f_.o_;
+        normal.normalize();
+        return true;
+    }
+    else
+        return false;
 }
 
 bool Sphere::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const

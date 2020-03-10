@@ -2,6 +2,7 @@
 
 #include "Frame3.hh"
 #include "Geometry.hh"
+#include "utils.hh"
 
 class Sphere : public Geometry
 {

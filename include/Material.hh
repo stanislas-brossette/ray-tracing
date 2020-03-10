@@ -8,7 +8,7 @@ class Material
 {
 public:
     Material ();
-    Material (const Vector3RGB color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity);
+    Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity);
     std::string describe() const;
     virtual ~Material ();
 

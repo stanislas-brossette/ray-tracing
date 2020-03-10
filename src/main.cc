@@ -7,6 +7,7 @@
 #include "Item.hh"
 #include "Sphere.hh"
 #include "Cylinder.hh"
+#include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Camera.hh"
 #include "Window.hh"
@@ -169,16 +170,5 @@ int main(void)
     Window myWindowParallel(cam.resX_, cam.resY_);
     renderMainParallel(myScene, myWindowParallel, "You should see a cool scene with 3 spheres in a grey room. Correct [y/n]?");
 
-    //ls.geometry_->f_.setOriginPos( 0.0, 1.3, -1.0);
-    //s0.material_->color_ = Vector3RGB(0, 255, 0);
-    //testRender(myScene, myWindow, "You should see 1 green sphere lit from the bottom. Correct? [y/n]");
-
-    //ls.geometry_->f_.setOriginPos( 1.0, 1.3, 0.0);
-    //s0.material_->color_ = Vector3RGB(0, 0, 255);
-    //testRender(myScene, myWindow, "You should see 1 blue sphere lit from the right. Correct? [y/n]");
-
-    //ls.geometry_->f_.setOriginPos( -1.0, 1.3, 0.0);
-    //s0.material_->color_ = Vector3RGB(255, 20, 150);
-    //testRender(myScene, myWindow, "You should see 1 pink sphere lit from the left. Correct? [y/n]");
     return 0;
 }

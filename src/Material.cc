@@ -10,7 +10,7 @@ Material::Material()
 {
 }
 
-Material::Material (const Vector3RGB color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity)
+Material::Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity)
     : color_(color),
       rugosity_(rugosity),
       refractionIndex_(refIndex),

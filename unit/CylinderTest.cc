@@ -6,6 +6,7 @@
 #include "Item.hh"
 #include "Sphere.hh"
 #include "Cylinder.hh"
+#include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Camera.hh"
 #include "Window.hh"
@@ -63,14 +64,14 @@ TEST(ManoTests, VisuCylinderTest)
     fCy1.translate(0.5, 1.2, 0.0);
     fCy1.rotate(Vector3(0.0, 1.0, 0.0), -30);
     Material mCy1(Vector3RGB(30, 250, 40), 0, 0, 0, false, 0);
-    Cylinder gCy1(fCy1, 0.05, 1.0);
+    Cylinder gCy1(fCy1, 0.05, 2.0);
     Item cy1(&gCy1, &mCy1);
 
     Frame3 fCy2;
     fCy2.translate(0.0, 1.0, 0.5);
     //fCy2.rotate(Vector3(0.0, 1.0, 0.0), 0);
     Material mCy2(Vector3RGB(30, 25, 200), 0, 0, 0, false, 0);
-    Cylinder gCy2(fCy2, 0.5, 0.1);
+    ClosedCylinder gCy2(fCy2, 0.5, 0.02);
     Item cy2(&gCy2, &mCy2);
 
     Frame3 fls;
@@ -83,7 +84,7 @@ TEST(ManoTests, VisuCylinderTest)
     Material mls2(Vector3RGB(255, 255, 255), 0, 0, 0, true, 1.0);
     Sphere gsls2(fls2, 0.04);
     Item ls2(&gsls2, &mls2);
-    ls2.geometry_->f_.setOriginPos( 0.4, 0.9, 0.5);
+    ls2.geometry_->f_.setOriginPos( -0.4, 1.0, 0.7);
 
     myScene.addCamera(&cam);
     myScene.setAmbiantLight(al);

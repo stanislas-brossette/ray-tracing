@@ -51,7 +51,7 @@ bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal
     {
         dist = x1;
         impactPoint = lr.origin_ + lr.dir_ * dist;
-        normal = f_.o_ - impactPoint - f_.o_;
+        normal = f_.o_ - impactPoint;
         normal.normalize();
         return true;
     }

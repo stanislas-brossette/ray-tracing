@@ -85,3 +85,48 @@ TEST(ManoTests, Visu1SpheresTest)
     testRender(myScene, cam.resX_, cam.resY_, "You should see 1 pink sphere lit from the left. Correct? [y/n]", true);
 }
 
+TEST(ManoTests, VisuSphereFromInsideTest)
+{
+    int resX = 1000;
+    int fovX = 100;
+    int fovY = 100;
+    Scene myScene;
+    Frame3 f;
+
+    Camera cam(f, fovX, fovY, resX);
+
+    AmbiantLight al(0.02, Vector3RGB(255,255,255));
+
+    Frame3 fls;
+    Material mls(Vector3RGB(255, 255, 255), 0, 0, 0, true, 5);
+    fls.translate( 0.2, -0.2, -0.1);
+    Sphere gsls(fls, 0.1);
+    Item ls(&gsls, &mls);
+
+    Frame3 fs0;
+    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 1, false, 0);
+    fs0.translate( 0.2, 0.4, 0.0);
+    Sphere gs0(fs0, 0.1);
+    Item s0(&gs0, &ms0);
+
+    Frame3 fs1;
+    Material ms1(Vector3RGB(0, 254, 0), 0.1, 0, 1, false, 0);
+    fs1.translate( 0.0, 0.0, 0.0);
+    Sphere gs1(fs1, 1.0);
+    Item s1(&gs1, &ms1);
+
+    Frame3 fpBottom;
+    Material mpBottom(Vector3RGB(150, 150, 150), 0, 0, 0, false, 0);
+    fpBottom.translate( 0.0, 0.0, -0.5);
+    Plane gpBottom(fpBottom);
+    Item pBottom(&gpBottom, &mpBottom);
+
+    myScene.addCamera(&cam);
+    myScene.setAmbiantLight(al);
+    myScene.addItem(&ls);
+    myScene.addItem(&s0);
+    myScene.addItem(&s1);
+    myScene.addItem(&pBottom);
+
+    testRender(myScene, cam.resX_, cam.resY_, "You should see 1 pink sphere lit from the left. Correct? [y/n]", true);
+}

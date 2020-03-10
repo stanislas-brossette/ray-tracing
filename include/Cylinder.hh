@@ -7,7 +7,7 @@ class Cylinder : public Geometry
 {
 public:
     Cylinder ();
-    Cylinder(const Frame3& f, double radius);
+    Cylinder(const Frame3& f, double radius, double length = 100000000);
     virtual ~Cylinder ();
     std::string describe() const;
     //The Cylinders normal is f_.z_
@@ -15,5 +15,6 @@ public:
     bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const;
 
     double radius_;
+    double length_;
 };
 

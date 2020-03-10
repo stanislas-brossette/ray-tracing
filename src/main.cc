@@ -108,10 +108,10 @@ int main(void)
     Item s2(&gs2, &ms2);
 
     Frame3 fCy0;
-    Material mCy0(Vector3RGB(255, 3, 4), 0, 0, 0, false, 0);
+    Material mCy0(Vector3RGB(255, 3, 4), 0.01, 0, 5.0, false, 0);
     fCy0.translate( -0.2, 1.8, -0.8);
     fCy0.rotate( Vector3(0.0, 1.0, 0.0), 70);
-    Cylinder gCy0(fCy0, 0.05);
+    Cylinder gCy0(fCy0, 0.05, 1.8);
     Item cy0(&gCy0, &mCy0);
 
     Frame3 fpBottom;

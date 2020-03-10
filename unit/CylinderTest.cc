@@ -16,7 +16,7 @@ void testRenderCylinder(const Scene& myScene, Window& myWindow, const std::strin
     myWindow.clear();
     int iter = 0;
     int nPixPerRender = 100000;
-    while(iter < 10000000)
+    while(iter < 20000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, 0, nPixPerRender);
@@ -50,44 +50,45 @@ TEST(ManoTests, VisuCylinderTest)
     Material mpBottom(Vector3RGB(80, 80, 80), 0, 0, 0, false, 0);
     Plane gpBottom(fpBottom);
     Item pBottom(&gpBottom, &mpBottom);
-    pBottom.geometry_->f_.setOriginPos( 0.0, 0.0, -0.3);
+    pBottom.geometry_->f_.setOriginPos( 0.0, 0.0, 0.0);
 
     Frame3 fCy0;
     fCy0.translate(-0.5, 1.0, 0.0);
     fCy0.rotate(Vector3(0.0, 1.0, 0.0), 30);
     Material mCy0(Vector3RGB(250, 30, 40), 0, 0, 0, false, 0);
-    Cylinder gCy0(fCy0, 0.05);
+    Cylinder gCy0(fCy0, 0.05, 1.5);
     Item cy0(&gCy0, &mCy0);
 
     Frame3 fCy1;
     fCy1.translate(0.5, 1.2, 0.0);
     fCy1.rotate(Vector3(0.0, 1.0, 0.0), -30);
     Material mCy1(Vector3RGB(30, 250, 40), 0, 0, 0, false, 0);
-    Cylinder gCy1(fCy1, 0.05);
+    Cylinder gCy1(fCy1, 0.05, 1.0);
     Item cy1(&gCy1, &mCy1);
 
     Frame3 fCy2;
-    fCy2.translate(0.0, 1.4, 0.0);
-    fCy2.rotate(Vector3(0.0, 1.0, 0.0), 0);
+    fCy2.translate(0.0, 1.0, 0.5);
+    //fCy2.rotate(Vector3(0.0, 1.0, 0.0), 0);
     Material mCy2(Vector3RGB(30, 25, 200), 0, 0, 0, false, 0);
-    Cylinder gCy2(fCy2, 0.05);
+    Cylinder gCy2(fCy2, 0.5, 0.1);
     Item cy2(&gCy2, &mCy2);
 
     Frame3 fls;
-    Material mls(Vector3RGB(255, 255, 255), 0, 0, 0, true, 10.0);
-    Sphere gsls(fls, 0.1);
+    Material mls(Vector3RGB(255, 255, 255), 0, 0, 0, true, 3.0);
+    Sphere gsls(fls, 0.04);
     Item ls(&gsls, &mls);
-    ls.geometry_->f_.setOriginPos( -0.2, 0.8, 1.0);
+    ls.geometry_->f_.setOriginPos( 0.8, 1.0, 1.0);
 
     Frame3 fls2;
     Material mls2(Vector3RGB(255, 255, 255), 0, 0, 0, true, 1.0);
-    Sphere gsls2(fls2, 0.1);
+    Sphere gsls2(fls2, 0.04);
     Item ls2(&gsls2, &mls2);
-    ls2.geometry_->f_.setOriginPos( 0.2, 1.0, 0.0);
+    ls2.geometry_->f_.setOriginPos( 0.4, 0.9, 0.5);
 
     myScene.addCamera(&cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
+    myScene.addItem(&ls2);
     myScene.addItem(&pBottom);
     myScene.addItem(&cy0);
     myScene.addItem(&cy1);

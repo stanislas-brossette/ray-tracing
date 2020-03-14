@@ -13,6 +13,13 @@ Cylinder::Cylinder(const Frame3& f, double radius, double length)
 {
 }
 
+Cylinder::Cylinder(CylinderData* cData)
+  : Geometry(cData),
+    radius_(cData->radius),
+    length_(cData->length)
+{
+}
+
 Cylinder::~Cylinder()
 {
 }
@@ -100,11 +107,11 @@ bool Cylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, double
     //return inHalfSpace;
 }
 
-std::string cylinderData::describe() const
+std::string CylinderData::describe() const
 {
     std::stringstream ss;
     ss << "=== Cylinder ===\n";
-    ss << geometryData::describe();
+    ss << GeometryData::describe();
     ss << "radius: " << radius << "\n";
     ss << "length: " << length << "\n";
     return ss.str();

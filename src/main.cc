@@ -9,16 +9,18 @@
 #include "Cylinder.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
+#include "Pixel.hh"
 #include "Camera.hh"
 #include "Window.hh"
 
 void renderMainParallel(const Scene& myScene, Window& myWindow, const std::string& s)
 {
+    std::cout << myScene << std::endl;
     myWindow.clear();
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 30000000)
+    while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, 0, nPixPerRender);
@@ -61,7 +63,7 @@ int main(void)
     Frame3 fCam;
     fCam.translate(1,0.1,0.4);
     fCam.rotate(Vector3(1,0,0), -10);
-    fCam.rotate(Vector3(0,0,1), 30);
+    //fCam.rotate(Vector3(0,0,1), 30);
     Camera cam(fCam, fovX, fovY, resX);
 
     AmbiantLight al(0.05, Vector3RGB(246,243,255));

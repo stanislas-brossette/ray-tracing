@@ -11,6 +11,18 @@ Camera::Camera()
     resY_ = 0;
 }
 
+Camera::Camera(const CamData& cData)
+  : frame_(),
+    fovX_(cData.fovX),
+    fovY_(cData.fovY),
+    resX_(cData.resX)
+{
+    frame_.translate(cData.pos);
+    frame_.rotate(cData.rotAxis, cData.rotAngle);
+    focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
+    resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
+}
+
 Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
   : frame_(frame),
     fovX_(fovX),
@@ -62,10 +74,10 @@ std::string Camera::describe() const
     return ss.str();
 }
 
-std::string camData::describe() const
+std::string CamData::describe() const
 {
     std::stringstream ss;
-    ss << "=== camData ===\n";
+    ss << "=== CamData ===\n";
     ss << "resX: " << resX << "\n";
     ss << "fovX: " << fovX << "\n";
     ss << "fovY: " << fovY << "\n";

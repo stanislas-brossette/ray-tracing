@@ -2,13 +2,17 @@
 #include <iostream>
 #include <sstream>
 #include "Geometry.hh"
+#include "Sphere.hh"
+#include "Cylinder.hh"
+#include "ClosedCylinder.hh"
+#include "Plane.hh"
 #include "Material.hh"
 
-struct itemData
+struct ItemData
 {
     std::string name;
-    materialData* mData;
-    geometryData* gData;
+    MaterialData* mData;
+    GeometryData* gData;
     std::string describe() const;
 };
 
@@ -16,6 +20,7 @@ class Item
 {
 public:
     Item (Geometry* g, Material* m);
+    Item (const ItemData& iData);
     virtual ~Item ();
 
     std::string describe() const;
@@ -24,4 +29,5 @@ public:
 
     Geometry* geometry_;
     Material* material_;
+    std::string name_;
 };

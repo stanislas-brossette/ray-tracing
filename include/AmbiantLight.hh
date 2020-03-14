@@ -5,7 +5,7 @@
 
 #include "Vector3.hh"
 
-struct ambiantData
+struct AmbiantData
 {
     Vector3RGB color = Vector3RGB(0, 0, 0);
     double intensity = 0;
@@ -16,6 +16,7 @@ class AmbiantLight
 {
 public:
     AmbiantLight ();
+    AmbiantLight (const AmbiantData& aData);
     AmbiantLight (double alpha, const Vector3RGB& v);
     virtual ~AmbiantLight ();
     std::string describe() const;

@@ -6,6 +6,20 @@ Item::Item (Geometry* g, Material* m)
 {
 }
 
+Item::Item (const ItemData& iData)
+    : name_(iData.name)
+{
+    material_ = new Material(*(iData.mData));
+    if(SphereData* sData = dynamic_cast<SphereData*>(iData.gData))
+        geometry_ = new Sphere(sData);
+    else if(PlaneData* sData = dynamic_cast<PlaneData*>(iData.gData))
+        geometry_ = new Plane(sData);
+    else if(CylinderData* sData = dynamic_cast<CylinderData*>(iData.gData))
+        geometry_ = new Cylinder(sData);
+    else if(ClosedCylinderData* sData = dynamic_cast<ClosedCylinderData*>(iData.gData))
+        geometry_ = new ClosedCylinder(sData);
+}
+
 Item::~Item()
 {
 }
@@ -30,10 +44,10 @@ std::string Item::describe() const
     return ss.str();
 }
 
-std::string itemData::describe() const
+std::string ItemData::describe() const
 {
     std::stringstream ss;
-    ss << "=== itemData ===\n";
+    ss << "=== ItemData ===\n";
     ss << "name: " << name << "\n";
     ss << mData->describe() << "\n";
     ss << gData->describe() << "\n";

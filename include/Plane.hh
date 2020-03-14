@@ -3,7 +3,7 @@
 #include "Frame3.hh"
 #include "Geometry.hh"
 
-struct planeData : public geometryData
+struct PlaneData : public GeometryData
 {
     std::string describe() const;
 };
@@ -12,6 +12,7 @@ class Plane : public Geometry
 {
 public:
     Plane ();
+    Plane (PlaneData* pData);
     Plane(const Frame3& f);
     virtual ~Plane ();
     std::string describe() const;

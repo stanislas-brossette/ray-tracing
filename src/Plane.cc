@@ -10,6 +10,11 @@ Plane::Plane(const Frame3& f)
 {
 }
 
+Plane::Plane(PlaneData* pData)
+  : Geometry(pData)
+{
+}
+
 Plane::~Plane()
 {
 }
@@ -55,10 +60,10 @@ bool Plane::isInHalfSpace(const Vector3& point, const Vector3& normal,
     return false;
 }
 
-std::string planeData::describe() const
+std::string PlaneData::describe() const
 {
     std::stringstream ss;
     ss << "=== Plane ===\n";
-    ss << geometryData::describe();
+    ss << GeometryData::describe();
     return ss.str();
 }

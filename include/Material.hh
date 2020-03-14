@@ -4,7 +4,7 @@
 
 #include "Vector3.hh"
 
-struct materialData
+struct MaterialData
 {
     Vector3RGB color = Vector3RGB(0,0,0);
     double rugosity = 0.0;
@@ -19,6 +19,7 @@ class Material
 {
 public:
     Material ();
+    Material (const MaterialData& mData);
     Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity);
     std::string describe() const;
     virtual ~Material ();

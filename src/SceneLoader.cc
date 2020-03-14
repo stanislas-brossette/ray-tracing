@@ -16,9 +16,9 @@ SceneLoader::~SceneLoader()
 {
 }
 
-sceneData SceneLoader::load(const std::string& path)
+SceneData SceneLoader::load(const std::string& path)
 {
-    sceneData mySceneData;
+    SceneData mySceneData;
     FILE* fp = fopen(path.c_str(), "r");
     char readBuffer[65536];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer));
@@ -53,9 +53,9 @@ void SceneLoader::scanVector3RGB(Value& vIn, Vector3RGB& vRes)
     vRes = Vector3RGB(vec3[0], vec3[1], vec3[2]);
 }
 
-camData SceneLoader::scanCamera(Value& vIn)
+CamData SceneLoader::scanCamera(Value& vIn)
 {
-    camData cData;
+    CamData cData;
     cData.resX = vIn.FindMember("resX")->value.GetInt();
     cData.fovX = vIn.FindMember("fovX")->value.GetDouble();
     cData.fovY = vIn.FindMember("fovY")->value.GetDouble();
@@ -65,25 +65,25 @@ camData SceneLoader::scanCamera(Value& vIn)
     return cData;
 }
 
-renderData SceneLoader::scanRender(Value& vIn)
+RenderData SceneLoader::scanRender(Value& vIn)
 {
-    renderData rData;
+    RenderData rData;
     rData.nPixPerRender = vIn.FindMember("nPixPerRender")->value.GetInt();
     rData.nLightRay = vIn.FindMember("nLightRay")->value.GetInt();
     return rData;
 }
 
-ambiantData SceneLoader::scanAmbiant(Value& vIn)
+AmbiantData SceneLoader::scanAmbiant(Value& vIn)
 {
-    ambiantData aData;
+    AmbiantData aData;
     aData.intensity = vIn.FindMember("intensity")->value.GetDouble();
     scanVector3RGB(vIn.FindMember("color")->value, aData.color);
     return aData;
 }
 
-materialData* SceneLoader::scanMaterial(Value& vIn)
+MaterialData* SceneLoader::scanMaterial(Value& vIn)
 {
-    materialData* mData = new materialData();
+    MaterialData* mData = new MaterialData();
     scanVector3RGB(vIn.FindMember("color")->value, mData->color);
     mData->rugosity = vIn.FindMember("rugosity")->value.GetDouble();
     mData->refraction = vIn.FindMember("refraction")->value.GetDouble();
@@ -93,7 +93,7 @@ materialData* SceneLoader::scanMaterial(Value& vIn)
     return mData;
 }
 
-void SceneLoader::scanBaseGeometry(Value& vIn, geometryData* gData)
+void SceneLoader::scanBaseGeometry(Value& vIn, GeometryData* gData)
 {
     gData->type = vIn.FindMember("type")->value.GetString();
     scanVector3(vIn.FindMember("pos")->value, gData->pos);
@@ -107,25 +107,25 @@ void SceneLoader::scanBaseGeometry(Value& vIn, geometryData* gData)
         gData->rotAngle = itr->value.GetDouble();
 }
 
-geometryData* SceneLoader::scanGeometry(Value& vIn)
+GeometryData* SceneLoader::scanGeometry(Value& vIn)
 {
     std::string type = vIn.FindMember("type")->value.GetString();
     if(type == "Sphere")
     {
-        sphereData* sData = new sphereData();
+        SphereData* sData = new SphereData();
         scanBaseGeometry(vIn, sData);
         sData->radius = vIn.FindMember("radius")->value.GetDouble();
         return sData;
     }
     else if(type == "Plane")
     {
-        planeData* pData = new planeData();
+        PlaneData* pData = new PlaneData();
         scanBaseGeometry(vIn, pData);
         return pData;
     }
     else if(type == "Cylinder")
     {
-        cylinderData* cData = new cylinderData();
+        CylinderData* cData = new CylinderData();
         scanBaseGeometry(vIn, cData);
         cData->radius = vIn.FindMember("radius")->value.GetDouble();
         cData->length = vIn.FindMember("length")->value.GetDouble();
@@ -133,7 +133,7 @@ geometryData* SceneLoader::scanGeometry(Value& vIn)
     }
     else if(type == "ClosedCylinder")
     {
-        closedCylinderData* cData = new closedCylinderData();
+        ClosedCylinderData* cData = new ClosedCylinderData();
         scanBaseGeometry(vIn, cData);
         cData->radius = vIn.FindMember("radius")->value.GetDouble();
         cData->length = vIn.FindMember("length")->value.GetDouble();
@@ -144,15 +144,15 @@ geometryData* SceneLoader::scanGeometry(Value& vIn)
         std::cout << "ERROR: wrong item type" << std::endl;
     }
 
-    geometryData* gData = new geometryData();
+    GeometryData* gData = new GeometryData();
     return gData;
 }
 
-void SceneLoader::scanItems(Value& vIn, std::vector<itemData>& vOut)
+void SceneLoader::scanItems(Value& vIn, std::vector<ItemData>& vOut)
 {
     for (auto& o : vIn.GetObject())
     {
-        itemData iData;
+        ItemData iData;
         iData.name = o.name.GetString();
         iData.mData = scanMaterial(o.value.FindMember("material")->value);
         iData.gData = scanGeometry(o.value.FindMember("geometry")->value);

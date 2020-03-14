@@ -9,16 +9,30 @@ ClosedCylinder::ClosedCylinder()
 {
 }
 
+ClosedCylinder::ClosedCylinder(ClosedCylinderData* cData)
+  : Geometry(cData),
+    radius_(cData->radius),
+    length_(cData->length),
+    cylinder_(f_, radius_, length_)
+{
+    initPlanes();
+}
+
 ClosedCylinder::ClosedCylinder(const Frame3& f, double radius, double length)
   : Geometry(f),
     radius_(radius),
     length_(length),
-    cylinder_(f, radius, length)
+    cylinder_(f_, radius, length)
 {
-    Frame3 fBP(f.o_ - f.vz_ * (length/2), f.vx_, f.vy_, f.vz_);
+    initPlanes();
+}
+
+void ClosedCylinder::initPlanes()
+{
+    Frame3 fBP(f_.o_ - f_.vz_ * (length_/2), f_.vx_, f_.vy_, f_.vz_);
     bottomPlane_ = Plane(fBP);
 
-    Frame3 fTP(f.o_ + f.vz_ * (length/2), f.vx_, f.vy_, f.vz_);
+    Frame3 fTP(f_.o_ + f_.vz_ * (length_/2), f_.vx_, f_.vy_, f_.vz_);
     topPlane_ = Plane(fTP);
 }
 
@@ -102,11 +116,11 @@ bool ClosedCylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, 
 }
 
 
-std::string closedCylinderData::describe() const
+std::string ClosedCylinderData::describe() const
 {
     std::stringstream ss;
     ss << "=== ClosedCylinder ===\n";
-    ss << geometryData::describe();
+    ss << GeometryData::describe();
     ss << "radius: " << radius << "\n";
     ss << "length: " << length << "\n";
     return ss.str();

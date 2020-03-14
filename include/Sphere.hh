@@ -4,7 +4,7 @@
 #include "Geometry.hh"
 #include "utils.hh"
 
-struct sphereData : public geometryData
+struct SphereData : public GeometryData
 {
     double radius = 0;
     std::string describe() const;
@@ -14,6 +14,7 @@ class Sphere : public Geometry
 {
 public:
     Sphere ();
+    Sphere (SphereData* sData);
     Sphere(const Frame3& f, double radius);
     virtual ~Sphere ();
     std::string describe() const;

@@ -74,5 +74,13 @@ target_include_directories(${PROJECT_NAME}Main PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(${PROJECT_NAME}Main ${PROJECT_NAME})
 
+set(SRC_EXEC_FROM_JSON
+    "${CMAKE_SOURCE_DIR}/src/mainFromJson.cc"
+    )
+add_executable(${PROJECT_NAME}MainFromJson ${SRC_EXEC_FROM_JSON})
+target_include_directories(${PROJECT_NAME}MainFromJson PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(${PROJECT_NAME}MainFromJson ${PROJECT_NAME})
+
 # Build unit tests
 add_subdirectory("unit")

@@ -9,7 +9,7 @@
 #include "LightRay.hh"
 #include "Pixel.hh"
 
-struct camData
+struct CamData
 {
     int resX = 0;
     double fovX = 0;
@@ -24,6 +24,7 @@ class Camera
 {
 public:
     Camera ();
+    Camera (const CamData& cData);
     Camera (const Frame3& frame, double fovX, double fovY, int resX);
     virtual ~Camera ();
     std::string describe() const;

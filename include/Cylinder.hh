@@ -4,7 +4,7 @@
 #include "Geometry.hh"
 #include "utils.hh"
 
-struct cylinderData : public geometryData
+struct CylinderData : public GeometryData
 {
     double radius = 0;
     double length = 1e9;
@@ -15,6 +15,7 @@ class Cylinder : public Geometry
 {
 public:
     Cylinder ();
+    Cylinder (CylinderData* cData);
     Cylinder(const Frame3& f, double radius, double length = 100000000);
     virtual ~Cylinder ();
     std::string describe() const;

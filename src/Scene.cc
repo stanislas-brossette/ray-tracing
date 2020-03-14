@@ -7,6 +7,17 @@ Scene::Scene()
 {
 }
 
+Scene::Scene(const SceneData& sData)
+  : items_(),
+    camera_(sData.cData),
+    ambiantLight_(sData.aData)
+{
+    for (size_t i = 0; i < sData.itemsData.size(); i++)
+    {
+      items_.push_back(new Item(sData.itemsData.at(i)));
+    }
+}
+
 Scene::~Scene()
 {
 }
@@ -282,7 +293,7 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
     os << "+++++++++++++++++++++++++++++++++++";
 }
 
-std::string sceneData::describe() const
+std::string SceneData::describe() const
 {
     std::stringstream ss;
     ss << "========== Scene ==========\n";

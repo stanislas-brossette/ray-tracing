@@ -28,16 +28,16 @@ class SceneLoader
 public:
     SceneLoader ();
     virtual ~SceneLoader ();
-    sceneData load(const std::string& path);
+    SceneData load(const std::string& path);
     void scanVector3(Value& vIn, Vector3& vRes);
     void scanVector3RGB(Value& vIn, Vector3RGB& vRes);
-    camData scanCamera(Value& vIn);
-    renderData scanRender(Value& vIn);
-    ambiantData scanAmbiant(Value& vIn);
-    materialData* scanMaterial(Value& vIn);
-    void scanBaseGeometry(Value& vIn, geometryData* gData);
-    geometryData* scanGeometry(Value& vIn);
-    void scanItems(Value& vIn, std::vector<itemData>& vOut);
+    CamData scanCamera(Value& vIn);
+    RenderData scanRender(Value& vIn);
+    AmbiantData scanAmbiant(Value& vIn);
+    MaterialData* scanMaterial(Value& vIn);
+    void scanBaseGeometry(Value& vIn, GeometryData* gData);
+    GeometryData* scanGeometry(Value& vIn);
+    void scanItems(Value& vIn, std::vector<ItemData>& vOut);
 
 private:
 };

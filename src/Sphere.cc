@@ -12,6 +12,12 @@ Sphere::Sphere(const Frame3& f, double radius)
 {
 }
 
+Sphere::Sphere(SphereData* sData)
+  : Geometry(sData),
+    radius_(sData->radius)
+{
+}
+
 Sphere::~Sphere()
 {
 }
@@ -69,11 +75,11 @@ bool Sphere::isInHalfSpace(const Vector3& point, const Vector3& normal, double& 
     return inHalfSpace;
 }
 
-std::string sphereData::describe() const
+std::string SphereData::describe() const
 {
     std::stringstream ss;
-    ss << "=== sphereData ===\n";
-    ss << geometryData::describe();
+    ss << "=== SphereData ===\n";
+    ss << GeometryData::describe();
     ss << "radius: " << radius << "\n";
     return ss.str();
 }

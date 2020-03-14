@@ -10,12 +10,12 @@
 #include "Pixel.hh"
 #include "Renderer.hh"
 
-struct sceneData
+struct SceneData
 {
-    ambiantData aData;
-    camData cData;
-    renderData rData;
-    std::vector<itemData> itemsData;
+    AmbiantData aData;
+    CamData cData;
+    RenderData rData;
+    std::vector<ItemData> itemsData;
     std::string describe() const;
 };
 
@@ -23,6 +23,7 @@ class Scene
 {
 public:
     Scene ();
+    Scene (const SceneData& sData);
     virtual ~Scene ();
     void addItem(Item* i);
     void setCamera(const Camera& c);

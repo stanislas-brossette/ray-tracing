@@ -148,7 +148,7 @@ int main(void)
     Plane gpLeft(fpLeft);
     Item pLeft(&gpLeft, &mpLeft);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
     myScene.addItem(&ls2);

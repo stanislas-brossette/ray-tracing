@@ -127,7 +127,7 @@ TEST(ManoTests, TableTest)
     Sphere gsSpot(fSpot, 0.05);
     Item spot(&gsSpot, &mSpot);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&floor);
     myScene.addItem(&tableTop);

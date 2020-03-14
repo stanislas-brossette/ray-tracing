@@ -2,7 +2,7 @@
 
 Scene::Scene()
   : items_(),
-    cameras_(),
+    camera_(),
     ambiantLight_()
 {
 }
@@ -54,9 +54,9 @@ void Scene::addItem(Item* item)
     items_.push_back(item);
 }
 
-void Scene::addCamera(Camera* cam)
+void Scene::setCamera(const Camera& cam)
 {
-    cameras_.push_back(cam);
+    camera_ = cam;
 }
 
 void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
@@ -83,7 +83,7 @@ void Scene::castRandomRayInPlace(size_t camIndex, Pixel& pix) const
 {
     LightRay lr;
     Pixel ambiantPix, diffuseRefPix, specReflPix;
-    cameras_[camIndex]->castRandomRay(lr, pix);
+    camera_.castRandomRay(lr, pix);
 
     Vector3 impactPoint;
     Vector3 impactNormal;
@@ -274,11 +274,24 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
 
     os << s.ambiantLight_.describe() << std::endl;
 
-    for(size_t camIndex = 0; camIndex < s.cameras_.size(); ++camIndex)
-        os << s.cameras_[camIndex]->describe() << std::endl;
+    os << s.camera_.describe() << std::endl;
 
     for(size_t itemIndex = 0; itemIndex < s.items_.size(); ++itemIndex)
         os << s.items_[itemIndex]->describe() << std::endl;
 
     os << "+++++++++++++++++++++++++++++++++++";
+}
+
+std::string sceneData::describe() const
+{
+    std::stringstream ss;
+    ss << "========== Scene ==========\n";
+    ss << rData.describe();
+    ss << aData.describe();
+    ss << cData.describe();
+    for (size_t i = 0; i < itemsData.size(); i++)
+    {
+        ss << itemsData[i].describe();
+    }
+    return ss.str();
 }

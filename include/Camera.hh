@@ -23,6 +23,7 @@ struct camData
 class Camera
 {
 public:
+    Camera ();
     Camera (const Frame3& frame, double fovX, double fovY, int resX);
     virtual ~Camera ();
     std::string describe() const;

@@ -1,6 +1,16 @@
 #include "Camera.hh"
 #include "utils.hh"
 
+Camera::Camera()
+  : frame_(),
+    fovX_(),
+    fovY_(),
+    resX_()
+{
+    focalDist_ = 0;
+    resY_ = 0;
+}
+
 Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
   : frame_(frame),
     fovX_(fovX),

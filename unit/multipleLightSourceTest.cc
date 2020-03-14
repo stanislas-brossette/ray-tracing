@@ -65,7 +65,7 @@ TEST(ManoTests, multiLightSourcesTest)
     Plane gpBottom(fpBottom);
     Item pBottom(&gpBottom, &mpBottom);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
     myScene.addItem(&ls2);

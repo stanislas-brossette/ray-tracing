@@ -86,7 +86,7 @@ TEST(ManoTests, VisuCylinderTest)
     Item ls2(&gsls2, &mls2);
     ls2.geometry_->f_.setOriginPos( -0.4, 1.0, 0.7);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
     myScene.addItem(&ls2);

@@ -28,7 +28,7 @@ class SceneLoader
 public:
     SceneLoader ();
     virtual ~SceneLoader ();
-    void load(const std::string& path);
+    sceneData load(const std::string& path);
     void scanVector3(Value& vIn, Vector3& vRes);
     void scanVector3RGB(Value& vIn, Vector3RGB& vRes);
     camData scanCamera(Value& vIn);

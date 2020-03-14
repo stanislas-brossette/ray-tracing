@@ -62,7 +62,7 @@ TEST(ManoTests, Visu1SpheresTest)
     Plane gpBottom(fpBottom);
     Item pBottom(&gpBottom, &mpBottom);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
     myScene.addItem(&s0);
@@ -121,7 +121,7 @@ TEST(ManoTests, VisuSphereFromInsideTest)
     Plane gpBottom(fpBottom);
     Item pBottom(&gpBottom, &mpBottom);
 
-    myScene.addCamera(&cam);
+    myScene.setCamera(cam);
     myScene.setAmbiantLight(al);
     myScene.addItem(&ls);
     myScene.addItem(&s0);

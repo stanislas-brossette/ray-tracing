@@ -83,6 +83,82 @@ ambiantData scanAmbiant(Value& vIn)
     std::cout << "ambiantLight.color: " << aData.color << std::endl;
     return aData;
 }
+
+struct materialData
+{
+    Vector3RGB color = Vector3RGB(0,0,0);
+    double rugosity = 0.0;
+    double refraction = 0.0;
+    double reflectiveness = 0.0;
+    bool lightEmitter = false;
+    double lightIntensity = 0.0;
+};
+
+materialData scanMaterial(Value& vIn)
+{
+    materialData mData;
+    scanVector3RGB(vIn.FindMember("color")->value, mData.color);
+    mData.rugosity = vIn.FindMember("rugosity")->value.GetDouble();
+    mData.refraction = vIn.FindMember("refraction")->value.GetDouble();
+    mData.reflectiveness = vIn.FindMember("reflectiveness")->value.GetDouble();
+    mData.lightEmitter = vIn.FindMember("lightEmitter")->value.GetBool();
+    mData.lightIntensity = vIn.FindMember("lightIntensity")->value.GetDouble();
+    std::cout << "mData.color : " << mData.color << std::endl;
+    std::cout << "mData.rugosity : " << mData.rugosity << std::endl;
+    std::cout << "mData.refraction : " << mData.refraction << std::endl;
+    std::cout << "mData.reflectiveness : " << mData.reflectiveness << std::endl;
+    std::cout << "mData.lightEmitter : " << mData.lightEmitter << std::endl;
+    std::cout << "mData.lightIntensity : " << mData.lightIntensity << std::endl;
+    return mData;
+}
+
+struct geometryData
+{
+    std::string type = "";
+    Vector3 pos = Vector3(0,0,0);
+    Vector3 rotAxis = Vector3(0,0,0);
+    double rotAngle = 0;
+};
+
+geometryData scanGeometry(Value& vIn)
+{
+    geometryData gData;
+
+    gData.type = vIn.FindMember("type")->value.GetString();
+
+    scanVector3(vIn.FindMember("pos")->value, gData.pos);
+
+    Value::MemberIterator itr = vIn.FindMember("rotAxis");
+    if(itr != vIn.MemberEnd())
+        scanVector3(itr->value, gData.rotAxis);
+
+    itr = vIn.FindMember("rotAngle");
+    if(itr != vIn.MemberEnd())
+        gData.rotAngle = itr->value.GetDouble();
+
+    std::cout << "gData.type : " << gData.type << std::endl;
+    std::cout << "gData.pos : " << gData.pos << std::endl;
+    std::cout << "gData.rotAxis : " << gData.rotAxis << std::endl;
+    std::cout << "gData.rotAngle : " << gData.rotAngle << std::endl;
+    return gData;
+}
+
+struct itemData
+{
+    materialData mData;
+    geometryData gData;
+};
+
+void scanItems(Value& vIn, std::vector<itemData>& vOut)
+{
+    for (auto& o : vIn.GetObject())
+    {
+        std::cout << "scan item: " << o.name.GetString() << std::endl;
+        itemData iData;
+        iData.mData = scanMaterial(o.value.FindMember("material")->value);
+        iData.gData = scanGeometry(o.value.FindMember("geometry")->value);
+    }
+}
  
 TEST(rapidJsonTest, RapidJsonTest)
 {
@@ -106,6 +182,8 @@ TEST(rapidJsonTest, RapidJsonTest)
     camData cData = scanCamera(document.FindMember("camera")->value);
     renderData rData = scanRender(document.FindMember("render")->value);
     ambiantData aData = scanAmbiant(document.FindMember("ambiantLight")->value);
+    std::vector<itemData> itemVec;
+    scanItems(document.FindMember("items")->value, itemVec);
      
     ASSERT_TRUE(true);
 }

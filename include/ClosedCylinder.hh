@@ -6,6 +6,13 @@
 #include "Plane.hh"
 #include "utils.hh"
 
+struct closedCylinderData : public geometryData
+{
+    double radius = 0;
+    double length = 1e9;
+    std::string describe() const;
+};
+
 class ClosedCylinder : public Geometry
 {
 public:

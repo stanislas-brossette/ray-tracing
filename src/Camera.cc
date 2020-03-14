@@ -51,3 +51,16 @@ std::string Camera::describe() const
     ss << "fov: " << fovX_ << ", " << fovY_;
     return ss.str();
 }
+
+std::string camData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== camData ===\n";
+    ss << "resX: " << resX << "\n";
+    ss << "fovX: " << fovX << "\n";
+    ss << "fovY: " << fovY << "\n";
+    ss << "pos: " << pos << "\n";
+    ss << "rotAxis: " << rotAxis << "\n";
+    ss << "rotAngle: " << rotAngle << "\n";
+    return ss.str();
+}

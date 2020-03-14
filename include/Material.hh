@@ -12,6 +12,7 @@ struct materialData
     double reflectiveness = 0.0;
     bool lightEmitter = false;
     double lightIntensity = 0.0;
+    std::string describe() const;
 };
 
 class Material

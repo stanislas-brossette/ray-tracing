@@ -12,6 +12,7 @@
 #include "Item.hh"
 #include "Sphere.hh"
 #include "Cylinder.hh"
+#include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Camera.hh"
 #include "Window.hh"
@@ -33,8 +34,9 @@ public:
     camData scanCamera(Value& vIn);
     renderData scanRender(Value& vIn);
     ambiantData scanAmbiant(Value& vIn);
-    materialData scanMaterial(Value& vIn);
-    geometryData scanGeometry(Value& vIn);
+    materialData* scanMaterial(Value& vIn);
+    void scanBaseGeometry(Value& vIn, geometryData* gData);
+    geometryData* scanGeometry(Value& vIn);
     void scanItems(Value& vIn, std::vector<itemData>& vOut);
 
 private:

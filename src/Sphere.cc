@@ -68,3 +68,12 @@ bool Sphere::isInHalfSpace(const Vector3& point, const Vector3& normal, double& 
     bool inHalfSpace = (cosAngle > 0);
     return inHalfSpace;
 }
+
+std::string sphereData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== sphereData ===\n";
+    ss << geometryData::describe();
+    ss << "radius: " << radius << "\n";
+    return ss.str();
+}

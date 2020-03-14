@@ -9,6 +9,7 @@ struct ambiantData
 {
     Vector3RGB color = Vector3RGB(0, 0, 0);
     double intensity = 0;
+    std::string describe() const;
 };
 
 class AmbiantLight

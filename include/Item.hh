@@ -6,8 +6,10 @@
 
 struct itemData
 {
-    materialData mData;
-    geometryData gData;
+    std::string name;
+    materialData* mData;
+    geometryData* gData;
+    std::string describe() const;
 };
 
 class Item

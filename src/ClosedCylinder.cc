@@ -102,3 +102,12 @@ bool ClosedCylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, 
 }
 
 
+std::string closedCylinderData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== ClosedCylinder ===\n";
+    ss << geometryData::describe();
+    ss << "radius: " << radius << "\n";
+    ss << "length: " << length << "\n";
+    return ss.str();
+}

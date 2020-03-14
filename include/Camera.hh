@@ -17,6 +17,7 @@ struct camData
     Vector3 pos = Vector3(0,0,0);
     Vector3 rotAxis = Vector3(0,0,0);
     double rotAngle = 0;
+    std::string describe() const;
 };
 
 class Camera

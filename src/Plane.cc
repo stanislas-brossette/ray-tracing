@@ -54,3 +54,11 @@ bool Plane::isInHalfSpace(const Vector3& point, const Vector3& normal,
 {
     return false;
 }
+
+std::string planeData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== Plane ===\n";
+    ss << geometryData::describe();
+    return ss.str();
+}

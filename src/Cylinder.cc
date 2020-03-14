@@ -100,3 +100,12 @@ bool Cylinder::isInHalfSpace(const Vector3& point, const Vector3& normal, double
     //return inHalfSpace;
 }
 
+std::string cylinderData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== Cylinder ===\n";
+    ss << geometryData::describe();
+    ss << "radius: " << radius << "\n";
+    ss << "length: " << length << "\n";
+    return ss.str();
+}

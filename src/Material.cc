@@ -35,3 +35,16 @@ std::string Material::describe() const
     ss << "lightIntensity: " << lightIntensity_;
     return ss.str();
 }
+
+std::string materialData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== materialData ===\n";
+    ss << "color: " << color << "\n";
+    ss << "rugosity: " << rugosity << "\n";
+    ss << "refractionIndex: " << refraction << "\n";
+    ss << "reflectiveness: " << reflectiveness << "\n";
+    ss << "lightEmitter: " << lightEmitter << "\n";
+    ss << "lightIntensity: " << lightIntensity;
+    return ss.str();
+}

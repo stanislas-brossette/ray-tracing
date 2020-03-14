@@ -29,3 +29,13 @@ std::string Item::describe() const
     ss << material_->describe();
     return ss.str();
 }
+
+std::string itemData::describe() const
+{
+    std::stringstream ss;
+    ss << "=== itemData ===\n";
+    ss << "name: " << name << "\n";
+    ss << mData->describe() << "\n";
+    ss << gData->describe() << "\n";
+    return ss.str();
+}

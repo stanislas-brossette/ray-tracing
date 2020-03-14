@@ -4,6 +4,12 @@
 #include "Geometry.hh"
 #include "utils.hh"
 
+struct sphereData : public geometryData
+{
+    double radius = 0;
+    std::string describe() const;
+};
+
 class Sphere : public Geometry
 {
 public:

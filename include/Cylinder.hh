@@ -4,6 +4,13 @@
 #include "Geometry.hh"
 #include "utils.hh"
 
+struct cylinderData : public geometryData
+{
+    double radius = 0;
+    double length = 1e9;
+    std::string describe() const;
+};
+
 class Cylinder : public Geometry
 {
 public:

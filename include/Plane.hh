@@ -3,6 +3,11 @@
 #include "Frame3.hh"
 #include "Geometry.hh"
 
+struct planeData : public geometryData
+{
+    std::string describe() const;
+};
+
 class Plane : public Geometry
 {
 public:

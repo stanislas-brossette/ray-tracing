@@ -4,6 +4,16 @@
 
 #include "Vector3.hh"
 
+struct materialData
+{
+    Vector3RGB color = Vector3RGB(0,0,0);
+    double rugosity = 0.0;
+    double refraction = 0.0;
+    double reflectiveness = 0.0;
+    bool lightEmitter = false;
+    double lightIntensity = 0.0;
+};
+
 class Material
 {
 public:

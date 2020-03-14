@@ -5,6 +5,12 @@
 
 #include "Vector3.hh"
 
+struct ambiantData
+{
+    Vector3RGB color = Vector3RGB(0, 0, 0);
+    double intensity = 0;
+};
+
 class AmbiantLight
 {
 public:

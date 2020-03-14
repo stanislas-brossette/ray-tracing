@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "SceneLoader.hh"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
@@ -8,7 +8,39 @@
 
 using namespace rapidjson;
 
-void scanVector3(Value& vIn, Vector3& vRes)
+SceneLoader::SceneLoader()
+{
+}
+
+SceneLoader::~SceneLoader()
+{
+}
+
+void SceneLoader::load(const std::string& path)
+{
+    FILE* fp = fopen(path.c_str(), "r");
+    char readBuffer[65536];
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+    std::cout << "readBuffer: " << readBuffer << std::endl;
+    Document document;
+    document.Parse(readBuffer);
+    std::cout << "document.IsObject(): " << document.IsObject() << std::endl;
+    fclose(fp);
+    if(document.HasParseError())
+    {
+        std::cout << "ERROR: Json has errors" << std::endl;
+    }
+
+    camData cData = scanCamera(document.FindMember("camera")->value);
+    renderData rData = scanRender(document.FindMember("render")->value);
+    ambiantData aData = scanAmbiant(document.FindMember("ambiantLight")->value);
+    std::vector<itemData> itemVec;
+    scanItems(document.FindMember("items")->value, itemVec);
+    std::cout << "Scanned " << itemVec.size() << " items" << std::endl;
+
+}
+
+void SceneLoader::scanVector3(Value& vIn, Vector3& vRes)
 {
     std::vector<double> vec3;
     for (auto& vec : vIn.GetArray())
@@ -16,7 +48,7 @@ void scanVector3(Value& vIn, Vector3& vRes)
     vRes = Vector3(vec3[0], vec3[1], vec3[2]);
 }
 
-void scanVector3RGB(Value& vIn, Vector3RGB& vRes)
+void SceneLoader::scanVector3RGB(Value& vIn, Vector3RGB& vRes)
 {
     std::vector<int> vec3;
     for (auto& vec : vIn.GetArray())
@@ -24,17 +56,7 @@ void scanVector3RGB(Value& vIn, Vector3RGB& vRes)
     vRes = Vector3RGB(vec3[0], vec3[1], vec3[2]);
 }
 
-struct camData
-{
-    int resX = 0;
-    double fovX = 0;
-    double fovY = 0;
-    Vector3 pos = Vector3(0,0,0);
-    Vector3 rotAxis = Vector3(0,0,0);
-    double rotAngle = 0;
-};
-
-camData scanCamera(Value& vIn)
+camData SceneLoader::scanCamera(Value& vIn)
 {
     camData cData;
     cData.resX = vIn.FindMember("resX")->value.GetInt();
@@ -52,13 +74,7 @@ camData scanCamera(Value& vIn)
     return cData;
 }
 
-struct renderData
-{
-    int nPixPerRender = 0;
-    int nLightRay = 0;
-};
-
-renderData scanRender(Value& vIn)
+renderData SceneLoader::scanRender(Value& vIn)
 {
     renderData rData;
     rData.nPixPerRender = vIn.FindMember("nPixPerRender")->value.GetInt();
@@ -68,13 +84,7 @@ renderData scanRender(Value& vIn)
     return rData;
 }
 
-struct ambiantData
-{
-    Vector3RGB color = Vector3RGB(0, 0, 0);
-    double intensity = 0;
-};
-
-ambiantData scanAmbiant(Value& vIn)
+ambiantData SceneLoader::scanAmbiant(Value& vIn)
 {
     ambiantData aData;
     aData.intensity = vIn.FindMember("intensity")->value.GetDouble();
@@ -84,17 +94,7 @@ ambiantData scanAmbiant(Value& vIn)
     return aData;
 }
 
-struct materialData
-{
-    Vector3RGB color = Vector3RGB(0,0,0);
-    double rugosity = 0.0;
-    double refraction = 0.0;
-    double reflectiveness = 0.0;
-    bool lightEmitter = false;
-    double lightIntensity = 0.0;
-};
-
-materialData scanMaterial(Value& vIn)
+materialData SceneLoader::scanMaterial(Value& vIn)
 {
     materialData mData;
     scanVector3RGB(vIn.FindMember("color")->value, mData.color);
@@ -112,20 +112,10 @@ materialData scanMaterial(Value& vIn)
     return mData;
 }
 
-struct geometryData
-{
-    std::string type = "";
-    Vector3 pos = Vector3(0,0,0);
-    Vector3 rotAxis = Vector3(0,0,0);
-    double rotAngle = 0;
-};
-
-geometryData scanGeometry(Value& vIn)
+geometryData SceneLoader::scanGeometry(Value& vIn)
 {
     geometryData gData;
-
     gData.type = vIn.FindMember("type")->value.GetString();
-
     scanVector3(vIn.FindMember("pos")->value, gData.pos);
 
     Value::MemberIterator itr = vIn.FindMember("rotAxis");
@@ -143,13 +133,7 @@ geometryData scanGeometry(Value& vIn)
     return gData;
 }
 
-struct itemData
-{
-    materialData mData;
-    geometryData gData;
-};
-
-void scanItems(Value& vIn, std::vector<itemData>& vOut)
+void SceneLoader::scanItems(Value& vIn, std::vector<itemData>& vOut)
 {
     for (auto& o : vIn.GetObject())
     {
@@ -157,33 +141,7 @@ void scanItems(Value& vIn, std::vector<itemData>& vOut)
         itemData iData;
         iData.mData = scanMaterial(o.value.FindMember("material")->value);
         iData.gData = scanGeometry(o.value.FindMember("geometry")->value);
+        vOut.push_back(iData);
     }
 }
- 
-TEST(rapidJsonTest, RapidJsonTest)
-{
-    std::string path("/home/stanislas/profiles/devel/src/raytracing/unit/data/cylinderTest.json");
-    FILE* fp = fopen(path.c_str(), "r");
- 
-    char readBuffer[65536];
-    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-    std::cout << "readBuffer: " << readBuffer << std::endl;
-     
-    Document document;
-    document.Parse(readBuffer);
-    std::cout << "document.IsObject(): " << document.IsObject() << std::endl;
-    fclose(fp);
 
-    if(document.HasParseError())
-    {
-        std::cout << "ERROR: Json has errors" << std::endl;
-    }
-
-    camData cData = scanCamera(document.FindMember("camera")->value);
-    renderData rData = scanRender(document.FindMember("render")->value);
-    ambiantData aData = scanAmbiant(document.FindMember("ambiantLight")->value);
-    std::vector<itemData> itemVec;
-    scanItems(document.FindMember("items")->value, itemVec);
-     
-    ASSERT_TRUE(true);
-}

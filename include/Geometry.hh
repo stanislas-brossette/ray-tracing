@@ -5,6 +5,14 @@
 #include "Vector3.hh"
 #include "LightRay.hh"
 
+struct geometryData
+{
+    std::string type = "";
+    Vector3 pos = Vector3(0,0,0);
+    Vector3 rotAxis = Vector3(0,0,0);
+    double rotAngle = 0;
+};
+
 class Geometry
 {
 public:

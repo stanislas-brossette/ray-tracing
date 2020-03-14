@@ -4,6 +4,12 @@
 #include "Geometry.hh"
 #include "Material.hh"
 
+struct itemData
+{
+    materialData mData;
+    geometryData gData;
+};
+
 class Item
 {
 public:

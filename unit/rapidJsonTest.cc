@@ -1,14 +1,28 @@
 #include <gtest/gtest.h>
-// rapidjson/example/simpledom/simpledom.cpp`
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/document.h"
-#include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include "Vector3.hh"
 #include <iostream>
 #include <cstdio>
 
 using namespace rapidjson;
+
+void scanVector3(Value& vIn, Vector3& vRes)
+{
+    std::vector<double> vec3;
+    for (auto& vec : vIn.GetArray())
+        vec3.push_back(vec.GetDouble());
+    vRes = Vector3(vec3[0], vec3[1], vec3[2]);
+}
+
+void scanVector3RGB(Value& vIn, Vector3RGB& vRes)
+{
+    std::vector<int> vec3;
+    for (auto& vec : vIn.GetArray())
+        vec3.push_back(vec.GetDouble());
+    vRes = Vector3RGB(vec3[0], vec3[1], vec3[2]);
+}
 
 struct camData
 {
@@ -20,35 +34,59 @@ struct camData
     double rotAngle = 0;
 };
 
-void scanVector3(Value& vIn, Vector3& vRes)
+camData scanCamera(Value& vIn)
 {
-    std::vector<double> vec3;
-    for (auto& vec : vIn.GetArray())
-        vec3.push_back(vec.GetDouble());
-    vRes = Vector3(vec3[0], vec3[1], vec3[2]);
+    camData cData;
+    cData.resX = vIn.FindMember("resX")->value.GetInt();
+    cData.fovX = vIn.FindMember("fovX")->value.GetDouble();
+    cData.fovY = vIn.FindMember("fovY")->value.GetDouble();
+    cData.rotAngle = vIn.FindMember("rotAngle")->value.GetDouble();
+    scanVector3(vIn.FindMember("pos")->value, cData.pos);
+    scanVector3(vIn.FindMember("rotAxis")->value, cData.rotAxis);
+    std::cout << "camera.resX: " << cData.resX << std::endl;
+    std::cout << "camera.fovX: " << cData.fovX << std::endl;
+    std::cout << "camera.fovY: " << cData.fovY << std::endl;
+    std::cout << "camera.rotAxis: " << cData.rotAxis << std::endl;
+    std::cout << "camera.rotAngle: " << cData.rotAngle << std::endl;
+    std::cout << "camera.pos: " << cData.pos << std::endl;
+    return cData;
 }
 
-camData scanCamera(Value& v)
+struct renderData
 {
-    camData c;
-    c.resX = v.FindMember("resX")->value.GetInt();
-    c.fovX = v.FindMember("fovX")->value.GetDouble();
-    c.fovY = v.FindMember("fovY")->value.GetDouble();
-    c.rotAngle = v.FindMember("rotAngle")->value.GetDouble();
-    scanVector3(v.FindMember("pos")->value, c.pos);
-    scanVector3(v.FindMember("rotAxis")->value, c.rotAxis);
-    std::cout << "c.resX: " << c.resX << std::endl;
-    std::cout << "c.fovX: " << c.fovX << std::endl;
-    std::cout << "c.fovY: " << c.fovY << std::endl;
-    std::cout << "c.rotAxis: " << c.rotAxis << std::endl;
-    std::cout << "c.rotAngle: " << c.rotAngle << std::endl;
-    std::cout << "c.pos: " << c.pos << std::endl;
-    return c;
+    int nPixPerRender = 0;
+    int nLightRay = 0;
+};
+
+renderData scanRender(Value& vIn)
+{
+    renderData rData;
+    rData.nPixPerRender = vIn.FindMember("nPixPerRender")->value.GetInt();
+    rData.nLightRay = vIn.FindMember("nLightRay")->value.GetInt();
+    std::cout << "render.nPixPerRender: " << rData.nPixPerRender << std::endl;
+    std::cout << "render.nLightRay: " << rData.nLightRay << std::endl;
+    return rData;
+}
+
+struct ambiantData
+{
+    Vector3RGB color = Vector3RGB(0, 0, 0);
+    double intensity = 0;
+};
+
+ambiantData scanAmbiant(Value& vIn)
+{
+    ambiantData aData;
+    aData.intensity = vIn.FindMember("intensity")->value.GetDouble();
+    scanVector3RGB(vIn.FindMember("color")->value, aData.color);
+    std::cout << "ambiantLight.intensity: " << aData.intensity << std::endl;
+    std::cout << "ambiantLight.color: " << aData.color << std::endl;
+    return aData;
 }
  
 TEST(rapidJsonTest, RapidJsonTest)
 {
-    std::string path("/home/stanislas/wdc_workspace/src/ray-tracing/unit/data/cylinderTest.json");
+    std::string path("/home/stanislas/profiles/devel/src/raytracing/unit/data/cylinderTest.json");
     FILE* fp = fopen(path.c_str(), "r");
  
     char readBuffer[65536];
@@ -65,46 +103,9 @@ TEST(rapidJsonTest, RapidJsonTest)
         std::cout << "ERROR: Json has errors" << std::endl;
     }
 
-    static const char* kTypeNames[] =
-        { "Null", "False", "True", "Object", "Array", "String", "Number" };
-    for (Value::ConstMemberIterator itr = document.MemberBegin();
-        itr != document.MemberEnd(); ++itr)
-    {
-        std::string name(itr->name.GetString());
-        camData cam;
-        if(name == "camera")
-        {
-            cam = scanCamera(document[itr->name.GetString()]);
-        }
-        printf("Type of member %s is %s\n",
-            itr->name.GetString(), kTypeNames[itr->value.GetType()]);
-        if(kTypeNames[itr->value.GetType()] == "Object")
-        {
-            std::cout << "This is an object" << std::endl;
-            Value& obj = document[name.c_str()];
-            for (Value::ConstMemberIterator itr2 = obj.MemberBegin();
-                itr2 != obj.MemberEnd(); ++itr2)
-            {
-                printf("Type of member %s is %s\n",
-                    itr2->name.GetString(), kTypeNames[itr2->value.GetType()]);
-            }
-        }
-    }
-
-
-    //Value::MemberIterator sceneIt;
-    //for(sceneIt = document.MemberBegin(); sceneIt != document.MemberEnd(); sceneIt++)
-    //{
-    //    std::string sceneName(sceneIt->name.GetString());
-    //    std::cout << "sceneName: " << sceneName << std::endl;
-
-    //    Value::MemberIterator elementIt;
-    //    for(elementIt = document[sceneName].MemberBegin(); elementIt != document[sceneName].MemberEnd(); elementIt++)
-    //    {
-    //        std::string elementName(elementIt->name.GetString());
-    //        std::cout << "elementName: " << elementName << std::endl;
-    //    }
-    //}
+    camData cData = scanCamera(document.FindMember("camera")->value);
+    renderData rData = scanRender(document.FindMember("render")->value);
+    ambiantData aData = scanAmbiant(document.FindMember("ambiantLight")->value);
      
     ASSERT_TRUE(true);
 }

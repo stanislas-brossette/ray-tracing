@@ -18,7 +18,7 @@ void renderMainParallel(const Scene& myScene, Window& myWindow, const std::strin
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 10000000)
+    while(iter < 30000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, 0, nPixPerRender);

@@ -111,6 +111,7 @@ void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
             pix.r_ = impactItem->material_->color_.r_;
             pix.g_ = impactItem->material_->color_.g_;
             pix.b_ = impactItem->material_->color_.b_;
+            pix.clamp();
             return;
         }
 
@@ -215,6 +216,7 @@ void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
             }
         }
     }
+    pix.clamp();
     return;
 }
 

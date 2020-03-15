@@ -52,13 +52,13 @@ void Pixel::clamp()
         g_ = 255;
     if(b_ > 255)
         b_ = 255;
-    if(a_ > 0)
+    if(a_ < 0)
         a_ = 0;
-    if(r_ > 0)
+    if(r_ < 0)
         r_ = 0;
-    if(g_ > 0)
+    if(g_ < 0)
         g_ = 0;
-    if(b_ > 0)
+    if(b_ < 0)
         b_ = 0;
 }
 

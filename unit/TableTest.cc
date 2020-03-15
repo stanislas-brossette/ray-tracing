@@ -17,7 +17,7 @@ void renderTable(const Scene& myScene, Window& myWindow, const std::string& s)
     myWindow.clear();
     int iter = 0;
     int nPixPerRender = 100000;
-    while(iter < 30000000)
+    while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         myScene.renderParallel(pixs, nPixPerRender);

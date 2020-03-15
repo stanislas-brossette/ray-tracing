@@ -1,20 +1,20 @@
 #include "AmbiantLight.hh"
 
 AmbiantLight::AmbiantLight()
-  : alpha_(0),
-    rgb_()
+  : intensity_(0),
+    color_()
 {
 }
 
 AmbiantLight::AmbiantLight(const AmbiantData& aData)
-  : alpha_(aData.intensity),
-    rgb_(aData.color)
+  : intensity_(aData.intensity),
+    color_(aData.color)
 {
 }
 
 AmbiantLight::AmbiantLight (double a, const Vector3RGB& v)
-  : alpha_(a),
-    rgb_(v)
+  : intensity_(a),
+    color_(v)
 {
 }
 
@@ -26,8 +26,8 @@ std::string AmbiantLight::describe() const
 {
     std::stringstream ss;
     ss << "=== AmbiantLight ===\n";
-    ss << "alpha: " << alpha_ << "\n";
-    ss << "rgb: " << rgb_ << "\n";
+    ss << "intensity: " << intensity_ << "\n";
+    ss << "color: " << color_ << "\n";
     return ss.str();
 }
 

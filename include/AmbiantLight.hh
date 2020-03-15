@@ -11,10 +11,10 @@ class AmbiantLight
 public:
     AmbiantLight ();
     AmbiantLight (const AmbiantData& aData);
-    AmbiantLight (double alpha, const Vector3RGB& v);
+    AmbiantLight (double intensity, const Vector3RGB& color);
     virtual ~AmbiantLight ();
     std::string describe() const;
 
-    double alpha_;
-    Vector3RGB rgb_;
+    double intensity_;
+    Vector3RGB color_;
 };

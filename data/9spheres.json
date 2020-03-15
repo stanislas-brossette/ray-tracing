@@ -1,0 +1,171 @@
+{
+    "camera": {
+        "resX": 1000,
+        "fovX": 100,
+        "fovY": 100,
+        "pos": [0.0, 0.0, 0.0],
+        "rotAxis": [1.0, 0.0, 0.0],
+        "rotAngle": 0.0
+    },
+    "render": {
+        "nPixPerRender": 10000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255,255,255],
+        "intensity": 0.1
+    },
+    "items": {
+        "lightSource": {
+            "material": {
+                "color": [255, 255, 255],
+                "rugosity": 0.00,
+                "refraction": 0.0,
+                "reflectiveness": 1.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.2,
+                "pos": [0.0, 2.0, 0.0]
+            }
+        },
+        "sphere1": {
+            "material": {
+                "color": [0, 255, 0],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [1.2, 2.5, 0.0]
+            }
+        },
+        "sphere2": {
+            "material": {
+                "color": [0, 0, 255],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [0.0, 2.5, 1.2]
+            }
+        },
+        "sphere3": {
+            "material": {
+                "color": [255, 125, 255],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [-1.2, 2.5, 0.0]
+            }
+        },
+        "sphere4": {
+            "material": {
+                "color": [255, 255, 0],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [0.0, 2.5, -1.2]
+            }
+        },
+        "sphere5": {
+            "material": {
+                "color": [125, 255, 125],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [1.2, 2.5, 1.2]
+            }
+        },
+        "sphere6": {
+            "material": {
+                "color": [0, 125, 255],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [1.2, 2.5, -1.2]
+            }
+        },
+        "sphere7": {
+            "material": {
+                "color": [125, 255, 255],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [-1.2, 2.5, 1.2]
+            }
+        },
+        "sphere8": {
+            "material": {
+                "color": [255, 125, 0],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [-1.2, 2.5, -1.2]
+            }
+        },
+        "plane": {
+            "material": {
+                "color": [150, 150, 150],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 5,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 3.0, -0.5],
+                "rotAxis": [1,0,0],
+                "rotAngle": 90
+            }
+        }
+    }
+}

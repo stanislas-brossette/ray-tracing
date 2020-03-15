@@ -76,10 +76,10 @@
                 "pos": [2.3, 2.2, 0.9]
             }
         },
-        "sphere0": {
+        "greenSphere": {
             "material": {
                 "color": [52, 200, 51],
-                "rugosity": 0.01,
+                "rugosity": 0.05,
                 "refraction": 0.0,
                 "reflectiveness": 5.0,
                 "lightEmitter": false,
@@ -91,7 +91,7 @@
                 "pos": [0.0, 2.5, -0.5]
             }
         },
-        "sphere1": {
+        "pinkSphere": {
             "material": {
                 "color": [235, 20, 150],
                 "rugosity": 0.1,
@@ -106,7 +106,7 @@
                 "pos": [0.85, 2.2, -0.7]
             }
         },
-        "sphere2": {
+        "blueSphere": {
             "material": {
                 "color": [4, 30, 232],
                 "rugosity": 0.1,
@@ -121,7 +121,7 @@
                 "pos": [-0.2, 1.8, -0.8]
             }
         },
-        "cylinder0": {
+        "redCylinder": {
             "material": {
                 "color": [255, 3, 4],
                 "rugosity": 0.01,
@@ -137,6 +137,24 @@
                 "pos": [-0.2, 1.8, -0.8],
                 "rotAxis": [0.0, 1.0, 0.0],
                 "rotAngle": 70
+            }
+        },
+        "yellowCylinder": {
+            "material": {
+                "color": [255, 250, 25],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 5.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.3,
+                "length": 0.1,
+                "pos": [1.2, 1.8, -0.7],
+                "rotAxis": [1.0, 1.0, 0.0],
+                "rotAngle": 90
             }
         },
         "bottomPlane": {
@@ -204,7 +222,7 @@
                 "color": [84, 84, 84],
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.7,
+                "reflectiveness": 2.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

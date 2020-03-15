@@ -1,20 +1,14 @@
 #pragma once
 #include <iostream>
 #include <sstream>
+
+#include "dataStructures.hh"
 #include "Geometry.hh"
 #include "Sphere.hh"
 #include "Cylinder.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Material.hh"
-
-struct ItemData
-{
-    std::string name;
-    MaterialData* mData;
-    GeometryData* gData;
-    std::string describe() const;
-};
 
 class Item
 {

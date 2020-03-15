@@ -1,12 +1,8 @@
 #pragma once
 
+#include "dataStructures.hh"
 #include "Frame3.hh"
 #include "Geometry.hh"
-
-struct PlaneData : public GeometryData
-{
-    std::string describe() const;
-};
 
 class Plane : public Geometry
 {

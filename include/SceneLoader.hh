@@ -6,6 +6,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 
+#include "dataStructures.hh"
 #include "Vector3.hh"
 #include "Frame3.hh"
 #include "Scene.hh"
@@ -27,6 +28,7 @@ class SceneLoader
 {
 public:
     SceneLoader ();
+    SceneLoader (const std::string& path);
     virtual ~SceneLoader ();
     SceneData load(const std::string& path);
     void scanVector3(Value& vIn, Vector3& vRes);
@@ -38,6 +40,8 @@ public:
     void scanBaseGeometry(Value& vIn, GeometryData* gData);
     GeometryData* scanGeometry(Value& vIn);
     void scanItems(Value& vIn, std::vector<ItemData>& vOut);
+
+    SceneData sceneData_;
 
 private:
 };

@@ -3,17 +3,7 @@
 #include <sstream>
 
 #include "Vector3.hh"
-
-struct MaterialData
-{
-    Vector3RGB color = Vector3RGB(0,0,0);
-    double rugosity = 0.0;
-    double refraction = 0.0;
-    double reflectiveness = 0.0;
-    bool lightEmitter = false;
-    double lightIntensity = 0.0;
-    std::string describe() const;
-};
+#include "dataStructures.hh"
 
 class Material
 {

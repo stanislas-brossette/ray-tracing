@@ -12,13 +12,17 @@ SceneLoader::SceneLoader()
 {
 }
 
+SceneLoader::SceneLoader(const std::string& path)
+{
+    load(path);
+}
+
 SceneLoader::~SceneLoader()
 {
 }
 
 SceneData SceneLoader::load(const std::string& path)
 {
-    SceneData mySceneData;
     FILE* fp = fopen(path.c_str(), "r");
     char readBuffer[65536];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer));
@@ -30,11 +34,11 @@ SceneData SceneLoader::load(const std::string& path)
         std::cout << "ERROR: Json has errors" << std::endl;
     }
 
-    mySceneData.cData = scanCamera(document.FindMember("camera")->value);
-    mySceneData.rData = scanRender(document.FindMember("render")->value);
-    mySceneData.aData = scanAmbiant(document.FindMember("ambiantLight")->value);
-    scanItems(document.FindMember("items")->value, mySceneData.itemsData);
-    return mySceneData;
+    sceneData_.cData = scanCamera(document.FindMember("camera")->value);
+    sceneData_.rData = scanRender(document.FindMember("render")->value);
+    sceneData_.aData = scanAmbiant(document.FindMember("ambiantLight")->value);
+    scanItems(document.FindMember("items")->value, sceneData_.itemsData);
+    return sceneData_;
 }
 
 void SceneLoader::scanVector3(Value& vIn, Vector3& vRes)

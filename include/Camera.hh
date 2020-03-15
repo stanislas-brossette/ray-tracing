@@ -4,21 +4,11 @@
 #include <string>
 #include <cstdlib>
 
+#include "dataStructures.hh"
 #include "Vector3.hh"
 #include "Frame3.hh"
 #include "LightRay.hh"
 #include "Pixel.hh"
-
-struct CamData
-{
-    int resX = 0;
-    double fovX = 0;
-    double fovY = 0;
-    Vector3 pos = Vector3(0,0,0);
-    Vector3 rotAxis = Vector3(0,0,0);
-    double rotAngle = 0;
-    std::string describe() const;
-};
 
 class Camera
 {

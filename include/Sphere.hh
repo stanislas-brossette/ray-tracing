@@ -1,14 +1,9 @@
 #pragma once
 
+#include "dataStructures.hh"
 #include "Frame3.hh"
 #include "Geometry.hh"
 #include "utils.hh"
-
-struct SphereData : public GeometryData
-{
-    double radius = 0;
-    std::string describe() const;
-};
 
 class Sphere : public Geometry
 {

@@ -3,21 +3,12 @@
 #include <vector>
 #include <thread>
 
+#include "dataStructures.hh"
 #include "Vector3.hh"
 #include "Item.hh"
 #include "AmbiantLight.hh"
 #include "Camera.hh"
 #include "Pixel.hh"
-#include "Renderer.hh"
-
-struct SceneData
-{
-    AmbiantData aData;
-    CamData cData;
-    RenderData rData;
-    std::vector<ItemData> itemsData;
-    std::string describe() const;
-};
 
 class Scene
 {

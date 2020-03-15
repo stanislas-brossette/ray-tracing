@@ -1,15 +1,9 @@
 #pragma once
 
+#include "dataStructures.hh"
 #include "Frame3.hh"
 #include "Geometry.hh"
 #include "utils.hh"
-
-struct CylinderData : public GeometryData
-{
-    double radius = 0;
-    double length = 1e9;
-    std::string describe() const;
-};
 
 class Cylinder : public Geometry
 {

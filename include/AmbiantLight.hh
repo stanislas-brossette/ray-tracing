@@ -4,13 +4,7 @@
 #include <string>
 
 #include "Vector3.hh"
-
-struct AmbiantData
-{
-    Vector3RGB color = Vector3RGB(0, 0, 0);
-    double intensity = 0;
-    std::string describe() const;
-};
+#include "dataStructures.hh"
 
 class AmbiantLight
 {

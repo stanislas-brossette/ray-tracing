@@ -16,7 +16,8 @@ Camera::Camera(const CamData& cData)
   : frame_(),
     fovX_(cData.fovX),
     fovY_(cData.fovY),
-    resX_(cData.resX)
+    resX_(cData.resX),
+    fovType_(cData.fovType)
 {
     frame_.translate(cData.pos);
     frame_.rotate(cData.rotAxis, cData.rotAngle);
@@ -59,11 +60,34 @@ Vector3 Camera::pixelToDir(const Pixel& px) const
 
     double dx = double(px.x_) - double(resX_)/2;
     double dy = double(px.y_) - double(resY_)/2;
-    dir.x_ = dx;
-    dir.y_ = focalDist_;
-    dir.z_ = dy;
-    dir.normalize();
 
+    if(fovType_ == 0)
+    {
+        dir.x_ = dx;
+        dir.y_ = focalDist_;
+        dir.z_ = dy;
+        dir.normalize();
+    }
+    else if (fovType_ == 1)
+    {
+        double theta = dx*fovX_/resX_;
+        double phi = dy*fovY_/resY_;
+
+        dir.x_ =  focalDist_*std::sin(deg2rad(theta))*std::cos(deg2rad(phi));
+        dir.y_ =  focalDist_*std::cos(deg2rad(theta))*std::cos(deg2rad(phi));
+        dir.z_ =  focalDist_*std::sin(deg2rad(phi));
+    }
+    else if (fovType_ == 2)
+    {
+        double theta = dx*fovX_/resX_;
+        double phi = dy*fovY_/resY_;
+
+        dir.x_ =  focalDist_*std::sin(deg2rad(theta));
+        dir.y_ =  focalDist_*std::cos(deg2rad(theta))*std::cos(deg2rad(phi));
+        dir.z_ =  focalDist_*std::cos(deg2rad(theta))*std::sin(deg2rad(phi));
+    }
+
+    dir.normalize();
     return dir;
 }
 

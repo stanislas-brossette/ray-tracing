@@ -31,6 +31,7 @@ public:
     double fovY_;
     int resX_;
     int resY_;
+    int fovType_ = 1;
 
 private:
     double focalDist_;

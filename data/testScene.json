@@ -3,9 +3,10 @@
         "resX": 1300,
         "fovX": 110,
         "fovY": 90,
-        "pos": [0.4, 0.0, 0.1],
+        "pos": [0.4, -0.5, 0.1],
         "rotAxis": [0, 0, 1],
-        "rotAngle": 18
+        "rotAngle": 18,
+        "fovType": 2
     },
     "render": {
         "nPixPerRender": 10000,

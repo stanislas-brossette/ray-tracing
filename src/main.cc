@@ -64,7 +64,7 @@ int main(void)
     Frame3 fCam;
     fCam.translate(1,0.1,0.4);
     fCam.rotate(Vector3(1,0,0), -10);
-    //fCam.rotate(Vector3(0,0,1), 30);
+    fCam.rotate(Vector3(0,0,1), 30);
     Camera cam(fCam, fovX, fovY, resX);
 
     AmbiantLight al(0.05, Vector3RGB(246,243,255));

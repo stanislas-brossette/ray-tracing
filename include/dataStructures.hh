@@ -8,7 +8,7 @@
 struct RenderData
 {
     int nPixPerRender = 0;
-    int nLightRay = 0;
+    int percentLightRay = 100;
     std::string describe() const;
 };
 

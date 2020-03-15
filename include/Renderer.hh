@@ -15,7 +15,7 @@ public:
     void renderSerial(const Scene& sc, Window& win, const std::string& s = "");
     virtual ~Renderer ();
     int nPixPerRender_ = 0;
-    int nLightRay_ = 0;
+    int percentLightRay_ = 100; //nLightRay = nTotalResolution*percentLightRay_;
 
 private:
 };

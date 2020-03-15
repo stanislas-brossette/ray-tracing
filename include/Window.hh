@@ -18,6 +18,9 @@ public:
     void render();
     void clear();
     ~Window ();
+    int resX() const{return resX_;};
+    int resY() const{return resY_;};
+    int nPixels() const{return resX_*resY_;};
 
 private:
     SDL_Window *window_;

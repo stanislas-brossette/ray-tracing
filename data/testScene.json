@@ -9,7 +9,7 @@
     },
     "render": {
         "nPixPerRender": 10000,
-        "nLightRay": 10000000
+        "percentLightRay": 100
     },
     "ambiantLight": {
         "color": [246,243,255],

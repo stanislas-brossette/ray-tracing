@@ -73,7 +73,7 @@ RenderData SceneLoader::scanRender(Value& vIn)
 {
     RenderData rData;
     rData.nPixPerRender = vIn.FindMember("nPixPerRender")->value.GetInt();
-    rData.nLightRay = vIn.FindMember("nLightRay")->value.GetInt();
+    rData.percentLightRay = vIn.FindMember("percentLightRay")->value.GetInt();
     return rData;
 }
 

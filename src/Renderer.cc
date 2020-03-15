@@ -5,19 +5,19 @@ std::string RenderData::describe() const
     std::stringstream ss;
     ss << "=== RenderData ===\n";
     ss << "nPixPerRender: " << nPixPerRender << "\n";
-    ss << "nLightRay: " << nLightRay << "\n";
+    ss << "percentLightRay: " << percentLightRay << "\n";
     return ss.str();
 }
 
 Renderer::Renderer()
     : nPixPerRender_(0),
-    nLightRay_(0)
+    percentLightRay_(0)
 {
 }
 
 Renderer::Renderer(const RenderData& rData)
     : nPixPerRender_(rData.nPixPerRender),
-    nLightRay_(rData.nLightRay)
+    percentLightRay_(rData.percentLightRay)
 {
 }
 
@@ -29,11 +29,12 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
 {
     win.clear();
     int iter = 0;
+    int nLightRay = win.nPixels()*percentLightRay_/100;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < nLightRay_)
+    while(iter < nLightRay)
     {
         std::vector<Pixel> pixs(nPixPerRender_);
-        sc.renderParallel(pixs, 0, nPixPerRender_);
+        sc.renderParallel(pixs, nPixPerRender_);
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;
@@ -49,8 +50,9 @@ void Renderer::renderSerial(const Scene& sc, Window& win, const std::string& s)
 {
     win.clear();
     int iter = 0;
+    int nLightRay = win.nPixels()*percentLightRay_/100;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < nLightRay_)
+    while(iter < nLightRay)
     {
         std::vector<Pixel> pixs(nPixPerRender_);
         sc.renderSerial(pixs, nPixPerRender_);

@@ -9,9 +9,12 @@
 #include "Pixel.hh"
 #include "utils.hh"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    std::string sceneJsonName("tableScene.json");
+    std::string sceneJsonName("testScene.json");
+    if(argc > 1)
+        sceneJsonName = std::string(argv[1]);
+
     std::string path = std::string(DATA) + sceneJsonName;
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);

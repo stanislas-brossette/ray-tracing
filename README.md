@@ -14,8 +14,11 @@ cd build
 ./RayTracingMain
 
 # play around with scenes:
-./RayTracingMainFromJson
-The scene can be conveniently modified in ./data/testScene.json
+./RayTracingMainFromJson testScene.json
+./RayTracingMainFromJson tableScene.json
+....
+
+The scene can be conveniently modified in the json files in ./data/
 
 # filter tests:
 cd build  

@@ -14,14 +14,13 @@ int main(void)
     SceneData sData = sceneLoader.load(path);
     std::cout << sData.describe();
     Scene scene(sData);
-    std::cout << scene << std::endl;
     Window window(scene.camera_.resX_, scene.camera_.resY_);
 
     window.clear();
     int iter = 0;
-    int nPixPerRender = 100000;
+    int nPixPerRender = sData.rData.nPixPerRender;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 10000000)
+    while(iter < sData.rData.nLightRay)
     {
         std::vector<Pixel> pixs(nPixPerRender);
         scene.renderParallel(pixs, 0, nPixPerRender);

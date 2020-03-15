@@ -20,7 +20,7 @@ void testRenderCylinder(const Scene& myScene, Window& myWindow, const std::strin
     while(iter < 20000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myScene.renderParallel(pixs, nPixPerRender);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;

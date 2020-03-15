@@ -23,7 +23,7 @@ void renderMainParallel(const Scene& myScene, Window& myWindow, const std::strin
     while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myScene.renderParallel(pixs, nPixPerRender);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;
@@ -44,7 +44,7 @@ void renderMainSerial(const Scene& myScene, Window& myWindow, const std::string&
     while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderSerial(pixs, 0, nPixPerRender);
+        myScene.renderSerial(pixs, nPixPerRender);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;

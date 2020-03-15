@@ -96,7 +96,7 @@ TEST(ManoTests, Visu9SpheresTest)
     while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderParallel(pixs, 0, nPixPerRender);
+        myScene.renderParallel(pixs, nPixPerRender);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;

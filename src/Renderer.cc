@@ -53,7 +53,7 @@ void Renderer::renderSerial(const Scene& sc, Window& win, const std::string& s)
     while(iter < nLightRay_)
     {
         std::vector<Pixel> pixs(nPixPerRender_);
-        sc.renderSerial(pixs, 0, nPixPerRender_);
+        sc.renderSerial(pixs, nPixPerRender_);
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;

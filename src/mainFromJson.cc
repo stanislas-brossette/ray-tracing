@@ -11,7 +11,7 @@
 
 int main(void)
 {
-    std::string sceneJsonName("testScene.json");
+    std::string sceneJsonName("tableScene.json");
     std::string path = std::string(DATA) + sceneJsonName;
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);

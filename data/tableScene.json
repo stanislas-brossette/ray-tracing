@@ -1,0 +1,221 @@
+{
+    "camera": {
+        "resX": 1200,
+        "fovX": 110,
+        "fovY": 100,
+        "pos": [0.1, -0.6, 0.35],
+        "rotAxis": [1, 0, 0],
+        "rotAngle": -20
+    },
+    "render": {
+        "nPixPerRender": 10000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [246,243,255],
+        "intensity": 0.2
+    },
+    "items": {
+        "floorPlane": {
+            "material": {
+                "color": [80, 81, 82],
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, 0.0]
+            }
+        },
+        "tableTop": {
+            "material": {
+                "color": [210, 105, 30],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.05,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.5,
+                "length": 0.02,
+                "pos": [0.0, 0.0, 0.75]
+            }
+        },
+        "tableLeg0": {
+            "material": {
+                "color": [210, 105, 30],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.05,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.025,
+                "length": 0.75,
+                "pos": [0.0, 0.45, 0.375]
+            }
+        },
+        "tableLeg1": {
+            "material": {
+                "color": [210, 105, 30],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.05,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.025,
+                "length": 0.75,
+                "pos": [0.45, 0.0, 0.375]
+            }
+        },
+        "tableLeg2": {
+            "material": {
+                "color": [210, 105, 30],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.05,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.025,
+                "length": 0.75,
+                "pos": [-0.45, 0.0, 0.375]
+            }
+        },
+        "tableLeg3": {
+            "material": {
+                "color": [210, 105, 30],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.05,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.025,
+                "length": 0.75,
+                "pos": [0.0, -0.45, 0.375]
+            }
+        },
+        "appleRed": {
+            "material": {
+                "color": [250, 20, 24],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [0.2, -0.2, 0.8]
+            }
+        },
+        "appleBlue": {
+            "material": {
+                "color": [20, 250, 24],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [-0.2, 0.2, 0.8]
+            }
+        },
+        "appleYellow": {
+            "material": {
+                "color": [250, 250, 24],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [-0.2, -0.2, 0.8]
+            }
+        },
+        "lightBulb": {
+            "material": {
+                "color": [250, 226, 234],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 5.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.07,
+                "pos": [0.0, 0.0, 1.05]
+            }
+        },
+        "lamp": {
+            "material": {
+                "color": [1, 20, 24],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 3.0,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.05,
+                "length": 0.25,
+                "pos": [0.0, 0.0, 0.85]
+            }
+        },
+        "lampTop": {
+            "material": {
+                "color": [1, 20, 240],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0.0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.15,
+                "length": 0.15,
+                "pos": [0.0, 0.0, 1.05]
+            }
+        },
+        "spot": {
+            "material": {
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 10.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [1.0, 1.0, 1.5]
+            }
+        }
+    }
+}

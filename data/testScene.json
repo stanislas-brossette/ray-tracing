@@ -23,7 +23,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.4
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -38,7 +38,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.8
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -53,7 +53,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.8
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -68,12 +68,12 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.8
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [-3.3, 4.2, 0.9]
+                "pos": [2.3, 2.2, 0.9]
             }
         },
         "sphere0": {

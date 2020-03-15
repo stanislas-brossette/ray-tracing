@@ -6,7 +6,7 @@ cd build
 cmake ..  
 make  
 
-# test(best to watch):
+# tests:
 cd build  
 ./unit/unit  
 
@@ -14,8 +14,8 @@ cd build
 ./RayTracingMain
 
 # play around with scenes:
-./RayTracingMainFromJson testScene.json
-./RayTracingMainFromJson tableScene.json
+./RayTracingMainFromJson testScene.json  
+./RayTracingMainFromJson tableScene.json  
 ....
 
 The scene can be conveniently modified in the json files in ./data/

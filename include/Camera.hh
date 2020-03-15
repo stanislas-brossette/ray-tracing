@@ -3,6 +3,9 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <vector>
+#include <utility>
+#include <algorithm>
 
 #include "dataStructures.hh"
 #include "Vector3.hh"
@@ -19,7 +22,9 @@ public:
     virtual ~Camera ();
     std::string describe() const;
     void castRandomRay(LightRay& lr, Pixel& px) const;
+    void castOrderedRay(LightRay& lr, Pixel& px, size_t index) const;
     Vector3 pixelToDir(const Pixel& px) const;
+    int nPixels() const {return resX_*resY_;};
 
     Frame3 frame_;
     double fovX_;
@@ -29,4 +34,6 @@ public:
 
 private:
     double focalDist_;
+    std::vector<std::pair<int, int>> allPixels_;
+    void initAllPixelsVec();
 };

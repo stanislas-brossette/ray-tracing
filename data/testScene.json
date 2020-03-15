@@ -13,7 +13,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.05
+        "intensity": 0.1
     },
     "items": {
         "lightSource1": {
@@ -169,10 +169,10 @@
         },
         "frontPlane": {
             "material": {
-                "color": [0, 0, 0],
+                "color": [81, 80, 83],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 20.0,
+                "reflectiveness": 0.9,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -204,7 +204,7 @@
                 "color": [84, 84, 84],
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 10.2,
+                "reflectiveness": 0.7,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -217,10 +217,10 @@
         },
         "backPlane": {
             "material": {
-                "color": [30, 30, 30],
+                "color": [130, 80, 70],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 10.0,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

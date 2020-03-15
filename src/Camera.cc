@@ -5,7 +5,8 @@ Camera::Camera()
   : frame_(),
     fovX_(),
     fovY_(),
-    resX_()
+    resX_(),
+    allPixels_()
 {
     focalDist_ = 0;
     resY_ = 0;
@@ -21,6 +22,7 @@ Camera::Camera(const CamData& cData)
     frame_.rotate(cData.rotAxis, cData.rotAngle);
     focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
     resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
+    initAllPixelsVec();
 }
 
 Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
@@ -31,10 +33,24 @@ Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
 {
     focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
     resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
+    initAllPixelsVec();
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::initAllPixelsVec()
+{
+    allPixels_.resize(nPixels());
+    for (int i = 0; i < resX_; ++i)
+    {
+        for (int j = 0; j < resY_; ++j)
+        {
+            allPixels_[i*resY_ + j] = std::make_pair<int, int>(int(i), int(j));
+        }
+    }
+    std::random_shuffle(allPixels_.begin(), allPixels_.end());
 }
 
 Vector3 Camera::pixelToDir(const Pixel& px) const
@@ -57,6 +73,20 @@ void Camera::castRandomRay(LightRay& lr, Pixel& px) const
     int randY = std::rand();
     px.x_ = randX % resX_;
     px.y_ = randY % resY_;
+
+    lr.origin_ = frame_.pointToWorld(frame_.o_);
+    lr.dir_ = frame_.vecToWorld(pixelToDir(px));
+}
+
+void Camera::castOrderedRay(LightRay& lr, Pixel& px, size_t index) const
+{
+    if (index >= allPixels_.size())
+    {
+        std::cout << "Error, requesting index " << index << ", which out of allPixels(size: " << allPixels_.size() << ")" << std::endl;
+        return;
+    }
+    px.x_ = allPixels_[index].first;
+    px.y_ = allPixels_[index].second;
 
     lr.origin_ = frame_.pointToWorld(frame_.o_);
     lr.dir_ = frame_.vecToWorld(pixelToDir(px));

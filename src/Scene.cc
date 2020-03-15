@@ -22,15 +22,15 @@ Scene::~Scene()
 {
 }
 
-void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints) const
+void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t nPointsRendered) const
 {
     for (size_t i = 0; i < nPoints; i++)
     {
-        castRandomRayInPlace( res[i]);
+        castRandomRayInPlace( res[i], nPointsRendered + i);
     }
 }
 
-void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute) const
+void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
 {
     int nPix = res.size();
     int numThreads = std::thread::hardware_concurrency();
@@ -50,7 +50,7 @@ void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute)
         std::vector<Pixel> threadPix(pixPerThread[i]);
         size_t beginIndex = index;
         size_t endIndex = index + pixPerThread[i];
-        pool[i] = new std::thread(&Scene::castMultipleRandomRaysInPlace, this, std::ref(res), beginIndex, endIndex);
+        pool[i] = new std::thread(&Scene::castMultipleRandomRaysInPlace, this, std::ref(res), beginIndex, endIndex, nPointsRendered);
         index += pixPerThread[i];
     }
     for (size_t i = 0; i < numThreads; i++)
@@ -75,26 +75,19 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
     ambiantLight_ = ambiantLight;
 }
 
-Pixel Scene::castRandomRay() const
-{
-    Pixel pix;
-    castRandomRayInPlace( pix);
-    return pix;
-}
-
-void Scene::castMultipleRandomRaysInPlace( std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex) const
+void Scene::castMultipleRandomRaysInPlace( std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPixels) const
 {
     for (size_t i = beginIndex; i < endIndex; i++)
     {
-        castRandomRayInPlace( vecPix[i]);
+        castRandomRayInPlace( vecPix[i], i + nRenderedPixels);
     }
 }
 
-void Scene::castRandomRayInPlace( Pixel& pix) const
+void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
 {
     LightRay lr;
     Pixel ambiantPix, diffuseRefPix, specReflPix;
-    camera_.castRandomRay(lr, pix);
+    camera_.castOrderedRay(lr, pix, iOrderedRay);
 
     Vector3 impactPoint;
     Vector3 impactNormal;

@@ -89,14 +89,15 @@ TEST(ManoTests, Visu9SpheresTest)
     myScene.addItem(&s8);
     myScene.addItem(&pBottom);
 
-    std::cout << myScene << std::endl;
 
     int iter = 0;
     int nPixPerRender = 100000;
-    while(iter < 10000000)
+    while(iter < myWindow.nPixels())
     {
+        if(iter+nPixPerRender > myWindow.nPixels())
+            nPixPerRender = myWindow.nPixels() - iter;
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderParallel(pixs, nPixPerRender);
+        myScene.renderParallel(pixs, nPixPerRender, iter);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;

@@ -33,8 +33,11 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while(iter < nLightRay)
     {
-        std::vector<Pixel> pixs(nPixPerRender_);
-        sc.renderParallel(pixs, nPixPerRender_);
+        size_t nPixToRender = nPixPerRender_;
+        if(iter+nPixPerRender_ > win.nPixels())
+            nPixToRender = win.nPixels() - iter;
+        std::vector<Pixel> pixs(nPixToRender);
+        sc.renderParallel(pixs, nPixToRender, iter);
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;
@@ -55,11 +58,14 @@ void Renderer::renderSerial(const Scene& sc, Window& win, const std::string& s)
     while(iter < nLightRay)
     {
         std::vector<Pixel> pixs(nPixPerRender_);
-        sc.renderSerial(pixs, nPixPerRender_);
+        sc.renderSerial(pixs, nPixPerRender_, iter);
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;
     }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "duration Serial = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    std::cout << s;
+    char answer;
+    std::cin >> answer;
 }

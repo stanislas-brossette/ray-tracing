@@ -15,15 +15,16 @@
 
 void renderMainParallel(const Scene& myScene, Window& myWindow, const std::string& s)
 {
-    std::cout << myScene << std::endl;
     myWindow.clear();
     int iter = 0;
     int nPixPerRender = 100000;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < 10000000)
+    while(iter < myWindow.nPixels())
     {
+        if(iter+nPixPerRender > myWindow.nPixels())
+            nPixPerRender = myWindow.nPixels() - iter;
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderParallel(pixs, nPixPerRender);
+        myScene.renderParallel(pixs, nPixPerRender, iter);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;
@@ -44,7 +45,7 @@ void renderMainSerial(const Scene& myScene, Window& myWindow, const std::string&
     while(iter < 10000000)
     {
         std::vector<Pixel> pixs(nPixPerRender);
-        myScene.renderSerial(pixs, nPixPerRender);
+        myScene.renderSerial(pixs, nPixPerRender, iter);
         myWindow.addPixels(pixs);
         myWindow.render();
         iter+=nPixPerRender;

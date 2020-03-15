@@ -7,12 +7,13 @@
 #include "Window.hh"
 #include "Scene.hh"
 #include "Pixel.hh"
+#include "utils.hh"
 
 int main(void)
 {
-    std::string path("/home/stanislas/profiles/devel/src/raytracing/data/testScene.json");
+    std::string sceneJsonName("testScene.json");
+    std::string path = std::string(DATA) + sceneJsonName;
     SceneLoader sceneLoader(path);
-    std::cout << sceneLoader.sceneData_.describe();
     Scene scene(sceneLoader.sceneData_);
     Window window(scene.camera_.resX_, scene.camera_.resY_);
     Renderer renderer(sceneLoader.sceneData_.rData);

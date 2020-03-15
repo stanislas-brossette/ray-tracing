@@ -27,7 +27,6 @@ Renderer::~Renderer()
 
 void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s)
 {
-    std::cout << sc << std::endl;
     win.clear();
     int iter = 0;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

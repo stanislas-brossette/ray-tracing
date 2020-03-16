@@ -1,4 +1,6 @@
+#include <sys/stat.h>
 #include <cmath>
+#include <string>
 #include "utils.hh"
 
 double deg2rad(double d)
@@ -23,4 +25,10 @@ bool solve2ndOrderEq(double a, double b, double c, double& x0, double& x1)
     x0 = (-b-delta)/(2*a);
     x1 = (-b+delta)/(2*a);
     return true;
+}
+
+bool fileExists(const std::string& s)
+{
+    struct stat buffer;
+    return (stat (s.c_str(), &buffer) == 0);
 }

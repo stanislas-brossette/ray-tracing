@@ -16,6 +16,12 @@ int main(int argc, char *argv[])
         sceneJsonName = std::string(argv[1]);
 
     std::string path = std::string(DATA) + sceneJsonName;
+    if(not fileExists(path))
+    {
+        std::cout << "Error: this file " << path << " does not exist" << std::endl;
+        return 0;
+    }
+
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);
     Window window(scene.camera_.resX_, scene.camera_.resY_);

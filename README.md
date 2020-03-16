@@ -1,6 +1,8 @@
 # Ray tracing simulator
 
 # installation:
+sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+
 mkdir build  
 cd build  
 cmake ..  

@@ -4,13 +4,11 @@ project (RayTracing)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 
 find_package (Threads)
-find_package(Curses REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
-include_directories(SYSTEM ${CURSES_INCLUDE_DIRS})
 include_directories(SYSTEM ${SDL2_INCLUDE_DIR})
 include_directories(SYSTEM ${SDL2_TTF_INCLUDE_DIRS})
 include_directories(SYSTEM ${SDL2_MIXER_INCLUDE_DIRS})

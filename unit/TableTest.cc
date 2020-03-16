@@ -15,7 +15,7 @@ void renderTable(const Scene& myScene, Window& myWindow, const std::string& s)
 {
     myWindow.clear();
     int iter = 0;
-    int nPixPerRender = 1000;
+    int nPixPerRender = 10000;
     while(iter < myWindow.nPixels())
     {
         if(iter+nPixPerRender > myWindow.nPixels())

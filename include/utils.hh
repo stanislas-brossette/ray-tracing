@@ -6,6 +6,12 @@
 #define DATA ""
 #endif
 
+#ifdef UNIT_DATA_FOLDER
+#define UNIT_DATA UNIT_DATA_FOLDER
+#else
+#define UNIT_DATA ""
+#endif
+
 double deg2rad(double d);
 double rad2deg(double d);
 

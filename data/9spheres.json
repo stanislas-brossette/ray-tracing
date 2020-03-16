@@ -9,7 +9,7 @@
         "fovType": 2
     },
     "render": {
-        "nPixPerRender": 10000,
+        "nPixPerRender": 1000,
         "percentLightRay": 100
     },
     "ambiantLight": {

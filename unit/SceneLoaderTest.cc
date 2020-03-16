@@ -3,7 +3,7 @@
 
 TEST(sceneLoaderTest, SceneLoaderTest)
 {
-    std::string path("/home/stanislas/profiles/devel/src/raytracing/unit/data/cylinderTest.json");
+    std::string path = std::string(UNIT_DATA) + "cylinderTest.json";
     SceneLoader sceneLoader;
     SceneData sData = sceneLoader.load(path);
     std::cout << sData.describe();

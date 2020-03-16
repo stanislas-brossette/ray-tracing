@@ -21,6 +21,7 @@ public:
     int resX() const{return resX_;};
     int resY() const{return resY_;};
     int nPixels() const{return resX_*resY_;};
+    bool save(std::string filepath = "image.bmp");
 
 private:
     SDL_Window *window_;

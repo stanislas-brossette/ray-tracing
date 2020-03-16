@@ -11,11 +11,11 @@
 
 int main(int argc, char *argv[])
 {
-    std::string sceneJsonName("testScene.json");
+    std::string sceneJsonName("testScene");
     if(argc > 1)
         sceneJsonName = std::string(argv[1]);
 
-    std::string path = std::string(DATA) + sceneJsonName;
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
     if(not fileExists(path))
     {
         std::cout << "Error: this file " << path << " does not exist" << std::endl;
@@ -27,5 +27,6 @@ int main(int argc, char *argv[])
     Window window(scene.camera_.resX_, scene.camera_.resY_);
     Renderer renderer(sceneLoader.sceneData_.rData);
     renderer.renderParallel(scene, window, "This is the json scene");
+    window.save("../images/" + sceneJsonName + ".bmp");
     return 0;
 }

@@ -66,6 +66,8 @@ target_link_libraries(${PROJECT_NAME}
 # Data folder
 set(DATA_FOLDER "${CMAKE_SOURCE_DIR}/data/")
 add_definitions(-DDATA_FOLDER="${CMAKE_SOURCE_DIR}/data/")
+set(UNIT_DATA_FOLDER "${CMAKE_SOURCE_DIR}/unit/data/")
+add_definitions(-DUNIT_DATA_FOLDER="${CMAKE_SOURCE_DIR}/unit/data/")
 
 # Building executable
 set(SRC_EXEC

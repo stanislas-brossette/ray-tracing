@@ -27,6 +27,9 @@ public:
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
     double getDistReductionFactor(double dist) const;
 
+    void translateCamera(double x, double y, double z);
+    void multiplyResolution(double ratio);
+
     AmbiantLight ambiantLight_;
     std::vector<Item*> items_;
     Camera camera_;

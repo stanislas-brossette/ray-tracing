@@ -22,6 +22,8 @@ public:
     int resY() const{return resY_;};
     int nPixels() const{return resX_*resY_;};
     bool save(std::string filepath = "image.bmp");
+    SDL_Window* win(){return window_;};
+    void changeResolution(int resX, int resY);
 
 private:
     SDL_Window *window_;

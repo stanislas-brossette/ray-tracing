@@ -18,7 +18,7 @@ Window::Window(int resX, int resY)
     Uint32 flags = SDL_WINDOW_SHOWN;
 
     // Set up window
-    window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX, resY, flags);
+    window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX_, resY_, flags);
     if(!window_) {
         std::cerr << SDL_GetError() << std::endl;
     }
@@ -31,6 +31,16 @@ Window::Window(int resX, int resY)
 
     if(renderer_ == nullptr) {
         std::cerr << SDL_GetError() << std::endl;
+    }
+
+    filledPixels_.resize(resY_);
+    for (size_t i = 0; i < resY_; i++)
+    {
+        filledPixels_[i].resize(resX_);
+        for (size_t j = 0; j < resX_; j++)
+        {
+            filledPixels_[i][j] = 0;
+        }
     }
 }
 
@@ -51,7 +61,16 @@ void Window::addPixels(const std::vector<Pixel>& v)
 
 void Window::clear()
 {
+    for (size_t i = 0; i < resX_; i++)
+    {
+        for (size_t j = 0; j < resY_; j++)
+        {
+            SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+            SDL_RenderDrawPoint(renderer_, i, j);
+        }
+    }
     SDL_RenderClear(renderer_);
+    render();
 }
 
 void Window::render()
@@ -110,4 +129,11 @@ bool Window::save(std::string filepath)
         infoSurface = NULL;
     }
     return true;
+}
+
+void Window::changeResolution(int resX, int resY)
+{
+    resX_ = resX;
+    resY_ = resY;
+    SDL_SetWindowSize(window_, resX_, resY_);
 }

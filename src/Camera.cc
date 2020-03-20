@@ -140,3 +140,10 @@ std::string CamData::describe() const
     ss << "rotAngle: " << rotAngle << "\n";
     return ss.str();
 }
+
+void Camera::changeResolution(int resX, int resY)
+{
+    resX_ = resX;
+    resY_ = resY;
+    initAllPixelsVec();
+}

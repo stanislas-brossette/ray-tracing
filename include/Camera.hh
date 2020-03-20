@@ -25,6 +25,7 @@ public:
     void castOrderedRay(LightRay& lr, Pixel& px, size_t index) const;
     Vector3 pixelToDir(const Pixel& px) const;
     int nPixels() const {return resX_*resY_;};
+    void changeResolution(int resX, int resY);
 
     Frame3 frame_;
     double fovX_;

@@ -86,5 +86,13 @@ target_include_directories(RenderJson${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(RenderJson${PROJECT_NAME} ${PROJECT_NAME})
 
+set(SRC_MOTION
+    "${CMAKE_SOURCE_DIR}/src/mainMotion.cc"
+    )
+add_executable(MotionTest${PROJECT_NAME} ${SRC_MOTION})
+target_include_directories(MotionTest${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(MotionTest${PROJECT_NAME} ${PROJECT_NAME})
+
 # Build unit tests
 add_subdirectory("unit")

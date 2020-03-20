@@ -45,8 +45,6 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "duration Parallel = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
     std::cout << s;
-    char answer;
-    std::cin >> answer;
 }
 
 void Renderer::renderSerial(const Scene& sc, Window& win, const std::string& s)

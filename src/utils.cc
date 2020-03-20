@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <sys/stat.h>
 #include <cmath>
 #include <string>
@@ -31,4 +33,18 @@ bool fileExists(const std::string& s)
 {
     struct stat buffer;
     return (stat (s.c_str(), &buffer) == 0);
+}
+
+void printManual()
+{
+    std::cout << "This in RayTracings manual:" << std::endl;
+    std::cout << "q: quit" << std::endl;
+    std::cout << "right: move camera to right" << std::endl;
+    std::cout << "left: move camera to left" << std::endl;
+    std::cout << "up: move camera to up" << std::endl;
+    std::cout << "down: move camera to down" << std::endl;
+    std::cout << "F5: refresh window" << std::endl;
+    std::cout << "c: clear window" << std::endl;
+    std::cout << "+(number pad): Increase resolution by 10%" << std::endl;
+    std::cout << "-(number pad): Decrease resolution by 10%" << std::endl;
 }

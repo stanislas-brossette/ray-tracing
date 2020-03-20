@@ -301,3 +301,15 @@ std::string SceneData::describe() const
     }
     return ss.str();
 }
+
+void Scene::translateCamera(double x, double y, double z)
+{
+    camera_.frame_.translate(x, y, z);
+}
+
+void Scene::multiplyResolution(double ratio)
+{
+    int newResX = int(ratio * double(camera_.resX_));
+    int newResY = int(ratio * double(camera_.resY_));
+    camera_.changeResolution(newResX, newResY);
+}

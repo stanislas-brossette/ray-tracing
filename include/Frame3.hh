@@ -11,10 +11,14 @@ public:
     //Translations and rotations are always made w.r.t the world frame
     void translate(const Vector3& v);
     void translate(double x, double y, double z);
+    void translateLocal(double x, double y, double z);
     void setOriginPos(double x, double y, double z);
     //angle is given in degrees
     //rotate is always done around the origin of the frame, which therefore does not move with rotate
     void rotate(const Vector3& axis, double angle);
+    void roll(double theta); // rotation around frames y axis
+    void pitch(double theta); // rotation around frames x axis
+    void yaw(double theta); // rotation around frames z axis
 
     bool operator==(const Frame3& f);
     bool isApprox(const Frame3& f, double prec);

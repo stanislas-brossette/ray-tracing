@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
 
     bool quit = false;
     SDL_Event event;
+
+    bool rotationMode = false;
+    double rotIncrement = 5;
+    double transIncrement = 0.1;
  
     bool needRender = true;
     while (!quit)
@@ -76,31 +80,54 @@ int main(int argc, char *argv[])
                     scene.toggleSimplifiedRender();
                     needRender = true;
                     break;
+                // Toggle simplified render with s
+                case SDLK_r:
+                    rotationMode = not rotationMode;
+                    break;
                 // Move camera left right up down
                 case SDLK_LEFT:
-                    scene.translateCamera(-0.1, 0.0, 0.0);
+                    if(rotationMode)
+                        scene.camera_.frame_.yaw(rotIncrement);
+                    else
+                        scene.translateCameraLocal(-transIncrement, 0.0, 0.0);
                     needRender = true;
                     break;
                 case SDLK_RIGHT:
-                    scene.translateCamera(0.1, 0.0, 0.0);
+                    if(rotationMode)
+                        scene.camera_.frame_.yaw(-rotIncrement);
+                    else
+                        scene.translateCameraLocal(transIncrement, 0.0, 0.0);
                     needRender = true;
                     break;
                 case SDLK_UP:
-                    scene.translateCamera(0.0, 0.1, 0.0);
+                    if(rotationMode)
+                        scene.camera_.frame_.pitch(rotIncrement);
+                    else
+                        scene.translateCameraLocal(0.0, transIncrement, 0.0);
                     needRender = true;
                     break;
                 case SDLK_DOWN:
-                    scene.translateCamera(0.0, -0.1, 0.0);
+                    if(rotationMode)
+                        scene.camera_.frame_.pitch(-rotIncrement);
+                    else
+                        scene.translateCameraLocal(0.0, -transIncrement, 0.0);
                     needRender = true;
                     break;
                 case SDLK_PAGEUP:
-                    scene.translateCamera(0.0, 0.0, 0.1);
+                    if(rotationMode)
+                        scene.camera_.frame_.roll(rotIncrement);
+                    else
+                        scene.translateCameraLocal(0.0, 0.0, transIncrement);
                     needRender = true;
                     break;
                 case SDLK_PAGEDOWN:
-                    scene.translateCamera(0.0, 0.0, -0.1);
+                    if(rotationMode)
+                        scene.camera_.frame_.roll(-rotIncrement);
+                    else
+                        scene.translateCameraLocal(0.0, 0.0, -transIncrement);
                     needRender = true;
                     break;
+                // Change camera/windows resolution
                 case SDLK_KP_MINUS:
                     scene.multiplyResolution(0.8);
                     myWindow.changeResolution(scene.camera_.resX_, scene.camera_.resY_);

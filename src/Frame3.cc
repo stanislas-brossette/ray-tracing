@@ -31,6 +31,13 @@ void Frame3::translate(double x, double y, double z)
     translate(v);
 }
 
+void Frame3::translateLocal(double x, double y, double z)
+{
+    Vector3 v(x, y, z);
+    Vector3 v_w = vecToWorld(v);
+    translate(v_w);
+}
+
 void Frame3::setOriginPos(double x, double y, double z)
 {
     o_.x_ = x;
@@ -65,6 +72,37 @@ void Frame3::rotate(const Vector3& axis, double theta)
     tmpV.y_ = row1.dot(vz_);
     tmpV.z_ = row2.dot(vz_);
     vz_ = tmpV;
+}
+
+void Frame3::pitch(double theta)
+{
+    double theta_rad = theta * M_PI / 180;
+    double s = std::sin(theta_rad);
+    double c = std::cos(theta_rad);
+    Vector3 vyTmp = vy_;
+    Vector3 vzTmp = vz_;
+    vy_ = (vyTmp * c) + (vzTmp * s);
+    vz_ = (vzTmp * c) - (vyTmp * s);
+}
+void Frame3::roll(double theta)
+{
+    double theta_rad = theta * M_PI / 180;
+    double s = std::sin(theta_rad);
+    double c = std::cos(theta_rad);
+    Vector3 vxTmp = vx_;
+    Vector3 vzTmp = vz_;
+    vz_ = (vzTmp * c) + (vxTmp * s);
+    vx_ = (vxTmp * c) - (vzTmp * s);
+}
+void Frame3::yaw(double theta)
+{
+    double theta_rad = theta * M_PI / 180;
+    double s = std::sin(theta_rad);
+    double c = std::cos(theta_rad);
+    Vector3 vxTmp = vx_;
+    Vector3 vyTmp = vy_;
+    vx_ = (vxTmp * c) + (vyTmp * s);
+    vy_ = (vyTmp * c) - (vxTmp * s);
 }
 
 bool Frame3::operator==(const Frame3& f)

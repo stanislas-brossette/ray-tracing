@@ -28,6 +28,7 @@ public:
     double getDistReductionFactor(double dist) const;
 
     void translateCamera(double x, double y, double z);
+    void translateCameraLocal(double x, double y, double z);
     void multiplyResolution(double ratio);
     void toggleSimplifiedRender();
 

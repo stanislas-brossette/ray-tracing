@@ -48,3 +48,19 @@ void printManual()
     std::cout << "+(number pad): Increase resolution by 10%" << std::endl;
     std::cout << "-(number pad): Decrease resolution by 10%" << std::endl;
 }
+
+void printMat(std::vector<std::vector<int> > m)
+{
+    std::cout << "rows: " << m.size() << std::endl;
+    std::cout << "cols: " << m[0].size() << std::endl;
+    for (size_t i = 0; i < m.size(); i++)
+    {
+        std::cout << "[";
+        for (size_t j = 0; j < m[0].size(); j++)
+        {
+            std::cout << m[i][j] << ",";
+        }
+        std::cout << "]\n";
+    }
+    std::cout << std::endl;
+}

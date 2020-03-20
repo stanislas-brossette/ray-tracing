@@ -32,16 +32,6 @@ Window::Window(int resX, int resY)
     if(renderer_ == nullptr) {
         std::cerr << SDL_GetError() << std::endl;
     }
-
-    filledPixels_.resize(resY_);
-    for (size_t i = 0; i < resY_; i++)
-    {
-        filledPixels_[i].resize(resX_);
-        for (size_t j = 0; j < resX_; j++)
-        {
-            filledPixels_[i][j] = 0;
-        }
-    }
 }
 
 void Window::addPixel(const Pixel& p)

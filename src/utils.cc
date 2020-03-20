@@ -38,13 +38,14 @@ bool fileExists(const std::string& s)
 void printManual()
 {
     std::cout << "This in RayTracings manual:" << std::endl;
-    std::cout << "q: quit" << std::endl;
-    std::cout << "right: move camera to right" << std::endl;
-    std::cout << "left: move camera to left" << std::endl;
-    std::cout << "up: move camera to up" << std::endl;
-    std::cout << "down: move camera to down" << std::endl;
-    std::cout << "F5: refresh window" << std::endl;
-    std::cout << "c: clear window" << std::endl;
+    std::cout << "q: Quit" << std::endl;
+    std::cout << "right: Move camera to right" << std::endl;
+    std::cout << "left: Move camera to left" << std::endl;
+    std::cout << "up: Move camera to up" << std::endl;
+    std::cout << "down: Move camera to down" << std::endl;
+    std::cout << "F5: Refresh window" << std::endl;
+    std::cout << "c: Clear window" << std::endl;
+    std::cout << "s: Toggle simplified render" << std::endl;
     std::cout << "+(number pad): Increase resolution by 10%" << std::endl;
     std::cout << "-(number pad): Decrease resolution by 10%" << std::endl;
 }

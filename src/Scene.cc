@@ -3,14 +3,16 @@
 Scene::Scene()
   : items_(),
     camera_(),
-    ambiantLight_()
+    ambiantLight_(),
+    simplifiedRender_(false)
 {
 }
 
 Scene::Scene(const SceneData& sData)
   : items_(),
     camera_(sData.cData),
-    ambiantLight_(sData.aData)
+    ambiantLight_(sData.aData),
+    simplifiedRender_(false)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
@@ -118,10 +120,19 @@ void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
         /*******************
         *  Ambiant light  *
         *******************/
-        ambiantPix.a_ = 255*ambiantLight_.intensity_;
+        double cosAngleAmbiant = std::abs(- lr.dir_.dot(impactNormal));
+        ambiantPix.a_ = 255*cosAngleAmbiant*ambiantLight_.intensity_;
         ambiantPix.r_ = impactItem->material_->color_.r_;
         ambiantPix.g_ = impactItem->material_->color_.g_;
         ambiantPix.b_ = impactItem->material_->color_.b_;
+
+        if(simplifiedRender_)
+        {
+            ambiantPix.a_ *= 2.0;
+            pix = pix + ambiantPix;
+            pix.clamp();
+            return;
+        }
 
         /************************
         *  diffuse reflection  *
@@ -312,4 +323,9 @@ void Scene::multiplyResolution(double ratio)
     int newResX = int(ratio * double(camera_.resX_));
     int newResY = int(ratio * double(camera_.resY_));
     camera_.changeResolution(newResX, newResY);
+}
+
+void Scene::toggleSimplifiedRender()
+{
+    simplifiedRender_ = not simplifiedRender_;
 }

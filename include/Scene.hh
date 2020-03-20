@@ -29,10 +29,12 @@ public:
 
     void translateCamera(double x, double y, double z);
     void multiplyResolution(double ratio);
+    void toggleSimplifiedRender();
 
     AmbiantLight ambiantLight_;
     std::vector<Item*> items_;
     Camera camera_;
+    bool simplifiedRender_;
 
     friend std::ostream& operator<<(std::ostream& os, const Scene& s);
 };

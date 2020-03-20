@@ -71,6 +71,11 @@ int main(int argc, char *argv[])
                 case SDLK_c:
                     myWindow.clear();
                     break;
+                // Toggle simplified render with s
+                case SDLK_s:
+                    scene.toggleSimplifiedRender();
+                    needRender = true;
+                    break;
                 // Move camera left right up down
                 case SDLK_LEFT:
                     scene.translateCamera(-0.1, 0.0, 0.0);

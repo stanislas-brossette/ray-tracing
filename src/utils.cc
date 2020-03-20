@@ -37,17 +37,21 @@ bool fileExists(const std::string& s)
 
 void printManual()
 {
-    std::cout << "This in RayTracings manual:" << std::endl;
-    std::cout << "q: Quit" << std::endl;
-    std::cout << "right: Move camera to right" << std::endl;
-    std::cout << "left: Move camera to left" << std::endl;
-    std::cout << "up: Move camera to up" << std::endl;
-    std::cout << "down: Move camera to down" << std::endl;
-    std::cout << "F5: Refresh window" << std::endl;
-    std::cout << "c: Clear window" << std::endl;
-    std::cout << "s: Toggle simplified render" << std::endl;
-    std::cout << "+(number pad): Increase resolution by 10%" << std::endl;
-    std::cout << "-(number pad): Decrease resolution by 10%" << std::endl;
+    std::cout << "==================================================\n";
+    std::cout << "This in RayTracings manual:\n";
+    std::cout << "q: Quit\n";
+    std::cout << "Right: Move camera to right\n";
+    std::cout << "Left: Move camera to left\n";
+    std::cout << "Up: Move camera forward\n";
+    std::cout << "Down: Move camera backward\n";
+    std::cout << "PageUp: Move camera forward\n";
+    std::cout << "PageDown: Move camera backward\n";
+    std::cout << "F5: Refresh window\n";
+    std::cout << "c: Clear window\n";
+    std::cout << "s: Toggle simplified render\n";
+    std::cout << "+(number pad): Increase resolution by 20%\n";
+    std::cout << "-(number pad): Decrease resolution by 20%\n";
+    std::cout << "==================================================" << std::endl;
 }
 
 void printMat(std::vector<std::vector<int> > m)

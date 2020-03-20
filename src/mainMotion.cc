@@ -93,15 +93,21 @@ int main(int argc, char *argv[])
                     scene.translateCamera(0.0, -0.1, 0.0);
                     needRender = true;
                     break;
+                case SDLK_PAGEUP:
+                    scene.translateCamera(0.0, 0.0, 0.1);
+                    needRender = true;
+                    break;
+                case SDLK_PAGEDOWN:
+                    scene.translateCamera(0.0, 0.0, -0.1);
+                    needRender = true;
+                    break;
                 case SDLK_KP_MINUS:
-                    std::cout << "pressed -" << std::endl;
-                    scene.multiplyResolution(0.9);
+                    scene.multiplyResolution(0.8);
                     myWindow.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                     needRender = true;
                     break;
                 case SDLK_KP_PLUS:
-                    std::cout << "pressed +" << std::endl;
-                    scene.multiplyResolution(1.1);
+                    scene.multiplyResolution(1.2);
                     myWindow.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                     needRender = true;
                     break;

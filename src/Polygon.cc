@@ -50,44 +50,30 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     {
         impact = true;
         normal = f_.vz_;
-        double l = (f_.o_ - lr.origin_).dot(f_.vz_) / lr.dir_.dot(f_.vz_);
-        Vector3 Pimpact = lr.origin_ + (lr.dir_*l) - f_.o_;
-        Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_));
-        Vector2 P0(0.1, 0.1);
-        Vector2 P1(0.0, -1.0);
-        Vector2 P2(-1.0, 0.0);
-        bool b0 = Pp.isRightOf(P0, P1);
-        bool b1 = Pp.isRightOf(P1, P2);
-        bool b2 = Pp.isRightOf(P2, P0);
-        if(b0 and b1 and b2)
-            impact = true;
-        else
-            impact = false;
     }
     else if (not pointAbovePolygon and lrSameDirNormal)
     {
         impact = true;
         normal = f_.vz_ * -1.0;
-        double l = (f_.o_ - lr.origin_).dot(normal) / lr.dir_.dot(normal);
-        Vector3 Pimpact = lr.origin_ + (lr.dir_*l) - f_.o_;
-        Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_));
-        Vector2 P0(0.1, 0.1);
-        Vector2 P1(0.0, -1.0);
-        Vector2 P2(-1.0, 0.0);
-        bool b0 = Pp.isRightOf(P0, P1);
-        bool b1 = Pp.isRightOf(P1, P2);
-        bool b2 = Pp.isRightOf(P2, P0);
-        if(b0 and b1 and b2)
-            impact = true;
-        else
-            impact = false;
+    }
+    else
+    {
+        return false;
     }
 
-    if(impact)
+    dist = (f_.o_ - lr.origin_).dot(normal) / lr.dir_.dot(normal);
+    Vector3 Pimpact = lr.origin_ + (lr.dir_*dist) - f_.o_; // In planes frame
+    Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_)); // In planes frame
+
+    for (size_t i = 0; i < points_.size(); i++)
     {
-        dist = std::abs((f_.o_ - lr.origin_).dot(normal)/(lr.dir_.dot(normal)));
-        point = lr.origin_ + lr.dir_ * dist;
+        size_t i1 = (i+1)%(points_.size());
+        impact = impact and Pp.isRightOf(points_.at(i), points_.at(i1));
+        if(not impact)
+            return false;
     }
+
+    point = lr.origin_ + lr.dir_ * dist;
     return impact;
 }
 

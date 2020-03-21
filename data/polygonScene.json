@@ -65,6 +65,27 @@
                     {"x": -1.0, "y": 0.0}
                 ]
             }
+        },
+        "hexagone0": {
+            "material": {
+                "color": [180, 8, 180],
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Polygon",
+                "pos": [0.0, 2.5, -0.5],
+                "points": [
+                    {"x": -0.5, "y": -1.0},
+                    {"x": -1.5, "y": 0.5},
+                    {"x": 0.0, "y": 1.5},
+                    {"x": 1.5, "y": 0.5},
+                    {"x": 0.5, "y": -1.0}
+                ]
+            }
         }
     }
 }

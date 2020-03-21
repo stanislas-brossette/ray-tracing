@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "dataStructures.hh"
+#include "BoundingVolume.hh"
 #include "Frame3.hh"
 #include "Vector3.hh"
 #include "LightRay.hh"
@@ -19,4 +20,5 @@ public:
     virtual bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const = 0;
 
     Frame3 f_;
+    BoundingVolume bv_;
 };

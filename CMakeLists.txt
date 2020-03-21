@@ -32,10 +32,11 @@ option(CMAKE_BUILD_TYPE "Choose the type of build." Release)
 # Building Library
 set(SRC
     "${CMAKE_SOURCE_DIR}/src/AmbiantLight.cc"
+    "${CMAKE_SOURCE_DIR}/src/BoundingVolume.cc"
     "${CMAKE_SOURCE_DIR}/src/Camera.cc"
+    "${CMAKE_SOURCE_DIR}/src/ClosedCylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/Cube.cc"
     "${CMAKE_SOURCE_DIR}/src/Cylinder.cc"
-    "${CMAKE_SOURCE_DIR}/src/ClosedCylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/Frame3.cc"
     "${CMAKE_SOURCE_DIR}/src/Geometry.cc"
     "${CMAKE_SOURCE_DIR}/src/Item.cc"
@@ -48,9 +49,9 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"
     "${CMAKE_SOURCE_DIR}/src/SceneLoader.cc"
     "${CMAKE_SOURCE_DIR}/src/Sphere.cc"
-    "${CMAKE_SOURCE_DIR}/src/utils.cc"
     "${CMAKE_SOURCE_DIR}/src/Vector3.cc"
     "${CMAKE_SOURCE_DIR}/src/Window.cc"
+    "${CMAKE_SOURCE_DIR}/src/utils.cc"
     )
 add_library(${PROJECT_NAME} STATIC ${SRC})
 target_include_directories(${PROJECT_NAME} PUBLIC

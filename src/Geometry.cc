@@ -1,17 +1,20 @@
 #include "Geometry.hh"
 
 Geometry::Geometry()
-  : f_()
+  : f_(),
+    bv_()
 {
 }
 
 Geometry::Geometry(const Frame3& f)
-  : f_(f)
+  : f_(f),
+    bv_()
 {
 }
 
 Geometry::Geometry(GeometryData* gData)
-  : f_()
+  : f_(),
+    bv_()
 {
     f_.translate(gData->pos);
     f_.rotate(gData->rotAxis, gData->rotAngle);

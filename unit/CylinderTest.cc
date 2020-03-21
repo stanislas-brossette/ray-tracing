@@ -99,5 +99,72 @@ TEST(ManoTests, VisuCylinderTest)
     testRenderCylinder(myScene, myWindow, "You should see a cool scene with 3 infinite cylinders in a grey room. Correct [y/n]?");
 }
 
+TEST(UnitTests, CylinderTest)
+{
+    double prec = 1e-9;
+    Frame3 f;
+    f.translate(Vector3(0,3,0));
 
+    Cylinder c(f, 0.2, 1);
 
+    Vector3 impactPoint(0,0,0);
+    Vector3 normal(0,0,0);
+    double dist(0);
+    bool impact(false);
+
+    LightRay lr(Vector3(0,0,0), Vector3(0,1,0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+    ASSERT_TRUE(impactPoint.isApprox(Vector3(0, 2.8, 0), prec));
+    ASSERT_TRUE(normal.isApprox(Vector3(0, -1, 0), prec));
+    ASSERT_TRUE(std::abs(dist - 2.8) < prec);
+
+    lr = LightRay(Vector3(0, 0, 0), Vector3(0, -1, 0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(0,1,0.1));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(0,1,-0.1));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(0,1,2));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(0,1,-2));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(0.01,1,0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(-0.01,1,0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(1,1,0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    lr = LightRay(Vector3(0,0,0), Vector3(-1,1,0));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    lr = LightRay(Vector3(0,3,2), Vector3(0,0,-1));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    ClosedCylinder cc(f, 0.2, 1);
+    impact = cc.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+    lr = LightRay(Vector3(0,3,2), Vector3(0.1,0,-1));
+    impact = c.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+
+}

@@ -302,7 +302,7 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
 std::string SceneData::describe() const
 {
     std::stringstream ss;
-    ss << "========== Scene ==========\n";
+    ss << "========== SceneData ==========\n";
     ss << rData.describe();
     ss << aData.describe();
     ss << cData.describe();

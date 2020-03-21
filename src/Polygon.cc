@@ -13,6 +13,11 @@ Polygon::Polygon(const Frame3& f)
 Polygon::Polygon(PolygonData* pData)
   : Geometry(pData)
 {
+    points_.resize(pData->points.size());
+    for (size_t i = 0; i < points_.size(); i++)
+    {
+        points_[i] = pData->points[i];
+    }
 }
 
 Polygon::~Polygon()
@@ -25,6 +30,12 @@ std::string Polygon::describe() const
     ss << "=== Polygon ===\n";
     ss << "origin: " << f_.o_ << "\n";
     ss << "normal: " << f_.vz_ << "\n";
+    ss << "points: ";
+    for (size_t i = 0; i < points_.size()-1; i++)
+    {
+        ss << points_.at(i) << ",";
+    }
+    ss << points_.at(points_.size()-1);
 
     return ss.str();
 }
@@ -32,9 +43,6 @@ std::string Polygon::describe() const
 bool Polygon::intersect(const LightRay& lr, Vector3& point,
                       Vector3& normal, double& dist) const
 {
-    //std::cout << "Polygon::intersect" << std::endl;
-    //std::cout << "(lr.origin_ - f_.o_).dot(f_.vz_): " << (lr.origin_ - f_.o_).dot(f_.vz_) << std::endl;
-    //std::cout << "f_.vz_.dot(lr.dir_): " << f_.vz_.dot(lr.dir_) << std::endl;
     bool pointAbovePolygon = ((lr.origin_ - f_.o_).dot(f_.vz_) > 0);
     bool lrSameDirNormal = (f_.vz_.dot(lr.dir_) > 0);
     bool impact = false;

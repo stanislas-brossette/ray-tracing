@@ -43,8 +43,12 @@ std::string Polygon::describe() const
 bool Polygon::intersect(const LightRay& lr, Vector3& point,
                       Vector3& normal, double& dist) const
 {
-    bool pointAbovePolygon = ((lr.origin_ - f_.o_).dot(f_.vz_) > 0);
-    bool lrSameDirNormal = (f_.vz_.dot(lr.dir_) > 0);
+    double verticalDist = (lr.origin_ - f_.o_).dot(f_.vz_);
+    bool pointAbovePolygon = (verticalDist > 0);
+
+    double vzScalDir = f_.vz_.dot(lr.dir_);
+    bool lrSameDirNormal = (vzScalDir > 0);
+
     bool impact = false;
     if (pointAbovePolygon and not lrSameDirNormal)
     {
@@ -61,8 +65,9 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
         return false;
     }
 
-    dist = (f_.o_ - lr.origin_).dot(normal) / lr.dir_.dot(normal);
-    Vector3 Pimpact = lr.origin_ + (lr.dir_*dist) - f_.o_; // In planes frame
+    dist = -verticalDist/vzScalDir;
+    point = lr.origin_ + lr.dir_ * dist;
+    Vector3 Pimpact = point - f_.o_; // In planes frame
     Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_)); // In planes frame
 
     for (size_t i = 0; i < points_.size(); i++)
@@ -73,7 +78,6 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
             return false;
     }
 
-    point = lr.origin_ + lr.dir_ * dist;
     return impact;
 }
 

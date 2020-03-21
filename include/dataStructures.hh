@@ -80,6 +80,7 @@ struct PlaneData : public GeometryData
 
 struct PolygonData : public GeometryData
 {
+    std::vector<Vector2> points;
     std::string describe() const;
 };
 

@@ -40,17 +40,11 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     bool impact = false;
     if (pointAbovePolygon and not lrSameDirNormal)
     {
-        //std::cout << "impact of correct side" << std::endl;
         impact = true;
         normal = f_.vz_;
         double l = (f_.o_ - lr.origin_).dot(f_.vz_) / lr.dir_.dot(f_.vz_);
-        //std::cout << "l: " << l << std::endl;
         Vector3 Pimpact = lr.origin_ + (lr.dir_*l) - f_.o_;
-        //std::cout << "Pimpact: " << Pimpact << std::endl;
         Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_));
-        //std::cout << "Pp: " << Pp << std::endl;
-        //std::cout << "Pp.x_: " << Pp.x_ << std::endl;
-        //std::cout << "Pp.y_: " << Pp.y_ << std::endl;
         Vector2 P0(0.1, 0.1);
         Vector2 P1(0.0, -1.0);
         Vector2 P2(-1.0, 0.0);
@@ -67,13 +61,8 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
         impact = true;
         normal = f_.vz_ * -1.0;
         double l = (f_.o_ - lr.origin_).dot(normal) / lr.dir_.dot(normal);
-        //std::cout << "l: " << l << std::endl;
         Vector3 Pimpact = lr.origin_ + (lr.dir_*l) - f_.o_;
-        //std::cout << "Pimpact: " << Pimpact << std::endl;
         Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_));
-        //std::cout << "Pp: " << Pp << std::endl;
-        //std::cout << "Pp.x_: " << Pp.x_ << std::endl;
-        //std::cout << "Pp.y_: " << Pp.y_ << std::endl;
         Vector2 P0(0.1, 0.1);
         Vector2 P1(0.0, -1.0);
         Vector2 P2(-1.0, 0.0);
@@ -84,9 +73,6 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
             impact = true;
         else
             impact = false;
-        //bool right0 = Pp.isRightOf(P0, P1);
-        //bool right1 = Pp.isRightOf(P1, P2);
-        //bool right1 = Pp.isRightOf(P1, P2);
     }
 
     if(impact)
@@ -108,6 +94,12 @@ std::string PolygonData::describe() const
     std::stringstream ss;
     ss << "=== Polygon ===\n";
     ss << GeometryData::describe();
+    ss << "points: ";
+    for (size_t i = 0; i < points.size()-1; i++)
+    {
+        ss << points.at(i) << ",";
+    }
+    ss << points.at(points.size()-1);
     return ss.str();
 }
 

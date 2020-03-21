@@ -41,6 +41,14 @@ SceneData SceneLoader::load(const std::string& path)
     return sceneData_;
 }
 
+void SceneLoader::scanVector2(Value& vIn, Vector2& vRes)
+{
+    std::vector<double> vec2;
+    for (auto& vec : vIn.GetArray())
+        vec2.push_back(vec.GetDouble());
+    vRes = Vector2(vec2[0], vec2[1]);
+}
+
 void SceneLoader::scanVector3(Value& vIn, Vector3& vRes)
 {
     std::vector<double> vec3;
@@ -136,6 +144,14 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
     {
         PolygonData* pData = new PolygonData();
         scanBaseGeometry(vIn, pData);
+        {
+            const Value& pointsValue = vIn["points"];
+            pData->points.resize(pointsValue.Size());
+            for (SizeType i = 0; i < pointsValue.Size(); i++)
+            {
+                pData->points[i] = Vector2(pointsValue[i]["x"].GetDouble(), pointsValue[i]["y"].GetDouble());
+            }
+        }
         return pData;
     }
     else if(type == "Cylinder")

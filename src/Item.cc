@@ -20,6 +20,8 @@ Item::Item (const ItemData& iData)
         geometry_ = new Cylinder(sData);
     else if(ClosedCylinderData* sData = dynamic_cast<ClosedCylinderData*>(iData.gData))
         geometry_ = new ClosedCylinder(sData);
+    else if(CubeData* sData = dynamic_cast<CubeData*>(iData.gData))
+        geometry_ = new Cube(sData);
 }
 
 Item::~Item()

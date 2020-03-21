@@ -33,6 +33,7 @@ option(CMAKE_BUILD_TYPE "Choose the type of build." Release)
 set(SRC
     "${CMAKE_SOURCE_DIR}/src/AmbiantLight.cc"
     "${CMAKE_SOURCE_DIR}/src/Camera.cc"
+    "${CMAKE_SOURCE_DIR}/src/Cube.cc"
     "${CMAKE_SOURCE_DIR}/src/Cylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/ClosedCylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/Frame3.cc"

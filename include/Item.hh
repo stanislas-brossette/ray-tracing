@@ -8,6 +8,7 @@
 #include "Cylinder.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
+#include "Cube.hh"
 #include "Polygon.hh"
 #include "Material.hh"
 

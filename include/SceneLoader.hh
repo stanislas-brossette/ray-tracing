@@ -13,6 +13,7 @@
 #include "Item.hh"
 #include "Sphere.hh"
 #include "Cylinder.hh"
+#include "Cube.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Polygon.hh"

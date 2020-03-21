@@ -73,6 +73,12 @@ struct CylinderData : public GeometryData
     std::string describe() const;
 };
 
+struct CubeData : public GeometryData
+{
+    double size = 1.0;
+    std::string describe() const;
+};
+
 struct PlaneData : public GeometryData
 {
     std::string describe() const;

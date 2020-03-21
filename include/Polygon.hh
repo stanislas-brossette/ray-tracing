@@ -11,7 +11,7 @@ class Polygon : public Geometry
 public:
     Polygon ();
     Polygon (PolygonData* pData);
-    Polygon(const Frame3& f);
+    Polygon(const Frame3& f, const std::vector<Vector2>& p);
     virtual ~Polygon ();
     std::string describe() const;
     //The planes normal is f_.z_

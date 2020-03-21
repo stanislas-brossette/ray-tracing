@@ -142,9 +142,14 @@ TEST(UnitTests, PlaneTest)
     double prec = 1e-9;
     Frame3 f;
     f.translate(Vector3(0,0,0));
+    std::vector<Vector2> points(4);
+    points[0] = Vector2(-1,-1);
+    points[1] = Vector2(-1,1);
+    points[2] = Vector2(1,1);
+    points[3] = Vector2(1,-1);
 
     Plane pl(f);
-    Polygon po(f);
+    Polygon po(f, points);
 
     Vector3 impactPoint(0,0,0);
     Vector3 normal(0,0,0);
@@ -162,12 +167,10 @@ TEST(UnitTests, PlaneTest)
     impact = pl.intersect(lr, impactPoint, normal, dist);
     ASSERT_FALSE(impact);
 
-    std::cout << "Polygon intersection should fail" << std::endl;
     lr = LightRay(Vector3(0,0,1), Vector3(0,0,1));
     impact = po.intersect(lr, impactPoint, normal, dist);
     ASSERT_FALSE(impact);
 
-    std::cout << "Polygon intersection should succeed" << std::endl;
     lr = LightRay(Vector3(0,0,1), Vector3(0,0,-1));
     impact = po.intersect(lr, impactPoint, normal, dist);
     ASSERT_TRUE(impact);

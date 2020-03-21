@@ -170,6 +170,13 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
         cData->length = vIn.FindMember("length")->value.GetDouble();
         return cData;
     }
+    else if(type == "Cube")
+    {
+        CubeData* cData = new CubeData();
+        scanBaseGeometry(vIn, cData);
+        cData->size = vIn.FindMember("size")->value.GetDouble();
+        return cData;
+    }
     else
     {
         std::cout << "ERROR: wrong item type" << std::endl;

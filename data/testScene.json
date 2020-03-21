@@ -1,6 +1,6 @@
 {
     "camera": {
-        "resX": 1300,
+        "resX": 800,
         "fovX": 110,
         "fovY": 90,
         "pos": [0.4, -0.5, 0.1],
@@ -120,6 +120,23 @@
                 "type": "Sphere",
                 "radius": 0.2,
                 "pos": [-0.2, 1.8, -0.8]
+            }
+        },
+        "blueCube": {
+            "material": {
+                "color": [204, 130, 232],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 10.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cube",
+                "size": 0.5,
+                "pos": [0.8, 2.0, 0.1],
+                "rotAxis": [0.57, 0.57, 0.57],
+                "rotAngle": 50
             }
         },
         "redCylinder": {

@@ -5,9 +5,10 @@ Polygon::Polygon()
 {
 }
 
-Polygon::Polygon(const Frame3& f)
+Polygon::Polygon(const Frame3& f, const std::vector<Vector2>& p)
   : Geometry(f)
 {
+    points_ = p;
 }
 
 Polygon::Polygon(PolygonData* pData)

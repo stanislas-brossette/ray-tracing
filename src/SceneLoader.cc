@@ -132,6 +132,12 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
         scanBaseGeometry(vIn, pData);
         return pData;
     }
+    else if(type == "Polygon")
+    {
+        PolygonData* pData = new PolygonData();
+        scanBaseGeometry(vIn, pData);
+        return pData;
+    }
     else if(type == "Cylinder")
     {
         CylinderData* cData = new CylinderData();

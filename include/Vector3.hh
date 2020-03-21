@@ -2,6 +2,18 @@
 #include <iostream>
 #include <cmath>
 
+class Vector2
+{
+public:
+    Vector2();
+    Vector2 (double, double);
+    virtual ~Vector2 ();
+    double x_;
+    double y_;
+    bool isRightOf(const Vector2& p0, const Vector2& p1) const;
+    friend std::ostream& operator<<(std::ostream& os, const Vector2& v);
+};
+
 class Vector3
 {
 public:

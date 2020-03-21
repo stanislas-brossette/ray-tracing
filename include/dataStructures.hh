@@ -78,6 +78,11 @@ struct PlaneData : public GeometryData
     std::string describe() const;
 };
 
+struct PolygonData : public GeometryData
+{
+    std::string describe() const;
+};
+
 struct SphereData : public GeometryData
 {
     double radius = 0;

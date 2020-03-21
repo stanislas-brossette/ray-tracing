@@ -15,6 +15,7 @@
 #include "Cylinder.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
+#include "Polygon.hh"
 #include "Camera.hh"
 #include "Window.hh"
 #include "Renderer.hh"

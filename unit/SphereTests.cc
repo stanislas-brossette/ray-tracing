@@ -26,6 +26,10 @@ TEST(UnitTests, SphereTest)
     ASSERT_TRUE(normal.isApprox(Vector3(0, -1, 0), prec));
     ASSERT_TRUE(std::abs(dist - 2) < prec);
 
+    lr = LightRay(Vector3(0,0,0), Vector3(0,-1,0));
+    impact = s.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
     lr = LightRay(Vector3(0,6,0), Vector3(0,-1,0));
     impact = s.intersect(lr, impactPoint, normal, dist);
     ASSERT_TRUE(impact);

@@ -1,5 +1,34 @@
 #include "Vector3.hh"
 
+Vector2::Vector2()
+  : x_(0),
+    y_(0)
+{
+}
+
+Vector2::Vector2(double x, double y)
+  : x_(x),
+    y_(y)
+{
+}
+
+Vector2::~Vector2()
+{
+}
+
+bool Vector2::isRightOf(const Vector2& p0, const Vector2& p1) const
+{
+    //std::cout << "IsRightOf" << std::endl;
+    double prodVec = (x_ - p0.x_)*(p1.y_ - p0.y_) - (y_ - p0.y_)*(p1.x_ - p0.x_);
+    //std::cout << "prodVec: " << prodVec << std::endl;
+    return (prodVec > 0);
+}
+
+std::ostream& operator<<(std::ostream& os, const Vector2& v)
+{
+    os << "[" << v.x_ << "," << v.y_ << "]";
+}
+
 Vector3::Vector3()
   : x_(0),
     y_(0),

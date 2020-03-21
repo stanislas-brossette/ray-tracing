@@ -46,6 +46,7 @@ void printManual()
     std::cout << "Down: Move camera backward\n";
     std::cout << "PageUp: Move camera forward\n";
     std::cout << "PageDown: Move camera backward\n";
+    std::cout << "r: Toggle rotation mode\n";
     std::cout << "F5: Refresh window\n";
     std::cout << "c: Clear window\n";
     std::cout << "s: Toggle simplified render\n";

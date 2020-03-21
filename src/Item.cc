@@ -14,6 +14,8 @@ Item::Item (const ItemData& iData)
         geometry_ = new Sphere(sData);
     else if(PlaneData* sData = dynamic_cast<PlaneData*>(iData.gData))
         geometry_ = new Plane(sData);
+    else if(PolygonData* sData = dynamic_cast<PolygonData*>(iData.gData))
+        geometry_ = new Polygon(sData);
     else if(CylinderData* sData = dynamic_cast<CylinderData*>(iData.gData))
         geometry_ = new Cylinder(sData);
     else if(ClosedCylinderData* sData = dynamic_cast<ClosedCylinderData*>(iData.gData))

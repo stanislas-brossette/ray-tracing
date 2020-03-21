@@ -42,6 +42,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Material.cc"
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
     "${CMAKE_SOURCE_DIR}/src/Plane.cc"
+    "${CMAKE_SOURCE_DIR}/src/Polygon.cc"
     "${CMAKE_SOURCE_DIR}/src/Renderer.cc"
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"
     "${CMAKE_SOURCE_DIR}/src/SceneLoader.cc"

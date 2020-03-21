@@ -6,6 +6,7 @@
 #include "Item.hh"
 #include "Sphere.hh"
 #include "Plane.hh"
+#include "Polygon.hh"
 #include "Camera.hh"
 #include "Window.hh"
 
@@ -136,4 +137,42 @@ TEST(ManoTests, VisuPlaneSphereTest)
     //testRender(myScene, myWindow, "You should see 1 pink sphere lit from the left. Correct? [y/n]");
 }
 
+TEST(UnitTests, PlaneTest)
+{
+    double prec = 1e-9;
+    Frame3 f;
+    f.translate(Vector3(0,0,0));
+
+    Plane pl(f);
+    Polygon po(f);
+
+    Vector3 impactPoint(0,0,0);
+    Vector3 normal(0,0,0);
+    double dist(0);
+    bool impact(false);
+
+    LightRay lr(Vector3(0,0,1), Vector3(0,0,-1));
+    impact = pl.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+    ASSERT_TRUE(impactPoint.isApprox(Vector3(0, 0, 0), prec));
+    ASSERT_TRUE(normal.isApprox(Vector3(0, 0, 1), prec));
+    ASSERT_TRUE(std::abs(dist - 1.0) < prec);
+
+    lr = LightRay(Vector3(0,0,1), Vector3(0,0,1));
+    impact = pl.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    std::cout << "Polygon intersection should fail" << std::endl;
+    lr = LightRay(Vector3(0,0,1), Vector3(0,0,1));
+    impact = po.intersect(lr, impactPoint, normal, dist);
+    ASSERT_FALSE(impact);
+
+    std::cout << "Polygon intersection should succeed" << std::endl;
+    lr = LightRay(Vector3(0,0,1), Vector3(0,0,-1));
+    impact = po.intersect(lr, impactPoint, normal, dist);
+    ASSERT_TRUE(impact);
+    ASSERT_TRUE(impactPoint.isApprox(Vector3(0, 0, 0), prec));
+    ASSERT_TRUE(normal.isApprox(Vector3(0, 0, 1), prec));
+    ASSERT_TRUE(std::abs(dist - 1.0) < prec);
+}
 

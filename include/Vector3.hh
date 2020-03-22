@@ -23,9 +23,10 @@ public:
 
     double norm() const;
     double squaredNorm() const;
-    void normalize();
+    Vector3 normalize();
 
     double dot(const Vector3&) const;
+    Vector3 vectorial(const Vector3&) const;
 
     Vector3 operator+(const Vector3&) const;
     Vector3 operator-(const Vector3&) const;

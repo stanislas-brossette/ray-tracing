@@ -91,7 +91,7 @@ bool Polygon::isInHalfSpace(const Vector3& point, const Vector3& normal,
 std::string PolygonData::describe() const
 {
     std::stringstream ss;
-    ss << "=== Polygon ===\n";
+    ss << "=== PolygonData ===\n";
     ss << GeometryData::describe();
     ss << "points: ";
     for (size_t i = 0; i < points.size()-1; i++)

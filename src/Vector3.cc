@@ -57,17 +57,27 @@ double Vector3::squaredNorm() const
     return x_*x_ + y_*y_ + z_*z_;
 }
 
-void Vector3::normalize()
+Vector3 Vector3::normalize()
 {
     double n = norm();
     x_ = x_ / n;
     y_ = y_ / n;
     z_ = z_ / n;
+    return *this;
 }
 
 double Vector3::dot(const Vector3& v) const
 {
     return (x_*v.x_ + y_*v.y_ + z_*v.z_);
+}
+
+Vector3 Vector3::vectorial(const Vector3& v) const
+{
+    Vector3 out;
+    out.x_ = y_ * v.z_ - z_ * v.y_;
+    out.y_ = z_ * v.x_ - x_ * v.z_;
+    out.z_ = x_ * v.z_ - z_ * v.x_;
+    return out;
 }
 
 Vector3 Vector3::operator+(const Vector3& v) const

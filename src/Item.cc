@@ -22,6 +22,8 @@ Item::Item (const ItemData& iData)
         geometry_ = new ClosedCylinder(sData);
     else if(CubeData* sData = dynamic_cast<CubeData*>(iData.gData))
         geometry_ = new Cube(sData);
+    else if(MeshData* sData = dynamic_cast<MeshData*>(iData.gData))
+        geometry_ = new Mesh(sData);
 }
 
 Item::~Item()

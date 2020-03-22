@@ -14,6 +14,7 @@
 #include "Sphere.hh"
 #include "Cylinder.hh"
 #include "Cube.hh"
+#include "Mesh.hh"
 #include "ClosedCylinder.hh"
 #include "Plane.hh"
 #include "Polygon.hh"

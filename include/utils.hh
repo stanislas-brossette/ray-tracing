@@ -12,8 +12,8 @@
 #define UNIT_DATA ""
 #endif
 
-#ifdef MESHES_DATA_FOLDER
-#define MESHES_DATA MESHES_DATA_FOLDER
+#ifdef MESHES_FOLDER
+#define MESHES MESHES_FOLDER
 #else
 #define MESHES ""
 #endif

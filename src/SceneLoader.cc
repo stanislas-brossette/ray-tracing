@@ -177,6 +177,13 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
         cData->size = vIn.FindMember("size")->value.GetDouble();
         return cData;
     }
+    else if(type == "Mesh")
+    {
+        MeshData* mData = new MeshData();
+        scanBaseGeometry(vIn, mData);
+        mData->path = vIn.FindMember("path")->value.GetString();
+        return mData;
+    }
     else
     {
         std::cout << "ERROR: wrong item type" << std::endl;

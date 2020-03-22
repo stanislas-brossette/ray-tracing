@@ -42,6 +42,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Item.cc"
     "${CMAKE_SOURCE_DIR}/src/LightRay.cc"
     "${CMAKE_SOURCE_DIR}/src/Material.cc"
+    "${CMAKE_SOURCE_DIR}/src/Mesh.cc"
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
     "${CMAKE_SOURCE_DIR}/src/Plane.cc"
     "${CMAKE_SOURCE_DIR}/src/Polygon.cc"
@@ -69,8 +70,8 @@ target_link_libraries(${PROJECT_NAME}
 # Data folder
 set(DATA_FOLDER "${CMAKE_SOURCE_DIR}/data/")
 add_definitions(-DDATA_FOLDER="${CMAKE_SOURCE_DIR}/data/")
-set(MESHES_FOLDER "${CMAKE_SOURCE_DIR}/data/meshes")
-add_definitions(-DMESHES_FOLDER="${CMAKE_SOURCE_DIR}/data/meshes")
+set(MESHES_FOLDER "${CMAKE_SOURCE_DIR}/data/meshes/")
+add_definitions(-DMESHES_FOLDER="${CMAKE_SOURCE_DIR}/data/meshes/")
 set(UNIT_DATA_FOLDER "${CMAKE_SOURCE_DIR}/unit/data/")
 add_definitions(-DUNIT_DATA_FOLDER="${CMAKE_SOURCE_DIR}/unit/data/")
 

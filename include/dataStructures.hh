@@ -96,6 +96,12 @@ struct SphereData : public GeometryData
     std::string describe() const;
 };
 
+struct MeshData : public GeometryData
+{
+    std::string path = "";
+    std::string describe() const;
+};
+
 struct SceneData
 {
     AmbiantData aData;

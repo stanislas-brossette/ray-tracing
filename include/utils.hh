@@ -12,6 +12,12 @@
 #define UNIT_DATA ""
 #endif
 
+#ifdef MESHES_DATA_FOLDER
+#define MESHES_DATA MESHES_DATA_FOLDER
+#else
+#define MESHES ""
+#endif
+
 #include <vector>
 
 double deg2rad(double d);

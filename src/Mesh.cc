@@ -64,7 +64,7 @@ void Mesh::initTriangles()
     radiusBoundingSphere = std::sqrt(radiusBoundingSphere);
     std::cout << "radiusBoundingSphere: " << radiusBoundingSphere << std::endl;
 
-    Frame3 fBV(bary, f_.vx_, f_.vy_, f_.vz_);
+    Frame3 fBV(f_.o_ + bary, f_.vx_, f_.vy_, f_.vz_);
     bv_ = BoundingVolume(fBV, radiusBoundingSphere);
 
     size_t numTris = tris.size() / 3;
@@ -103,7 +103,7 @@ void Mesh::initTriangles()
         vz.normalize();
         Vector3 vx = (P1 - P0).normalize();
         Vector3 vy = vz.vectorial(vx);
-        Frame3 tFrame(P0, vx, vy, vz);
+        Frame3 tFrame(f_.o_ + P0, vx, vy, vz);
         std::vector<Vector2> points(3);
         points[0] = Vector2(0,0);
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));

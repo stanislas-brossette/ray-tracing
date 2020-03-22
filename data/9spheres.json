@@ -9,7 +9,7 @@
         "fovType": 2
     },
     "render": {
-        "nPixPerRender": 1000,
+        "nPixPerRender": 10000,
         "percentLightRay": 100
     },
     "ambiantLight": {
@@ -35,9 +35,9 @@
         "sphere1": {
             "material": {
                 "color": [0, 255, 0],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -50,9 +50,9 @@
         "sphere2": {
             "material": {
                 "color": [0, 0, 255],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -65,9 +65,9 @@
         "sphere3": {
             "material": {
                 "color": [255, 125, 255],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -80,9 +80,9 @@
         "sphere4": {
             "material": {
                 "color": [255, 255, 0],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -95,9 +95,9 @@
         "sphere5": {
             "material": {
                 "color": [125, 255, 125],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -110,9 +110,9 @@
         "sphere6": {
             "material": {
                 "color": [0, 125, 255],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -125,9 +125,9 @@
         "sphere7": {
             "material": {
                 "color": [125, 255, 255],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -140,9 +140,9 @@
         "sphere8": {
             "material": {
                 "color": [255, 125, 0],
-                "rugosity": 0.05,
+                "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -157,7 +157,7 @@
                 "color": [150, 150, 150],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 5,
+                "reflectiveness": 1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

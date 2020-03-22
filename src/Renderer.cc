@@ -33,6 +33,7 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     while(iter < nLightRay)
     {
+        std::chrono::steady_clock::time_point beginBatch = std::chrono::steady_clock::now();
         size_t nPixToRender = nPixPerRender_;
         if(iter+nPixPerRender_ > win.nPixels())
             nPixToRender = win.nPixels() - iter;
@@ -41,6 +42,8 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;
+        std::chrono::steady_clock::time_point endBatch = std::chrono::steady_clock::now();
+        std::cout << "duration batch (" << nPixToRender << " points): " << std::chrono::duration_cast<std::chrono::milliseconds>(endBatch - beginBatch).count() << "[ms]" << std::endl;
     }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "duration Parallel = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;

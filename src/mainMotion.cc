@@ -35,8 +35,9 @@ int main(int argc, char *argv[])
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);
     std::cout << sceneLoader.sceneData_.describe() << std::endl;
-    Window myWindow(scene.camera_.resX_, scene.camera_.resY_);
+    Window window(scene.camera_.resX_, scene.camera_.resY_);
     Renderer renderer(sceneLoader.sceneData_.rData);
+    window.save("../images/" + sceneJsonName + ".bmp");
 
     bool quit = false;
     SDL_Event event;
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
     {
         if(needRender)
         {
-            renderer.renderParallel(scene, myWindow, "");
+            renderer.renderParallel(scene, window, "");
             needRender = false;
         }
         SDL_WaitEvent(&event);
@@ -74,7 +75,7 @@ int main(int argc, char *argv[])
                     break;
                 // Clear with c
                 case SDLK_c:
-                    myWindow.clear();
+                    window.clear();
                     break;
                 // Toggle simplified render with s
                 case SDLK_s:
@@ -131,12 +132,12 @@ int main(int argc, char *argv[])
                 // Change camera/windows resolution
                 case SDLK_KP_MINUS:
                     scene.multiplyResolution(0.8);
-                    myWindow.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
+                    window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                     needRender = true;
                     break;
                 case SDLK_KP_PLUS:
                     scene.multiplyResolution(1.2);
-                    myWindow.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
+                    window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                     needRender = true;
                     break;
             }

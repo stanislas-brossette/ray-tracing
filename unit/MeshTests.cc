@@ -16,7 +16,7 @@ TEST(UnitTests, MeshTest)
 {
     double prec = 1e-9;
     Frame3 f;
-    std::string path = std::string(MESHES) + "cube.stl";
+    std::string path = std::string(MESHES) + "cube.STL";
     std::cout << "path: " << path << std::endl;
     Mesh m(f, path);
     ASSERT_TRUE(true);

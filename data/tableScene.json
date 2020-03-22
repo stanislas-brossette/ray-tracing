@@ -6,7 +6,7 @@
         "pos": [0.1, -0.6, 0.35],
         "rotAxis": [1, 0, 0],
         "rotAngle": -20,
-        "fovType": 2
+        "fovType": 0
     },
     "render": {
         "nPixPerRender": 10000,

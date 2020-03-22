@@ -15,7 +15,7 @@ Mesh::Mesh (const Frame3& f, std::string path)
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
     if(not fileExists(path_))
-        std::cout << "ERROR, mesh file does not exist" << std::endl;
+        std::cout << "ERROR, mesh file does not exist: " << path << std::endl;
     initTriangles();
 }
 

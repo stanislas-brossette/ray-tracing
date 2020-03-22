@@ -1,11 +1,11 @@
 {
     "camera": {
-        "resX": 800,
+        "resX": 1200,
         "fovX": 110,
         "fovY": 90,
         "pos": [0.0, 0.0, 0.0],
         "rotAxis": [0, 0, 1],
-        "rotAngle": 0,
+        "rotAngle": 90,
         "fovType": 2
     },
     "render": {
@@ -24,15 +24,29 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 1.0
+                "lightIntensity": 10.0
             },
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [0.3, 1.5, -0.9]
+                "pos": [-0.6, 0.5, 0.4]
             }
         },
-        "cube0": {
+        "bottomPlane": {
+            "material": {
+                "color": [80, 80, 80],
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -0.3]
+            }
+        },
+        "leftSagittalHip": {
             "material": {
                 "color": [180, 180, 8],
                 "rugosity": 0.0,
@@ -43,8 +57,23 @@
             },
             "geometry": {
                 "type": "Mesh",
-                "pos": [0.0, 0.5, 0.0],
-                "path": "LeftSagittalAnkleLink.STL"
+                "pos": [-0.8, 0.3, 0.2],
+                "path": "LeftSagittalHipLink.STL"
+            }
+        },
+        "rightSagittalHip": {
+            "material": {
+                "color": [8, 180, 180],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [-0.8, -0.3, 0.2],
+                "path": "RightSagittalHipLink.STL"
             }
         }
     }

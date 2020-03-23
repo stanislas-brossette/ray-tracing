@@ -9,6 +9,7 @@
 #include "AmbiantLight.hh"
 #include "Camera.hh"
 #include "Pixel.hh"
+#include "utils.hh"
 
 class Scene
 {

@@ -19,6 +19,7 @@
 #endif
 
 #include <vector>
+#include <limits>
 
 double deg2rad(double d);
 double rad2deg(double d);
@@ -29,3 +30,6 @@ bool fileExists(const std::string& s);
 
 void printManual();
 void printMat(std::vector<std::vector<int> > m);
+
+double INFINITY_d();
+float INFINITY_f();

@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <cmath>
 #include <string>
+
 #include "utils.hh"
 
 double deg2rad(double d)
@@ -69,4 +70,14 @@ void printMat(std::vector<std::vector<int> > m)
         std::cout << "]\n";
     }
     std::cout << std::endl;
+}
+
+double INFINITY_d()
+{
+    return std::numeric_limits<double>::infinity();
+}
+
+float INFINITY_f()
+{
+    return std::numeric_limits<float>::infinity();
 }

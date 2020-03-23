@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Vector3.hh"
+#include "utils.hh"
 
 struct RenderData
 {
@@ -62,7 +63,7 @@ struct ItemData
 struct ClosedCylinderData : public GeometryData
 {
     double radius = 0;
-    double length = 1e9;
+    double length = INFINITY_d();
     std::string describe() const;
 };
 

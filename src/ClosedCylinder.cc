@@ -60,26 +60,26 @@ bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3
 
     Vector3 impactPointCyl;
     Vector3 normalCyl;
-    double distCyl = 1e9;
+    double distCyl = INFINITY_d();
     bool impactCyl = cylinder_.intersect(lr, impactPointCyl, normalCyl, distCyl);
     if(not impactCyl)
-        distCyl = 1e9;
+        distCyl = INFINITY_d();
 
     Vector3 impactPointBP;
     Vector3 normalBP;
-    double distBP = 1e9;
+    double distBP = INFINITY_d();
     bool impactBP = bottomPlane_.intersect(lr, impactPointBP, normalBP, distBP);
     impactBP = impactBP and ((impactPointBP - f_.o_ + (f_.vz_ * (length_/2))).squaredNorm() < radius_*radius_);
     if(not impactBP)
-        distBP = 1e9;
+        distBP = INFINITY_d();
 
     Vector3 impactPointTP;
     Vector3 normalTP;
-    double distTP = 1e9;
+    double distTP = INFINITY_d();
     bool impactTP = topPlane_.intersect(lr, impactPointTP, normalTP, distTP);
     impactTP = impactTP and ((impactPointTP - f_.o_ - (f_.vz_ * (length_/2))).squaredNorm() < radius_*radius_);
     if(not impactTP)
-        distTP = 1e9;
+        distTP = INFINITY_d();
 
     if( not( impactTP or impactBP or impactCyl))
         return false;

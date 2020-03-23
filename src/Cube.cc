@@ -90,52 +90,52 @@ bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, 
 
     bool impact = false;
 
-    double distTop = 1e9;
+    double distTop = INFINITY_d();
     bool impactTop = topPlane_.intersect(lr, impactPointTop, normalTop, distTop);
     if(not impactTop)
-        distTop = 1e9;
+        distTop = INFINITY_d();
     else
         impact = true;
 
-    double distBottom = 1e9;
+    double distBottom = INFINITY_d();
     bool impactBottom = bottomPlane_.intersect(lr, impactPointBottom, normalBottom, distBottom);
     if(not impactBottom)
-        distBottom = 1e9;
+        distBottom = INFINITY_d();
     else
         impact = true;
 
-    double distRight = 1e9;
+    double distRight = INFINITY_d();
     bool impactRight = rightPlane_.intersect(lr, impactPointRight, normalRight, distRight);
     if(not impactRight)
-        distRight = 1e9;
+        distRight = INFINITY_d();
     else
         impact = true;
 
-    double distLeft = 1e9;
+    double distLeft = INFINITY_d();
     bool impactLeft = leftPlane_.intersect(lr, impactPointLeft, normalLeft, distLeft);
     if(not impactLeft)
-        distLeft = 1e9;
+        distLeft = INFINITY_d();
     else
         impact = true;
 
-    double distFront = 1e9;
+    double distFront = INFINITY_d();
     bool impactFront = frontPlane_.intersect(lr, impactPointFront, normalFront, distFront);
     if(not impactFront)
-        distFront = 1e9;
+        distFront = INFINITY_d();
     else
         impact = true;
 
-    double distBack = 1e9;
+    double distBack = INFINITY_d();
     bool impactBack = backPlane_.intersect(lr, impactPointBack, normalBack, distBack);
     if(not impactBack)
-        distBack = 1e9;
+        distBack = INFINITY_d();
     else
         impact = true;
 
     if(not impact)
         return false;
 
-    dist = 1e9;
+    dist = INFINITY_d();
     if(impactTop and distTop < dist)
     {
         dist = distTop;

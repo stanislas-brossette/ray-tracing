@@ -128,7 +128,7 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     if(not bv_.intersect(lr))
         return false;
 
-    dist = 1e9;
+    dist = INFINITY_d();
     size_t minIndex = -1;
     bool impact = false;
     //std::cout << "triangles_.size(): " << triangles_.size() << std::endl;

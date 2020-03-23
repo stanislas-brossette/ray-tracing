@@ -93,7 +93,7 @@ void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
 
     Vector3 impactPoint;
     Vector3 impactNormal;
-    double impactDist = 1e9;
+    double impactDist = INFINITY_d();
     size_t impactItemIndex = 0;
 
     //Does the primary light ray contact with an item?
@@ -201,7 +201,7 @@ void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
             LightRay lrSpecReflection(impactPoint, lrSpecRefDir);
             Vector3 secImpactPoint;
             Vector3 secImpactNormal;
-            double secImpactDist = 1e9;
+            double secImpactDist = INFINITY_d();
             size_t secImpactItemIndex = 0;
 
             //Does the primary light ray contact with an item?

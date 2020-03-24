@@ -34,6 +34,21 @@ Pixel::~Pixel()
 {
 }
 
+void Pixel::setColor(double a, double r, double g, double b)
+{
+    a_ = a;
+    r_ = r;
+    g_ = g;
+    b_ = b;
+}
+void Pixel::setColor(double a, const Vector3RGB c)
+{
+    a_ = a;
+    r_ = c.r_;
+    g_ = c.g_;
+    b_ = c.b_;
+}
+
 std::string Pixel::describe() const
 {
     std::stringstream ss;

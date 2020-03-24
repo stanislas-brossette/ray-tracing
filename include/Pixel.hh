@@ -3,6 +3,8 @@
 #include <sstream>
 #include <string>
 
+#include "Vector3.hh"
+
 class Pixel
 {
 public:
@@ -12,6 +14,8 @@ public:
     ~Pixel();
     Pixel operator+(const Pixel& p) const;
     void clamp();
+    void setColor(double a, double r, double g, double b);
+    void setColor(double a, const Vector3RGB c);
     int x_;
     int y_;
     double a_;

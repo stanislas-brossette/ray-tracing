@@ -8,10 +8,11 @@ class LightRay
 {
 public:
     LightRay ();
-    LightRay (Vector3 origin, Vector3 dir);
+    LightRay (Vector3 origin, Vector3 dir, double refractiveIndex_ = 1.0);
     virtual ~LightRay ();
     std::string describe() const;
 
     Vector3 origin_;
     Vector3 dir_;
+    double refractiveIndex_;
 };

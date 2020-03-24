@@ -16,7 +16,7 @@ public:
 
     Vector3RGB color_;
     double rugosity_;
-    double refractionIndex_;
+    double refractiveIndex_;
     double reflectiveness_;
     bool lightEmitter_;
     double lightIntensity_;

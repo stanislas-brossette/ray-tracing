@@ -54,3 +54,27 @@ TEST(UnitTests, Vector3RotationTest)
     vRZ = v0.rotateZ(-90);
     ASSERT_TRUE(vRZ.isApprox(Vector3(0, 0, 1), prec));
 }
+
+TEST(UnitTests, Vector3SymmetrizeTest)
+{
+    double prec = 1e-9;
+    Vector3 n(0,0,1);
+    Vector3 i(1,0,-1);
+    i.normalize();
+    Vector3 s = i.symmetrize(n);
+    double r2 = std::sqrt(2);
+    ASSERT_TRUE(s.isApprox(Vector3(1/r2, 0, 1/r2), prec));
+}
+
+TEST(UnitTests, Vector3RefractionTest)
+{
+    Vector3 n(0,0,1);
+    Vector3 i(2,0,-1);
+    i.normalize();
+    double n1 = 0.9;
+    double n2 = 1.5;
+    Vector3 t = i.refract(n, n1, n2);
+    double ns1 = n1*std::sqrt(1-std::pow(i.dot(n),2));
+    double ns2 = n2*std::sqrt(1-std::pow(t.dot(n),2));
+    ASSERT_TRUE(std::abs(ns1-ns2) <= 1e-9);
+}

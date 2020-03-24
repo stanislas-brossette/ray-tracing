@@ -3,7 +3,7 @@
 Material::Material()
     : color_(0,0,0),
       rugosity_(0),
-      refractionIndex_(0),
+      refractiveIndex_(0),
       reflectiveness_(0),
       lightEmitter_(false),
       lightIntensity_(0)
@@ -13,7 +13,7 @@ Material::Material()
 Material::Material (const MaterialData& mData)
     : color_(mData.color),
       rugosity_(mData.rugosity),
-      refractionIndex_(mData.refraction),
+      refractiveIndex_(mData.refraction),
       reflectiveness_(mData.reflectiveness),
       lightEmitter_(mData.lightEmitter),
       lightIntensity_(mData.lightIntensity)
@@ -23,7 +23,7 @@ Material::Material (const MaterialData& mData)
 Material::Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity)
     : color_(color),
       rugosity_(rugosity),
-      refractionIndex_(refIndex),
+      refractiveIndex_(refIndex),
       reflectiveness_(reflectiveness),
       lightEmitter_(lightEmitter),
       lightIntensity_(lightIntensity)
@@ -39,7 +39,7 @@ std::string Material::describe() const
     std::stringstream ss;
     ss << "color: " << color_ << "\n";
     ss << "rugosity: " << rugosity_ << "\n";
-    ss << "refractionIndex: " << refractionIndex_ << "\n";
+    ss << "refractiveIndex: " << refractiveIndex_ << "\n";
     ss << "reflectiveness: " << reflectiveness_ << "\n";
     ss << "lightEmitter: " << lightEmitter_ << "\n";
     ss << "lightIntensity: " << lightIntensity_;
@@ -52,7 +52,7 @@ std::string MaterialData::describe() const
     ss << "=== MaterialData ===\n";
     ss << "color: " << color << "\n";
     ss << "rugosity: " << rugosity << "\n";
-    ss << "refractionIndex: " << refraction << "\n";
+    ss << "refractiveIndex: " << refraction << "\n";
     ss << "reflectiveness: " << reflectiveness << "\n";
     ss << "lightEmitter: " << lightEmitter << "\n";
     ss << "lightIntensity: " << lightIntensity;

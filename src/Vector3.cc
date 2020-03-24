@@ -157,8 +157,18 @@ void Vector3::addNoise(double rugosity)
 
 Vector3 Vector3::symmetrize(const Vector3& n) const
 {
-    Vector3 res(n*2 + *this);
+    double c1 = -n.dot(*this);
+    Vector3 res(n*(2*c1) + *this);
     return res;
+}
+
+Vector3 Vector3::refract(const Vector3& N, double n1, double n2) const
+{
+    double n1sn2 = n1/n2;
+    double c1 = -N.dot(*this);
+    double c2 = std::sqrt(1 - std::pow(n1sn2,2)*(1-std::pow(c1,2)));
+    Vector3 T = *this * n1sn2 + N * (n1sn2*c1 - c2);
+    return T;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vector3& v)

@@ -39,6 +39,7 @@ public:
     Vector3 rotateZ(double theta) const;
 
     Vector3 symmetrize(const Vector3& n) const;
+    Vector3 refract(const Vector3& n, double n1, double n2) const;
     void addNoise(double val);
 
     double x_;

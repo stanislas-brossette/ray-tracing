@@ -20,8 +20,8 @@ public:
     void addItem(Item* i);
     void setCamera(const Camera& c);
     void setAmbiantLight(const AmbiantLight& al);
-    void castRandomRayInPlace(Pixel& pix, size_t index) const;
-    void castMultipleRandomRaysInPlace(std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPoints) const;
+    void castRandomRay(Pixel& pix, size_t index) const;
+    void castMultipleRandomRays(std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPoints) const;
     void renderSerial(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
     void renderParallel(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
     bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const;

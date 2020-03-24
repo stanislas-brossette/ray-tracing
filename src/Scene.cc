@@ -28,7 +28,7 @@ void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t 
 {
     for (size_t i = 0; i < nPoints; i++)
     {
-        castRandomRayInPlace( res[i], nPointsRendered + i);
+        castRandomRay( res[i], nPointsRendered + i);
     }
 }
 
@@ -52,7 +52,7 @@ void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute,
         std::vector<Pixel> threadPix(pixPerThread[i]);
         size_t beginIndex = index;
         size_t endIndex = index + pixPerThread[i];
-        pool[i] = new std::thread(&Scene::castMultipleRandomRaysInPlace, this, std::ref(res), beginIndex, endIndex, nPointsRendered);
+        pool[i] = new std::thread(&Scene::castMultipleRandomRays, this, std::ref(res), beginIndex, endIndex, nPointsRendered);
         index += pixPerThread[i];
     }
     for (size_t i = 0; i < numThreads; i++)
@@ -77,15 +77,19 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
     ambiantLight_ = ambiantLight;
 }
 
-void Scene::castMultipleRandomRaysInPlace( std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPixels) const
+void Scene::castMultipleRandomRays( std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPixels) const
 {
+
+    std::chrono::steady_clock::time_point beginBatch = std::chrono::steady_clock::now();
     for (size_t i = beginIndex; i < endIndex; i++)
     {
-        castRandomRayInPlace( vecPix[i], i + nRenderedPixels);
+        castRandomRay( vecPix[i], i + nRenderedPixels);
     }
+    std::chrono::steady_clock::time_point endBatch = std::chrono::steady_clock::now();
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(endBatch - beginBatch).count() << "[ms]" << std::endl;
 }
 
-void Scene::castRandomRayInPlace( Pixel& pix, size_t iOrderedRay) const
+void Scene::castRandomRay( Pixel& pix, size_t iOrderedRay) const
 {
     LightRay lr;
     Pixel ambiantPix, diffuseRefPix, specReflPix;

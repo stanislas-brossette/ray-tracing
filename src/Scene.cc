@@ -5,7 +5,7 @@ Scene::Scene()
     camera_(),
     ambiantLight_(),
     simplifiedRender_(false),
-    maxDepthIndex_(10)
+    maxDepthIndex_(5)
 {
 }
 
@@ -14,7 +14,7 @@ Scene::Scene(const SceneData& sData)
     camera_(sData.cData),
     ambiantLight_(sData.aData),
     simplifiedRender_(false),
-    maxDepthIndex_(10)
+    maxDepthIndex_(5)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
@@ -37,7 +37,7 @@ void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t 
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
 {
     int nPix = res.size();
-    int numThreads = std::thread::hardware_concurrency() - 2;
+    int numThreads = std::thread::hardware_concurrency() - 1;
 
     std::vector<int> pixPerThread(numThreads);
     for (size_t i = 0; i < numThreads; i++)
@@ -344,7 +344,6 @@ void Scene::toggleSimplifiedRender()
 
 void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
 {
-    //std::cout << "\n=== Casting new ray ===" << std::endl;
     LightRay lr;
     camera_.castOrderedRay(lr, pix, iOrderedRay);
     castRay(pix, lr, 0);
@@ -352,9 +351,6 @@ void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
 
 void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
 {
-    //std::cout << "castRay depth: " << depthIndex << std::endl;
-    //std::cout << "maxDepthIndex_: " << maxDepthIndex_ << std::endl;
-    //std::cout << "initial pix: " << pix.describe() << std::endl;
     if(depthIndex >= maxDepthIndex_)
     {
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
@@ -365,10 +361,6 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
     Pixel diffuseRefPix(pix.x_, pix.y_);
     Pixel specReflPix(pix.x_, pix.y_);
     Pixel refracPix(pix.x_, pix.y_);
-    //std::cout << "initial refracPix: " << refracPix.describe() << std::endl;
-    //std::cout << "initial specReflPix: " << specReflPix.describe() << std::endl;
-    //std::cout << "initial diffuseRefPix: " << diffuseRefPix.describe() << std::endl;
-    //std::cout << "initial ambiantPix: " << ambiantPix.describe() << std::endl;
 
     Vector3 impactPoint(0,0,0);
     Vector3 impactNormal(0,0,0);
@@ -378,13 +370,11 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
 
     if(not impact)
     {
-        //std::cout << "NO Impact" << std::endl;
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
         return;
     }
     else
     {
-        //std::cout << "Impact" << std::endl;
         Item* impactItem = items_[impactItemIndex];
 
         /*************************************
@@ -415,26 +405,17 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double c1 = -impactNormal.dot(lr.dir_); // cos(theta1)
         double c22 = 1 - std::pow(n1sn2,2)*(1-std::pow(c1,2)); // squared cos(theta2)
         double c2 = 0; // cos(theta2)
-        double FR = 0; // Fresnel coef reflexion
+        double FR = 1; // Fresnel coef reflexion
         double FT = 0; // Fresnel coef transmission
 
         if(c22 >= 0 and n2 > 0)
         {
             c2 = std::sqrt(c22);
             refractionExists = true;
-            //std::cout << "n1: " << n1 << std::endl;
-            //std::cout << "n2: " << n2 << std::endl;
-            //std::cout << "c1: " << c1 << std::endl;
-            //std::cout << "c2: " << c2 << std::endl;
             double FRparallel = std::pow((n2*c1 - n1*c2)/(n2*c1 + n1*c2),2);
             double FRorthogonal = std::pow((n2*c2 - n1*c1)/(n2*c2 + n1*c1),2);
             FR = (FRparallel + FRorthogonal)/2;
-            //FR = std::pow((n1*c1 - n2*c2)/(n1*c1 + n2*c2),2);
             FT = 1 - FR;
-            //std::cout << "FRparallel: " << FRparallel << std::endl;
-            //std::cout << "FRorthogonal: " << FRorthogonal << std::endl;
-            //std::cout << "FR: " << FR << std::endl;
-            //std::cout << "FT: " << FT << std::endl;
         }
 
         /****************
@@ -528,28 +509,11 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double FRspec = FR * impactItem->material_->reflectiveness_;
         double FRdiff = FR - FRspec;
 
-        //pix = specReflPix * FRspec;
-        //pix = diffuseRefPix * FRdiff;
-        //pix = refracPix * FT;
-
         refracPix.clamp();
         specReflPix.clamp();
         diffuseRefPix.clamp();
 
-        //pix = (refracPix * FT) + (specReflPix * FRspec) + (diffuseRefPix * FRdiff);
-        pix = diffuseRefPix + specReflPix + refracPix;
+        pix = (refracPix * FT) + (specReflPix * FRspec) + (diffuseRefPix * FRdiff);
         pix.clamp();
-
-        if(depthIndex == 0)
-        {
-        //    std::cout << "FT: " << FT << std::endl;
-        //    std::cout << "FRspec: " << FRspec << std::endl;
-        //    std::cout << "FRdiff: " << FRdiff << std::endl;
-        //    std::cout << "FT + FRspec + FRdiff: " << FT + FRspec + FRdiff << std::endl;
-        //    std::cout << "final refracPix: " << refracPix.describe() << std::endl;
-        //    std::cout << "final specReflPix: " << specReflPix.describe() << std::endl;
-        //    std::cout << "final diffuseRefPix: " << diffuseRefPix.describe() << std::endl;
-        //    std::cout << "final pix: " << pix.describe() << std::endl;
-        }
     }
 }

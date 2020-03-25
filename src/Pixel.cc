@@ -79,6 +79,8 @@ void Pixel::clamp()
 
 Pixel Pixel::operator+(const Pixel& p) const
 {
+    if(p.a_ == 0)
+        return *this;
     Pixel pRes;
     pRes.x_ = x_;
     pRes.y_ = y_;

@@ -1,9 +1,9 @@
 {
     "camera": {
-        "resX": 1000,
+        "resX": 1400,
         "fovX": 110,
         "fovY": 90,
-        "pos": [0.0, 0.0, 0.2],
+        "pos": [0.0, 0.0, 0.35],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0,
         "fovType": 1
@@ -32,19 +32,49 @@
                 "pos": [0.0, 1.0, 1.0]
             }
         },
-        "pinkSphere": {
+        "redTransparentSphere": {
             "material": {
-                "color": [10, 10, 10],
+                "color": [200, 10, 10],
                 "rugosity": 0.0,
                 "refraction": 1.4,
-                "reflectiveness": 0.0,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 0.3,
-                "pos": [0.0, 1.5, 0.3]
+                "radius": 0.2,
+                "pos": [-0.5, 1.5, 0.2]
+            }
+        },
+        "greenTransparentSphere": {
+            "material": {
+                "color": [10, 210, 10],
+                "rugosity": 0.0,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.2,
+                "pos": [0.0, 1.5, 0.2]
+            }
+        },
+        "blueTransparentSphere": {
+            "material": {
+                "color": [10, 10, 210],
+                "rugosity": 0.0,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.2,
+                "pos": [0.5, 1.5, 0.2]
             }
         },
         "greenSphere2": {
@@ -52,7 +82,7 @@
                 "color": [52, 200, 51],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.0,
+                "reflectiveness": 0.3,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -67,7 +97,7 @@
                 "color": [235, 20, 150],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.3,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -82,7 +112,7 @@
                 "color": [4, 30, 232],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.0,
+                "reflectiveness": 0.3,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -97,7 +127,7 @@
                 "color": [80, 80, 80],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.8,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

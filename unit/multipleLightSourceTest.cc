@@ -55,7 +55,7 @@ TEST(ManoTests, multiLightSourcesTest)
     Item ls2(&gsls2, &mls2);
 
     Frame3 fs0;
-    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 1, false, 0);
+    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 0.1, false, 0);
     fs0.translate( 0.0, 2.0, 0.0);
     Sphere gs0(fs0, 0.5);
     Item s0(&gs0, &ms0);

@@ -110,7 +110,7 @@ TEST(ManoTests, TableTest)
     Sphere gsLightBulb(fLightBulb, 0.07);
     Item lightBulb(&gsLightBulb, &mLightBulb);
 
-    Material mLamp(Vector3RGB(1,20,24), 0.01, 0, 3.0, false, 0);
+    Material mLamp(Vector3RGB(1,20,24), 0.01, 0, 0.9, false, 0);
     Frame3 fLamp;
     fLamp.translate( 0.0, 0.0, heightTable + 0.1);
     Cylinder gLamp(fLamp, 0.05, 0.25);

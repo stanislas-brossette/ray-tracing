@@ -52,7 +52,7 @@ TEST(ManoTests, Visu1SpheresTest)
     Item ls(&gsls, &mls);
 
     Frame3 fs0;
-    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 1, false, 0);
+    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 0.1, false, 0);
     fs0.translate( 0.0, 2.0, 0.0);
     Sphere gs0(fs0, 0.5);
     Item s0(&gs0, &ms0);
@@ -106,13 +106,13 @@ TEST(ManoTests, VisuSphereFromInsideTest)
     Item ls(&gsls, &mls);
 
     Frame3 fs0;
-    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 1, false, 0);
+    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 0.1, false, 0);
     fs0.translate( 0.2, 0.4, 0.0);
     Sphere gs0(fs0, 0.1);
     Item s0(&gs0, &ms0);
 
     Frame3 fs1;
-    Material ms1(Vector3RGB(0, 254, 0), 0.1, 0, 1, false, 0);
+    Material ms1(Vector3RGB(0, 254, 0), 0.1, 0, 0.1, false, 0);
     fs1.translate( 0.0, 0.0, 0.0);
     Sphere gs1(fs1, 1.0);
     Item s1(&gs1, &ms1);

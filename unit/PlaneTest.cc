@@ -59,19 +59,19 @@ TEST(ManoTests, VisuPlaneSphereTest)
     ls2.geometry_->f_.setOriginPos( 0.5, 2.6, -0.4);
 
     Frame3 fs0;
-    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 1, false, 0);
+    Material ms0(Vector3RGB(255, 0, 0), 0.1, 0, 0.1, false, 0);
     fs0.translate( 0.0, 2.0, 0.0);
     Sphere gs0(fs0, 0.5);
     Item s0(&gs0, &ms0);
 
     Frame3 fs1;
-    Material ms1(Vector3RGB(255, 20, 150), 0.1, 0, 1, false, 0);
+    Material ms1(Vector3RGB(255, 20, 150), 0.1, 0, 0.1, false, 0);
     fs1.translate( 1.05, 1.2, -0.2);
     Sphere gs1(fs1, 0.3);
     Item s1(&gs1, &ms1);
 
     Frame3 fs2;
-    Material ms2(Vector3RGB(0, 0, 255), 0.1, 0, 1, false, 0);
+    Material ms2(Vector3RGB(0, 0, 255), 0.1, 0, 0.1, false, 0);
     fs2.translate( -0.6, 0.8, -0.3);
     Sphere gs2(fs2, 0.2);
     Item s2(&gs2, &ms2);

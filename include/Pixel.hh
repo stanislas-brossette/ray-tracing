@@ -13,6 +13,7 @@ public:
     Pixel(int x, int y, double a, double r, double g, double b);
     ~Pixel();
     Pixel operator+(const Pixel& p) const;
+    Pixel operator*(const double& d) const;
     void clamp();
     void setColor(double a, double r, double g, double b);
     void setColor(double a, const Vector3RGB c);

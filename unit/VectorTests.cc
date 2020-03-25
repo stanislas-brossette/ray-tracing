@@ -73,8 +73,10 @@ TEST(UnitTests, Vector3RefractionTest)
     i.normalize();
     double n1 = 0.9;
     double n2 = 1.5;
-    Vector3 t = i.refract(n, n1, n2);
+    Vector3 t;
+    bool refBool = i.refract(t, n, n1, n2);
     double ns1 = n1*std::sqrt(1-std::pow(i.dot(n),2));
     double ns2 = n2*std::sqrt(1-std::pow(t.dot(n),2));
+    ASSERT_TRUE(refBool);
     ASSERT_TRUE(std::abs(ns1-ns2) <= 1e-9);
 }

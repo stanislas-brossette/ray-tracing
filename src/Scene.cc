@@ -4,7 +4,8 @@ Scene::Scene()
   : items_(),
     camera_(),
     ambiantLight_(),
-    simplifiedRender_(false)
+    simplifiedRender_(false),
+    maxDepthIndex_(10)
 {
 }
 
@@ -12,11 +13,12 @@ Scene::Scene(const SceneData& sData)
   : items_(),
     camera_(sData.cData),
     ambiantLight_(sData.aData),
-    simplifiedRender_(false)
+    simplifiedRender_(false),
+    maxDepthIndex_(10)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
-      items_.push_back(new Item(sData.itemsData.at(i)));
+        items_.push_back(new Item(sData.itemsData.at(i)));
     }
 }
 
@@ -35,7 +37,7 @@ void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t 
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
 {
     int nPix = res.size();
-    int numThreads = std::thread::hardware_concurrency();
+    int numThreads = std::thread::hardware_concurrency() - 2;
 
     std::vector<int> pixPerThread(numThreads);
     for (size_t i = 0; i < numThreads; i++)
@@ -83,7 +85,7 @@ void Scene::castMultipleRandomRays( std::vector<Pixel>& vecPix, size_t beginInde
     std::chrono::steady_clock::time_point beginBatch = std::chrono::steady_clock::now();
     for (size_t i = beginIndex; i < endIndex; i++)
     {
-        castRandomRay( vecPix[i], i + nRenderedPixels);
+        castPrimaryRay( vecPix[i], i + nRenderedPixels);
     }
     std::chrono::steady_clock::time_point endBatch = std::chrono::steady_clock::now();
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(endBatch - beginBatch).count() << "[ms]" << std::endl;
@@ -338,4 +340,216 @@ void Scene::multiplyResolution(double ratio)
 void Scene::toggleSimplifiedRender()
 {
     simplifiedRender_ = not simplifiedRender_;
+}
+
+void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
+{
+    //std::cout << "\n=== Casting new ray ===" << std::endl;
+    LightRay lr;
+    camera_.castOrderedRay(lr, pix, iOrderedRay);
+    castRay(pix, lr, 0);
+}
+
+void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
+{
+    //std::cout << "castRay depth: " << depthIndex << std::endl;
+    //std::cout << "maxDepthIndex_: " << maxDepthIndex_ << std::endl;
+    //std::cout << "initial pix: " << pix.describe() << std::endl;
+    if(depthIndex >= maxDepthIndex_)
+    {
+        pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+        return;
+    }
+
+    Pixel ambiantPix(pix.x_, pix.y_);
+    Pixel diffuseRefPix(pix.x_, pix.y_);
+    Pixel specReflPix(pix.x_, pix.y_);
+    Pixel refracPix(pix.x_, pix.y_);
+    //std::cout << "initial refracPix: " << refracPix.describe() << std::endl;
+    //std::cout << "initial specReflPix: " << specReflPix.describe() << std::endl;
+    //std::cout << "initial diffuseRefPix: " << diffuseRefPix.describe() << std::endl;
+    //std::cout << "initial ambiantPix: " << ambiantPix.describe() << std::endl;
+
+    Vector3 impactPoint(0,0,0);
+    Vector3 impactNormal(0,0,0);
+    double impactDist = INFINITY_d();
+    size_t impactItemIndex = 0;
+    bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
+
+    if(not impact)
+    {
+        //std::cout << "NO Impact" << std::endl;
+        pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+        return;
+    }
+    else
+    {
+        //std::cout << "Impact" << std::endl;
+        Item* impactItem = items_[impactItemIndex];
+
+        /*************************************
+        *  Direct impact with light source  *
+        *************************************/
+        if (impactItem->material_->lightEmitter_)
+        {
+            pix.a_ = 255*impactItem->material_->lightIntensity_;
+            pix.r_ = impactItem->material_->color_.r_;
+            pix.g_ = impactItem->material_->color_.g_;
+            pix.b_ = impactItem->material_->color_.b_;
+            pix.clamp();
+            return;
+        }
+
+        /*************
+        *  Fresnel  *
+        *************/
+        bool refractionExists = false;
+
+        double n1 = lr.refractiveIndex_;
+        double n2 = 0;
+        if(lr.refractiveIndex_ == impactItem->material_->refractiveIndex_)
+            n2 = 1.0;
+        else
+            n2 = impactItem->material_->refractiveIndex_;
+        double n1sn2 = n1/n2;
+        double c1 = -impactNormal.dot(lr.dir_); // cos(theta1)
+        double c22 = 1 - std::pow(n1sn2,2)*(1-std::pow(c1,2)); // squared cos(theta2)
+        double c2 = 0; // cos(theta2)
+        double FR = 0; // Fresnel coef reflexion
+        double FT = 0; // Fresnel coef transmission
+
+        if(c22 >= 0 and n2 > 0)
+        {
+            c2 = std::sqrt(c22);
+            refractionExists = true;
+            //std::cout << "n1: " << n1 << std::endl;
+            //std::cout << "n2: " << n2 << std::endl;
+            //std::cout << "c1: " << c1 << std::endl;
+            //std::cout << "c2: " << c2 << std::endl;
+            double FRparallel = std::pow((n2*c1 - n1*c2)/(n2*c1 + n1*c2),2);
+            double FRorthogonal = std::pow((n2*c2 - n1*c1)/(n2*c2 + n1*c1),2);
+            FR = (FRparallel + FRorthogonal)/2;
+            //FR = std::pow((n1*c1 - n2*c2)/(n1*c1 + n2*c2),2);
+            FT = 1 - FR;
+            //std::cout << "FRparallel: " << FRparallel << std::endl;
+            //std::cout << "FRorthogonal: " << FRorthogonal << std::endl;
+            //std::cout << "FR: " << FR << std::endl;
+            //std::cout << "FT: " << FT << std::endl;
+        }
+
+        /****************
+        *  Refraction  *
+        ****************/
+        if(refractionExists)
+        {
+            Vector3 lrRefractDir;
+            //TODO remove redundent calculation in refract
+            refractionExists = lr.dir_.refract(lrRefractDir, impactNormal, n1, n2);
+            if(refractionExists)
+            {
+                Vector3 impactPointRefr = impactPoint - impactNormal*1e-6;
+                LightRay lrRefraction(impactPointRefr, lrRefractDir, n2);
+                castRay(refracPix, lrRefraction, depthIndex+1);
+            }
+        }
+
+        /*************************
+        *  Specular reflection  *
+        *************************/
+        //TODO separate reflection in specular and diffuse
+        if (impactItem->material_->reflectiveness_ > 0)
+        {
+            // Rugosity can be taken into account here
+            Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
+            //lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
+            lrSpecRefDir.normalize();
+            Vector3 impactPointRefl = impactPoint + impactNormal*1e-6;
+            LightRay lrSpecReflection(impactPointRefl, lrSpecRefDir, lr.refractiveIndex_);
+            castRay(specReflPix, lrSpecReflection, depthIndex+1);
+        }
+
+        /************************
+        *  Diffuse reflection  *
+        ************************/
+        if (impactItem->material_->reflectiveness_ < 1.0)
+        {
+            //Is there a light source in the half plane (impactPoint impactNormal)
+            Pixel pixIfNotInShadow(pix.x_, pix.y_);
+            bool needToCheckShadow = false;
+            LightRay lrImpactToLightSource;
+            double distImpactToLightSource;
+            for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+            {
+                Item* lsItem = items_[itemIndex];
+                double cosAngle = 0;
+                if (lsItem->material_->lightEmitter_)
+                {
+                    bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+                    distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
+                    lrImpactToLightSource.origin_ = impactPoint;
+                    lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
+                    lrImpactToLightSource.dir_.normalize();
+
+                    //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
+                    if(inHalfSpace)
+                    {
+                        needToCheckShadow = true;
+                        double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
+                        pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
+                        pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
+                        pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
+                        pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
+
+                        bool inShadow = false;
+                        size_t shadowingItemIndex = 0;
+                        if(needToCheckShadow)
+                        {
+                            inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
+                            if(not inShadow)
+                            {
+                                diffuseRefPix = diffuseRefPix + pixIfNotInShadow;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    cosAngle = std::abs(- lr.dir_.dot(impactNormal));
+                    ambiantPix.a_ = 255*cosAngle*ambiantLight_.intensity_;
+                    ambiantPix.r_ = impactItem->material_->color_.r_;
+                    ambiantPix.g_ = impactItem->material_->color_.g_;
+                    ambiantPix.b_ = impactItem->material_->color_.b_;
+                    diffuseRefPix = diffuseRefPix + ambiantPix;
+                }
+            }
+        }
+
+
+        double FRspec = FR * impactItem->material_->reflectiveness_;
+        double FRdiff = FR - FRspec;
+
+        //pix = specReflPix * FRspec;
+        //pix = diffuseRefPix * FRdiff;
+        //pix = refracPix * FT;
+
+        refracPix.clamp();
+        specReflPix.clamp();
+        diffuseRefPix.clamp();
+
+        //pix = (refracPix * FT) + (specReflPix * FRspec) + (diffuseRefPix * FRdiff);
+        pix = diffuseRefPix + specReflPix + refracPix;
+        pix.clamp();
+
+        if(depthIndex == 0)
+        {
+        //    std::cout << "FT: " << FT << std::endl;
+        //    std::cout << "FRspec: " << FRspec << std::endl;
+        //    std::cout << "FRdiff: " << FRdiff << std::endl;
+        //    std::cout << "FT + FRspec + FRdiff: " << FT + FRspec + FRdiff << std::endl;
+        //    std::cout << "final refracPix: " << refracPix.describe() << std::endl;
+        //    std::cout << "final specReflPix: " << specReflPix.describe() << std::endl;
+        //    std::cout << "final diffuseRefPix: " << diffuseRefPix.describe() << std::endl;
+        //    std::cout << "final pix: " << pix.describe() << std::endl;
+        }
+    }
 }

@@ -162,13 +162,19 @@ Vector3 Vector3::symmetrize(const Vector3& n) const
     return res;
 }
 
-Vector3 Vector3::refract(const Vector3& N, double n1, double n2) const
+bool Vector3::refract(Vector3& T, const Vector3& N, double n1, double n2) const
 {
     double n1sn2 = n1/n2;
     double c1 = -N.dot(*this);
-    double c2 = std::sqrt(1 - std::pow(n1sn2,2)*(1-std::pow(c1,2)));
-    Vector3 T = *this * n1sn2 + N * (n1sn2*c1 - c2);
-    return T;
+    double c2 = 1 - std::pow(n1sn2,2)*(1-std::pow(c1,2));
+    if(c2 >= 0)
+    {
+        c2 = std::sqrt(c2);
+        T = *this * n1sn2 + N * (n1sn2*c1 - c2);
+        return true;
+    }
+    else
+        return false;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vector3& v)

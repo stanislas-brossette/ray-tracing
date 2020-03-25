@@ -28,6 +28,9 @@ public:
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
     double getDistReductionFactor(double dist) const;
 
+    void castPrimaryRay(Pixel& pix, size_t iOrderedRay) const;
+    void castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const;
+
     void translateCamera(double x, double y, double z);
     void translateCameraLocal(double x, double y, double z);
     void multiplyResolution(double ratio);
@@ -37,6 +40,8 @@ public:
     std::vector<Item*> items_;
     Camera camera_;
     bool simplifiedRender_;
+
+    size_t maxDepthIndex_;
 
     friend std::ostream& operator<<(std::ostream& os, const Scene& s);
 };

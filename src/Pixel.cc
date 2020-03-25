@@ -90,3 +90,15 @@ Pixel Pixel::operator+(const Pixel& p) const
     pRes.b_ = ratio*b_ + ratioP*p.b_;
     return pRes;
 }
+
+Pixel Pixel::operator*(const double& d) const
+{
+    Pixel pRes;
+    pRes.x_ = x_;
+    pRes.y_ = y_;
+    pRes.a_ = d*a_;
+    pRes.r_ = r_;
+    pRes.g_ = g_;
+    pRes.b_ = b_;
+    return pRes;
+}

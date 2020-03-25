@@ -241,9 +241,9 @@ double Scene::getDistReductionFactor(double dist) const
 {
     //double distReductionFactor = 1/std::sqrt(dist+1);
     //double distReductionFactor = 1/(dist+1);
-    //double distReductionFactor = 1/std::pow(dist+1,2);
+    double distReductionFactor = 1/std::pow(dist+1,2);
     //double distReductionFactor = 1/std::pow(dist/4+1,3);
-    double distReductionFactor = 1;
+    //double distReductionFactor = 1;
     return distReductionFactor;
 }
 

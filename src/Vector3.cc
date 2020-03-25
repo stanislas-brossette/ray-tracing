@@ -71,7 +71,7 @@ double Vector3::dot(const Vector3& v) const
     return (x_*v.x_ + y_*v.y_ + z_*v.z_);
 }
 
-Vector3 Vector3::vectorial(const Vector3& v) const
+Vector3 Vector3::cross(const Vector3& v) const
 {
     Vector3 out;
     out.x_ = y_ * v.z_ - z_ * v.y_;

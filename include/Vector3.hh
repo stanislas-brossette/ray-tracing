@@ -26,7 +26,7 @@ public:
     Vector3 normalize();
 
     double dot(const Vector3&) const;
-    Vector3 vectorial(const Vector3&) const;
+    Vector3 cross(const Vector3&) const;
 
     Vector3 operator+(const Vector3&) const;
     Vector3 operator-(const Vector3&) const;

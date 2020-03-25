@@ -102,7 +102,7 @@ void Mesh::initTriangles()
         Vector3 vz(n[0], n[1], n[2]);
         vz.normalize();
         Vector3 vx = (P1 - P0).normalize();
-        Vector3 vy = vz.vectorial(vx);
+        Vector3 vy = vz.cross(vx);
         Frame3 tFrame(f_.o_ + P0, vx, vy, vz);
         std::vector<Vector2> points(3);
         points[0] = Vector2(0,0);

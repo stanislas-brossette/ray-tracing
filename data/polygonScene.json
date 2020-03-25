@@ -14,7 +14,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.8
+        "intensity": 0.2
     },
     "items": {
         "lightSource1": {
@@ -37,7 +37,7 @@
                 "color": [52, 200, 51],
                 "rugosity": 0.05,
                 "refraction": 0.0,
-                "reflectiveness": 5.0,
+                "reflectiveness": 0.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

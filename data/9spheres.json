@@ -22,7 +22,7 @@
                 "color": [255, 255, 255],
                 "rugosity": 0.00,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.0,
                 "lightEmitter": true,
                 "lightIntensity": 1.0
             },
@@ -37,7 +37,7 @@
                 "color": [0, 255, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -52,7 +52,7 @@
                 "color": [0, 0, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -67,7 +67,7 @@
                 "color": [255, 125, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -82,7 +82,7 @@
                 "color": [255, 255, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -97,7 +97,7 @@
                 "color": [125, 255, 125],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -112,7 +112,7 @@
                 "color": [0, 125, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -127,7 +127,7 @@
                 "color": [125, 255, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -142,7 +142,7 @@
                 "color": [255, 125, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 1.0,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -157,7 +157,7 @@
                 "color": [150, 150, 150],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 1,
+                "reflectiveness": 0.7,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

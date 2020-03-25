@@ -14,7 +14,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.2
+        "intensity": 0.1
     },
     "items": {
         "floorPlane": {
@@ -22,7 +22,7 @@
                 "color": [80, 81, 82],
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.2,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0.0
             },
@@ -176,7 +176,7 @@
                 "color": [1, 20, 24],
                 "rugosity": 0.01,
                 "refraction": 0.0,
-                "reflectiveness": 3.0,
+                "reflectiveness": 1.0,
                 "lightEmitter": false,
                 "lightIntensity": 0.0
             },

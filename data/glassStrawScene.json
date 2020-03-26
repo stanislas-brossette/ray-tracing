@@ -1,0 +1,90 @@
+{
+    "camera": {
+        "resX": 1400,
+        "fovX": 110,
+        "fovY": 90,
+        "pos": [0.0, -0.3, 0.15],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0,
+        "fovType": 0
+    },
+    "render": {
+        "nPixPerRender": 100000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255,255,255],
+        "intensity": 0.4
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.5, 0.5, 0.5]
+            }
+        },
+        "glass": {
+            "material": {
+                "color": [10, 10, 10],
+                "rugosity": 0.0,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.1,
+                "length": 0.2,
+                "pos": [0.0, 0.0, 0.1]
+            }
+        },
+        "straw": {
+            "material": {
+                "color": [240, 10, 10],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.01,
+                "length": 0.3,
+                "pos": [0.0, 0.0, 0.15],
+                "rotAxis": [0, 1, 0],
+                "rotAngle": 20
+            }
+        },
+        "plane": {
+            "material": {
+                "color": [180, 8, 180],
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Polygon",
+                "pos": [0.0, 0.0, 0.0],
+                "points": [
+                    {"x": -0.2, "y": -0.2},
+                    {"x": -0.2, "y": 0.2},
+                    {"x": 0.2, "y": 0.2},
+                    {"x": 0.2, "y": -0.2}
+                ]
+            }
+        }
+    }
+}

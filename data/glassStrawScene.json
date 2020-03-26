@@ -66,6 +66,21 @@
                 "rotAngle": 20
             }
         },
+        "sky": {
+            "material": {
+                "color": [135, 206, 235],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 10000,
+                "pos": [0.0, 0.0, 0.0]
+            }
+        },
         "plane": {
             "material": {
                 "color": [180, 8, 180],

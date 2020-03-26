@@ -393,6 +393,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         /*************
         *  Fresnel  *
         *************/
+        double FR = 1; // Fresnel coef reflexion
+        double FT = 0; // Fresnel coef transmission
         bool refractionExists = false;
 
         double n1 = lr.refractiveIndex_;
@@ -405,8 +407,6 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double c1 = -impactNormal.dot(lr.dir_); // cos(theta1)
         double c22 = 1 - std::pow(n1sn2,2)*(1-std::pow(c1,2)); // squared cos(theta2)
         double c2 = 0; // cos(theta2)
-        double FR = 1; // Fresnel coef reflexion
-        double FT = 0; // Fresnel coef transmission
 
         if(c22 >= 0 and n2 > 0)
         {
@@ -421,7 +421,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         /****************
         *  Refraction  *
         ****************/
-        if(refractionExists)
+        if(refractionExists and not simplifiedRender_)
         {
             Vector3 lrRefractDir;
             //TODO remove redundent calculation in refract
@@ -438,7 +438,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         *  Specular reflection  *
         *************************/
         //TODO separate reflection in specular and diffuse
-        if (impactItem->material_->reflectiveness_ > 0)
+        if (impactItem->material_->reflectiveness_ > 0 and not simplifiedRender_)
         {
             // Rugosity can be taken into account here
             Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);

@@ -24,6 +24,7 @@ public:
     bool isApprox(const Frame3& f, double prec);
 
     std::string describe() const;
+    friend std::ostream& operator<<(std::ostream& os, const Frame3& f);
 
     virtual ~Frame3 ();
 

@@ -58,3 +58,9 @@ std::string MaterialData::describe() const
     ss << "lightIntensity: " << lightIntensity;
     return ss.str();
 }
+
+std::ostream& operator<<(std::ostream& os, const Material& m)
+{
+    os << m.describe();
+    return os;
+}

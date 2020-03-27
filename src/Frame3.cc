@@ -162,3 +162,9 @@ std::string Frame3::describe() const
     ss << "vz: " << vz_;
     return ss.str();
 }
+
+std::ostream& operator<<(std::ostream& os, const Frame3& f)
+{
+    os << f.describe();
+    return os;
+}

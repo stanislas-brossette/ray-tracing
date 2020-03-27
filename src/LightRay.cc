@@ -27,3 +27,9 @@ std::string LightRay::describe() const
     ss << "refractiveIndex: " << refractiveIndex_;
     return ss.str();
 }
+
+std::ostream& operator<<(std::ostream& os, const LightRay& lr)
+{
+    os << lr.describe();
+    return os;
+}

@@ -25,4 +25,5 @@ public:
     double b_;
 
     std::string describe() const;
+    friend std::ostream& operator<<(std::ostream& os, const Pixel& p);
 };

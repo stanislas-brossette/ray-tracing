@@ -39,3 +39,9 @@ std::string AmbiantData::describe() const
     ss << "color: " << color << "\n";
     return ss.str();
 }
+
+std::ostream& operator<<(std::ostream& os, const AmbiantLight& a)
+{
+    os << a.describe();
+    return os;
+}

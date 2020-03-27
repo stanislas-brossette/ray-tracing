@@ -147,3 +147,9 @@ void Camera::changeResolution(int resX, int resY)
     resY_ = resY;
     initAllPixelsVec();
 }
+
+std::ostream& operator<<(std::ostream& os, const Camera& c)
+{
+    os << c.describe();
+    return os;
+}

@@ -104,3 +104,9 @@ Pixel Pixel::operator*(const double& d) const
     pRes.b_ = b_;
     return pRes;
 }
+
+std::ostream& operator<<(std::ostream& os, const Pixel& p)
+{
+    os << p.describe();
+    return os;
+}

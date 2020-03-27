@@ -12,6 +12,7 @@ public:
     Material (const MaterialData& mData);
     Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity);
     std::string describe() const;
+    friend std::ostream& operator<<(std::ostream& os, const Material& m);
     virtual ~Material ();
 
     Vector3RGB color_;

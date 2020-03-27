@@ -296,14 +296,15 @@ std::ostream& operator<<(std::ostream& os, const Scene& s)
 {
     os << "++++++++++++++ Scene ++++++++++++++\n";
 
-    os << s.ambiantLight_.describe() << std::endl;
+    os << s.ambiantLight_ << std::endl;
 
-    os << s.camera_.describe() << std::endl;
+    os << s.camera_ << std::endl;
 
     for(size_t itemIndex = 0; itemIndex < s.items_.size(); ++itemIndex)
         os << s.items_[itemIndex]->describe() << std::endl;
 
     os << "+++++++++++++++++++++++++++++++++++";
+    return os;
 }
 
 std::string SceneData::describe() const

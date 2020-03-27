@@ -24,6 +24,45 @@ bool Vector2::isRightOf(const Vector2& p0, const Vector2& p1) const
     return (prodVec > 0);
 }
 
+Vector2 Vector2::operator+(const Vector2& v) const
+{
+    Vector2 res(x_+v.x_, y_+v.y_);
+    return res;
+}
+
+Vector2& Vector2::operator+=(const Vector2& v)
+{
+    x_ += v.x_;
+    y_ += v.y_;
+    return *this;
+}
+
+Vector2 Vector2::operator-(const Vector2& v) const
+{
+    Vector2 res(x_-v.x_, y_-v.y_);
+    return res;
+}
+
+Vector2& Vector2::operator-=(const Vector2& v)
+{
+    x_ -= v.x_;
+    y_ -= v.y_;
+    return *this;
+}
+
+Vector2 Vector2::operator*(double d) const
+{
+    Vector2 res(d*x_, d*y_);
+    return res;
+}
+
+Vector2& Vector2::operator*=(double d)
+{
+    x_ *= d;
+    y_ *= d;
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector2& v)
 {
     os << "[" << v.x_ << "," << v.y_ << "]";
@@ -86,16 +125,40 @@ Vector3 Vector3::operator+(const Vector3& v) const
     return res;
 }
 
+Vector3& Vector3::operator+=(const Vector3& v)
+{
+    x_ += v.x_;
+    y_ += v.y_;
+    z_ += v.z_;
+    return *this;
+}
+
 Vector3 Vector3::operator-(const Vector3& v) const
 {
     Vector3 res(x_-v.x_, y_-v.y_, z_-v.z_);
     return res;
 }
 
-Vector3 Vector3::operator*(const double& d) const
+Vector3& Vector3::operator-=(const Vector3& v)
+{
+    x_ -= v.x_;
+    y_ -= v.y_;
+    z_ -= v.z_;
+    return *this;
+}
+
+Vector3 Vector3::operator*(double d) const
 {
     Vector3 res(d*x_, d*y_, d*z_);
     return res;
+}
+
+Vector3& Vector3::operator*=(double d)
+{
+    x_ *= d;
+    y_ *= d;
+    z_ *= d;
+    return *this;
 }
 
 bool Vector3::operator==(const Vector3& v) const
@@ -229,14 +292,38 @@ Vector3RGB Vector3RGB::operator+(const Vector3RGB& c) const
     return Vector3RGB(c.r_ + r_, c.g_ + g_, c.g_ + g_);
 }
 
+Vector3RGB& Vector3RGB::operator+=(const Vector3RGB& c)
+{
+    r_ += c.r_;
+    g_ += c.g_;
+    b_ += c.b_;
+    return *this;
+}
+
 Vector3RGB Vector3RGB::operator*(const Vector3RGB& c) const
 {
     return Vector3RGB(c.r_ * r_, c.g_ * g_, c.g_ * g_);
 }
 
+Vector3RGB& Vector3RGB::operator*=(const Vector3RGB& c)
+{
+    r_ *= c.r_;
+    g_ *= c.g_;
+    b_ *= c.b_;
+    return *this;
+}
+
 Vector3RGB Vector3RGB::operator*(double d) const
 {
     return Vector3RGB(r_*d, g_*d, g_*d);
+}
+
+Vector3RGB& Vector3RGB::operator*=(double d)
+{
+    r_ *= d;
+    g_ *= d;
+    b_ *= d;
+    return *this;
 }
 
 void Vector3RGB::clamp(double min, double max)

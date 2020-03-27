@@ -10,6 +10,15 @@ public:
     virtual ~Vector2 ();
     double x_;
     double y_;
+
+    Vector2 operator+(const Vector2&) const;
+    Vector2 operator-(const Vector2&) const;
+    Vector2 operator*(double) const;
+
+    Vector2& operator+=(const Vector2&);
+    Vector2& operator-=(const Vector2&);
+    Vector2& operator*=(double);
+
     bool isRightOf(const Vector2& p0, const Vector2& p1) const;
     friend std::ostream& operator<<(std::ostream& os, const Vector2& v);
 };
@@ -30,7 +39,12 @@ public:
 
     Vector3 operator+(const Vector3&) const;
     Vector3 operator-(const Vector3&) const;
-    Vector3 operator*(const double&) const;
+    Vector3 operator*(double) const;
+
+    Vector3& operator+=(const Vector3&);
+    Vector3& operator-=(const Vector3&);
+    Vector3& operator*=(double);
+
     bool operator==(const Vector3&) const;
     bool isApprox(const Vector3&, double prec) const;
 
@@ -55,10 +69,16 @@ public:
     Vector3RGB (double);
     Vector3RGB (double, double, double);
     virtual ~Vector3RGB ();
-    Vector3RGB& operator=(const Vector3RGB&);
+
     Vector3RGB operator+(const Vector3RGB&) const;
     Vector3RGB operator*(const Vector3RGB&) const;
     Vector3RGB operator*(double d) const;
+
+    Vector3RGB& operator=(const Vector3RGB&);
+    Vector3RGB& operator+=(const Vector3RGB&);
+    Vector3RGB& operator*=(const Vector3RGB&);
+    Vector3RGB& operator*=(double d);
+
     void clamp(double min = 0.0, double max = 1.0);
     void applyGammaCorrection(double exposure, double gamma);
 

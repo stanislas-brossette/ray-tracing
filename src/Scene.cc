@@ -28,10 +28,10 @@ Scene::~Scene()
 
 void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t nPointsRendered) const
 {
-    for (size_t i = 0; i < nPoints; i++)
-    {
-        castRandomRay( res[i], nPointsRendered + i);
-    }
+    //for (size_t i = 0; i < nPoints; i++)
+    //{
+    //    castRandomRay( res[i], nPointsRendered + i);
+    //}
 }
 
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
@@ -93,157 +93,157 @@ void Scene::castMultipleRandomRays( std::vector<Pixel>& vecPix, size_t beginInde
 
 void Scene::castRandomRay( Pixel& pix, size_t iOrderedRay) const
 {
-    LightRay lr;
-    Pixel ambiantPix, diffuseRefPix, specReflPix;
-    camera_.castOrderedRay(lr, pix, iOrderedRay);
-
-    Vector3 impactPoint;
-    Vector3 impactNormal;
-    double impactDist = INFINITY_d();
-    size_t impactItemIndex = 0;
-
-    //Does the primary light ray contact with an item?
-    bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
-
-    //Compute illumination
-    if (impact)
-    {
-        Item* impactItem = items_[impactItemIndex];
-
-        /*************************************
-        *  Direct impact with light source  *
-        *************************************/
-        if (impactItem->material_->lightEmitter_)
-        {
-            pix.a_ = 255*impactItem->material_->lightIntensity_;
-            pix.r_ = impactItem->material_->color_.r_;
-            pix.g_ = impactItem->material_->color_.g_;
-            pix.b_ = impactItem->material_->color_.b_;
-            pix.clamp();
-            return;
-        }
-
-        /*******************
-        *  Ambiant light  *
-        *******************/
-        double cosAngleAmbiant = std::abs(- lr.dir_.dot(impactNormal));
-        ambiantPix.a_ = 255*cosAngleAmbiant*ambiantLight_.intensity_;
-        ambiantPix.r_ = impactItem->material_->color_.r_;
-        ambiantPix.g_ = impactItem->material_->color_.g_;
-        ambiantPix.b_ = impactItem->material_->color_.b_;
-
-        if(simplifiedRender_)
-        {
-            ambiantPix.a_ *= 2.0;
-            pix = pix + ambiantPix;
-            pix.clamp();
-            return;
-        }
-
-        /************************
-        *  diffuse reflection  *
-        ************************/
-        //Is there a light source in the half plane (impactPoint impactNormal)
-        Pixel pixIfNotInShadow;
-        bool needToCheckShadow = false;
-        LightRay lrImpactToLightSource;
-        double distImpactToLightSource;
-        for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
-        {
-            Item* lsItem = items_[itemIndex];
-            double cosAngle = 0;
-            bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
-            if (lsItem->material_->lightEmitter_)
-            {
-                distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
-                lrImpactToLightSource.origin_ = impactPoint;
-                lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
-                lrImpactToLightSource.dir_.normalize();
-
-                //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
-                if(inHalfSpace)
-                {
-                    needToCheckShadow = true;
-                    double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
-                    pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
-                    pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
-                    pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
-                    pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
-
-                    bool inShadow = false;
-                    size_t shadowingItemIndex = 0;
-                    if(needToCheckShadow)
-                    {
-                        inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
-                        if(not inShadow)
-                        {
-                            diffuseRefPix = pixIfNotInShadow;
-                            pix = pix + diffuseRefPix;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                cosAngle = std::abs(- lr.dir_.dot(impactNormal));
-                ambiantPix.a_ = 255*cosAngle*ambiantLight_.intensity_;
-                ambiantPix.r_ = impactItem->material_->color_.r_;
-                ambiantPix.g_ = impactItem->material_->color_.g_;
-                ambiantPix.b_ = impactItem->material_->color_.b_;
-            }
-        }
-        pix = pix + ambiantPix;
-
-
-        /*************************
-        *  specular reflection  *
-        *************************/
-        if (impactItem->material_->reflectiveness_ > 0)
-        {
-            // Rugosity can be taken into account here
-            Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
-            lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
-            lrSpecRefDir.normalize();
-            LightRay lrSpecReflection(impactPoint, lrSpecRefDir);
-            Vector3 secImpactPoint;
-            Vector3 secImpactNormal;
-            double secImpactDist = INFINITY_d();
-            size_t secImpactItemIndex = 0;
-
-            //Does the primary light ray contact with an item?
-            bool secImpact = findFirstImpact(lrSpecReflection, secImpactItemIndex, secImpactPoint, secImpactNormal, secImpactDist);
-            Item* specReflItem = items_[secImpactItemIndex];
-            if (secImpact)
-            {
-                double distReductionFactor = getDistReductionFactor(secImpactDist+1);
-                if(specReflItem->material_->lightEmitter_)
-                {
-                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
-                }
-                else
-                {
-                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*ambiantLight_.intensity_;
-                }
-                specReflPix.x_ = pix.x_;
-                specReflPix.y_ = pix.y_;
-                specReflPix.r_ = specReflItem->material_->color_.r_;
-                specReflPix.g_ = specReflItem->material_->color_.g_;
-                specReflPix.b_ = specReflItem->material_->color_.b_;
-                pix = pix + specReflPix;
-            }
-        }
-    }
-    pix.clamp();
-    return;
+//    LightRay lr;
+//    Pixel ambiantPix, diffuseRefPix, specReflPix;
+//    camera_.castOrderedRay(lr, pix, iOrderedRay);
+//
+//    Vector3 impactPoint;
+//    Vector3 impactNormal;
+//    double impactDist = INFINITY_d();
+//    size_t impactItemIndex = 0;
+//
+//    //Does the primary light ray contact with an item?
+//    bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
+//
+//    //Compute illumination
+//    if (impact)
+//    {
+//        Item* impactItem = items_[impactItemIndex];
+//
+//        /*************************************
+//        *  Direct impact with light source  *
+//        *************************************/
+//        if (impactItem->material_->lightEmitter_)
+//        {
+//            pix.a_ = 255*impactItem->material_->lightIntensity_;
+//            pix.r_ = impactItem->material_->color_.r_;
+//            pix.g_ = impactItem->material_->color_.g_;
+//            pix.b_ = impactItem->material_->color_.b_;
+//            pix.clamp();
+//            return;
+//        }
+//
+//        /*******************
+//        *  Ambiant light  *
+//        *******************/
+//        double cosAngleAmbiant = std::abs(- lr.dir_.dot(impactNormal));
+//        ambiantPix.a_ = 255*cosAngleAmbiant*ambiantLight_.intensity_;
+//        ambiantPix.r_ = impactItem->material_->color_.r_;
+//        ambiantPix.g_ = impactItem->material_->color_.g_;
+//        ambiantPix.b_ = impactItem->material_->color_.b_;
+//
+//        if(simplifiedRender_)
+//        {
+//            ambiantPix.a_ *= 2.0;
+//            pix = pix + ambiantPix;
+//            pix.clamp();
+//            return;
+//        }
+//
+//        /************************
+//        *  diffuse reflection  *
+//        ************************/
+//        //Is there a light source in the half plane (impactPoint impactNormal)
+//        Pixel pixIfNotInShadow;
+//        bool needToCheckShadow = false;
+//        LightRay lrImpactToLightSource;
+//        double distImpactToLightSource;
+//        for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+//        {
+//            Item* lsItem = items_[itemIndex];
+//            double cosAngle = 0;
+//            bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, cosAngle);
+//            if (lsItem->material_->lightEmitter_)
+//            {
+//                distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
+//                lrImpactToLightSource.origin_ = impactPoint;
+//                lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
+//                lrImpactToLightSource.dir_.normalize();
+//
+//                //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
+//                if(inHalfSpace)
+//                {
+//                    needToCheckShadow = true;
+//                    double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
+//                    pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
+//                    pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
+//                    pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
+//                    pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
+//
+//                    bool inShadow = false;
+//                    size_t shadowingItemIndex = 0;
+//                    if(needToCheckShadow)
+//                    {
+//                        inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
+//                        if(not inShadow)
+//                        {
+//                            diffuseRefPix = pixIfNotInShadow;
+//                            pix = pix + diffuseRefPix;
+//                        }
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                cosAngle = std::abs(- lr.dir_.dot(impactNormal));
+//                ambiantPix.a_ = 255*cosAngle*ambiantLight_.intensity_;
+//                ambiantPix.r_ = impactItem->material_->color_.r_;
+//                ambiantPix.g_ = impactItem->material_->color_.g_;
+//                ambiantPix.b_ = impactItem->material_->color_.b_;
+//            }
+//        }
+//        pix = pix + ambiantPix;
+//
+//
+//        /*************************
+//        *  specular reflection  *
+//        *************************/
+//        if (impactItem->material_->reflectiveness_ > 0)
+//        {
+//            // Rugosity can be taken into account here
+//            Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
+//            lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
+//            lrSpecRefDir.normalize();
+//            LightRay lrSpecReflection(impactPoint, lrSpecRefDir);
+//            Vector3 secImpactPoint;
+//            Vector3 secImpactNormal;
+//            double secImpactDist = INFINITY_d();
+//            size_t secImpactItemIndex = 0;
+//
+//            //Does the primary light ray contact with an item?
+//            bool secImpact = findFirstImpact(lrSpecReflection, secImpactItemIndex, secImpactPoint, secImpactNormal, secImpactDist);
+//            Item* specReflItem = items_[secImpactItemIndex];
+//            if (secImpact)
+//            {
+//                double distReductionFactor = getDistReductionFactor(secImpactDist+1);
+//                if(specReflItem->material_->lightEmitter_)
+//                {
+//                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*specReflItem->material_->lightIntensity_;
+//                }
+//                else
+//                {
+//                    specReflPix.a_ = 255*distReductionFactor*impactItem->material_->reflectiveness_*ambiantLight_.intensity_;
+//                }
+//                specReflPix.x_ = pix.x_;
+//                specReflPix.y_ = pix.y_;
+//                specReflPix.r_ = specReflItem->material_->color_.r_;
+//                specReflPix.g_ = specReflItem->material_->color_.g_;
+//                specReflPix.b_ = specReflItem->material_->color_.b_;
+//                pix = pix + specReflPix;
+//            }
+//        }
+//    }
+//    pix.clamp();
+//    return;
 }
 
 double Scene::getDistReductionFactor(double dist) const
 {
     //double distReductionFactor = 1/std::sqrt(dist+1);
     //double distReductionFactor = 1/(dist+1);
-    double distReductionFactor = 1/std::pow(dist+1,2);
+    //double distReductionFactor = 1/std::pow(dist+1,2);
     //double distReductionFactor = 1/std::pow(dist/4+1,3);
-    //double distReductionFactor = 1;
+    double distReductionFactor = 1;
     return distReductionFactor;
 }
 

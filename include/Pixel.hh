@@ -12,9 +12,15 @@ public:
     Pixel(int x, int y);
     Pixel(int x, int y, double a, double r, double g, double b);
     ~Pixel();
+
     Pixel operator+(const Pixel& p) const;
     Pixel operator*(const double& d) const;
     Pixel operator*(const Pixel& p) const;
+
+    Pixel& operator+=(const Pixel& p);
+    Pixel& operator*=(const double& d);
+    Pixel& operator*=(const Pixel& p);
+
     void clamp();
     void applyGammaCorrection(double exposure, double gamma);
     void setColor(double a, double r, double g, double b);

@@ -1,0 +1,66 @@
+{
+    "camera": {
+        "resX": 1000,
+        "fovX": 110,
+        "fovY": 90,
+        "pos": [0.0, 0.4, -0.2],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0,
+        "fovType": 0
+    },
+    "render": {
+        "nPixPerRender": 100000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [135, 206, 235],
+        "intensity": 0.6
+    },
+    "items": {
+        "lightSource": {
+            "material": {
+                "color": [200, 226, 234],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.7, 2.0, -0.9]
+            }
+        },
+        "greenSphere": {
+            "material": {
+                "color": [52, 200, 51],
+                "rugosity": 0.05,
+                "refraction": 0.0,
+                "reflectiveness": 0.2,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.5,
+                "pos": [0.0, 2.5, -0.5]
+            }
+        },
+        "bottomPlane": {
+            "material": {
+                "color": [230, 20, 20],
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -1.0]
+            }
+        }
+    }
+}
+

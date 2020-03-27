@@ -383,8 +383,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         *************************************/
         if (impactItem->material_->lightEmitter_)
         {
-            pix.a_ = impactItem->material_->lightIntensity_;
-            pix.c_ = impactItem->material_->color_;
+            double distReductionFactor = getDistReductionFactor(impactDist);
+            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->color_);
             pix.clamp();
             return;
         }
@@ -474,9 +474,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                     if(inHalfSpace)
                     {
                         needToCheckShadow = true;
-                        double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
-                        pixIfNotInShadow.a_ = cosAngle*distReductionFactor;
-                        pixIfNotInShadow.c_ = impactItem->material_->color_;
+                        double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
+                        pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->color_);
 
                         bool inShadow = false;
                         size_t shadowingItemIndex = 0;
@@ -485,7 +484,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                             inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex);
                             if(not inShadow)
                             {
-                                diffuseRefPix = diffuseRefPix + pixIfNotInShadow;
+                                diffuseRefPix += pixIfNotInShadow;
                             }
                         }
                     }
@@ -493,9 +492,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 else
                 {
                     cosAngle = std::abs(- lr.dir_.dot(impactNormal));
-                    ambiantPix.a_ = cosAngle*ambiantLight_.intensity_;
-                    ambiantPix.c_ = impactItem->material_->color_;
-                    diffuseRefPix = diffuseRefPix + ambiantPix;
+                    ambiantPix.setColor(cosAngle*ambiantLight_.intensity_, impactItem->material_->color_);
+                    diffuseRefPix += ambiantPix;
                 }
             }
         }
@@ -504,11 +502,14 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double FRspec = FR * impactItem->material_->reflectiveness_;
         double FRdiff = FR - FRspec;
 
-        refracPix.clamp();
-        specReflPix.clamp();
-        diffuseRefPix.clamp();
+        refracPix*=FT;
+        specReflPix*=FRspec;
+        diffuseRefPix*=FRdiff;
+        pix += refracPix;
+        pix += specReflPix;
+        pix += diffuseRefPix;
 
-        pix = (refracPix * FT) + (specReflPix * FRspec) + (diffuseRefPix * FRdiff);
+        //pix.applyGammaCorrection(1.0, 2.2);
         pix.clamp();
     }
 }

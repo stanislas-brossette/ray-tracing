@@ -1,0 +1,21 @@
+{
+    "camera": {
+        "resX": 50,
+        "fovX": 100,
+        "fovY": 100,
+        "pos": [0.0, 0.0, 0.0],
+        "rotAxis": [1.0, 0.0, 0.0],
+        "rotAngle": 0.0,
+        "fovType": 2
+    },
+    "render": {
+        "nPixPerRender": 10000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255,255,255],
+        "intensity": 0.1
+    },
+    "items": {}
+}
+

@@ -13,8 +13,8 @@
         "percentLightRay": 100
     },
     "ambiantLight": {
-        "color": [255,255,255],
-        "intensity": 0.4
+        "color": [255, 255, 255],
+        "intensity": 0.1
     },
     "items": {
         "lightSource1": {
@@ -28,16 +28,31 @@
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 0.1,
-                "pos": [0.5, 0.5, 0.5]
+                "radius": 0.05,
+                "pos": [0.0, 0.0, 0.4]
+            }
+        },
+        "lightSource2": {
+            "material": {
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [-0.2, -0.1, 0.1]
             }
         },
         "glass": {
             "material": {
-                "color": [10, 10, 10],
+                "color": [255, 255, 255],
                 "rugosity": 0.0,
-                "refraction": 1.4,
-                "reflectiveness": 0.1,
+                "refraction": 1.33,
+                "reflectiveness": 0.00,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -45,7 +60,7 @@
                 "type": "ClosedCylinder",
                 "radius": 0.1,
                 "length": 0.2,
-                "pos": [0.0, 0.0, 0.1]
+                "pos": [0.0, 0.0, 0.099]
             }
         },
         "straw": {
@@ -64,21 +79,6 @@
                 "pos": [0.0, 0.0, 0.15],
                 "rotAxis": [0, 1, 0],
                 "rotAngle": 20
-            }
-        },
-        "sky": {
-            "material": {
-                "color": [135, 206, 235],
-                "rugosity": 0.0,
-                "refraction": 0.0,
-                "reflectiveness": 0.0,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Sphere",
-                "radius": 10000,
-                "pos": [0.0, 0.0, 0.0]
             }
         },
         "plane": {

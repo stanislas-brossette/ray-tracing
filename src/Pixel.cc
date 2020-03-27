@@ -3,7 +3,6 @@
 Pixel::Pixel ()
   : x_(0),
     y_(0),
-    a_(0),
     c_(0, 0, 0)
 {
 }
@@ -11,7 +10,6 @@ Pixel::Pixel ()
 Pixel::Pixel (int x, int y)
   : x_(x),
     y_(y),
-    a_(0),
     c_(0, 0, 0)
 {
 }
@@ -19,7 +17,6 @@ Pixel::Pixel (int x, int y)
 Pixel::Pixel (int x, int y, double a, double r, double g, double b)
   : x_(x),
     y_(y),
-    a_(a),
     c_(r, g, b)
 {
 }
@@ -30,13 +27,11 @@ Pixel::~Pixel()
 
 void Pixel::setColor(double a, double r, double g, double b)
 {
-    a_ = a;
-    c_ = Vector3RGB(r, g, b);
+    c_ = Vector3RGB(a*r, a*g, a*b);
 }
 void Pixel::setColor(double a, const Vector3RGB c)
 {
-    a_ = a;
-    c_ = c;
+    c_ = c * a;
 }
 
 std::string Pixel::describe() const
@@ -49,8 +44,6 @@ std::string Pixel::describe() const
 
 void Pixel::clamp()
 {
-    if(a_ < 0.0)
-        a_ = 0.0;
     c_.clamp();
 }
 
@@ -66,12 +59,6 @@ Pixel Pixel::operator+(const Pixel& p) const
     Pixel pRes;
     pRes.x_ = x_;
     pRes.y_ = y_;
-    pRes.a_ = a_ + p.a_;
-    //double ratio = a_/(a_ + p.a_);
-    //double ratioP = p.a_/(a_ + p.a_);
-    //pRes.r_ = ratio*r_ + ratioP*p.r_;
-    //pRes.g_ = ratio*g_ + ratioP*p.g_;
-    //pRes.b_ = ratio*b_ + ratioP*p.b_;
     pRes.c_ = c_ + p.c_;
     return pRes;
 }
@@ -81,7 +68,6 @@ Pixel Pixel::operator*(const Pixel& p) const
     Pixel pRes;
     pRes.x_ = x_;
     pRes.y_ = y_;
-    pRes.a_ = a_;
     pRes.c_ = c_ * p.c_;
     return pRes;
 }
@@ -91,9 +77,26 @@ Pixel Pixel::operator*(const double& d) const
     Pixel pRes;
     pRes.x_ = x_;
     pRes.y_ = y_;
-    pRes.a_ = a_ * d;
     pRes.c_ = c_ * d;
     return pRes;
+}
+
+Pixel& Pixel::operator+=(const Pixel& p)
+{
+    c_ += p.c_;
+    return *this;
+}
+
+Pixel& Pixel::operator*=(const Pixel& p)
+{
+    c_ *= p.c_;
+    return *this;
+}
+
+Pixel& Pixel::operator*=(const double& d)
+{
+    c_ *= d;
+    return *this;
 }
 
 std::ostream& operator<<(std::ostream& os, const Pixel& p)

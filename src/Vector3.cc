@@ -262,11 +262,11 @@ Vector3RGB::Vector3RGB(double r, double g, double b)
     g_(g),
     b_(b)
 {
-    if(r_ < 0 or r_ > 1.0)
+    if(r_ < 0)
         std::cerr << "invalid R: " << r_ << std::endl;
-    if(g_ < 0 or g_ > 1.0)
+    if(g_ < 0)
         std::cerr << "invalid G: " << g_ << std::endl;
-    if(b_ < 0 or b_ > 1.0)
+    if(b_ < 0)
         std::cerr << "invalid B: " << b_ << std::endl;
 }
 
@@ -289,7 +289,7 @@ Vector3RGB& Vector3RGB::operator=(const Vector3RGB& c)
 
 Vector3RGB Vector3RGB::operator+(const Vector3RGB& c) const
 {
-    return Vector3RGB(c.r_ + r_, c.g_ + g_, c.g_ + g_);
+    return Vector3RGB(c.r_ + r_, c.g_ + g_, c.b_ + b_);
 }
 
 Vector3RGB& Vector3RGB::operator+=(const Vector3RGB& c)
@@ -302,7 +302,7 @@ Vector3RGB& Vector3RGB::operator+=(const Vector3RGB& c)
 
 Vector3RGB Vector3RGB::operator*(const Vector3RGB& c) const
 {
-    return Vector3RGB(c.r_ * r_, c.g_ * g_, c.g_ * g_);
+    return Vector3RGB(c.r_ * r_, c.g_ * g_, c.b_ * b_);
 }
 
 Vector3RGB& Vector3RGB::operator*=(const Vector3RGB& c)
@@ -315,7 +315,7 @@ Vector3RGB& Vector3RGB::operator*=(const Vector3RGB& c)
 
 Vector3RGB Vector3RGB::operator*(double d) const
 {
-    return Vector3RGB(r_*d, g_*d, g_*d);
+    return Vector3RGB(r_*d, g_*d, b_*d);
 }
 
 Vector3RGB& Vector3RGB::operator*=(double d)

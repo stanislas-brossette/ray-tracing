@@ -36,7 +36,7 @@ Window::Window(int resX, int resY)
 
 void Window::addPixel(const Pixel& p)
 {
-    SDL_SetRenderDrawColor(renderer_, p.r_, p.g_, p.b_, p.a_);
+    SDL_SetRenderDrawColor(renderer_, 255*p.r(), 255*p.g(), 255*p.b(), 255*p.a_);
     SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
 }
 
@@ -44,7 +44,7 @@ void Window::addPixels(const std::vector<Pixel>& v)
 {
     for (size_t i = 0; i < v.size(); i++)
     {
-        SDL_SetRenderDrawColor(renderer_, v[i].r_, v[i].g_, v[i].b_, v[i].a_);
+        SDL_SetRenderDrawColor(renderer_, 255*v[i].r(), 255*v[i].g(), 255*v[i].b(), 255*v[i].a_);
         SDL_RenderDrawPoint(renderer_, v[i].x_, resY_-v[i].y_);
     }
 }

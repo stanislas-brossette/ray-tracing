@@ -383,10 +383,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         *************************************/
         if (impactItem->material_->lightEmitter_)
         {
-            pix.a_ = 255*impactItem->material_->lightIntensity_;
-            pix.r_ = impactItem->material_->color_.r_;
-            pix.g_ = impactItem->material_->color_.g_;
-            pix.b_ = impactItem->material_->color_.b_;
+            pix.a_ = impactItem->material_->lightIntensity_;
+            pix.c_ = impactItem->material_->color_;
             pix.clamp();
             return;
         }
@@ -477,10 +475,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                     {
                         needToCheckShadow = true;
                         double distReductionFactor = getDistReductionFactor(distImpactToLightSource+1);
-                        pixIfNotInShadow.a_ = 255*cosAngle*distReductionFactor;
-                        pixIfNotInShadow.r_ = impactItem->material_->color_.r_;
-                        pixIfNotInShadow.g_ = impactItem->material_->color_.g_;
-                        pixIfNotInShadow.b_ = impactItem->material_->color_.b_;
+                        pixIfNotInShadow.a_ = cosAngle*distReductionFactor;
+                        pixIfNotInShadow.c_ = impactItem->material_->color_;
 
                         bool inShadow = false;
                         size_t shadowingItemIndex = 0;
@@ -497,10 +493,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 else
                 {
                     cosAngle = std::abs(- lr.dir_.dot(impactNormal));
-                    ambiantPix.a_ = 255*cosAngle*ambiantLight_.intensity_;
-                    ambiantPix.r_ = impactItem->material_->color_.r_;
-                    ambiantPix.g_ = impactItem->material_->color_.g_;
-                    ambiantPix.b_ = impactItem->material_->color_.b_;
+                    ambiantPix.a_ = cosAngle*ambiantLight_.intensity_;
+                    ambiantPix.c_ = impactItem->material_->color_;
                     diffuseRefPix = diffuseRefPix + ambiantPix;
                 }
             }

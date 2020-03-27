@@ -52,12 +52,19 @@ class Vector3RGB
 {
 public:
     Vector3RGB ();
-    Vector3RGB (int, int, int);
+    Vector3RGB (double);
+    Vector3RGB (double, double, double);
     virtual ~Vector3RGB ();
+    Vector3RGB& operator=(const Vector3RGB&);
+    Vector3RGB operator+(const Vector3RGB&) const;
+    Vector3RGB operator*(const Vector3RGB&) const;
+    Vector3RGB operator*(double d) const;
+    void clamp(double min = 0.0, double max = 1.0);
+    void applyGammaCorrection(double exposure, double gamma);
 
-    int r_;
-    int g_;
-    int b_;
+    double r_;
+    double g_;
+    double b_;
     friend std::ostream& operator<<(std::ostream& os, const Vector3RGB& v);
 };
 

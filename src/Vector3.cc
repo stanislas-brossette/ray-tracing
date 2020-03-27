@@ -183,23 +183,28 @@ std::ostream& operator<<(std::ostream& os, const Vector3& v)
 }
 
 Vector3RGB::Vector3RGB()
-  : r_(255),
-    g_(255),
-    b_(255)
+  : r_(0.0),
+    g_(0.0),
+    b_(0.0)
 {
 }
 
-Vector3RGB::Vector3RGB(int r, int g, int b)
+Vector3RGB::Vector3RGB(double c)
+  : Vector3RGB(c, c, c)
+{
+}
+
+Vector3RGB::Vector3RGB(double r, double g, double b)
   : r_(r),
     g_(g),
     b_(b)
 {
-    if(r_ < 0 or r_ > 255)
-        std::cerr << "invalid R" << std::endl;
-    if(g_ < 0 or g_ > 255)
-        std::cerr << "invalid G" << std::endl;
-    if(b_ < 0 or b_ > 255)
-        std::cerr << "invalid B" << std::endl;
+    if(r_ < 0 or r_ > 1.0)
+        std::cerr << "invalid R: " << r_ << std::endl;
+    if(g_ < 0 or g_ > 1.0)
+        std::cerr << "invalid G: " << g_ << std::endl;
+    if(b_ < 0 or b_ > 1.0)
+        std::cerr << "invalid B: " << b_ << std::endl;
 }
 
 Vector3RGB::~Vector3RGB()
@@ -209,4 +214,52 @@ Vector3RGB::~Vector3RGB()
 std::ostream& operator<<(std::ostream& os, const Vector3RGB& v)
 {
     os << "[" << v.r_ << "," << v.g_ << "," << v.b_ << "]";
+}
+
+Vector3RGB& Vector3RGB::operator=(const Vector3RGB& c)
+{
+    r_ = c.r_;
+    g_ = c.g_;
+    b_ = c.b_;
+    return *this;
+}
+
+Vector3RGB Vector3RGB::operator+(const Vector3RGB& c) const
+{
+    return Vector3RGB(c.r_ + r_, c.g_ + g_, c.g_ + g_);
+}
+
+Vector3RGB Vector3RGB::operator*(const Vector3RGB& c) const
+{
+    return Vector3RGB(c.r_ * r_, c.g_ * g_, c.g_ * g_);
+}
+
+Vector3RGB Vector3RGB::operator*(double d) const
+{
+    return Vector3RGB(r_*d, g_*d, g_*d);
+}
+
+void Vector3RGB::clamp(double min, double max)
+{
+    if(r_ <= min)
+        r_ = min;
+    if(r_ >= max)
+        r_ = max;
+
+    if(g_ <= min)
+        g_ = min;
+    if(g_ >= max)
+        g_ = max;
+
+    if(b_ <= min)
+        b_ = min;
+    if(b_ >= max)
+        b_ = max;
+}
+
+void Vector3RGB::applyGammaCorrection(double exposure, double gamma)
+{
+    r_ = std::pow(r_*exposure, gamma);
+    g_ = std::pow(g_*exposure, gamma);
+    b_ = std::pow(b_*exposure, gamma);
 }

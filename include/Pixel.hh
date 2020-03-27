@@ -14,15 +14,18 @@ public:
     ~Pixel();
     Pixel operator+(const Pixel& p) const;
     Pixel operator*(const double& d) const;
+    Pixel operator*(const Pixel& p) const;
     void clamp();
+    void applyGammaCorrection(double exposure, double gamma);
     void setColor(double a, double r, double g, double b);
     void setColor(double a, const Vector3RGB c);
     int x_;
     int y_;
     double a_;
-    double r_;
-    double g_;
-    double b_;
+    Vector3RGB c_;
+    double r() const {return c_.r_;};
+    double g() const {return c_.g_;};
+    double b() const {return c_.b_;};
 
     std::string describe() const;
     friend std::ostream& operator<<(std::ostream& os, const Pixel& p);

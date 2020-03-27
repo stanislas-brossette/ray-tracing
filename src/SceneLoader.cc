@@ -59,10 +59,10 @@ void SceneLoader::scanVector3(Value& vIn, Vector3& vRes)
 
 void SceneLoader::scanVector3RGB(Value& vIn, Vector3RGB& vRes)
 {
-    std::vector<int> vec3;
+    std::vector<double> vec3;
     for (auto& vec : vIn.GetArray())
         vec3.push_back(vec.GetDouble());
-    vRes = Vector3RGB(vec3[0], vec3[1], vec3[2]);
+    vRes = Vector3RGB(vec3[0]/255.0, vec3[1]/255.0, vec3[2]/255.0);
 }
 
 CamData SceneLoader::scanCamera(Value& vIn)

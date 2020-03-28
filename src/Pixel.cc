@@ -93,6 +93,12 @@ Pixel& Pixel::operator*=(const Pixel& p)
     return *this;
 }
 
+Pixel& Pixel::operator*=(const Vector3RGB& c)
+{
+    c_ *= c;
+    return *this;
+}
+
 Pixel& Pixel::operator*=(const double& d)
 {
     c_ *= d;

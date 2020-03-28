@@ -20,6 +20,7 @@ public:
     Pixel& operator+=(const Pixel& p);
     Pixel& operator*=(const double& d);
     Pixel& operator*=(const Pixel& p);
+    Pixel& operator*=(const Vector3RGB& c);
 
     void clamp();
     void applyGammaCorrection(double exposure, double gamma);

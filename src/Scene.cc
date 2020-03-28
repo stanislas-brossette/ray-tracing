@@ -430,6 +430,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 Vector3 impactPointRefr = impactPoint - impactNormal*1e-6;
                 LightRay lrRefraction(impactPointRefr, lrRefractDir, n2);
                 castRay(refracPix, lrRefraction, depthIndex+1);
+                refracPix *= impactItem->material_->color_;
             }
         }
 

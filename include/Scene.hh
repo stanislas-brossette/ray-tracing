@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <algorithm>
 
 #include "dataStructures.hh"
 #include "Vector3.hh"
@@ -24,7 +25,7 @@ public:
     void castMultipleRandomRays(std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPoints) const;
     void renderSerial(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
     void renderParallel(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
-    bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex) const;
+    bool isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex, Vector3RGB& transparencyColor) const;
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
     double getDistReductionFactor(double dist) const;
 

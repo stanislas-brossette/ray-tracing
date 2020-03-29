@@ -13,8 +13,12 @@ Scene::Scene(const SceneData& sData)
   : items_(),
     camera_(sData.cData),
     ambiantLight_(sData.aData),
-    simplifiedRender_(false),
-    maxDepthIndex_(5)
+    simplifiedRender_(sData.sExData.simplifiedRender),
+    maxDepthIndex_(sData.sExData.maxDepthRecursion),
+    maxNumThreads_(sData.sExData.maxNumThreads),
+    powerDistReduction_(sData.sExData.powerDistReduction),
+    exposition_(sData.sExData.exposition),
+    gammaPower_(sData.sExData.gammaPower)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
@@ -38,6 +42,8 @@ void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute,
 {
     int nPix = res.size();
     int numThreads = std::thread::hardware_concurrency() - 1;
+    if(numThreads > maxNumThreads_)
+        numThreads = maxNumThreads_;
 
     std::vector<int> pixPerThread(numThreads);
     for (size_t i = 0; i < numThreads; i++)
@@ -239,11 +245,22 @@ void Scene::castRandomRay( Pixel& pix, size_t iOrderedRay) const
 
 double Scene::getDistReductionFactor(double dist) const
 {
-    //double distReductionFactor = 1/std::sqrt(dist+1);
-    //double distReductionFactor = 1/(dist+1);
-    double distReductionFactor = 3.14/std::pow(dist+1,2);
-    //double distReductionFactor = 1/std::pow(dist/4+1,3);
-    //double distReductionFactor = 1;
+    double distReductionFactor;
+    switch(powerDistReduction_)
+    {
+        case 1:
+            distReductionFactor = 1/(dist+1);
+            break;
+        case 2:
+            distReductionFactor = 3.14/std::pow(dist+1,2);
+            break;
+        case 3:
+            distReductionFactor = 1/std::pow(dist/4+1,3);
+            break;
+        case 0:
+            distReductionFactor = 1;
+            break;
+    }
     return distReductionFactor;
 }
 
@@ -574,7 +591,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         pix += specReflPix;
         pix += diffuseRefPix;
 
-        pix.applyGammaCorrection(1.0, 2.2);
+        pix.applyGammaCorrection(exposition_, gammaPower_);
         pix.clamp();
     }
 }

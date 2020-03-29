@@ -47,8 +47,17 @@ int main(int argc, char *argv[])
     double transIncrement = 0.1;
  
     bool needRender = true;
+    bool needReload = false;
     while (!quit)
     {
+        if(needReload)
+        {
+            sceneLoader.load(path);
+            scene = Scene(sceneLoader.sceneData_);
+            window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
+            window.clear();
+            needReload = false;
+        }
         if(needRender)
         {
             renderer.renderParallel(scene, window, "");
@@ -71,6 +80,7 @@ int main(int argc, char *argv[])
                     break;
                 // Refresh with F5
                 case SDLK_F5:
+                    needReload = true;
                     needRender = true;
                     break;
                 // Clear with c

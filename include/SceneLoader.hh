@@ -37,6 +37,7 @@ public:
     void scanVector2(Value& vIn, Vector2& vRes);
     void scanVector3(Value& vIn, Vector3& vRes);
     void scanVector3RGB(Value& vIn, Vector3RGB& vRes);
+    SceneExtraData scanScene(Value& vIn);
     CamData scanCamera(Value& vIn);
     RenderData scanRender(Value& vIn);
     AmbiantData scanAmbiant(Value& vIn);

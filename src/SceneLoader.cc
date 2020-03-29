@@ -34,6 +34,7 @@ SceneData SceneLoader::load(const std::string& path)
         std::cout << "ERROR: Json has errors" << std::endl;
     }
 
+    sceneData_.sExData = scanScene(document.FindMember("scene")->value);
     sceneData_.cData = scanCamera(document.FindMember("camera")->value);
     sceneData_.rData = scanRender(document.FindMember("render")->value);
     sceneData_.aData = scanAmbiant(document.FindMember("ambiantLight")->value);
@@ -63,6 +64,18 @@ void SceneLoader::scanVector3RGB(Value& vIn, Vector3RGB& vRes)
     for (auto& vec : vIn.GetArray())
         vec3.push_back(vec.GetDouble());
     vRes = Vector3RGB(vec3[0]/255.0, vec3[1]/255.0, vec3[2]/255.0);
+}
+
+SceneExtraData SceneLoader::scanScene(Value& vIn)
+{
+    SceneExtraData sData;
+    sData.maxNumThreads = vIn.FindMember("maxNumThreads")->value.GetInt();
+    sData.powerDistReduction = vIn.FindMember("powerDistReduction")->value.GetInt();
+    sData.exposition = vIn.FindMember("exposition")->value.GetDouble();
+    sData.gammaPower = vIn.FindMember("gammaPower")->value.GetDouble();
+    sData.simplifiedRender = vIn.FindMember("simplifiedRender")->value.GetBool();
+    sData.maxDepthRecursion = vIn.FindMember("maxDepthRecursion")->value.GetInt();
+    return sData;
 }
 
 CamData SceneLoader::scanCamera(Value& vIn)

@@ -6,6 +6,16 @@
 #include "Vector3.hh"
 #include "utils.hh"
 
+struct SceneExtraData
+{
+    int maxNumThreads = 8;
+    int maxDepthRecursion = 5;
+    int powerDistReduction = 2;
+    double exposition = 1.0;
+    double gammaPower = 2.2;
+    bool simplifiedRender = false;
+};
+
 struct RenderData
 {
     int nPixPerRender = 0;
@@ -108,6 +118,7 @@ struct SceneData
     AmbiantData aData;
     CamData cData;
     RenderData rData;
+    SceneExtraData sExData;
     std::vector<ItemData> itemsData;
     std::string describe() const;
 };

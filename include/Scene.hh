@@ -40,9 +40,13 @@ public:
     AmbiantLight ambiantLight_;
     std::vector<Item*> items_;
     Camera camera_;
-    bool simplifiedRender_;
 
+    bool simplifiedRender_;
     size_t maxDepthIndex_;
+    size_t maxNumThreads_;
+    size_t powerDistReduction_;
+    double exposition_;
+    double gammaPower_;
 
     friend std::ostream& operator<<(std::ostream& os, const Scene& s);
 };

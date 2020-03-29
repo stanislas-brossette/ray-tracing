@@ -1,4 +1,12 @@
 {
+    "scene": {
+        "maxNumThreads": 8,
+        "powerDistReduction": 2,
+        "exposition": 0.9,
+        "gammaPower": 2.2,
+        "simplifiedRender": false,
+        "maxDepthRecursion": 5
+    },
     "camera": {
         "resX": 1400,
         "fovX": 110,

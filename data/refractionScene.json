@@ -3,7 +3,7 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 2.2,
+        "gammaPower": 1.0,
         "simplifiedRender": false,
         "maxDepthRecursion": 5
     },
@@ -22,7 +22,7 @@
     },
     "ambiantLight": {
         "color": [255,255,255],
-        "intensity": 0.05
+        "intensity": 0.1
     },
     "items": {
         "lightSource1": {
@@ -42,7 +42,7 @@
         },
         "redTransparentSphere": {
             "material": {
-                "color": [200, 10, 10],
+                "color": [200, 100, 100],
                 "rugosity": 0.0,
                 "refraction": 1.4,
                 "reflectiveness": 0.1,
@@ -57,7 +57,7 @@
         },
         "greenTransparentSphere": {
             "material": {
-                "color": [10, 210, 10],
+                "color": [205, 205, 205],
                 "rugosity": 0.0,
                 "refraction": 1.4,
                 "reflectiveness": 0.1,
@@ -72,7 +72,7 @@
         },
         "blueTransparentSphere": {
             "material": {
-                "color": [10, 10, 210],
+                "color": [100, 100, 210],
                 "rugosity": 0.0,
                 "refraction": 1.4,
                 "reflectiveness": 0.1,

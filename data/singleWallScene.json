@@ -3,7 +3,7 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 2.2,
+        "gammaPower": 1.0,
         "simplifiedRender": false,
         "maxDepthRecursion": 5
     },
@@ -22,7 +22,7 @@
     },
     "ambiantLight": {
         "color": [255,255,255],
-        "intensity": 0.0
+        "intensity": 0.2
     },
     "items": {
         "plane": {

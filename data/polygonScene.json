@@ -3,12 +3,12 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 2.2,
+        "gammaPower": 1.0,
         "simplifiedRender": false,
         "maxDepthRecursion": 5
     },
     "camera": {
-        "resX": 300,
+        "resX": 1000,
         "fovX": 110,
         "fovY": 90,
         "pos": [0.0, 0.0, 0.0],
@@ -22,7 +22,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.2
+        "intensity": 0.1
     },
     "items": {
         "lightSource1": {
@@ -37,7 +37,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [0.3, 1.5, -0.9]
+                "pos": [0.5, 1.3, -0.1]
             }
         },
         "greenSphere": {

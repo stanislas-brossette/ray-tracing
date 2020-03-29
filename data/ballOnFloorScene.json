@@ -37,7 +37,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [0.7, 2.0, -0.9]
+                "pos": [0.7, 2.0, -0.2]
             }
         },
         "greenSphere": {
@@ -45,7 +45,7 @@
                 "color": [52, 200, 51],
                 "rugosity": 0.05,
                 "refraction": 0.0,
-                "reflectiveness": 0.2,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

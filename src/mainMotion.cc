@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     {
         if(needReload)
         {
-            sceneLoader.load(path);
+            sceneLoader = SceneLoader(path);
             scene = Scene(sceneLoader.sceneData_);
             window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
             window.clear();

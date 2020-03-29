@@ -463,6 +463,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         if (impactItem->material_->lightEmitter_)
         {
             double distReductionFactor = getDistReductionFactor(impactDist);
+            if(depthIndex == 0) // exception when ray goes straight from lightsource to camera
+                distReductionFactor = 1;
             pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->color_);
             pix.clamp();
             return;

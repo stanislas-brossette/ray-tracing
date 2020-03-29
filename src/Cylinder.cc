@@ -39,7 +39,8 @@ std::string Cylinder::describe() const
 
 bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
-    if(not bv_.intersect(lr))
+    //Don't use bounding volume for infinite cylinder
+    if(length_ < INFINITY_d() and not bv_.intersect(lr))
         return false;
 
     bool impact = false;

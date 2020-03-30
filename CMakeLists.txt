@@ -79,10 +79,10 @@ add_definitions(-DUNIT_DATA_FOLDER="${CMAKE_SOURCE_DIR}/unit/data/")
 set(SRC_MOTION
     "${CMAKE_SOURCE_DIR}/src/mainMotion.cc"
     )
-add_executable(MotionTest${PROJECT_NAME} ${SRC_MOTION})
-target_include_directories(MotionTest${PROJECT_NAME} PUBLIC
+add_executable(Main${PROJECT_NAME} ${SRC_MOTION})
+target_include_directories(Main${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-target_link_libraries(MotionTest${PROJECT_NAME} ${PROJECT_NAME})
+target_link_libraries(Main${PROJECT_NAME} ${PROJECT_NAME})
 
 # Build unit tests
-add_subdirectory("unit")
+#add_subdirectory("unit")

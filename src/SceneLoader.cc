@@ -88,7 +88,6 @@ CamData SceneLoader::scanCamera(Value& vIn)
     scanVector3(vIn.FindMember("pos")->value, cData.pos);
     cData.rotAngle = vIn.FindMember("rotAngle")->value.GetDouble();
     scanVector3(vIn.FindMember("rotAxis")->value, cData.rotAxis);
-    cData.fovType = vIn.FindMember("fovType")->value.GetInt();
     cData.resX = vIn.FindMember("resX")->value.GetInt();
     return cData;
 }

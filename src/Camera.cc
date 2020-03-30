@@ -8,7 +8,6 @@ Camera::Camera()
     target_(0, 0, 0),
     upGuide_(0, 0, 1),
     aspectRatio_(1),
-    fovType_(0),
     allPixels_(),
     focalDist_(0),
     screenWidth_(0),
@@ -18,7 +17,6 @@ Camera::Camera()
 
 Camera::Camera(const CamData& cData)
   : frame_(),
-    fovType_(cData.fovType),
     resX_(cData.resX),
     aspectRatio_(cData.aspectRatio),
     fov_(cData.fov),
@@ -124,12 +122,14 @@ std::string CamData::describe() const
 {
     std::stringstream ss;
     ss << "=== CamData ===\n";
-    ss << "resX: " << resX << "\n";
-    ss << "fovX: " << fovX << "\n";
-    ss << "fovY: " << fovY << "\n";
+    ss << "fov: " << fov << "\n";
+    ss << "target: " << target << "\n";
+    ss << "upGuide: " << upGuide << "\n";
+    ss << "aspectRatio: " << aspectRatio << "\n";
     ss << "pos: " << pos << "\n";
     ss << "rotAxis: " << rotAxis << "\n";
     ss << "rotAngle: " << rotAngle << "\n";
+    ss << "resX: " << resX << "\n";
     return ss.str();
 }
 

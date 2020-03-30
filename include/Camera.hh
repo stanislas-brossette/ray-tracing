@@ -35,7 +35,6 @@ public:
     Vector3 target_;
     Vector3 upGuide_;
     double aspectRatio_;
-    int fovType_ = 1;
     int resX_;
     int resY_;
     double screenWidth_;

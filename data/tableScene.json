@@ -15,8 +15,7 @@
         "aspectRatio": 1.5,
         "pos": [0.1, -0.8, 1.0],
         "rotAxis": [1, 0, 0],
-        "rotAngle": -20,
-        "fovType": 0
+        "rotAngle": -20
     },
     "render": {
         "nPixPerRender": 10000,

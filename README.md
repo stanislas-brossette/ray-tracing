@@ -26,7 +26,8 @@ Down: Move camera backward
 PageUp: Move camera up
 PageDown: Move camera down
 r: Toggle rotation mode (may be buggy)
-l: Reset camera rotation to center on target and upGuide
+t: Reset camera rotation to center on target and upGuide
+l: Lock camera rotation to center on target and upGuide for later translations
 F5: Refresh window
 c: Clear window
 s: Toggle simplified render

@@ -54,7 +54,7 @@
                 "type": "ClosedCylinder",
                 "radius": 0.1,
                 "length": 0.2,
-                "pos": [0.0, 0.0, 0.099]
+                "pos": [0.0, 0.0, 0.1]
             }
         },
         "plane": {

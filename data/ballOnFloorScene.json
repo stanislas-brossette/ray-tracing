@@ -8,9 +8,11 @@
         "maxDepthRecursion": 5
     },
     "camera": {
+        "fov": 175,
         "resX": 1000,
-        "fovX": 110,
-        "fovY": 90,
+        "target": [0.0, 2.5, -0.5],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.5,
         "pos": [0.0, 0.4, -0.2],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0,

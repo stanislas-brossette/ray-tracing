@@ -8,13 +8,15 @@
         "maxDepthRecursion": 5
     },
     "camera": {
-        "resX": 1400,
-        "fovX": 110,
-        "fovY": 90,
-        "pos": [0.0, 0.0, 0.35],
+        "fov": 175,
+        "resX": 1000,
+        "target": [0.0, 1.5, 0.5],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.5,
+        "pos": [0.0, 0.7, 0.5],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0,
-        "fovType": 1
+        "fovType": 0
     },
     "render": {
         "nPixPerRender": 100000,

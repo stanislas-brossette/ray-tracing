@@ -14,7 +14,7 @@ Pixel::Pixel (int x, int y)
 {
 }
 
-Pixel::Pixel (int x, int y, double a, double r, double g, double b)
+Pixel::Pixel (int x, int y, double r, double g, double b)
   : x_(x),
     y_(y),
     c_(r, g, b)
@@ -25,19 +25,19 @@ Pixel::~Pixel()
 {
 }
 
-void Pixel::setColor(double a, double r, double g, double b)
+void Pixel::setColor(double intensity, double r, double g, double b)
 {
-    c_ = Vector3RGB(a*r, a*g, a*b);
+    c_ = Vector3RGB(intensity*r, intensity*g, intensity*b);
 }
-void Pixel::setColor(double a, const Vector3RGB c)
+void Pixel::setColor(double intensity, const Vector3RGB c)
 {
-    c_ = c * a;
+    c_ = c * intensity;
 }
 
 std::string Pixel::describe() const
 {
     std::stringstream ss;
-    ss << "Pixel(x:" << x_ << ",y:" << y_ << ",a:" << a_;
+    ss << "Pixel(x:" << x_ << ",y:" << y_;
     ss << ",r:" << r() << ",g:" << g() << ",b:" << b() << ")";
     return ss.str();
 }
@@ -54,8 +54,6 @@ void Pixel::applyGammaCorrection(double exposure, double gamma)
 
 Pixel Pixel::operator+(const Pixel& p) const
 {
-    if(p.a_ == 0)
-        return *this;
     Pixel pRes;
     pRes.x_ = x_;
     pRes.y_ = y_;

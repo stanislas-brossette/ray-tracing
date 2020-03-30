@@ -557,6 +557,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                     {
                         needToCheckShadow = true;
                         double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
+                        //TODO: there is a problem here, the setColor should contain some form of light intensity
                         pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->color_);
 
                         bool inShadow = false;

@@ -81,17 +81,15 @@ SceneExtraData SceneLoader::scanScene(Value& vIn)
 CamData SceneLoader::scanCamera(Value& vIn)
 {
     CamData cData;
-    cData.resX = vIn.FindMember("resX")->value.GetInt();
-    cData.fovX = vIn.FindMember("fovX")->value.GetDouble();
-    cData.fovY = vIn.FindMember("fovY")->value.GetDouble();
-
-    Value::MemberIterator itr = vIn.FindMember("fovType");
-    if(itr != vIn.MemberEnd())
-        cData.fovType = itr->value.GetInt();
-
-    cData.rotAngle = vIn.FindMember("rotAngle")->value.GetDouble();
+    cData.fov = vIn.FindMember("fov")->value.GetDouble();
+    scanVector3(vIn.FindMember("target")->value, cData.target);
+    scanVector3(vIn.FindMember("upGuide")->value, cData.upGuide);
+    cData.aspectRatio = vIn.FindMember("aspectRatio")->value.GetDouble();
     scanVector3(vIn.FindMember("pos")->value, cData.pos);
+    cData.rotAngle = vIn.FindMember("rotAngle")->value.GetDouble();
     scanVector3(vIn.FindMember("rotAxis")->value, cData.rotAxis);
+    cData.fovType = vIn.FindMember("fovType")->value.GetInt();
+    cData.resX = vIn.FindMember("resX")->value.GetInt();
     return cData;
 }
 

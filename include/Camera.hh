@@ -29,11 +29,15 @@ public:
     void changeResolution(int resX, int resY);
 
     Frame3 frame_;
-    double fovX_;
-    double fovY_;
+    double fov_;
+    Vector3 target_;
+    Vector3 upGuide_;
+    double aspectRatio_;
+    int fovType_ = 1;
     int resX_;
     int resY_;
-    int fovType_ = 1;
+    double screenWidth_;
+    double screenHeight_;
 
 private:
     double focalDist_;

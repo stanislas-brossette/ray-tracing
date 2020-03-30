@@ -32,13 +32,15 @@ struct AmbiantData
 
 struct CamData
 {
-    int resX = 0;
-    double fovX = 0;
-    double fovY = 0;
+    double fov = 0;
+    Vector3 target = Vector3(0,0,0);
+    Vector3 upGuide = Vector3(0,0,0);
+    double aspectRatio = 1.0;
     Vector3 pos = Vector3(0,0,0);
     Vector3 rotAxis = Vector3(0,0,0);
     double rotAngle = 0;
     int fovType = 1;
+    int resX = 0;
     std::string describe() const;
 };
 

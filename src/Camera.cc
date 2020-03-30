@@ -3,37 +3,47 @@
 
 Camera::Camera()
   : frame_(),
-    fovX_(),
-    fovY_(),
-    resX_(),
-    allPixels_()
+    fov_(0),
+    resX_(0),
+    target_(0, 0, 0),
+    upGuide_(0, 0, 1),
+    aspectRatio_(1),
+    fovType_(0),
+    allPixels_(),
+    focalDist_(0),
+    screenWidth_(0),
+    screenHeight_(0)
 {
-    focalDist_ = 0;
-    resY_ = 0;
 }
 
 Camera::Camera(const CamData& cData)
   : frame_(),
-    fovX_(cData.fovX),
-    fovY_(cData.fovY),
+    fovType_(cData.fovType),
     resX_(cData.resX),
-    fovType_(cData.fovType)
+    aspectRatio_(cData.aspectRatio),
+    fov_(cData.fov),
+    target_(cData.target),
+    upGuide_(cData.upGuide)
 {
-    frame_.translate(cData.pos);
-    frame_.rotate(cData.rotAxis, cData.rotAngle);
-    focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
-    resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
-    initAllPixelsVec();
-}
+    frame_.o_ = cData.pos;
+    frame_.vy_ = target_ - frame_.o_;
+    frame_.vy_.normalize();
+    Vector3 upNorm = upGuide_;
+    upNorm.normalize();
+    frame_.vx_ = frame_.vy_.cross(upNorm);
+    if(frame_.vx_.squaredNorm() <= 0.9) // equivalent to if(vx and upNorm are parallel)
+    {
+        upNorm = Vector3(0, 0.1, 1.0);
+        upNorm.normalize();
+        frame_.vx_ = frame_.vy_.cross(upNorm);
+    }
+    frame_.vx_.normalize();
+    frame_.vz_ = frame_.vx_.cross(frame_.vy_);
 
-Camera::Camera(const Frame3& frame, double fovX, double fovY, int resX)
-  : frame_(frame),
-    fovX_(fovX),
-    fovY_(fovY),
-    resX_(resX)
-{
-    focalDist_ = double(resX_)/(2*std::tan(deg2rad(fovX_)/2));
-    resY_ = int(focalDist_ * 2 * std::tan(deg2rad(fovY_)/2));
+    screenWidth_ = 2*std::atan(fov_);
+    screenHeight_ = screenWidth_/aspectRatio_;
+    resY_ = int(resX_/aspectRatio_);
+
     initAllPixelsVec();
 }
 
@@ -57,35 +67,9 @@ void Camera::initAllPixelsVec()
 Vector3 Camera::pixelToDir(const Pixel& px) const
 {
     Vector3 dir;
-
-    double dx = double(px.x_) - double(resX_)/2;
-    double dy = double(px.y_) - double(resY_)/2;
-
-    if(fovType_ == 0)
-    {
-        dir.x_ = dx;
-        dir.y_ = focalDist_;
-        dir.z_ = dy;
-        dir.normalize();
-    }
-    else if (fovType_ == 1)
-    {
-        double theta = dx*fovX_/resX_;
-        double phi = dy*fovY_/resY_;
-
-        dir.x_ =  focalDist_*std::sin(deg2rad(theta))*std::cos(deg2rad(phi));
-        dir.y_ =  focalDist_*std::cos(deg2rad(theta))*std::cos(deg2rad(phi));
-        dir.z_ =  focalDist_*std::sin(deg2rad(phi));
-    }
-    else if (fovType_ == 2)
-    {
-        double theta = dx*fovX_/resX_;
-        double phi = dy*fovY_/resY_;
-
-        dir.x_ =  focalDist_*std::sin(deg2rad(theta));
-        dir.y_ =  focalDist_*std::cos(deg2rad(theta))*std::cos(deg2rad(phi));
-        dir.z_ =  focalDist_*std::cos(deg2rad(theta))*std::sin(deg2rad(phi));
-    }
+    dir.x_ = - screenWidth_ / 2 + screenWidth_ * (px.x_+0.5) / resX_;
+    dir.z_ = - screenHeight_ / 2 + screenHeight_ * (px.y_+0.5) / resY_;
+    dir.y_ = 1.0;
 
     dir.normalize();
     return dir;
@@ -112,7 +96,7 @@ void Camera::castOrderedRay(LightRay& lr, Pixel& px, size_t index) const
     px.x_ = allPixels_[index].first;
     px.y_ = allPixels_[index].second;
 
-    lr.origin_ = frame_.pointToWorld(frame_.o_);
+    lr.origin_ = frame_.o_;
     lr.dir_ = frame_.vecToWorld(pixelToDir(px));
 }
 
@@ -120,11 +104,15 @@ std::string Camera::describe() const
 {
     std::stringstream ss;
     ss << "=== Camera ===\n";
-    ss << "frame.o: " << frame_.o_ << "\n";
-    ss << "frame.vx: " << frame_.vx_ << "\n";
-    ss << "frame.vy: " << frame_.vy_ << "\n";
-    ss << "frame.vy: " << frame_.vz_ << "\n";
-    ss << "fov: " << fovX_ << ", " << fovY_;
+    ss << "frame: " << frame_ << "\n";
+    ss << "fov: " << fov_ << "\n";
+    ss << "target: " << target_ << "\n";
+    ss << "upGuide: " << upGuide_ << "\n";
+    ss << "aspectRatio: " << aspectRatio_ << "\n";
+    ss << "screenWidth: " << screenWidth_ << "\n";
+    ss << "screenHeight: " << screenHeight_ << "\n";
+    ss << "resX: " << resX_ << "\n";
+    ss << "resY: " << resY_ << "\n";
     return ss.str();
 }
 

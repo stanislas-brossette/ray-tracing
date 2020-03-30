@@ -1,19 +1,21 @@
 {
     "scene": {
         "maxNumThreads": 8,
-        "powerDistReduction": 0,
+        "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.2,
         "simplifiedRender": false,
         "maxDepthRecursion": 5
     },
     "camera": {
+        "fov": 175,
         "resX": 1000,
-        "fovX": 110,
-        "fovY": 90,
+        "target": [0.0, 2.5, -0.5],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.5,
         "pos": [1.0, 0.0, 0.1],
         "rotAxis": [0, 0, 1],
-        "rotAngle": 18,
+        "rotAngle": 0,
         "fovType": 0
     },
     "render": {

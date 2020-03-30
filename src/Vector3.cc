@@ -115,7 +115,7 @@ Vector3 Vector3::cross(const Vector3& v) const
     Vector3 out;
     out.x_ = y_ * v.z_ - z_ * v.y_;
     out.y_ = z_ * v.x_ - x_ * v.z_;
-    out.z_ = x_ * v.z_ - z_ * v.x_;
+    out.z_ = x_ * v.y_ - y_ * v.x_;
     return out;
 }
 

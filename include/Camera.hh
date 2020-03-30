@@ -28,6 +28,8 @@ public:
     int nPixels() const {return resX_*resY_;};
     void changeResolution(int resX, int resY);
 
+    void rotateToTarget();
+
     Frame3 frame_;
     double fov_;
     Vector3 target_;

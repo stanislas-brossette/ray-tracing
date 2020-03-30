@@ -125,6 +125,10 @@ int main(int argc, char *argv[])
                         scene.translateCameraLocal(0.0, -transIncrement, 0.0);
                     needRender = true;
                     break;
+                case SDLK_l:
+                    scene.camera_.rotateToTarget();
+                    needRender = true;
+                    break;
                 case SDLK_PAGEUP:
                     if(rotationMode)
                         scene.camera_.frame_.roll(rotIncrement);

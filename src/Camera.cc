@@ -26,25 +26,29 @@ Camera::Camera(const CamData& cData)
     upGuide_(cData.upGuide)
 {
     frame_.o_ = cData.pos;
-    frame_.vy_ = target_ - frame_.o_;
-    frame_.vy_.normalize();
-    Vector3 upNorm = upGuide_;
-    upNorm.normalize();
-    frame_.vx_ = frame_.vy_.cross(upNorm);
-    if(frame_.vx_.squaredNorm() <= 0.9) // equivalent to if(vx and upNorm are parallel)
-    {
-        upNorm = Vector3(0, 0.1, 1.0);
-        upNorm.normalize();
-        frame_.vx_ = frame_.vy_.cross(upNorm);
-    }
-    frame_.vx_.normalize();
-    frame_.vz_ = frame_.vx_.cross(frame_.vy_);
+    upGuide_.normalize();
+    rotateToTarget();
 
     screenWidth_ = 2*std::atan(fov_);
     screenHeight_ = screenWidth_/aspectRatio_;
     resY_ = int(resX_/aspectRatio_);
 
     initAllPixelsVec();
+}
+
+void Camera::rotateToTarget()
+{
+    frame_.vy_ = target_ - frame_.o_;
+    frame_.vy_.normalize();
+    frame_.vx_ = frame_.vy_.cross(upGuide_);
+    if(frame_.vx_.squaredNorm() <= 0.9) // equivalent to if(vx and upGuide_ are parallel)
+    {
+        upGuide_ = Vector3(0, 0.1, 1.0);
+        upGuide_.normalize();
+        frame_.vx_ = frame_.vy_.cross(upGuide_);
+    }
+    frame_.vx_.normalize();
+    frame_.vz_ = frame_.vx_.cross(frame_.vy_);
 }
 
 Camera::~Camera()

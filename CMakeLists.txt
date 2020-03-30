@@ -76,22 +76,6 @@ set(UNIT_DATA_FOLDER "${CMAKE_SOURCE_DIR}/unit/data/")
 add_definitions(-DUNIT_DATA_FOLDER="${CMAKE_SOURCE_DIR}/unit/data/")
 
 # Building executable
-set(SRC_EXEC
-    "${CMAKE_SOURCE_DIR}/src/main.cc"
-    )
-add_executable(Main${PROJECT_NAME} ${SRC_EXEC})
-target_include_directories(Main${PROJECT_NAME} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-target_link_libraries(Main${PROJECT_NAME} ${PROJECT_NAME})
-
-set(SRC_EXEC_FROM_JSON
-    "${CMAKE_SOURCE_DIR}/src/mainFromJson.cc"
-    )
-add_executable(RenderJson${PROJECT_NAME} ${SRC_EXEC_FROM_JSON})
-target_include_directories(RenderJson${PROJECT_NAME} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-target_link_libraries(RenderJson${PROJECT_NAME} ${PROJECT_NAME})
-
 set(SRC_MOTION
     "${CMAKE_SOURCE_DIR}/src/mainMotion.cc"
     )

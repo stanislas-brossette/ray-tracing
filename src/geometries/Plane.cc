@@ -1,4 +1,4 @@
-#include "Plane.hh"
+#include "geometries/Plane.hh"
 
 Plane::Plane()
   : Geometry()

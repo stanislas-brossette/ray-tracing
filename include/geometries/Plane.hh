@@ -2,19 +2,17 @@
 
 #include "dataStructures.hh"
 #include "Frame3.hh"
-#include "Geometry.hh"
-#include "utils.hh"
+#include "geometries/Geometry.hh"
 
-class Sphere : public Geometry
+class Plane : public Geometry
 {
 public:
-    Sphere ();
-    Sphere (SphereData* sData);
-    Sphere(const Frame3& f, double radius);
-    virtual ~Sphere ();
+    Plane ();
+    Plane (PlaneData* pData);
+    Plane(const Frame3& f);
+    virtual ~Plane ();
     std::string describe() const;
+    //The planes normal is f_.z_
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
     bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const;
-
-    double radius_;
 };

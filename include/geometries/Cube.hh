@@ -2,8 +2,8 @@
 
 #include "dataStructures.hh"
 #include "Frame3.hh"
-#include "Geometry.hh"
-#include "Polygon.hh"
+#include "geometries/Geometry.hh"
+#include "geometries/Polygon.hh"
 #include "utils.hh"
 
 class Cube : public Geometry

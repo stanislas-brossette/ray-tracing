@@ -1,4 +1,4 @@
-#include "Mesh.hh"
+#include "geometries/Mesh.hh"
 
 Mesh::Mesh()
     : Geometry(),

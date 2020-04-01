@@ -1,4 +1,4 @@
-#include "ClosedCylinder.hh"
+#include "geometries/ClosedCylinder.hh"
 
 ClosedCylinder::ClosedCylinder()
   : Geometry(),

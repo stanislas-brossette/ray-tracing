@@ -1,4 +1,4 @@
-#include "Polygon.hh"
+#include "geometries/Polygon.hh"
 
 Polygon::Polygon()
   : Geometry()

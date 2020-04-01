@@ -1,4 +1,4 @@
-#include "Sphere.hh"
+#include "geometries/Sphere.hh"
 
 Sphere::Sphere()
   : Geometry(),

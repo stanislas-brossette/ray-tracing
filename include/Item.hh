@@ -3,14 +3,14 @@
 #include <sstream>
 
 #include "dataStructures.hh"
-#include "Geometry.hh"
-#include "Sphere.hh"
-#include "Cylinder.hh"
-#include "ClosedCylinder.hh"
-#include "Plane.hh"
-#include "Cube.hh"
-#include "Mesh.hh"
-#include "Polygon.hh"
+#include "geometries/Geometry.hh"
+#include "geometries/Sphere.hh"
+#include "geometries/Cylinder.hh"
+#include "geometries/ClosedCylinder.hh"
+#include "geometries/Plane.hh"
+#include "geometries/Cube.hh"
+#include "geometries/Mesh.hh"
+#include "geometries/Polygon.hh"
 #include "Material.hh"
 
 class Item

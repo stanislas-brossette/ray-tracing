@@ -1,4 +1,4 @@
-#include "Geometry.hh"
+#include "geometries/Geometry.hh"
 
 Geometry::Geometry()
   : f_(),

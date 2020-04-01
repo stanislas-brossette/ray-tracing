@@ -5,9 +5,9 @@
 
 #include "dataStructures.hh"
 #include "Frame3.hh"
-#include "Geometry.hh"
+#include "geometries/Geometry.hh"
+#include "geometries/Polygon.hh"
 #include "Vector3.hh"
-#include "Polygon.hh"
 #include "utils.hh"
 
 class Mesh : public Geometry

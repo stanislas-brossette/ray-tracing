@@ -1,4 +1,4 @@
-#include "Cube.hh"
+#include "geometries/Cube.hh"
 
 Cube::Cube()
     : Geometry(),

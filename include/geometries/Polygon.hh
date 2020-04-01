@@ -3,7 +3,7 @@
 
 #include "dataStructures.hh"
 #include "Frame3.hh"
-#include "Geometry.hh"
+#include "geometries/Geometry.hh"
 #include "Vector3.hh"
 
 class Polygon : public Geometry

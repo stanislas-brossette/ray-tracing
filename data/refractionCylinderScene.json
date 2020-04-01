@@ -1,0 +1,185 @@
+{
+    "scene": {
+        "maxNumThreads": 6,
+        "powerDistReduction": 2,
+        "exposition": 1.0,
+        "gammaPower": 1.0,
+        "simplifiedRender": false,
+        "maxDepthRecursion": 5
+    },
+    "camera": {
+        "fov": 179,
+        "resX": 1800,
+        "target": [0.0, 0.0, 0.1],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 2.0,
+        "pos": [0.0, -0.5, 0.25],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0
+    },
+    "render": {
+        "nPixPerRender": 100000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255,255,255],
+        "intensity": 0.2
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 0.5
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.08,
+                "pos": [0.0, -0.5, 1.0]
+            }
+        },
+        "lightSource2": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 0.5
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.05,
+                "pos": [0.0, 1.5, 0.7]
+            }
+        },
+        "transparentCylinder0": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 1.1,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "length": 0.32,
+                "radius": 0.08,
+                "pos": [-0.5, 0.0, 0.1]
+            }
+        },
+        "transparentCylinder1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 1.2,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "length": 0.32,
+                "radius": 0.08,
+                "pos": [-0.25, 0.0, 0.1]
+            }
+        },
+        "transparentCylinder2": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 1.3,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "length": 0.32,
+                "radius": 0.08,
+                "pos": [0.0, 0.0, 0.1]
+            }
+        },
+        "transparentCylinder3": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "length": 0.32,
+                "radius": 0.08,
+                "pos": [0.25, 0.0, 0.1]
+            }
+        },
+        "transparentCylinder4": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.5,
+                "refraction": 1.5,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "length": 0.32,
+                "radius": 0.08,
+                "pos": [0.5, 0.0, 0.1]
+            }
+        },
+        "bottomPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color0": [0, 0, 0],
+                "color1": [255, 255, 255],
+                "squareSizeX": 0.1,
+                "squareSizeY": 0.1,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, 0.0]
+            }
+        },
+        "frontPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color0": [0, 0, 0],
+                "color1": [255, 255, 255],
+                "squareSizeX": 0.1,
+                "squareSizeY": 0.1,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.5, 0.0],
+                "rotAxis": [1, 0, 0],
+                "rotAngle": 90
+            }
+        }
+    }
+}

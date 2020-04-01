@@ -19,6 +19,8 @@ Material::Material (MaterialData* mData)
 {
     if(SolidColorData* tData = dynamic_cast<SolidColorData*>(mData->textureData))
         texture_ = new SolidColor(tData->color);
+    else if(CheckerBoardData* tData = dynamic_cast<CheckerBoardData*>(mData->textureData))
+        texture_ = new CheckerBoard(tData->color0, tData->color1, tData->squareSizeX, tData->squareSizeY);
     else
         std::cout << "Unrecognized texture" << std::endl;
 }

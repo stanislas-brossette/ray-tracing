@@ -284,6 +284,8 @@ struct InterceptionData
     Vector3RGB color;
     double lengthIntercept; // TODO: not used yet
     double distIntercept;
+    Vector3 pointInWorld;
+    Vector3 pointInFrame;
 };
 
 bool compareByDist(const InterceptionData& a, const InterceptionData& b)
@@ -310,7 +312,9 @@ bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
             intData.intercept = true;
             intData.opaque = (shadowingItem->material_->refractiveIndex_ == 0.0);
             intData.lightEmitter = shadowingItem->material_->lightEmitter_;
-            intData.color = shadowingItem->material_->texture_->color();
+            intData.pointInWorld = tmpPoint;
+            intData.pointInFrame = shadowingItem->geometry_->f_.pointFromWorld(tmpPoint);
+            intData.color = shadowingItem->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
             intData.distIntercept = tmpDist;
             interceptionData.push_back(intData);
         }
@@ -334,13 +338,13 @@ bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
         {
             distLightSource = intData.distIntercept;
             metLightSource = true;
-            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color() * items_[intData.itemIndex]->material_->lightIntensity_ * getDistReductionFactor(distLightSource);
+            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_) * items_[intData.itemIndex]->material_->lightIntensity_ * getDistReductionFactor(distLightSource);
             inShadow = false;
             return inShadow;
         }
         else if(not intData.opaque)
         {
-            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color();
+            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
         }
         else
         {
@@ -466,7 +470,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             double distReductionFactor = getDistReductionFactor(impactDist);
             if(depthIndex == 0) // exception when ray goes straight from lightsource to camera
                 distReductionFactor = 1;
-            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color());
+            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color(0,0));
             pix.clamp();
             return;
         }
@@ -512,7 +516,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 Vector3 impactPointRefr = impactPoint - impactNormal*1e-6;
                 LightRay lrRefraction(impactPointRefr, lrRefractDir, n2);
                 castRay(refracPix, lrRefraction, depthIndex+1);
-                refracPix *= impactItem->material_->texture_->color();
+                refracPix *= impactItem->material_->texture_->color(0,0);
             }
         }
 
@@ -559,7 +563,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                         needToCheckShadow = true;
                         double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
                         //TODO: there is a problem here, the setColor should contain some form of light intensity
-                        pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->texture_->color());
+                        pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->texture_->color(0,0));
 
                         bool inShadow = false;
                         size_t shadowingItemIndex = 0;
@@ -578,7 +582,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 else
                 {
                     cosAngle = std::abs(- lr.dir_.dot(impactNormal));
-                    ambiantPix.setColor(cosAngle*ambiantLight_.intensity_, impactItem->material_->texture_->color());
+                    Vector3 impactPointInFrame = impactItem->geometry_->f_.pointFromWorld(impactPoint);
+                    ambiantPix.setColor(cosAngle*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
                     diffuseRefPix += ambiantPix;
                 }
             }

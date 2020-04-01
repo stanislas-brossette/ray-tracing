@@ -1,6 +1,6 @@
 {
     "scene": {
-        "maxNumThreads": 8,
+        "maxNumThreads": 6,
         "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.2,
@@ -9,7 +9,7 @@
     },
     "camera": {
         "fov": 175,
-        "resX": 1000,
+        "resX": 1500,
         "target": [0.0, 2.5, -0.5],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.1
+        "intensity": 0.2
     },
     "items": {
         "lightSource1": {
@@ -196,18 +196,22 @@
         },
         "bottomPlane": {
             "material": {
-                "textureType": "SolidColor",
-                "texture": "Solid",
-                "color": [20, 20, 20],
+                "textureType": "CheckerBoard",
+                "color0": [255, 0, 0],
+                "color1": [0, 0, 255],
+                "squareSizeX": 1,
+                "squareSizeY": 10000,
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.01,
+                "reflectiveness": 0.51,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
             "geometry": {
                 "type": "Plane",
-                "pos": [0.0, 0.0, -1.0]
+                "pos": [0.0, 0.0, -1.0],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 90
             }
         }
     }

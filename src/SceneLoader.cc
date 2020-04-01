@@ -132,6 +132,15 @@ TextureData* SceneLoader::scanTexture(Value& vIn)
         scanVector3RGB(vIn.FindMember("color")->value, tData->color);
         return tData;
     }
+    if(type == "CheckerBoard")
+    {
+        CheckerBoardData* tData = new CheckerBoardData();
+        scanVector3RGB(vIn.FindMember("color0")->value, tData->color0);
+        scanVector3RGB(vIn.FindMember("color1")->value, tData->color1);
+        tData->squareSizeX = vIn.FindMember("squareSizeX")->value.GetDouble();
+        tData->squareSizeY = vIn.FindMember("squareSizeY")->value.GetDouble();
+        return tData;
+    }
     else
     {
         std::cout << "Unknown textureType in SceneLoader::scanTexture" << std::endl;

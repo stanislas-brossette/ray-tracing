@@ -6,6 +6,7 @@
 #include "dataStructures.hh"
 #include "textures/Texture.hh"
 #include "textures/SolidColor.hh"
+#include "textures/CheckerBoard.hh"
 
 class Material
 {

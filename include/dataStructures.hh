@@ -106,6 +106,15 @@ struct SolidColorData : public TextureData
     std::string describe() const;
 };
 
+struct CheckerBoardData : public TextureData
+{
+    Vector3RGB color0 = Vector3RGB(0,0,0);
+    Vector3RGB color1 = Vector3RGB(0,0,0);
+    double squareSizeX = 0;
+    double squareSizeY = 0;
+    std::string describe() const;
+};
+
 struct MaterialData
 {
     std::string textureType = "";

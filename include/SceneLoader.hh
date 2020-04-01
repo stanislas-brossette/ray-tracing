@@ -11,6 +11,8 @@
 #include "Frame3.hh"
 #include "Scene.hh"
 #include "Item.hh"
+#include "textures/Texture.hh"
+#include "textures/SolidColor.hh"
 #include "geometries/Geometry.hh"
 #include "geometries/Sphere.hh"
 #include "geometries/Cylinder.hh"
@@ -44,6 +46,7 @@ public:
     MaterialData* scanMaterial(Value& vIn);
     void scanBaseGeometry(Value& vIn, GeometryData* gData);
     GeometryData* scanGeometry(Value& vIn);
+    TextureData* scanTexture(Value& vIn);
     void scanItems(Value& vIn, std::vector<ItemData>& vOut);
 
     SceneData sceneData_;

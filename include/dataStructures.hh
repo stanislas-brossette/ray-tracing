@@ -43,17 +43,6 @@ struct CamData
     std::string describe() const;
 };
 
-struct MaterialData
-{
-    Vector3RGB color = Vector3RGB(0,0,0);
-    double rugosity = 0.0;
-    double refraction = 0.0;
-    double reflectiveness = 0.0;
-    bool lightEmitter = false;
-    double lightIntensity = 0.0;
-    std::string describe() const;
-};
-
 struct GeometryData
 {
     std::string type = "";
@@ -61,14 +50,6 @@ struct GeometryData
     Vector3 rotAxis = Vector3(1,0,0);
     double rotAngle = 0;
     virtual std::string describe() const;
-};
-
-struct ItemData
-{
-    std::string name;
-    MaterialData* mData;
-    GeometryData* gData;
-    std::string describe() const;
 };
 
 struct ClosedCylinderData : public GeometryData
@@ -111,6 +92,38 @@ struct SphereData : public GeometryData
 struct MeshData : public GeometryData
 {
     std::string path = "";
+    std::string describe() const;
+};
+
+struct TextureData
+{
+    virtual ~TextureData() = default;
+};
+
+struct SolidColorData : public TextureData
+{
+    Vector3RGB color = Vector3RGB(0,0,0);
+    std::string describe() const;
+};
+
+struct MaterialData
+{
+    std::string textureType = "";
+    TextureData *textureData;
+    double rugosity = 0.0;
+    double refraction = 0.0;
+    double reflectiveness = 0.0;
+    bool lightEmitter = false;
+    double lightIntensity = 0.0;
+    std::string describe() const;
+    virtual ~MaterialData() = default;
+};
+
+struct ItemData
+{
+    std::string name;
+    MaterialData* mData;
+    GeometryData* gData;
     std::string describe() const;
 };
 

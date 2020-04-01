@@ -310,7 +310,7 @@ bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
             intData.intercept = true;
             intData.opaque = (shadowingItem->material_->refractiveIndex_ == 0.0);
             intData.lightEmitter = shadowingItem->material_->lightEmitter_;
-            intData.color = shadowingItem->material_->color_;
+            intData.color = shadowingItem->material_->texture_->color();
             intData.distIntercept = tmpDist;
             interceptionData.push_back(intData);
         }
@@ -334,13 +334,13 @@ bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
         {
             distLightSource = intData.distIntercept;
             metLightSource = true;
-            transparencyColor *= items_[intData.itemIndex]->material_->color_ * items_[intData.itemIndex]->material_->lightIntensity_ * getDistReductionFactor(distLightSource);
+            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color() * items_[intData.itemIndex]->material_->lightIntensity_ * getDistReductionFactor(distLightSource);
             inShadow = false;
             return inShadow;
         }
         else if(not intData.opaque)
         {
-            transparencyColor *= items_[intData.itemIndex]->material_->color_;
+            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color();
         }
         else
         {
@@ -408,6 +408,7 @@ void Scene::translateCamera(double x, double y, double z)
 void Scene::translateCameraLocal(double x, double y, double z)
 {
     camera_.frame_.translateLocal(x, y, z);
+    std::cout << "camera_.frame_: " << camera_.frame_ << std::endl;
 }
 
 void Scene::multiplyResolution(double ratio)
@@ -465,7 +466,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             double distReductionFactor = getDistReductionFactor(impactDist);
             if(depthIndex == 0) // exception when ray goes straight from lightsource to camera
                 distReductionFactor = 1;
-            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->color_);
+            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color());
             pix.clamp();
             return;
         }
@@ -511,7 +512,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 Vector3 impactPointRefr = impactPoint - impactNormal*1e-6;
                 LightRay lrRefraction(impactPointRefr, lrRefractDir, n2);
                 castRay(refracPix, lrRefraction, depthIndex+1);
-                refracPix *= impactItem->material_->color_;
+                refracPix *= impactItem->material_->texture_->color();
             }
         }
 
@@ -558,7 +559,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                         needToCheckShadow = true;
                         double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
                         //TODO: there is a problem here, the setColor should contain some form of light intensity
-                        pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->color_);
+                        pixIfNotInShadow.setColor(cosAngle*distReductionFactor, impactItem->material_->texture_->color());
 
                         bool inShadow = false;
                         size_t shadowingItemIndex = 0;
@@ -577,7 +578,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 else
                 {
                     cosAngle = std::abs(- lr.dir_.dot(impactNormal));
-                    ambiantPix.setColor(cosAngle*ambiantLight_.intensity_, impactItem->material_->color_);
+                    ambiantPix.setColor(cosAngle*ambiantLight_.intensity_, impactItem->material_->texture_->color());
                     diffuseRefPix += ambiantPix;
                 }
             }

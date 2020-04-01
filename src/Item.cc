@@ -9,7 +9,7 @@ Item::Item (Geometry* g, Material* m)
 Item::Item (const ItemData& iData)
     : name_(iData.name)
 {
-    material_ = new Material(*(iData.mData));
+    material_ = new Material(iData.mData);
     if(SphereData* sData = dynamic_cast<SphereData*>(iData.gData))
         geometry_ = new Sphere(sData);
     else if(PlaneData* sData = dynamic_cast<PlaneData*>(iData.gData))
@@ -24,6 +24,8 @@ Item::Item (const ItemData& iData)
         geometry_ = new Cube(sData);
     else if(MeshData* sData = dynamic_cast<MeshData*>(iData.gData))
         geometry_ = new Mesh(sData);
+    else
+        std::cout << "Unrecognized geometry" << std::endl;
 }
 
 Item::~Item()

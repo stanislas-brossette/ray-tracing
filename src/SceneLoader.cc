@@ -113,13 +113,29 @@ AmbiantData SceneLoader::scanAmbiant(Value& vIn)
 MaterialData* SceneLoader::scanMaterial(Value& vIn)
 {
     MaterialData* mData = new MaterialData();
-    scanVector3RGB(vIn.FindMember("color")->value, mData->color);
     mData->rugosity = vIn.FindMember("rugosity")->value.GetDouble();
     mData->refraction = vIn.FindMember("refraction")->value.GetDouble();
     mData->reflectiveness = vIn.FindMember("reflectiveness")->value.GetDouble();
     mData->lightEmitter = vIn.FindMember("lightEmitter")->value.GetBool();
     mData->lightIntensity = vIn.FindMember("lightIntensity")->value.GetDouble();
+    mData->textureType = vIn.FindMember("textureType")->value.GetString();
+    mData->textureData = scanTexture(vIn);
     return mData;
+}
+
+TextureData* SceneLoader::scanTexture(Value& vIn)
+{
+    std::string type = vIn.FindMember("textureType")->value.GetString();
+    if(type == "SolidColor")
+    {
+        SolidColorData* tData = new SolidColorData();
+        scanVector3RGB(vIn.FindMember("color")->value, tData->color);
+        return tData;
+    }
+    else
+    {
+        std::cout << "Unknown textureType in SceneLoader::scanTexture" << std::endl;
+    }
 }
 
 void SceneLoader::scanBaseGeometry(Value& vIn, GeometryData* gData)

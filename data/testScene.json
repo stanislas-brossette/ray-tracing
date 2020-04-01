@@ -28,6 +28,7 @@
     "items": {
         "lightSource1": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 255, 255],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -43,6 +44,7 @@
         },
         "lightSource2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [234, 200, 245],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -58,6 +60,7 @@
         },
         "lightSource3": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [224, 249, 210],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -73,6 +76,7 @@
         },
         "lightSource4": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [224, 249, 210],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -88,6 +92,7 @@
         },
         "greenSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [52, 200, 51],
                 "rugosity": 0.05,
                 "refraction": 0.0,
@@ -103,6 +108,7 @@
         },
         "pinkSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [235, 20, 150],
                 "rugosity": 0.1,
                 "refraction": 0.0,
@@ -118,6 +124,7 @@
         },
         "blueSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [4, 30, 232],
                 "rugosity": 0.1,
                 "refraction": 0.0,
@@ -133,6 +140,7 @@
         },
         "blueCube": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [204, 130, 232],
                 "rugosity": 0.0,
                 "refraction": 2.0,
@@ -150,6 +158,7 @@
         },
         "redCylinder": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 3, 4],
                 "rugosity": 0.01,
                 "refraction": 1.3,
@@ -168,6 +177,7 @@
         },
         "yellowCylinder": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 250, 25],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -186,6 +196,8 @@
         },
         "bottomPlane": {
             "material": {
+                "textureType": "SolidColor",
+                "texture": "Solid",
                 "color": [20, 20, 20],
                 "rugosity": 0.1,
                 "refraction": 0.0,
@@ -196,84 +208,6 @@
             "geometry": {
                 "type": "Plane",
                 "pos": [0.0, 0.0, -1.0]
-            }
-        },
-        "topPlane": {
-            "material": {
-                "color": [21, 21, 21],
-                "rugosity": 0.1,
-                "refraction": 0.0,
-                "reflectiveness": 0.01,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [0.0, 0.0, 1.0]
-            }
-        },
-        "frontPlane": {
-            "material": {
-                "color": [21, 20, 23],
-                "rugosity": 0.01,
-                "refraction": 0.0,
-                "reflectiveness": 0.91,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [0.0, 5.0, 0.0],
-                "rotAxis": [1,0,0],
-                "rotAngle": 90
-            }
-        },
-        "rightPlane": {
-            "material": {
-                "color": [23, 23, 23],
-                "rugosity": 0.1,
-                "refraction": 0.0,
-                "reflectiveness": 0.01,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [4.0, 0.0, 0.0],
-                "rotAxis": [0,1,0],
-                "rotAngle": 90
-            }
-        },
-        "leftPlane": {
-            "material": {
-                "color": [24, 24, 24],
-                "rugosity": 0.1,
-                "refraction": 0.0,
-                "reflectiveness": 0.01,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [-1.0, 0.0, 0.0],
-                "rotAxis": [0,1,0],
-                "rotAngle": 90
-            }
-        },
-        "backPlane": {
-            "material": {
-                "color": [30, 20, 30],
-                "rugosity": 0.01,
-                "refraction": 0.0,
-                "reflectiveness": 0.01,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [0.0, -1.0, 0.0],
-                "rotAxis": [1,0,0],
-                "rotAngle": -90
             }
         }
     }

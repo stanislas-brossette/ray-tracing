@@ -13,7 +13,7 @@
         "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [0.0, -2.0, 0.8],
+        "pos": [0.4, -2.0, 0.4],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -54,7 +54,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [1.05, 1.5, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -73,7 +73,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [1.05, 0.0, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -92,7 +92,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [1.05, -1.5, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -111,7 +111,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [-1.05, 1.5, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -130,7 +130,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [-1.05, 0.0, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -149,7 +149,7 @@
             },
             "geometry": {
                 "type": "Cylinder",
-                "radius": 0.1,
+                "radius": 0.05,
                 "length": 1.0,
                 "pos": [-1.05, -1.5, 0.5],
                 "rotAxis": [0.0, 0.0, 1.0],
@@ -159,7 +159,7 @@
         "glassCylinder": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [240, 240, 240],
+                "color": [200, 200, 200],
                 "rugosity": 0.01,
                 "refraction": 1.4,
                 "reflectiveness": 0.1,
@@ -176,7 +176,7 @@
         "glassBall": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [240, 240, 240],
+                "color": [200, 200, 200],
                 "rugosity": 0.01,
                 "refraction": 1.4,
                 "reflectiveness": 0.1,

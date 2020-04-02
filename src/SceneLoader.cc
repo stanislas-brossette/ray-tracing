@@ -141,6 +141,14 @@ TextureData* SceneLoader::scanTexture(Value& vIn)
         tData->squareSizeY = vIn.FindMember("squareSizeY")->value.GetDouble();
         return tData;
     }
+    if(type == "Image")
+    {
+        ImageData* tData = new ImageData();
+        tData->path = vIn.FindMember("path")->value.GetString();
+        tData->sizeX = vIn.FindMember("sizeX")->value.GetDouble();
+        tData->sizeY = vIn.FindMember("sizeY")->value.GetDouble();
+        return tData;
+    }
     else
     {
         std::cout << "Unknown textureType in SceneLoader::scanTexture" << std::endl;

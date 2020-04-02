@@ -115,6 +115,14 @@ struct CheckerBoardData : public TextureData
     std::string describe() const;
 };
 
+struct ImageData : public TextureData
+{
+    std::string path = "";
+    double sizeX = 0;
+    double sizeY = 0;
+    std::string describe() const;
+};
+
 struct MaterialData
 {
     std::string textureType = "";

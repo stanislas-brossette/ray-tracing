@@ -7,6 +7,7 @@
 #include "textures/Texture.hh"
 #include "textures/SolidColor.hh"
 #include "textures/CheckerBoard.hh"
+#include "textures/Image.hh"
 
 class Material
 {

@@ -48,6 +48,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/textures/Texture.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/SolidColor.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/CheckerBoard.cc"
+    "${CMAKE_SOURCE_DIR}/src/textures/Image.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/ClosedCylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/Cube.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/Cylinder.cc"

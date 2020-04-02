@@ -21,6 +21,8 @@
 #include <vector>
 #include <limits>
 
+#include <SDL.h>
+
 double deg2rad(double d);
 double rad2deg(double d);
 
@@ -33,3 +35,5 @@ void printMat(std::vector<std::vector<int> > m);
 
 double INFINITY_d();
 float INFINITY_f();
+
+Uint32 getpixel(SDL_Surface *surface, int x, int y);

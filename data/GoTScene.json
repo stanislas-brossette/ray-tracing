@@ -1,0 +1,232 @@
+{
+    "scene": {
+        "maxNumThreads": 6,
+        "powerDistReduction": 2,
+        "exposition": 1.0,
+        "gammaPower": 1.0,
+        "simplifiedRender": false,
+        "maxDepthRecursion": 5
+    },
+    "camera": {
+        "fov": 175,
+        "resX": 1500,
+        "target": [0.0, 0.0, 0.0],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.5,
+        "pos": [0.0, -2.0, 0.8],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0
+    },
+    "render": {
+        "nPixPerRender": 100000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [246,243,255],
+        "intensity": 0.2
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.0, 1.0, 2.0]
+            }
+        },
+        "column0": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [1.05, 1.5, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "column1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [1.05, 0.0, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "column2": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [1.05, -1.5, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "column3": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [-1.05, 1.5, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "column4": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [-1.05, 0.0, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "column5": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [197, 177, 146],
+                "rugosity": 0.01,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Cylinder",
+                "radius": 0.1,
+                "length": 1.0,
+                "pos": [-1.05, -1.5, 0.5],
+                "rotAxis": [0.0, 0.0, 1.0],
+                "rotAngle": 0
+            }
+        },
+        "glassCylinder": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [240, 240, 240],
+                "rugosity": 0.01,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "ClosedCylinder",
+                "radius": 0.2,
+                "length": 0.4,
+                "pos": [-0.5, -0.6, 0.099]
+            }
+        },
+        "glassBall": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [240, 240, 240],
+                "rugosity": 0.01,
+                "refraction": 1.4,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.2,
+                "pos": [0.5, -0.5, 0.2]
+            }
+        },
+        "Map": {
+            "material": {
+                "textureType": "Image",
+                "path": "/home/dynwalk/wdc_workspace/src/ray-tracing/images/westeros.bmp",
+                "sizeX": 2.1,
+                "sizeY": 3.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Polygon",
+                "pos": [0.0, 0.0, 0.0],
+                "points": [
+                    {"x": -1.05, "y": -1.5},
+                    {"x": -1.05, "y": 1.5},
+                    {"x": 1.05, "y": 1.5},
+                    {"x": 1.05, "y": -1.5}
+                ]
+            }
+        },
+        "Floor": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [172, 117, 24],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -0.001]
+            }
+        }
+    }
+}
+

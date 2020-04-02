@@ -9,6 +9,8 @@ Image::Image (const std::string& path, double sizeX, double sizeY)
 {
     image_ = SDL_LoadBMP(path.c_str());
     if(not image_)
+        image_ = SDL_LoadBMP((IMAGES_FOLDER + path).c_str());
+    if(not image_)
         std::cout << "Failed to load " << path << std::endl;
 }
 

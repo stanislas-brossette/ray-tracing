@@ -18,6 +18,12 @@
 #define MESHES ""
 #endif
 
+#ifdef IMAGES_FOLDER
+#define IMAGES IMAGES_FOLDER
+#else
+#define IMAGES ""
+#endif
+
 #include <vector>
 #include <limits>
 

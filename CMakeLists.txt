@@ -77,6 +77,8 @@ set(DATA_FOLDER "${CMAKE_SOURCE_DIR}/data/")
 add_definitions(-DDATA_FOLDER="${CMAKE_SOURCE_DIR}/data/")
 set(MESHES_FOLDER "${CMAKE_SOURCE_DIR}/data/meshes/")
 add_definitions(-DMESHES_FOLDER="${CMAKE_SOURCE_DIR}/data/meshes/")
+set(IMAGES_FOLDER "${CMAKE_SOURCE_DIR}/data/images/")
+add_definitions(-DIMAGES_FOLDER="${CMAKE_SOURCE_DIR}/images/")
 set(UNIT_DATA_FOLDER "${CMAKE_SOURCE_DIR}/unit/data/")
 add_definitions(-DUNIT_DATA_FOLDER="${CMAKE_SOURCE_DIR}/unit/data/")
 

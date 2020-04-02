@@ -28,6 +28,7 @@
     "items": {
         "lightSource1": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [0, 0, 255],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -43,6 +44,7 @@
         },
         "lightSource2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 0, 0],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -58,6 +60,7 @@
         },
         "glass": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [230, 235, 230],
                 "rugosity": 0.0,
                 "refraction": 1.33,
@@ -74,6 +77,7 @@
         },
         "straw": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [240, 10, 10],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -92,6 +96,7 @@
         },
         "plane": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [200, 200, 200],
                 "rugosity": 0.1,
                 "refraction": 0.0,

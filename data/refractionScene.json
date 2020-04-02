@@ -28,6 +28,7 @@
     "items": {
         "lightSource1": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 255, 255],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -43,6 +44,7 @@
         },
         "redTransparentSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [200, 100, 100],
                 "rugosity": 0.0,
                 "refraction": 1.4,
@@ -58,6 +60,7 @@
         },
         "greenTransparentSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [205, 205, 205],
                 "rugosity": 0.0,
                 "refraction": 1.4,
@@ -73,6 +76,7 @@
         },
         "blueTransparentSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [100, 100, 210],
                 "rugosity": 0.0,
                 "refraction": 1.4,
@@ -88,6 +92,7 @@
         },
         "greenSphere2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [52, 200, 51],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -103,6 +108,7 @@
         },
         "pinkSphere2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [235, 20, 150],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -118,6 +124,7 @@
         },
         "blueSphere2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [4, 30, 232],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -133,6 +140,7 @@
         },
         "bottomPlane": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [80, 80, 80],
                 "rugosity": 0.0,
                 "refraction": 0.0,

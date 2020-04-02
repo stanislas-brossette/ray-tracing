@@ -28,6 +28,7 @@
     "items": {
         "lightSource1": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [200, 226, 234],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -43,6 +44,7 @@
         },
         "greenSphere": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [52, 200, 51],
                 "rugosity": 0.05,
                 "refraction": 0.0,
@@ -58,6 +60,7 @@
         },
         "triangle0": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [180, 180, 8],
                 "rugosity": 0.1,
                 "refraction": 0.0,
@@ -77,6 +80,7 @@
         },
         "hexagone0": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [180, 8, 180],
                 "rugosity": 0.1,
                 "refraction": 0.0,

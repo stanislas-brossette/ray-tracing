@@ -28,6 +28,7 @@
     "items": {
         "lightSource": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 255, 255],
                 "rugosity": 0.00,
                 "refraction": 0.0,
@@ -43,6 +44,7 @@
         },
         "sphere1": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [0, 255, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -58,6 +60,7 @@
         },
         "sphere2": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [0, 0, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -73,6 +76,7 @@
         },
         "sphere3": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 125, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -88,6 +92,7 @@
         },
         "sphere4": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 255, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -103,6 +108,7 @@
         },
         "sphere5": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [125, 255, 125],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -118,6 +124,7 @@
         },
         "sphere6": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [0, 125, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -133,6 +140,7 @@
         },
         "sphere7": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [125, 255, 255],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -148,6 +156,7 @@
         },
         "sphere8": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 125, 0],
                 "rugosity": 0.01,
                 "refraction": 0.0,
@@ -163,6 +172,7 @@
         },
         "plane": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [150, 150, 150],
                 "rugosity": 0.0,
                 "refraction": 0.0,

@@ -28,6 +28,7 @@
     "items": {
         "plane": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [230, 10, 10],
                 "rugosity": 0.0,
                 "refraction": 0.0,
@@ -44,6 +45,7 @@
         },
         "lightSource": {
             "material": {
+                "textureType": "SolidColor",
                 "color": [255, 255, 255],
                 "rugosity": 0.00,
                 "refraction": 0.0,

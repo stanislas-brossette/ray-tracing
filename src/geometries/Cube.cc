@@ -175,15 +175,9 @@ bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, 
     return impact;
 }
 
-bool Cube::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const
+bool Cube::isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const
 {
     return false;
-    // v = OC - r.normal
-    //Vector3 v = f_.o_ - point;// - normal*radius_;
-    //v.normalize();
-    //cosAngle = v.dot(normal);
-    //bool inHalfSpace = (cosAngle > 0);
-    //return inHalfSpace;
 }
 
 

@@ -54,8 +54,7 @@ bool Plane::intersect(const LightRay& lr, Vector3& point,
     return impact;
 }
 
-bool Plane::isInHalfSpace(const Vector3& point, const Vector3& normal,
-                          double& cosAngle) const
+bool Plane::isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const
 {
     return false;
 }

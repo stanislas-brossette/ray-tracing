@@ -20,6 +20,8 @@ public:
     virtual ~Material ();
 
     Texture* texture_;
+    int specularExponent_;
+    double specularGain_;
     double rugosity_;
     double refractiveIndex_;
     double reflectiveness_;

@@ -11,7 +11,9 @@ Material::Material()
 }
 
 Material::Material (MaterialData* mData)
-    : rugosity_(mData->rugosity),
+    : specularExponent_(mData->specularExponent),
+      specularGain_(mData->specularGain),
+      rugosity_(mData->rugosity),
       refractiveIndex_(mData->refraction),
       reflectiveness_(mData->reflectiveness),
       lightEmitter_(mData->lightEmitter),
@@ -45,6 +47,8 @@ std::string Material::describe() const
 {
     std::stringstream ss;
     ss << "texture: " << "\n";
+    ss << "specularExponent: " << specularExponent_ << "\n";
+    ss << "specularGain: " << specularGain_ << "\n";
     ss << "rugosity: " << rugosity_ << "\n";
     ss << "refractiveIndex: " << refractiveIndex_ << "\n";
     ss << "reflectiveness: " << reflectiveness_ << "\n";
@@ -58,6 +62,8 @@ std::string MaterialData::describe() const
     std::stringstream ss;
     ss << "=== MaterialData ===\n";
     ss << "texture: " << "\n";
+    ss << "specularExponent: " << specularExponent << "\n";
+    ss << "specularGain: " << specularGain << "\n";
     ss << "rugosity: " << rugosity << "\n";
     ss << "refractiveIndex: " << refraction << "\n";
     ss << "reflectiveness: " << reflectiveness << "\n";

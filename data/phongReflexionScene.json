@@ -1,0 +1,182 @@
+{
+    "scene": {
+        "maxNumThreads": 6,
+        "powerDistReduction": 2,
+        "exposition": 1.0,
+        "gammaPower": 1.0,
+        "simplifiedRender": false,
+        "maxDepthRecursion": 5
+    },
+    "camera": {
+        "fov": 179,
+        "resX": 1400,
+        "target": [0.0, 0.0, 0.1],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 2.0,
+        "pos": [0.0, -0.5, 0.25],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0
+    },
+    "render": {
+        "nPixPerRender": 100000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255,255,255],
+        "intensity": 0.01
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "specularExponent": 1,
+                "specularGain": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.08,
+                "pos": [0.0, -0.1, 0.5]
+            }
+        },
+        "Sphere0": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [0, 0, 255],
+                "specularExponent": 3,
+                "specularGain": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [-0.5, 0.0, 0.1]
+            }
+        },
+        "sphere1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [0, 255, 0],
+                "specularExponent": 10,
+                "specularGain": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [-0.25, 0.0, 0.1]
+            }
+        },
+        "sphere2": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 0, 0],
+                "specularExponent": 50,
+                "specularGain": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.0, 0.0, 0.1]
+            }
+        },
+        "sphere3": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [0, 0, 255],
+                "specularExponent": 250,
+                "specularGain": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.25, 0.0, 0.1]
+            }
+        },
+        "sphere4": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [0, 255, 0],
+                "specularExponent": 1250,
+                "specularGain": 1.0,
+                "rugosity": 0.5,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.1,
+                "pos": [0.5, 0.0, 0.1]
+            }
+        },
+        "bottomPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color": [100, 100, 100],
+                "color0": [0, 0, 0],
+                "color1": [255, 255, 255],
+                "specularExponent": 1,
+                "specularGain": 0.01,
+                "squareSizeX": 0.1,
+                "squareSizeY": 0.1,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, 0.0]
+            }
+        },
+        "frontPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color": [100, 100, 100],
+                "color0": [0, 0, 0],
+                "color1": [255, 255, 255],
+                "specularExponent": 1,
+                "specularGain": 0.01,
+                "squareSizeX": 0.1,
+                "squareSizeY": 0.1,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.5, 0.0],
+                "rotAxis": [1, 0, 0],
+                "rotAngle": 90
+            }
+        }
+    }
+}

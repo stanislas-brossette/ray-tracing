@@ -82,8 +82,7 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     return impact;
 }
 
-bool Polygon::isInHalfSpace(const Vector3& point, const Vector3& normal,
-                          double& cosAngle) const
+bool Polygon::isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const
 {
     return false;
 }

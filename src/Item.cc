@@ -37,9 +37,9 @@ bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, 
     return geometry_->intersect(incident, point, normal, dist);
 }
 
-bool Item::isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const
+bool Item::isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const
 {
-    bool inHS = geometry_->isInHalfSpace(point, normal, cosAngle);
+    bool inHS = geometry_->isInHalfSpace(point, normal, specDir, cosAngleDiffuse, cosAnglePhong);
     return inHS;
 }
 

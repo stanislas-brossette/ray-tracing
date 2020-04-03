@@ -16,7 +16,7 @@ public:
     std::string describe() const;
     //The Cylinders normal is f_.z_
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
-    bool isInHalfSpace(const Vector3& point, const Vector3& normal, double& cosAngle) const;
+    bool isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const;
     void initPlanes();
 
     double size_;

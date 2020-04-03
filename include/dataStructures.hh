@@ -127,6 +127,8 @@ struct MaterialData
 {
     std::string textureType = "";
     TextureData *textureData;
+    int specularExponent = 50;
+    double specularGain = 0.1;
     double rugosity = 0.0;
     double refraction = 0.0;
     double reflectiveness = 0.0;

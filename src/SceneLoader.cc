@@ -113,6 +113,8 @@ AmbiantData SceneLoader::scanAmbiant(Value& vIn)
 MaterialData* SceneLoader::scanMaterial(Value& vIn)
 {
     MaterialData* mData = new MaterialData();
+    mData->specularExponent = vIn.FindMember("specularExponent")->value.GetInt();
+    mData->specularGain = vIn.FindMember("specularGain")->value.GetDouble();
     mData->rugosity = vIn.FindMember("rugosity")->value.GetDouble();
     mData->refraction = vIn.FindMember("refraction")->value.GetDouble();
     mData->reflectiveness = vIn.FindMember("reflectiveness")->value.GetDouble();

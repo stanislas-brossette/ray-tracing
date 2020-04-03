@@ -151,63 +151,51 @@ bool compareByDist(const InterceptionData& a, const InterceptionData& b)
     return a.distIntercept < b.distIntercept;
 }
 
-bool Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex, Vector3RGB& transparencyColor) const
+void Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex, size_t lightSourceIndex, Vector3RGB& transparencyColor) const
 {
     std::vector<InterceptionData> interceptionData;
-    bool inShadow = false;
-    size_t shadowingItemIndex = 0;
     for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
     {
-        Vector3 tmpPoint;
-        Vector3 tmpNormal;
-        double tmpDist;
-        Item* shadowingItem = items_[shadItemIndex];
-        bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
-        if(tmpImpact)
+        if(not (shadItemIndex == lightSourceIndex))
         {
-            InterceptionData intData;
-            intData.itemIndex = shadItemIndex;
-            intData.intercept = true;
-            intData.opaque = (shadowingItem->material_->refractiveIndex_ == 0.0);
-            intData.lightEmitter = shadowingItem->material_->lightEmitter_;
-            intData.pointInWorld = tmpPoint;
-            intData.pointInFrame = shadowingItem->geometry_->f_.pointFromWorld(tmpPoint);
-            intData.color = shadowingItem->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
-            intData.distIntercept = tmpDist;
-            interceptionData.push_back(intData);
+            Vector3 tmpPoint;
+            Vector3 tmpNormal;
+            double tmpDist;
+            Item* shadowingItem = items_[shadItemIndex];
+            bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
+            if(tmpImpact and tmpDist < distImpactToLightSource)
+            {
+                InterceptionData intData;
+                intData.itemIndex = shadItemIndex;
+                intData.intercept = true;
+                intData.opaque = (shadowingItem->material_->refractiveIndex_ == 0.0);
+                intData.lightEmitter = shadowingItem->material_->lightEmitter_;
+                intData.pointInWorld = tmpPoint;
+                intData.pointInFrame = shadowingItem->geometry_->f_.pointFromWorld(tmpPoint);
+                intData.color = shadowingItem->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
+                intData.distIntercept = tmpDist;
+                interceptionData.push_back(intData);
+            }
         }
     }
     //Sort interceptionData vector by order of distance of interception
     std::sort(interceptionData.begin(), interceptionData.end(), compareByDist);
 
-    //Find closest light source
-    bool metLightSource = false;
-    double distLightSource = INFINITY_d();
-    //transparencyColor = ambiantLight_.color_*ambiantLight_.intensity_;
     transparencyColor = Vector3RGB(1,1,1);
     for (auto& intData: interceptionData)
     {
         if(intData.opaque and not intData.lightEmitter)
         {
-            inShadow = true;
-            return inShadow;
+            transparencyColor *= Vector3RGB(0,0,0);
         }
         else if(intData.lightEmitter)
         {
-            distLightSource = intData.distIntercept;
-            metLightSource = true;
-            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_) * items_[intData.itemIndex]->material_->lightIntensity_ * getDistReductionFactor(distLightSource);
-            inShadow = false;
-            return inShadow;
-        }
-        else if(not intData.opaque)
-        {
-            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
+            // Nothing to do, product by 1...
+            //transparencyColor *= Vector3RGB(1,1,1);
         }
         else
         {
-            std::cout << "This item is not handled by intersect" << std::endl;
-            std::cout << items_[intData.itemIndex]->describe() << std::endl;
+            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
         }
     }
 }
@@ -328,8 +316,9 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         {
             double distReductionFactor = getDistReductionFactor(impactDist);
             if(depthIndex == 0) // exception when ray goes straight from lightsource to camera
-                distReductionFactor = 1;
-            pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color(0,0));
+                pix.setColor(1.0, impactItem->material_->texture_->color(0,0));
+            else
+                pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color(0,0));
             pix.clamp();
             return;
         }
@@ -399,14 +388,14 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         if (true or impactItem->material_->reflectiveness_ > 0.0)
         {
             //Is there a light source in the half plane (impactPoint impactNormal)
-            Pixel pixIfNotInShadow(pix.x_, pix.y_);
-            Pixel pixPhongIfNotInShadow(pix.x_, pix.y_);
             bool needToCheckShadow = false;
             LightRay lrImpactToLightSource;
             double distImpactToLightSource;
             Vector3 impactPointInFrame = impactItem->geometry_->f_.pointFromWorld(impactPoint);
             for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
             {
+                Pixel pixIfNotInShadow(pix.x_, pix.y_);
+                Pixel pixPhongIfNotInShadow(pix.x_, pix.y_);
                 Item* lsItem = items_[itemIndex];
                 double cosAngleDiffuse = 0;
                 double cosAnglePhong = 0;
@@ -421,28 +410,21 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                     //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
                     if(inHalfSpace)
                     {
-                        needToCheckShadow = true;
                         double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
                         //TODO: there is a problem here, the setColor should contain some form of light intensity
                         //Contribution of diffuse reflexion
-                        pixIfNotInShadow.setColor(cosAngleDiffuse*distReductionFactor*lsItem->material_->lightIntensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+                        pixIfNotInShadow.setColor(cosAngleDiffuse*distReductionFactor*lsItem->material_->lightIntensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_)*lsItem->material_->texture_->color(0,0));
                         //Contribution of specular phong reflexion
                         double phongCoeff = impactItem->material_->specularGain_ * std::pow(cosAnglePhong, impactItem->material_->specularExponent_);
                         pixPhongIfNotInShadow.setColor(phongCoeff*distReductionFactor*lsItem->material_->lightIntensity_, lsItem->material_->texture_->color(0,0));
 
-                        bool inShadow = false;
-                        size_t shadowingItemIndex = 0;
-                        if(needToCheckShadow)
-                        {
-                            Vector3RGB transparencyColor(1,1,1);
-                            inShadow = isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex, transparencyColor);
-                            if(not inShadow)
-                            {
-                                pixIfNotInShadow *= transparencyColor;
-                                diffuseRefPix += pixIfNotInShadow;
-                                diffuseRefPix += pixPhongIfNotInShadow;
-                            }
-                        }
+
+                        Vector3RGB transparencyColor(1,1,1);
+                        isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex, itemIndex, transparencyColor);
+                        pixIfNotInShadow *= transparencyColor;
+                        pixPhongIfNotInShadow *= transparencyColor;
+                        diffuseRefPix += pixIfNotInShadow;
+                        diffuseRefPix += pixPhongIfNotInShadow;
                     }
                 }
                 else

@@ -1,7 +1,7 @@
 {
     "scene": {
-        "maxNumThreads": 8,
-        "powerDistReduction": 3,
+        "maxNumThreads": 6,
+        "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.0,
         "simplifiedRender": false,
@@ -9,11 +9,11 @@
     },
     "camera": {
         "fov": 175,
-        "resX": 1000,
+        "resX": 1500,
         "target": [0.0, 0.1, 0.099],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [0.0, -0.3, 0.15],
+        "pos": [0.0, -0.6, 0.15],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -26,7 +26,7 @@
         "intensity": 0.1
     },
     "items": {
-        "lightSource1": {
+        "lightSourceBlue": {
             "material": {
                 "textureType": "SolidColor",
                 "color": [0, 0, 255],
@@ -34,7 +34,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 1.0
+                "lightIntensity": 0.4
             },
             "geometry": {
                 "type": "Sphere",
@@ -42,7 +42,7 @@
                 "pos": [0.0, 0.05, 0.4]
             }
         },
-        "lightSource2": {
+        "lightSourceRed": {
             "material": {
                 "textureType": "SolidColor",
                 "color": [255, 0, 0],
@@ -50,7 +50,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 1.0
+                "lightIntensity": 0.4
             },
             "geometry": {
                 "type": "Sphere",

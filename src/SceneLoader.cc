@@ -113,8 +113,10 @@ AmbiantData SceneLoader::scanAmbiant(Value& vIn)
 MaterialData* SceneLoader::scanMaterial(Value& vIn)
 {
     MaterialData* mData = new MaterialData();
-    mData->specularExponent = vIn.FindMember("specularExponent")->value.GetInt();
-    mData->specularGain = vIn.FindMember("specularGain")->value.GetDouble();
+    Value::MemberIterator itr = vIn.FindMember("specularExponent");
+    if(itr != vIn.MemberEnd()) mData->specularExponent = itr->value.GetInt();
+    itr = vIn.FindMember("specularGain");
+    if(itr != vIn.MemberEnd()) mData->specularGain = itr->value.GetDouble();
     mData->rugosity = vIn.FindMember("rugosity")->value.GetDouble();
     mData->refraction = vIn.FindMember("refraction")->value.GetDouble();
     mData->reflectiveness = vIn.FindMember("reflectiveness")->value.GetDouble();
@@ -163,12 +165,10 @@ void SceneLoader::scanBaseGeometry(Value& vIn, GeometryData* gData)
     scanVector3(vIn.FindMember("pos")->value, gData->pos);
 
     Value::MemberIterator itr = vIn.FindMember("rotAxis");
-    if(itr != vIn.MemberEnd())
-        scanVector3(itr->value, gData->rotAxis);
+    if(itr != vIn.MemberEnd()) scanVector3(itr->value, gData->rotAxis);
 
     itr = vIn.FindMember("rotAngle");
-    if(itr != vIn.MemberEnd())
-        gData->rotAngle = itr->value.GetDouble();
+    if(itr != vIn.MemberEnd()) gData->rotAngle = itr->value.GetDouble();
 }
 
 GeometryData* SceneLoader::scanGeometry(Value& vIn)

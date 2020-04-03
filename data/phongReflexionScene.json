@@ -36,7 +36,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 1.0
+                "lightIntensity": 0.7
             },
             "geometry": {
                 "type": "Sphere",

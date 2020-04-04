@@ -52,7 +52,6 @@ void Mesh::initTriangles()
         bary.z_ += coords[3*i + 2];
     }
     bary = bary * (3.0/coords.size());
-    std::cout << "bary: " << bary << std::endl;
     double radiusBoundingSphere = -1;
     for (size_t i = 0; i < coords.size()/3; i++)
     {
@@ -62,7 +61,6 @@ void Mesh::initTriangles()
             radiusBoundingSphere = bd;
     }
     radiusBoundingSphere = std::sqrt(radiusBoundingSphere);
-    std::cout << "radiusBoundingSphere: " << radiusBoundingSphere << std::endl;
 
     Frame3 fBV(f_.o_ + bary, f_.vx_, f_.vy_, f_.vz_);
     bv_ = BoundingVolume(fBV, radiusBoundingSphere);
@@ -71,16 +69,7 @@ void Mesh::initTriangles()
     triangles_.resize(numTris);
     for(size_t itri = 0; itri < numTris; ++itri)
     {
-        //std::cout << "coordinates of triangle " << itri << ": ";
-        //for(size_t icorner = 0; icorner < 3; ++icorner)
-        //{
-        //    float* c = &coords[3 * tris [3 * itri + icorner]];
-        //    std::cout << "(" << c[0] << ", " << c[1] << ", " << c[2] << ") ";
-        //}
-        //std::cout << std::endl;
-
         float* n = &normals [3 * itri];
-        //std::cout << "normal of triangle " << itri << ": " << "(" << n[0] << ", " << n[1] << ", " << n[2] << ")\n";
 
         float* c = &coords[3 * tris [3 * itri]];
         Vector3 P0(c[0], c[1], c[2]);
@@ -88,16 +77,6 @@ void Mesh::initTriangles()
         Vector3 P1(c[0], c[1], c[2]);
         c = &coords[3 * tris [3 * itri + 2]];
         Vector3 P2(c[0], c[1], c[2]);
-
-        //double radius = (P0 - f_.o_).squaredNorm();
-        //if(radius > radiusBoundingSphere)
-        //    radiusBoundingSphere = radius;
-        //radius = (P1 - f_.o_).squaredNorm();
-        //if(radius > radiusBoundingSphere)
-        //    radiusBoundingSphere = radius;
-        //radius = (P2 - f_.o_).squaredNorm();
-        //if(radius > radiusBoundingSphere)
-        //    radiusBoundingSphere = radius;
 
         Vector3 vz(n[0], n[1], n[2]);
         vz.normalize();
@@ -109,9 +88,7 @@ void Mesh::initTriangles()
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));
         points[2] = Vector2((P1 - P0).dot(vx), (P1 - P0).dot(vy));
         triangles_[itri] = Polygon(tFrame, points);
-        //std::cout << triangles_[itri].describe() << std::endl;
     }
-    std::cout << "triangles_.size(): " << triangles_.size() << std::endl;
 }
 
 std::string Mesh::describe() const
@@ -131,14 +108,12 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     dist = INFINITY_d();
     size_t minIndex = -1;
     bool impact = false;
-    //std::cout << "triangles_.size(): " << triangles_.size() << std::endl;
     for (size_t i = 0; i < triangles_.size(); i++)
     {
         Vector3 triPoint;
         Vector3 triNormal;
         double triDist;
         bool triImpact;
-        //std::cout << "triangles_[i].describe(): " << triangles_[i].describe() << std::endl;
         triImpact = triangles_[i].intersect(lr, triPoint, triNormal, triDist);
         if(triImpact and triDist < dist)
         {
@@ -149,14 +124,6 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
             minIndex = i;
         }
     }
-    //if(impact)
-    //{
-    //    std::cout << "\nImpact with mesh" << std::endl;
-    //    std::cout << "dist: " << dist << std::endl;
-    //    std::cout << "point: " << point << std::endl;
-    //    std::cout << "normal: " << normal << std::endl;
-    //    std::cout << "minIndex: " << minIndex << std::endl;
-    //}
     return impact;
 }
 

@@ -12,7 +12,6 @@ public:
     Renderer ();
     Renderer (const RenderData& rData);
     void renderParallel(const Scene& sc, Window& win, const std::string& s = "");
-    void renderSerial(const Scene& sc, Window& win, const std::string& s = "");
     virtual ~Renderer ();
     int nPixPerRender_ = 0;
     int percentLightRay_ = 100; //nLightRay = nTotalResolution*percentLightRay_;

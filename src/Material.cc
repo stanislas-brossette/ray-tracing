@@ -29,16 +29,6 @@ Material::Material (MaterialData* mData)
         std::cout << "Unrecognized texture" << std::endl;
 }
 
-//Material::Material (const Vector3RGB& color, double rugosity, double refIndex, double reflectiveness, bool lightEmitter, double lightIntensity)
-//    : color_(color),
-//      rugosity_(rugosity),
-//      refractiveIndex_(refIndex),
-//      reflectiveness_(reflectiveness),
-//      lightEmitter_(lightEmitter),
-//      lightIntensity_(lightIntensity)
-//{
-//}
-
 Material::~Material()
 {
 }

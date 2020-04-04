@@ -23,7 +23,6 @@ public:
     void setAmbiantLight(const AmbiantLight& al);
     void castRandomRay(Pixel& pix, size_t index) const;
     void castMultipleRandomRays(std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPoints) const;
-    void renderSerial(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
     void renderParallel(std::vector<Pixel>& res, const size_t& nPoint, size_t nRenderedPoints) const;
     void isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex, size_t lightSourceIndex, Vector3RGB& transparencyColor) const;
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;

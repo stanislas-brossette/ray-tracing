@@ -50,23 +50,3 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
     std::cout << s;
 }
 
-void Renderer::renderSerial(const Scene& sc, Window& win, const std::string& s)
-{
-    win.clear();
-    int iter = 0;
-    int nLightRay = win.nPixels()*percentLightRay_/100;
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    while(iter < nLightRay)
-    {
-        std::vector<Pixel> pixs(nPixPerRender_);
-        sc.renderSerial(pixs, nPixPerRender_, iter);
-        win.addPixels(pixs);
-        win.render();
-        iter+=nPixPerRender_;
-    }
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "duration Serial = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
-    std::cout << s;
-    char answer;
-    std::cin >> answer;
-}

@@ -30,14 +30,6 @@ Scene::~Scene()
 {
 }
 
-void Scene::renderSerial(std::vector<Pixel>& res, const size_t& nPoints, size_t nPointsRendered) const
-{
-    //for (size_t i = 0; i < nPoints; i++)
-    //{
-    //    castRandomRay( res[i], nPointsRendered + i);
-    //}
-}
-
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
 {
     int nPix = res.size();

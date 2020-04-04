@@ -36,6 +36,16 @@ void PerformanceTracker::incrementCallToIntersectPolygon()
     nCallToIntersectPolygon_++;
 }
 
+void PerformanceTracker::startRenderTimer()
+{
+    beginRender_ = std::chrono::steady_clock::now();
+}
+
+void PerformanceTracker::endRenderTimer()
+{
+    endRender_ = std::chrono::steady_clock::now();
+}
+
 void PerformanceTracker::resetAll()
 {
     nItems_ = 0;
@@ -64,6 +74,7 @@ std::string PerformanceTracker::describe()
     ss << "nPrimaryRays_: " << nPrimaryRays_ << std::endl;
     ss << "nCallToIntersect_: " << nCallToIntersect_ << std::endl;
     ss << "nCallToIntersectPolygon_: " << nCallToIntersectPolygon_ << std::endl;
+    ss << "totalRenderTime_: " << std::chrono::duration_cast<std::chrono::milliseconds>(endRender_ - beginRender_).count() << "[ms]" << std::endl;
     ss << "========================" << std::endl;
     return ss.str();
 }

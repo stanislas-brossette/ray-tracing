@@ -80,14 +80,10 @@ void Scene::setAmbiantLight(const AmbiantLight& ambiantLight)
 
 void Scene::castMultipleRandomRays( std::vector<Pixel>& vecPix, size_t beginIndex, size_t endIndex, size_t nRenderedPixels) const
 {
-
-    std::chrono::steady_clock::time_point beginBatch = std::chrono::steady_clock::now();
     for (size_t i = beginIndex; i < endIndex; i++)
     {
         castPrimaryRay( vecPix[i], i + nRenderedPixels);
     }
-    std::chrono::steady_clock::time_point endBatch = std::chrono::steady_clock::now();
-    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(endBatch - beginBatch).count() << "[ms]" << std::endl;
 }
 
 void Scene::castRandomRay( Pixel& pix, size_t iOrderedRay) const

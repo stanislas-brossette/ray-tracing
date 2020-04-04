@@ -4,6 +4,7 @@
 #include <atomic>
 #include <string>
 #include <sstream>
+#include <chrono>
 
 class PerformanceTracker
 {
@@ -14,6 +15,8 @@ public:
     void incrementPrimaryRays();
     void incrementCallToIntersect();
     void incrementCallToIntersectPolygon();
+    void startRenderTimer();
+    void endRenderTimer();
     void resetAll();
     void resetRays();
     std::string describe();
@@ -27,4 +30,5 @@ private:
     std::atomic<int> nPrimaryRays_{0};
     std::atomic<int> nCallToIntersect_{0};
     std::atomic<int> nCallToIntersectPolygon_{0};
+    std::chrono::steady_clock::time_point beginRender_, endRender_;
 };

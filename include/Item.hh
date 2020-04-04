@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "dataStructures.hh"
+#include "PerformanceTracker.hh"
 #include "geometries/Geometry.hh"
 #include "geometries/Sphere.hh"
 #include "geometries/Cylinder.hh"

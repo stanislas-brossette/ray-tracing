@@ -11,6 +11,7 @@
 #include "Camera.hh"
 #include "Pixel.hh"
 #include "utils.hh"
+#include "PerformanceTracker.hh"
 
 class Scene
 {

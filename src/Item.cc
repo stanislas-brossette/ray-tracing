@@ -34,6 +34,7 @@ Item::~Item()
 
 bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
 {
+    PerformanceTracker::instance().incrementCallToIntersect();
     return geometry_->intersect(incident, point, normal, dist);
 }
 

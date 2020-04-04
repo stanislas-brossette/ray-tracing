@@ -22,6 +22,7 @@ Scene::Scene(const SceneData& sData)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
+        PerformanceTracker::instance().incrementItems();
         items_.push_back(new Item(sData.itemsData.at(i)));
     }
 }
@@ -276,6 +277,7 @@ void Scene::toggleSimplifiedRender()
 
 void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
 {
+    PerformanceTracker::instance().incrementPrimaryRays();
     LightRay lr;
     camera_.castOrderedRay(lr, pix, iOrderedRay);
     castRay(pix, lr, 0);
@@ -307,7 +309,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
     }
     else if(simplifiedRender_)
     {
-        double cosAngleSimplified = std::abs(- lr.dir_.dot(impactNormal));
+        double cosAngleSimplified = std::abs(lr.dir_.dot(impactNormal));
         Vector3 impactPointInFrame = items_[impactItemIndex]->geometry_->f_.pointFromWorld(impactPoint);
         pix.setColor(cosAngleSimplified, items_[impactItemIndex]->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
         return;

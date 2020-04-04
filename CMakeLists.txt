@@ -39,6 +39,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Item.cc"
     "${CMAKE_SOURCE_DIR}/src/LightRay.cc"
     "${CMAKE_SOURCE_DIR}/src/Material.cc"
+    "${CMAKE_SOURCE_DIR}/src/PerformanceTracker.cc"
     "${CMAKE_SOURCE_DIR}/src/Pixel.cc"
     "${CMAKE_SOURCE_DIR}/src/Renderer.cc"
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"

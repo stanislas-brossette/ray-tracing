@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     {
         if(inputHandler.needReload)
         {
+            PerformanceTracker::instance().resetAll();
             sceneLoader = SceneLoader(path);
             scene = Scene(sceneLoader.sceneData_);
             window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
@@ -53,8 +54,10 @@ int main(int argc, char *argv[])
         }
         if(inputHandler.needRender)
         {
+            PerformanceTracker::instance().resetRays();
             renderer.renderParallel(scene, window, "");
             inputHandler.needRender = false;
+            std::cout << PerformanceTracker::instance().describe();
         }
         inputHandler.handleInputs(window, scene);
     }

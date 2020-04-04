@@ -23,6 +23,7 @@ public:
     double specularGain_;
     double rugosity_;
     double refractiveIndex_;
+    double absorption_;
     double reflectiveness_;
     bool lightEmitter_;
     double lightIntensity_;

@@ -187,7 +187,16 @@ void Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
         }
         else
         {
-            transparencyColor *= items_[intData.itemIndex]->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
+            //Compute the distance traveled in the transparent medium
+            Item* intItem = items_[intData.itemIndex];
+            double distTransparent;
+            {
+                LightRay lrTransparent(intData.pointInWorld + lrImpactToLightSource.dir_ * 1e-9, lrImpactToLightSource.dir_);
+                Vector3 impactPointTransparent, impactNormalTransparent;
+                intItem->intersect(lrTransparent, impactPointTransparent, impactNormalTransparent, distTransparent);
+            }
+            transparencyColor *= intItem->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
+            transparencyColor *= std::exp(-intItem->material_->absorption_*distTransparent);
         }
     }
 }
@@ -380,54 +389,50 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         /************************
         *  Diffuse reflection  *
         ************************/
-        if (true or impactItem->material_->reflectiveness_ > 0.0)
+        //Is there a light source in the half plane (impactPoint impactNormal)
+        bool needToCheckShadow = false;
+        LightRay lrImpactToLightSource;
+        double distImpactToLightSource;
+        for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
         {
-            //Is there a light source in the half plane (impactPoint impactNormal)
-            bool needToCheckShadow = false;
-            LightRay lrImpactToLightSource;
-            double distImpactToLightSource;
-            Vector3 impactPointInFrame = impactItem->geometry_->f_.pointFromWorld(impactPoint);
-            for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+            Pixel pixIfNotInShadow(pix.x_, pix.y_);
+            Pixel pixPhongIfNotInShadow(pix.x_, pix.y_);
+            Item* lsItem = items_[itemIndex];
+            double cosAngleDiffuse = 0;
+            double cosAnglePhong = 0;
+            if (lsItem->material_->lightEmitter_)
             {
-                Pixel pixIfNotInShadow(pix.x_, pix.y_);
-                Pixel pixPhongIfNotInShadow(pix.x_, pix.y_);
-                Item* lsItem = items_[itemIndex];
-                double cosAngleDiffuse = 0;
-                double cosAnglePhong = 0;
-                if (lsItem->material_->lightEmitter_)
+                bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, lr.dir_, cosAngleDiffuse, cosAnglePhong);
+                distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
+                lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
+                lrImpactToLightSource.dir_.normalize();
+                lrImpactToLightSource.origin_ = impactPoint + lrImpactToLightSource.dir_ * 1e-9;
+
+                //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
+                if(inHalfSpace)
                 {
-                    bool inHalfSpace = lsItem->isInHalfSpace(impactPoint, impactNormal, lr.dir_, cosAngleDiffuse, cosAnglePhong);
-                    distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
-                    lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
-                    lrImpactToLightSource.dir_.normalize();
-                    lrImpactToLightSource.origin_ = impactPoint + lrImpactToLightSource.dir_ * 1e-9;
-
-                    //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
-                    if(inHalfSpace)
-                    {
-                        double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
-                        //TODO: there is a problem here, the setColor should contain some form of light intensity
-                        //Contribution of diffuse reflexion
-                        pixIfNotInShadow.setColor(cosAngleDiffuse*distReductionFactor*lsItem->material_->lightIntensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_)*lsItem->material_->texture_->color(0,0));
-                        //Contribution of specular phong reflexion
-                        double phongCoeff = impactItem->material_->specularGain_ * std::pow(cosAnglePhong, impactItem->material_->specularExponent_);
-                        pixPhongIfNotInShadow.setColor(phongCoeff*distReductionFactor*lsItem->material_->lightIntensity_, lsItem->material_->texture_->color(0,0));
+                    double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
+                    //TODO: there is a problem here, the setColor should contain some form of light intensity
+                    //Contribution of diffuse reflexion
+                    pixIfNotInShadow.setColor(cosAngleDiffuse*distReductionFactor*lsItem->material_->lightIntensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_)*lsItem->material_->texture_->color(0,0));
+                    //Contribution of specular phong reflexion
+                    double phongCoeff = impactItem->material_->specularGain_ * std::pow(cosAnglePhong, impactItem->material_->specularExponent_);
+                    pixPhongIfNotInShadow.setColor(phongCoeff*distReductionFactor*lsItem->material_->lightIntensity_, lsItem->material_->texture_->color(0,0));
 
 
-                        Vector3RGB transparencyColor(1,1,1);
-                        isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex, itemIndex, transparencyColor);
-                        pixIfNotInShadow *= transparencyColor;
-                        pixPhongIfNotInShadow *= transparencyColor;
-                        diffuseRefPix += pixIfNotInShadow;
-                        diffuseRefPix += pixPhongIfNotInShadow;
-                    }
+                    Vector3RGB transparencyColor(1,1,1);
+                    isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex, itemIndex, transparencyColor);
+                    pixIfNotInShadow *= transparencyColor;
+                    pixPhongIfNotInShadow *= transparencyColor;
+                    diffuseRefPix += pixIfNotInShadow;
+                    diffuseRefPix += pixPhongIfNotInShadow;
                 }
-                else
-                {
-                    cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
-                    ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
-                    diffuseRefPix += ambiantPix;
-                }
+            }
+            else
+            {
+                cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
+                ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+                diffuseRefPix += ambiantPix;
             }
         }
 

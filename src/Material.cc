@@ -15,6 +15,7 @@ Material::Material (MaterialData* mData)
       specularGain_(mData->specularGain),
       rugosity_(mData->rugosity),
       refractiveIndex_(mData->refraction),
+      absorption_(mData->absorption),
       reflectiveness_(mData->reflectiveness),
       lightEmitter_(mData->lightEmitter),
       lightIntensity_(mData->lightIntensity)

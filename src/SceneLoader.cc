@@ -119,6 +119,8 @@ MaterialData* SceneLoader::scanMaterial(Value& vIn)
     if(itr != vIn.MemberEnd()) mData->specularGain = itr->value.GetDouble();
     mData->rugosity = vIn.FindMember("rugosity")->value.GetDouble();
     mData->refraction = vIn.FindMember("refraction")->value.GetDouble();
+    itr = vIn.FindMember("absorption");
+    if(itr != vIn.MemberEnd()) mData->absorption = itr->value.GetDouble();
     mData->reflectiveness = vIn.FindMember("reflectiveness")->value.GetDouble();
     mData->lightEmitter = vIn.FindMember("lightEmitter")->value.GetBool();
     mData->lightIntensity = vIn.FindMember("lightIntensity")->value.GetDouble();

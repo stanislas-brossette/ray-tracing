@@ -3,6 +3,7 @@
 
 #include "stl_reader/stl_reader.h"
 
+#include "PerformanceTracker.hh"
 #include "dataStructures.hh"
 #include "Frame3.hh"
 #include "geometries/Geometry.hh"

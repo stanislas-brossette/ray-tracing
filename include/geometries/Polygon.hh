@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+#include "PerformanceTracker.hh"
 #include "dataStructures.hh"
 #include "Frame3.hh"
 #include "geometries/Geometry.hh"

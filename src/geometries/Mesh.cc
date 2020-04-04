@@ -69,6 +69,7 @@ void Mesh::initTriangles()
     triangles_.resize(numTris);
     for(size_t itri = 0; itri < numTris; ++itri)
     {
+        PerformanceTracker::instance().incrementPolygons();
         float* n = &normals [3 * itri];
 
         float* c = &coords[3 * tris [3 * itri]];

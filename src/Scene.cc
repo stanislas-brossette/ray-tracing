@@ -307,8 +307,9 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
     }
     else if(simplifiedRender_)
     {
+        double cosAngleSimplified = std::abs(- lr.dir_.dot(impactNormal));
         Vector3 impactPointInFrame = items_[impactItemIndex]->geometry_->f_.pointFromWorld(impactPoint);
-        pix.setColor(1.0, items_[impactItemIndex]->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+        pix.setColor(cosAngleSimplified, items_[impactItemIndex]->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
         return;
     }
     else
@@ -430,8 +431,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             }
             else
             {
-                cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
-                ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+                ambiantPix.setColor(ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
                 diffuseRefPix += ambiantPix;
             }
         }

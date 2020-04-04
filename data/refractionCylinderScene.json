@@ -9,11 +9,11 @@
     },
     "camera": {
         "fov": 179,
-        "resX": 1800,
+        "resX": 800,
         "target": [0.0, 0.0, 0.1],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 2.0,
-        "pos": [0.0, -0.5, 0.25],
+        "pos": [0.0, -0.5, 0.30],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [255,255,255],
-        "intensity": 0.2
+        "intensity": 0.02
     },
     "items": {
         "lightSource1": {
@@ -34,12 +34,12 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.5
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 0.08,
-                "pos": [0.0, -0.5, 1.0]
+                "radius": 0.03,
+                "pos": [0.0, 0.2, 0.6]
             }
         },
         "lightSource2": {

@@ -100,7 +100,7 @@
                 "color": [255, 255, 255],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.0,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

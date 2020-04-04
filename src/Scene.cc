@@ -296,6 +296,12 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
         return;
     }
+    else if(simplifiedRender_)
+    {
+        Vector3 impactPointInFrame = items_[impactItemIndex]->geometry_->f_.pointFromWorld(impactPoint);
+        pix.setColor(1.0, items_[impactItemIndex]->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+        return;
+    }
     else
     {
         Item* impactItem = items_[impactItemIndex];
@@ -346,7 +352,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         /****************
         *  Refraction  *
         ****************/
-        if(refractionExists and not simplifiedRender_)
+        if(refractionExists)
         {
             Vector3 lrRefractDir;
             //TODO remove redundent calculation in refract
@@ -363,16 +369,13 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         /*************************
         *  Specular reflection  *
         *************************/
-        if (not simplifiedRender_)
-        {
-            // Rugosity can be taken into account here
-            Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
-            //lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
-            lrSpecRefDir.normalize();
-            Vector3 impactPointRefl = impactPoint + impactNormal*1e-6;
-            LightRay lrSpecReflection(impactPointRefl, lrSpecRefDir, lr.refractiveIndex_);
-            castRay(specReflPix, lrSpecReflection, depthIndex+1);
-        }
+        // Rugosity can be taken into account here
+        Vector3 lrSpecRefDir = lr.dir_.symmetrize(impactNormal);
+        //lrSpecRefDir.addNoise(impactItem->material_->rugosity_);
+        lrSpecRefDir.normalize();
+        Vector3 impactPointRefl = impactPoint + impactNormal*1e-6;
+        LightRay lrSpecReflection(impactPointRefl, lrSpecRefDir, lr.refractiveIndex_);
+        castRay(specReflPix, lrSpecReflection, depthIndex+1);
 
         /************************
         *  Diffuse reflection  *

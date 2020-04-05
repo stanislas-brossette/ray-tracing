@@ -16,10 +16,11 @@ BoundingPolyhedron::BoundingPolyhedron(const Frame3& f)
 {
 }
 
-bool BoundingPolyhedron::intersect(const LightRay& incident) const
+bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
 {
     double t0 = -INFINITY_d();
     double t1 = INFINITY_d();
+    size_t impactIndex;
     for (size_t i = 0; i < planeNormals_.size(); i++)
     {
         double tMin = (-pMin_[i] - planeNormals_[i].dot(incident.origin_-f_.o_))/(planeNormals_[i].dot(incident.dir_));
@@ -31,11 +32,17 @@ bool BoundingPolyhedron::intersect(const LightRay& incident) const
             tMax = tmp;
         }
         if(tMin > t0)
+        {
             t0 = tMin;
+            impactIndex = i;
+        }
         if(tMax < t1)
             t1 = tMax;
     }
-    if(t0 <= t1)
+    point = incident.origin_ + incident.dir_ * t0;
+    dist = t0;
+    normal = f_.vecToWorld(planeNormals_[impactIndex]);
+    if(0 < t0 and t0 <= t1)
         return true;
     else
         return false;

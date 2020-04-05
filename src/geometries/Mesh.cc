@@ -109,7 +109,7 @@ std::string Mesh::describe() const
 
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
 {
-    if(not bp_.intersect(lr))
+    if(not bp_.intersect(lr, point, normal, dist))
     {
         return false;
     }

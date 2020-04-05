@@ -13,7 +13,7 @@ public:
     BoundingPolyhedron () = default;
     BoundingPolyhedron (const Frame3& f);
     ~BoundingPolyhedron ();
-    bool intersect(const LightRay& incident) const;
+    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
     void extendBy(const Vector3& point);
     std::string describe() const;
 

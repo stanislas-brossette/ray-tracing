@@ -109,7 +109,10 @@ std::string Mesh::describe() const
 
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
 {
-    if(not bp_.intersect(lr, point, normal, dist))
+    LightRay lrInFrame;
+    lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
+    lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
+    if(not bp_.intersect(lrInFrame, point, normal, dist))
     {
         return false;
     }
@@ -123,7 +126,7 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
         Vector3 triNormal;
         double triDist;
         bool triImpact;
-        triImpact = triangles_[i].intersect(lr, triPoint, triNormal, triDist);
+        triImpact = triangles_[i].intersect(lrInFrame, triPoint, triNormal, triDist);
         if(triImpact and triDist < dist)
         {
             impact = true;
@@ -133,6 +136,8 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
             minIndex = i;
         }
     }
+    point = f_.pointToWorld(point);
+    normal = f_.vecToWorld(normal);
     return impact;
 }
 

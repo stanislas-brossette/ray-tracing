@@ -32,7 +32,8 @@ option(CMAKE_BUILD_TYPE "Choose the type of build." Release)
 # Building Library
 set(SRC
     "${CMAKE_SOURCE_DIR}/src/AmbiantLight.cc"
-    "${CMAKE_SOURCE_DIR}/src/BoundingVolume.cc"
+    "${CMAKE_SOURCE_DIR}/src/geometries/BoundingSphere.cc"
+    "${CMAKE_SOURCE_DIR}/src/geometries/BoundingPolyhedron.cc"
     "${CMAKE_SOURCE_DIR}/src/Camera.cc"
     "${CMAKE_SOURCE_DIR}/src/Frame3.cc"
     "${CMAKE_SOURCE_DIR}/src/InputHandler.cc"

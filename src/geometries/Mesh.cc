@@ -3,14 +3,16 @@
 Mesh::Mesh()
     : Geometry(),
     triangles_(),
-    path_()
+    path_(),
+    bp_()
 {
 }
 
 Mesh::Mesh (const Frame3& f, std::string path)
     : Geometry(f),
     triangles_(),
-    path_(path)
+    path_(path),
+    bp_(f)
 {
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
@@ -22,7 +24,8 @@ Mesh::Mesh (const Frame3& f, std::string path)
 Mesh::Mesh (MeshData* mData)
     : Geometry(mData),
     triangles_(),
-    path_(mData->path)
+    path_(mData->path),
+    bp_(f_)
 {
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
@@ -63,7 +66,7 @@ void Mesh::initTriangles()
     radiusBoundingSphere = std::sqrt(radiusBoundingSphere);
 
     Frame3 fBV(f_.o_ + bary, f_.vx_, f_.vy_, f_.vz_);
-    bv_ = BoundingVolume(fBV, radiusBoundingSphere);
+    bs_ = BoundingSphere(fBV, radiusBoundingSphere);
 
     size_t numTris = tris.size() / 3;
     triangles_.resize(numTris);
@@ -77,6 +80,10 @@ void Mesh::initTriangles()
         Vector3 P1(c[0], c[1], c[2]);
         c = &coords[3 * tris [3 * itri + 2]];
         Vector3 P2(c[0], c[1], c[2]);
+
+        bp_.extendBy(P0);
+        bp_.extendBy(P1);
+        bp_.extendBy(P2);
 
         Vector3 vz(n[0], n[1], n[2]);
         vz.normalize();
@@ -102,8 +109,10 @@ std::string Mesh::describe() const
 
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
 {
-    if(not bv_.intersect(lr))
+    if(not bp_.intersect(lr))
+    {
         return false;
+    }
 
     dist = INFINITY_d();
     size_t minIndex = -1;

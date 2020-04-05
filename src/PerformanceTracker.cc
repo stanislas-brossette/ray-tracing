@@ -8,7 +8,6 @@ PerformanceTracker::PerformanceTracker()
 
 PerformanceTracker::~PerformanceTracker()
 {
-    std::cout << "dtor performanceTracker" << std::endl;
 }
 
 void PerformanceTracker::incrementItems()

@@ -11,7 +11,7 @@ Cylinder::Cylinder(const Frame3& f, double radius, double length)
     radius_(radius),
     length_(length)
 {
-    bv_ = BoundingVolume(f_, std::sqrt(length_*length_ + radius_*radius_));
+    bs_ = BoundingSphere(f_, std::sqrt(length_*length_ + radius_*radius_));
 }
 
 Cylinder::Cylinder(CylinderData* cData)
@@ -19,7 +19,7 @@ Cylinder::Cylinder(CylinderData* cData)
     radius_(cData->radius),
     length_(cData->length)
 {
-    bv_ = BoundingVolume(f_, std::sqrt(length_*length_ + radius_*radius_));
+    bs_ = BoundingSphere(f_, std::sqrt(length_*length_ + radius_*radius_));
 }
 
 Cylinder::~Cylinder()
@@ -40,7 +40,7 @@ std::string Cylinder::describe() const
 bool Cylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
     //Don't use bounding volume for infinite cylinder
-    if(length_ < INFINITY_d() and not bv_.intersect(lr))
+    if(length_ < INFINITY_d() and not bs_.intersect(lr))
         return false;
 
     bool impact = false;

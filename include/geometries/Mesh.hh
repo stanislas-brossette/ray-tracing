@@ -8,6 +8,7 @@
 #include "Frame3.hh"
 #include "geometries/Geometry.hh"
 #include "geometries/Polygon.hh"
+#include "geometries/BoundingPolyhedron.hh"
 #include "Vector3.hh"
 #include "utils.hh"
 
@@ -26,5 +27,7 @@ public:
 
     std::vector<Polygon> triangles_;
     std::string path_;
+
+    BoundingPolyhedron bp_;
 
 };

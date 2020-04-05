@@ -29,6 +29,10 @@ Scene::Scene(const SceneData& sData)
 
 Scene::~Scene()
 {
+    for (size_t i = 0; i < items_.size(); i++)
+    {
+        delete items_[i];
+    }
 }
 
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const

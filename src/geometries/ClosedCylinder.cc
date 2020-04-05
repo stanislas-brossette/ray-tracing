@@ -16,7 +16,7 @@ ClosedCylinder::ClosedCylinder(ClosedCylinderData* cData)
     cylinder_(f_, radius_, length_)
 {
     initPlanes();
-    bv_ = BoundingVolume(f_, std::sqrt(length_*length_ + radius_*radius_));
+    bs_ = BoundingSphere(f_, std::sqrt(length_*length_ + radius_*radius_));
 }
 
 ClosedCylinder::ClosedCylinder(const Frame3& f, double radius, double length)
@@ -26,7 +26,7 @@ ClosedCylinder::ClosedCylinder(const Frame3& f, double radius, double length)
     cylinder_(f_, radius, length)
 {
     initPlanes();
-    bv_ = BoundingVolume(f_, std::sqrt(length_*length_ + radius_*radius_));
+    bs_ = BoundingSphere(f_, std::sqrt(length_*length_ + radius_*radius_));
 }
 
 void ClosedCylinder::initPlanes()
@@ -55,7 +55,7 @@ std::string ClosedCylinder::describe() const
 
 bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
-    if(not bv_.intersect(lr))
+    if(not bs_.intersect(lr))
         return false;
 
     Vector3 impactPointCyl;

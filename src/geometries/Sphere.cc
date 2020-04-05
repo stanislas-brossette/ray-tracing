@@ -10,14 +10,12 @@ Sphere::Sphere(const Frame3& f, double radius)
   : Geometry(f),
     radius_(radius)
 {
-    bv_ = BoundingVolume(f_, radius_);
 }
 
 Sphere::Sphere(SphereData* sData)
   : Geometry(sData),
     radius_(sData->radius)
 {
-    bv_ = BoundingVolume(f_, radius_);
 }
 
 Sphere::~Sphere()
@@ -35,9 +33,6 @@ std::string Sphere::describe() const
 
 bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
-    if(not bv_.intersect(lr))
-        return false;
-
     // Compute dist between light ray and sphere center
     Vector3 va = lr.origin_ - f_.o_;
 

@@ -2,19 +2,19 @@
 
 Geometry::Geometry()
   : f_(),
-    bv_()
+    bs_()
 {
 }
 
 Geometry::Geometry(const Frame3& f)
   : f_(f),
-    bv_()
+    bs_(f)
 {
 }
 
 Geometry::Geometry(GeometryData* gData)
   : f_(),
-    bv_()
+    bs_(f_)
 {
     f_.translate(gData->pos);
     f_.rotate(gData->rotAxis, gData->rotAngle);

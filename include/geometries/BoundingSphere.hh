@@ -2,12 +2,12 @@
 #include "Frame3.hh"
 #include "LightRay.hh"
 
-class BoundingVolume
+class BoundingSphere
 {
 public:
-    BoundingVolume ();
-    BoundingVolume (const Frame3& f, double radius);
-    virtual ~BoundingVolume ();
+    BoundingSphere ();
+    BoundingSphere (const Frame3& f, double radius = 0);
+    virtual ~BoundingSphere ();
     bool intersect(const LightRay& incident) const;
 
 private:

@@ -1,22 +1,22 @@
-#include "BoundingVolume.hh"
+#include "geometries/BoundingSphere.hh"
 
-BoundingVolume::BoundingVolume()
+BoundingSphere::BoundingSphere()
     : f_(),
     radius_(0)
 {
 }
 
-BoundingVolume::BoundingVolume(const Frame3& f, double radius)
+BoundingSphere::BoundingSphere(const Frame3& f, double radius)
     : f_(f),
     radius_(radius)
 {
 }
 
-BoundingVolume::~BoundingVolume()
+BoundingSphere::~BoundingSphere()
 {
 }
 
-bool BoundingVolume::intersect(const LightRay& lr) const
+bool BoundingSphere::intersect(const LightRay& lr) const
 {
     Vector3 OmSo = lr.origin_ - f_.o_;
     double dist = (OmSo - lr.dir_ * (lr.dir_.dot(OmSo))).squaredNorm() - radius_*radius_;

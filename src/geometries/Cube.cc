@@ -22,7 +22,7 @@ Cube::Cube(CubeData* cData)
     rightPlane_(),
     leftPlane_()
 {
-    bv_ = BoundingVolume(f_, size_/0.57);
+    bs_ = BoundingSphere(f_, size_/0.57);
     initPlanes();
 }
 
@@ -36,7 +36,7 @@ Cube::Cube(const Frame3& f, double size)
     rightPlane_(),
     leftPlane_()
 {
-    bv_ = BoundingVolume(f_, size_/0.57);
+    bs_ = BoundingSphere(f_, size_/0.57);
     initPlanes();
 }
 
@@ -82,7 +82,7 @@ std::string Cube::describe() const
 
 bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
 {
-    if(not bv_.intersect(lr))
+    if(not bs_.intersect(lr))
         return false;
 
     Vector3 impactPointTop, impactPointBottom, impactPointRight, impactPointLeft, impactPointFront, impactPointBack;

@@ -8,12 +8,14 @@ Polygon::Polygon()
 Polygon::Polygon(const Frame3& f, const std::vector<Vector2>& p)
   : Geometry(f)
 {
+    PerformanceTracker::instance().incrementPolygons();
     points_ = p;
 }
 
 Polygon::Polygon(PolygonData* pData)
   : Geometry(pData)
 {
+    PerformanceTracker::instance().incrementPolygons();
     points_.resize(pData->points.size());
     for (size_t i = 0; i < points_.size(); i++)
     {

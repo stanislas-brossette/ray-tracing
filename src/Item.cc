@@ -35,7 +35,10 @@ Item::~Item()
 bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
 {
     PerformanceTracker::instance().incrementCallToIntersect();
-    return geometry_->intersect(incident, point, normal, dist);
+    bool intersection = geometry_->intersect(incident, point, normal, dist);
+    if(intersection)
+        PerformanceTracker::instance().incrementIntersections();
+    return intersection;
 }
 
 bool Item::isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const

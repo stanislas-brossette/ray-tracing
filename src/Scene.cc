@@ -281,6 +281,7 @@ void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
 
 void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
 {
+    PerformanceTracker::instance().incrementRays();
     if(depthIndex >= maxDepthIndex_)
     {
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);

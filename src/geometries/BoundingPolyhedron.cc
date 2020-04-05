@@ -2,7 +2,15 @@
 
 BoundingPolyhedron::BoundingPolyhedron(const Frame3& f)
     : f_(f),
-    planeNormals_{ {1,0,0}, {0,1,0}, {0,0,1} },
+    planeNormals_{
+        {1,0,0},
+        {0,1,0},
+        {0,0,1},
+        {0.57735026919,0.57735026919,0.57735026919},
+        {-0.57735026919,0.57735026919,0.57735026919},
+        {0.57735026919,-0.57735026919,0.57735026919},
+        {-0.57735026919,-0.57735026919,0.57735026919}
+    },
     pMin_(planeNormals_.size(), INFINITY_d()),
     pMax_(planeNormals_.size(), -INFINITY_d())
 {

@@ -24,6 +24,7 @@ Scene::Scene(const SceneData& sData)
     {
         PerformanceTracker::instance().incrementItems();
         items_.push_back(new Item(sData.itemsData.at(i)));
+        items_[i]->geometry_->simplifiedRender_ = simplifiedRender_;
     }
 }
 
@@ -273,6 +274,10 @@ void Scene::multiplyResolution(double ratio)
 void Scene::toggleSimplifiedRender()
 {
     simplifiedRender_ = not simplifiedRender_;
+    for (size_t i = 0; i < items_.size(); i++)
+    {
+        items_[i]->geometry_->simplifiedRender_ = simplifiedRender_;
+    }
 }
 
 void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const

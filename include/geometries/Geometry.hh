@@ -21,4 +21,5 @@ public:
 
     Frame3 f_;
     BoundingSphere bs_;
+    bool simplifiedRender_;
 };

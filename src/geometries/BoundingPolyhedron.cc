@@ -16,6 +16,22 @@ BoundingPolyhedron::BoundingPolyhedron(const Frame3& f)
 {
 }
 
+BoundingPolyhedron::BoundingPolyhedron(const Frame3& f, const std::vector<Vector3>& planeNormals)
+    : f_(f),
+    planeNormals_(planeNormals),
+    pMin_(planeNormals_.size(), INFINITY_d()),
+    pMax_(planeNormals_.size(), -INFINITY_d())
+{
+}
+
+BoundingPolyhedron::BoundingPolyhedron (const Frame3& f, const std::vector<Vector3>& planeNormals, const std::vector<double>& pMin, const std::vector<double>& pMax)
+    : f_(f),
+    planeNormals_(planeNormals),
+    pMin_(pMin),
+    pMax_(pMax)
+{
+}
+
 bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
 {
     double t0 = -INFINITY_d();
@@ -69,6 +85,17 @@ void BoundingPolyhedron::extendBy(const Vector3& point)
     }
 }
 
+bool BoundingPolyhedron::contains(const Vector3& p)
+{
+    for (size_t i = 0; i < planeNormals_.size(); i++)
+    {
+        double dot = -p.dot(planeNormals_[i]);
+        if(not (dot >= pMin_[i] and dot <= pMax_[i]))
+            return false;
+    }
+    return true;
+}
+
 BoundingPolyhedron::~BoundingPolyhedron()
 {
 }
@@ -79,9 +106,8 @@ std::string BoundingPolyhedron::describe() const
     ss << "BoundingPolyhedron:\n";
     for (size_t i = 0; i < planeNormals_.size(); i++)
     {
-        ss << "planeNormals_[" << i << "]: " << planeNormals_[i] << "\n";
-        ss << "pMin_[" << i << "]: " << pMin_[i] << "\n";
-        ss << "pMax_[" << i << "]: " << pMax_[i] << "\n";
+        ss << "dir[" << i << "]: " << planeNormals_[i];
+        ss << ": " << pMin_[i] << "->" << pMax_[i] << "\n";
     }
     return ss.str();
 }

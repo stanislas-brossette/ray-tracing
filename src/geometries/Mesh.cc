@@ -4,7 +4,8 @@ Mesh::Mesh()
     : Geometry(),
     triangles_(),
     path_(),
-    bp_()
+    bp_(),
+    hbv_()
 {
 }
 
@@ -12,7 +13,8 @@ Mesh::Mesh (const Frame3& f, std::string path)
     : Geometry(f),
     triangles_(),
     path_(path),
-    bp_(f)
+    bp_(f),
+    hbv_(f)
 {
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
@@ -25,7 +27,8 @@ Mesh::Mesh (MeshData* mData)
     : Geometry(mData),
     triangles_(),
     path_(mData->path),
-    bp_(f_)
+    bp_(f_),
+    hbv_(f_)
 {
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
@@ -85,6 +88,8 @@ void Mesh::initTriangles()
         bp_.extendBy(P1);
         bp_.extendBy(P2);
 
+        hbv_.extendByTriangle(P0, P1, P2, itri);
+
         Vector3 vz(n[0], n[1], n[2]);
         vz.normalize();
         Vector3 vx = (P1 - P0).normalize();
@@ -95,6 +100,17 @@ void Mesh::initTriangles()
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));
         points[2] = Vector2((P1 - P0).dot(vx), (P1 - P0).dot(vy));
         triangles_[itri] = Polygon(tFrame, points);
+    }
+    hbv_.finishFirstPass();
+    for(size_t itri = 0; itri < numTris; ++itri)
+    {
+        float* c = &coords[3 * tris [3 * itri]];
+        Vector3 P0(c[0], c[1], c[2]);
+        c = &coords[3 * tris [3 * itri + 1]];
+        Vector3 P1(c[0], c[1], c[2]);
+        c = &coords[3 * tris [3 * itri + 2]];
+        Vector3 P2(c[0], c[1], c[2]);
+        hbv_.populateWithTriangle(P0, P1, P2, itri);
     }
 }
 
@@ -112,7 +128,7 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     LightRay lrInFrame;
     lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
     lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
-    if(not bp_.intersect(lrInFrame, point, normal, dist))
+    if(not hbv_.intersect(lrInFrame, point, normal, dist))
     {
         return false;
     }

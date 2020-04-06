@@ -9,6 +9,7 @@
 #include "geometries/Geometry.hh"
 #include "geometries/Polygon.hh"
 #include "geometries/BoundingPolyhedron.hh"
+#include "geometries/HierarchyBoundingVolume.hh"
 #include "Vector3.hh"
 #include "utils.hh"
 
@@ -29,5 +30,6 @@ public:
     std::string path_;
 
     BoundingPolyhedron bp_;
+    HierarchyBoundingVolume hbv_;
 
 };

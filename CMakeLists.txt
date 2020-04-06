@@ -34,6 +34,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/AmbiantLight.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/BoundingSphere.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/BoundingPolyhedron.cc"
+    "${CMAKE_SOURCE_DIR}/src/geometries/HierarchyBoundingVolume.cc"
     "${CMAKE_SOURCE_DIR}/src/Camera.cc"
     "${CMAKE_SOURCE_DIR}/src/Frame3.cc"
     "${CMAKE_SOURCE_DIR}/src/InputHandler.cc"

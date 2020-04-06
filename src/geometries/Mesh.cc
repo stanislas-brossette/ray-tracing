@@ -123,16 +123,25 @@ std::string Mesh::describe() const
     return ss.str();
 }
 
+bool compareByFirst(const std::pair<double, const Node*>& a, const std::pair<double, const Node*>& b)
+{
+    return a.first < b.first;
+}
+
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
 {
     LightRay lrInFrame;
     lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
     lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
-    if(not hbv_.intersect(lrInFrame, point, normal, dist))
+    std::vector<std::pair<double, const Node*> > intersectingNodes;
+    if(not hbv_.intersect(lrInFrame, point, normal, dist, intersectingNodes))
     {
         return false;
     }
-    else if(simplifiedRender_)
+
+    std::sort(intersectingNodes.begin(), intersectingNodes.end(), compareByFirst);
+
+    if(simplifiedRender_)
     {
         point = f_.pointToWorld(point);
         normal = f_.vecToWorld(normal);
@@ -142,21 +151,29 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     dist = INFINITY_d();
     size_t minIndex = -1;
     bool impact = false;
-    for (size_t i = 0; i < triangles_.size(); i++)
+    for (size_t nIndex = 0; nIndex < intersectingNodes.size(); nIndex++)
     {
-        Vector3 triPoint;
-        Vector3 triNormal;
-        double triDist;
-        bool triImpact;
-        triImpact = triangles_[i].intersect(lrInFrame, triPoint, triNormal, triDist);
-        if(triImpact and triDist < dist)
+        bool impactNode = false;
+        for (size_t j = 0; j < intersectingNodes[nIndex].second->includedIndices_.size(); j++)
         {
-            impact = true;
-            dist = triDist;
-            point = triPoint;
-            normal = triNormal;
-            minIndex = i;
+            int tIndex = intersectingNodes[nIndex].second->includedIndices_[j];
+            Vector3 triPoint;
+            Vector3 triNormal;
+            double triDist;
+            bool triImpact;
+            triImpact = triangles_[tIndex].intersect(lrInFrame, triPoint, triNormal, triDist);
+            if(triImpact and triDist < dist)
+            {
+                impactNode = true;
+                impact = true;
+                dist = triDist;
+                point = triPoint;
+                normal = triNormal;
+                minIndex = tIndex;
+            }
         }
+        if(impactNode)
+            break;
     }
     point = f_.pointToWorld(point);
     normal = f_.vecToWorld(normal);

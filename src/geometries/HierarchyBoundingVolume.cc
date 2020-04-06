@@ -78,6 +78,31 @@ void Node::populateChildren(const Vector3& p0, const Vector3& p1, const Vector3&
     }
 }
 
+
+bool Node::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<std::pair<double, const Node*> >& intersectingNodes) const
+{
+    if(includedIndices_.size() == 0)
+        return false;
+
+    if(bp_.intersect(incident, point, normal, dist))
+    {
+        if(depth_ == maxDepth_)
+        {
+            intersectingNodes.push_back(std::make_pair(dist, this));
+        }
+        else
+        {
+            for (size_t i = 0; i < children_.size(); i++)
+            {
+                children_[i]->intersect(incident, point, normal, dist, intersectingNodes);
+            }
+        }
+        return true;
+    }
+    else
+        return false;
+}
+
 std::string Node::describe() const
 {
     std::stringstream ss;
@@ -96,14 +121,13 @@ HierarchyBoundingVolume::HierarchyBoundingVolume(const Frame3& f, int maxDepth)
     root_(nullptr),
     maxDepth_(maxDepth)
 {
-    std::cout << "ctor HBV" << std::endl;
     int depth = 0;
     root_ = new Node(f_, depth, maxDepth_);
 }
 
-bool HierarchyBoundingVolume::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
+bool HierarchyBoundingVolume::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<std::pair<double, const Node*> >& intersectingNodes) const
 {
-    return root_->bp_.intersect(incident, point, normal, dist);
+    return root_->intersect(incident, point, normal, dist, intersectingNodes);
 }
 
 void HierarchyBoundingVolume::extendBy(const Vector3& point)

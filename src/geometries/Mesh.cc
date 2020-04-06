@@ -118,9 +118,8 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     }
     else if(simplifiedRender_)
     {
-        point = lrInFrame.origin_+lrInFrame.dir_;
-        normal = lrInFrame.dir_*(-1);
-        dist = 1;
+        point = f_.pointToWorld(point);
+        normal = f_.vecToWorld(normal);
         return true;
     }
 

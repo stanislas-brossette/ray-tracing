@@ -43,14 +43,14 @@ bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vec
     {
         point = incident.origin_ + incident.dir_ * t0;
         dist = t0;
-        normal = f_.vecToWorld(planeNormals_[impactIndex]);
+        normal = planeNormals_[impactIndex]*(-1);
         return true;
     }
     else if(t0 <= 0 and t1 > 0) //lr coming from incide intersecting with t1
     {
         point = incident.origin_ + incident.dir_ * t1;
         dist = t1;
-        normal = f_.vecToWorld(planeNormals_[impactIndex]*(-1));
+        normal = planeNormals_[impactIndex];
         return true;
     }
     else

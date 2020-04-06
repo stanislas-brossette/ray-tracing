@@ -1,15 +1,15 @@
 {
     "scene": {
-        "maxNumThreads": 8,
+        "maxNumThreads": 7,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 2.2,
-        "simplifiedRender": false,
+        "gammaPower": 1.0,
+        "simplifiedRender": true,
         "maxDepthRecursion": 5
     },
     "camera": {
         "fov": 175,
-        "resX": 200,
+        "resX": 500,
         "target": [0.1, 0.0, -0.2],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
@@ -22,8 +22,8 @@
         "percentLightRay": 100
     },
     "ambiantLight": {
-        "color": [246,243,255],
-        "intensity": 0.2
+        "color": [255, 255, 255],
+        "intensity": 0.3
     },
     "items": {
         "lightSource1": {
@@ -34,21 +34,24 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 1.0
+                "lightIntensity": 0.9
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 0.01,
-                "pos": [0.5, -0.3, -0.1]
+                "radius": 0.03,
+                "pos": [0.1, 0.0, 0.1]
             }
         },
         "bottomPlane": {
             "material": {
-                "textureType": "SolidColor",
-                "color": [255, 255, 255],
+                "textureType": "CheckerBoard",
+                "color0": [255, 255, 255],
+                "color1": [0, 0, 0],
+                "squareSizeX": 0.3,
+                "squareSizeY": 0.3,
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.7,
+                "reflectiveness": 0.4,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -60,10 +63,11 @@
         "leftSagittalHip": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [238, 18, 180],
+                "color": [238, 18, 220],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.4,
+                "absorption": 1.0,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -78,10 +82,11 @@
         "rightSagittalHip": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [8, 180, 180],
+                "color": [8, 220, 220],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.4,
+                "absorption": 1.0,
+                "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

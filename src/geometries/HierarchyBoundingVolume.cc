@@ -26,6 +26,7 @@ Node::Node(const Frame3& f, int depth, int maxDepth,
 
 void Node::spawnChildren()
 {
+    bp_.finalize();
     if(depth_ == maxDepth_)
         return;
     std::vector<double> bp__pMid_(bp_.pMin_.size());
@@ -78,7 +79,11 @@ bool Node::testIntersectionWithEdge(const Vector3& p0, const Vector3& p1)
     Vector3 normal;
     double dist;
     bool intersection = bp_.intersect(lrEdge, point, normal, dist);
+    //std::cout << "intersection: " << intersection << std::endl;
+    //std::cout << "dist: " << dist << std::endl;
+    //std::cout << "edgeLength: " << edgeLength << std::endl;
     bool res = intersection and dist >= 0 and dist <= edgeLength;
+    //std::cout << "res: " << res << std::endl;
     return res;
 }
 
@@ -111,6 +116,54 @@ void Node::populateChildren(const Vector3& p0, const Vector3& p1, const Vector3&
 
     // Third, check if any vertex of the boundingPolyhedron projected onto the triangle plane
     // is inside the triangle
+    {
+        Vector3 triO = p0;
+        Vector3 triX = (p1-p0).normalize();
+        Vector3 triZ = (triX.cross(p2-p0)).normalize();
+        Vector3 triY = triZ.cross(triX);
+        //check if there are points above and below triangle plane
+        bool pointAbove = false;
+        bool pointBelow = false;
+        for (size_t i = 0; i < bp_.verticesCube().size(); i++)
+        {
+            double dot = triZ.dot(bp_.verticesCube().at(i) - triO);
+            if(not pointAbove)
+                pointAbove = dot>=0;
+            if(not pointBelow)
+                pointBelow = dot<=0;
+            if(pointAbove and pointBelow)
+                break;
+        }
+        if(not(pointAbove and pointBelow))
+        {
+            return;
+        }
+
+
+        //check if at least one point of the bp projects inside the triangle
+        Vector2 p0P(0,0);
+        Vector2 p1P((p1-triO).dot(triX), (p1-triO).dot(triY));
+        Vector2 p2P((p2-triO).dot(triX), (p2-triO).dot(triY));
+        for (size_t i = 0; i < bp_.verticesCube().size(); i++)
+        {
+            Vector3 p = bp_.verticesCube().at(i) - triO;
+            Vector2 pP(p.dot(triX), p.dot(triY));
+            bool rightOfp0p1 = pP.isRightOf(p0P, p1P);
+            bool rightOfp1p2 = pP.isRightOf(p1P, p2P);
+            bool rightOfp2p0 = pP.isRightOf(p2P, p0P);
+            bool onSameSideOfAllEdges = ((rightOfp0p1 == rightOfp1p2) and (rightOfp1p2 == rightOfp2p0));
+            if(onSameSideOfAllEdges)
+            {
+                includedIndices_.push_back(index);
+                for (size_t i = 0; i < children_.size(); i++)
+                {
+                    children_[i]->populateChildren(p0, p1, p2, index);
+                }
+                return;
+            }
+        }
+    }
+    return;
 }
 
 

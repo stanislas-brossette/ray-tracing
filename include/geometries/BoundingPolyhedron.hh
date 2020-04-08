@@ -18,10 +18,14 @@ public:
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
     bool contains(const Vector3& point);
     void extendBy(const Vector3& point);
+    void finalize();
+    // vertices returns the 8 vertices of the bounding parallelepipede (based on the 3 first planeNormals)
+    const std::vector<Vector3>& verticesCube() const {return verticesCube_;};
     std::string describe() const;
 
     Frame3 f_;
     std::vector<Vector3> planeNormals_;
     std::vector<double> pMin_;
     std::vector<double> pMax_;
+    std::vector<Vector3> verticesCube_;
 };

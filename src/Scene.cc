@@ -439,7 +439,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             }
             else
             {
-                ambiantPix.setColor(ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+                cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
+                ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
                 diffuseRefPix += ambiantPix;
             }
         }

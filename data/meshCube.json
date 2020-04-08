@@ -4,7 +4,7 @@
         "powerDistReduction": 0,
         "exposition": 1.0,
         "gammaPower": 1.0,
-        "simplifiedRender": true,
+        "simplifiedRender": false,
         "maxDepthRecursion": 1
     },
     "camera": {
@@ -13,7 +13,7 @@
         "target": [-45.0, 50.0, 10.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [-45.0, 20.0, 10.0],
+        "pos": [-30.0, 30.0, 25.0],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },

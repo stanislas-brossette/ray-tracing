@@ -55,7 +55,7 @@ class HierarchyBoundingVolume
 {
 public:
     HierarchyBoundingVolume () = default;
-    HierarchyBoundingVolume (const Frame3& f, int maxDepth = 5);
+    HierarchyBoundingVolume (const Frame3& f, int maxDepth = 4);
     ~HierarchyBoundingVolume () = default;
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersection) const;
     void extendBy(const Vector3& point);

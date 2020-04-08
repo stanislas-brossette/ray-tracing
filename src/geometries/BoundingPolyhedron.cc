@@ -96,6 +96,22 @@ bool BoundingPolyhedron::contains(const Vector3& p)
     return true;
 }
 
+void BoundingPolyhedron::finalize()
+{
+    verticesCube_.clear();
+    verticesCube_.resize(8);
+    verticesCube_ = std::vector<Vector3>{
+        {-pMin_[0], -pMin_[1], -pMin_[2]},
+        {-pMin_[0], -pMin_[1], -pMax_[2]},
+        {-pMin_[0], -pMax_[1], -pMin_[2]},
+        {-pMin_[0], -pMax_[1], -pMax_[2]},
+        {-pMax_[0], -pMin_[1], -pMin_[2]},
+        {-pMax_[0], -pMin_[1], -pMax_[2]},
+        {-pMax_[0], -pMax_[1], -pMin_[2]},
+        {-pMax_[0], -pMax_[1], -pMax_[2]}
+    };
+}
+
 BoundingPolyhedron::~BoundingPolyhedron()
 {
 }

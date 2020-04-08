@@ -1,19 +1,19 @@
 {
     "scene": {
-        "maxNumThreads": 7,
+        "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.0,
-        "simplifiedRender": true,
-        "maxDepthRecursion": 5
+        "simplifiedRender": false,
+        "maxDepthRecursion": 4
     },
     "camera": {
-        "fov": 175,
-        "resX": 500,
-        "target": [0.1, 0.0, -0.2],
+        "fov": 120,
+        "resX": 1000,
+        "target": [0.0, 0.0, -0.2],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [0.0, -0.5, -0.2],
+        "pos": [0.05, -0.35, -0.2],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -39,7 +39,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.03,
-                "pos": [0.1, 0.0, 0.1]
+                "pos": [0.1, -0.3, 0.1]
             }
         },
         "bottomPlane": {
@@ -60,41 +60,22 @@
                 "pos": [0.0, 0.0, -0.5]
             }
         },
-        "leftSagittalHip": {
-            "material": {
-                "textureType": "SolidColor",
-                "color": [238, 18, 220],
-                "rugosity": 0.0,
-                "refraction": 0.0,
-                "absorption": 1.0,
-                "reflectiveness": 0.1,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Mesh",
-                "pos": [0.2, 0.2, 0.0],
-                "rotAxis": [0, 0, 1],
-                "rotAngle": -90,
-                "path": "LeftSagittalHipLink.STL"
-            }
-        },
         "rightSagittalHip": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [8, 220, 220],
+                "color": [238, 20, 220],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "absorption": 1.0,
+                "absorption": 0.0,
                 "reflectiveness": 0.1,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
             "geometry": {
                 "type": "Mesh",
-                "pos": [-0.2, 0.0, 0.0],
+                "pos": [0.0, 0.0, 0.0],
                 "rotAxis": [0, 0, 1],
-                "rotAngle": -90,
+                "rotAngle": -35,
                 "path": "RightSagittalHipLink.STL"
             }
         }

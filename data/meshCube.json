@@ -1,0 +1,68 @@
+{
+    "scene": {
+        "maxNumThreads": 1,
+        "powerDistReduction": 0,
+        "exposition": 1.0,
+        "gammaPower": 1.0,
+        "simplifiedRender": false,
+        "maxDepthRecursion": 1
+    },
+    "camera": {
+        "fov": 160,
+        "resX": 500,
+        "target": [-45.0, 50.0, 10.0],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.5,
+        "pos": [-45.0, 20.0, 10.0],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0
+    },
+    "render": {
+        "nPixPerRender": 10000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255, 255, 255],
+        "intensity": 0.3
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 0.8
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 1.0,
+                "pos": [-35.0, 35.0, 20.0]
+            }
+        },
+        "cube": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [8, 220, 220],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.1,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [0.0, 0.0, 0.0],
+                "rotAxis": [0, 0, 1],
+                "rotAngle": 0,
+                "path": "cube.STL"
+            }
+        }
+    }
+}
+
+
+

@@ -10,6 +10,23 @@
 #include "BoundingPolyhedron.hh"
 #include "LightRay.hh"
 
+class Node;
+
+struct NodeIntersection
+{
+    NodeIntersection(const Vector3& point, const Vector3& normal, double dist, const Node* node)
+        : point_(point),
+        normal_(normal),
+        dist_(dist),
+        node_(node)
+    {
+    }
+
+    Vector3 point_;
+    Vector3 normal_;
+    double dist_;
+    const Node* node_;
+};
 
 class Node
 {
@@ -22,7 +39,8 @@ public:
     ~Node () = default;
     void spawnChildren();
     void populateChildren(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
-    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<std::pair<double, const Node*> >& intersectingNodes) const;
+    bool intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections) const;
+    bool testIntersectionWithEdge(const Vector3& p0, const Vector3& p1);
 
     std::string describe() const;
 
@@ -37,9 +55,9 @@ class HierarchyBoundingVolume
 {
 public:
     HierarchyBoundingVolume () = default;
-    HierarchyBoundingVolume (const Frame3& f, int maxDepth = 1);
+    HierarchyBoundingVolume (const Frame3& f, int maxDepth = 5);
     ~HierarchyBoundingVolume () = default;
-    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<std::pair<double, const Node*> >& intersectingNodes) const;
+    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersection) const;
     void extendBy(const Vector3& point);
     void extendByTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
     std::string describe() const;

@@ -1,10 +1,10 @@
 {
     "scene": {
-        "maxNumThreads": 1,
+        "maxNumThreads": 8,
         "powerDistReduction": 0,
         "exposition": 1.0,
         "gammaPower": 1.0,
-        "simplifiedRender": false,
+        "simplifiedRender": true,
         "maxDepthRecursion": 1
     },
     "camera": {
@@ -39,7 +39,23 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 1.0,
-                "pos": [-35.0, 35.0, 20.0]
+                "pos": [-34.0, 35.0, 20.0]
+            }
+        },
+        "lightSource2": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [255, 255, 255],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 0.8
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 1.0,
+                "pos": [-56.0, 65.0, 0.0]
             }
         },
         "cube": {

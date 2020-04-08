@@ -123,9 +123,9 @@ std::string Mesh::describe() const
     return ss.str();
 }
 
-bool compareByFirst(const std::pair<double, const Node*>& a, const std::pair<double, const Node*>& b)
+bool compareByDist(const NodeIntersection& a, const NodeIntersection& b)
 {
-    return a.first < b.first;
+    return a.dist_ < b.dist_;
 }
 
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
@@ -133,30 +133,31 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     LightRay lrInFrame;
     lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
     lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
-    std::vector<std::pair<double, const Node*> > intersectingNodes;
-    if(not hbv_.intersect(lrInFrame, point, normal, dist, intersectingNodes))
+    std::vector<NodeIntersection> nodeIntersections;
+    if(not hbv_.intersect(lrInFrame, point, normal, dist, nodeIntersections))
     {
         return false;
     }
 
-    std::sort(intersectingNodes.begin(), intersectingNodes.end(), compareByFirst);
+    std::sort(nodeIntersections.begin(), nodeIntersections.end(), compareByDist);
 
     if(simplifiedRender_)
     {
-        point = f_.pointToWorld(point);
-        normal = f_.vecToWorld(normal);
+        point = f_.pointToWorld(nodeIntersections[0].point_);
+        normal = f_.vecToWorld(nodeIntersections[0].normal_);
+        dist = nodeIntersections[0].dist_;
         return true;
     }
 
     dist = INFINITY_d();
     size_t minIndex = -1;
     bool impact = false;
-    for (size_t nIndex = 0; nIndex < intersectingNodes.size(); nIndex++)
+    for (size_t nIndex = 0; nIndex < nodeIntersections.size(); nIndex++)
     {
         bool impactNode = false;
-        for (size_t j = 0; j < intersectingNodes[nIndex].second->includedIndices_.size(); j++)
+        for (size_t j = 0; j < nodeIntersections[nIndex].node_->includedIndices_.size(); j++)
         {
-            int tIndex = intersectingNodes[nIndex].second->includedIndices_[j];
+            int tIndex = nodeIntersections[nIndex].node_->includedIndices_[j];
             Vector3 triPoint;
             Vector3 triNormal;
             double triDist;

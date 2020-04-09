@@ -1,6 +1,6 @@
 #include "geometries/HierarchyBoundingVolume.hh"
 
-Node::Node(const Frame3& f, int depth, int maxDepth)
+Node::Node(const Frame3& f, int depth, int maxDepth, const std::string& name)
     : bp_(f, {
         {1,0,0},
         {0,1,0},
@@ -10,17 +10,20 @@ Node::Node(const Frame3& f, int depth, int maxDepth)
         {0.57735026919,-0.57735026919,0.57735026919},
         {-0.57735026919,-0.57735026919,0.57735026919}}),
     depth_(depth),
-    maxDepth_(maxDepth)
+    maxDepth_(maxDepth),
+    name_(name)
 {
 }
 
 Node::Node(const Frame3& f, int depth, int maxDepth,
         const std::vector<Vector3>& normals,
         const std::vector<double>& pMin,
-        const std::vector<double>& pMax)
+        const std::vector<double>& pMax,
+        const std::string& name)
     : bp_(f, normals, pMin, pMax),
     depth_(depth),
-    maxDepth_(maxDepth)
+    maxDepth_(maxDepth),
+    name_(name)
 {
 }
 
@@ -39,28 +42,36 @@ void Node::spawnChildren()
     std::vector<Vector3> basicNormals{{1,0,0},{0,1,0},{0,0,1}};
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp_.pMin_[0] - eps[0], bp_.pMin_[1] - eps[1], bp_.pMin_[2] - eps[2]},
-                {bp__pMid_[0] + eps[0], bp__pMid_[1] + eps[1], bp__pMid_[2] + eps[2]}));
+                {bp__pMid_[0] + eps[0], bp__pMid_[1] + eps[1], bp__pMid_[2] + eps[2]},
+                name_ + std::to_string(0)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp__pMid_[0] - eps[0], bp_.pMin_[1] - eps[1], bp_.pMin_[2] - eps[2]},
-                {bp_.pMax_[0] + eps[0], bp__pMid_[1] + eps[1], bp__pMid_[2] + eps[2]}));
+                {bp_.pMax_[0] + eps[0], bp__pMid_[1] + eps[1], bp__pMid_[2] + eps[2]},
+                name_ + std::to_string(1)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp_.pMin_[0] - eps[0], bp__pMid_[1] - eps[1], bp_.pMin_[2] - eps[2]},
-                {bp__pMid_[0] + eps[0], bp_.pMax_[1] + eps[1], bp__pMid_[2] + eps[2]}));
+                {bp__pMid_[0] + eps[0], bp_.pMax_[1] + eps[1], bp__pMid_[2] + eps[2]},
+                name_ + std::to_string(2)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp_.pMin_[0] - eps[0], bp_.pMin_[1] - eps[1], bp__pMid_[2] - eps[2]},
-                {bp__pMid_[0] + eps[0], bp__pMid_[1] + eps[1], bp_.pMax_[2] + eps[2]}));
+                {bp__pMid_[0] + eps[0], bp__pMid_[1] + eps[1], bp_.pMax_[2] + eps[2]},
+                name_ + std::to_string(3)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp__pMid_[0] - eps[0], bp__pMid_[1] - eps[1], bp_.pMin_[2] - eps[2]},
-                {bp_.pMax_[0] + eps[0], bp_.pMax_[1] + eps[1], bp__pMid_[2] + eps[2]}));
+                {bp_.pMax_[0] + eps[0], bp_.pMax_[1] + eps[1], bp__pMid_[2] + eps[2]},
+                name_ + std::to_string(4)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp__pMid_[0] - eps[0], bp_.pMin_[1] - eps[1], bp__pMid_[2] - eps[2]},
-                {bp_.pMax_[0] + eps[0], bp__pMid_[1] + eps[1], bp_.pMax_[2] + eps[2]}));
+                {bp_.pMax_[0] + eps[0], bp__pMid_[1] + eps[1], bp_.pMax_[2] + eps[2]},
+                name_ + std::to_string(5)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp_.pMin_[0] - eps[0], bp__pMid_[1] - eps[1], bp__pMid_[2] - eps[2]},
-                {bp__pMid_[0] + eps[0], bp_.pMax_[1] + eps[1], bp_.pMax_[2] + eps[2]}));
+                {bp__pMid_[0] + eps[0], bp_.pMax_[1] + eps[1], bp_.pMax_[2] + eps[2]},
+                name_ + std::to_string(6)));
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,
                 {bp__pMid_[0] - eps[0], bp__pMid_[1] - eps[1], bp__pMid_[2] - eps[2]},
-                {bp_.pMax_[0] + eps[0], bp_.pMax_[1] + eps[1], bp_.pMax_[2] + eps[2]}));
+                {bp_.pMax_[0] + eps[0], bp_.pMax_[1] + eps[1], bp_.pMax_[2] + eps[2]},
+                name_ + std::to_string(7)));
 
     for (size_t i = 0; i < children_.size(); i++)
     {
@@ -171,7 +182,6 @@ bool Node::intersect(const LightRay& incident, std::vector<NodeIntersection>& no
 {
     if(includedIndices_.size() == 0)
         return false;
-    }
 
     Vector3 point(0,0,0);
     Vector3 normal(0,0,0);
@@ -203,6 +213,7 @@ std::string Node::describe() const
 {
     std::stringstream ss;
     ss << "Node depth: " << depth_ << "\n";
+    ss << "name: " << name_ << "\n";
     ss << bp_.describe();
     ss << "nTriangles: " << includedIndices_.size() << "\n";
     for (size_t i = 0; i < children_.size(); i++)
@@ -218,7 +229,7 @@ HierarchyBoundingVolume::HierarchyBoundingVolume(const Frame3& f, int maxDepth)
     maxDepth_(maxDepth)
 {
     int depth = 0;
-    root_ = new Node(f_, depth, maxDepth_);
+    root_ = new Node(f_, depth, maxDepth_, std::to_string(0));
 }
 
 bool HierarchyBoundingVolume::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersections) const

@@ -149,6 +149,15 @@ bool compareByDist(const InterceptionData& a, const InterceptionData& b)
 
 void Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpactToLightSource, size_t impactItemIndex, size_t lightSourceIndex, Vector3RGB& transparencyColor) const
 {
+    if(verbose_)
+    {
+        std::cout << "Scene::isIntercepted" << std::endl;
+        std::cout << "lrImpactToLightSource: " << lrImpactToLightSource << std::endl;
+        std::cout << "distImpactToLightSource: " << distImpactToLightSource << std::endl;
+        std::cout << "impactItemIndex: " << impactItemIndex << std::endl;
+        std::cout << "lightSourceIndex: " << lightSourceIndex << std::endl;
+        std::cout << "transparencyColor: " << transparencyColor << std::endl;
+    }
     std::vector<InterceptionData> interceptionData;
     for (size_t shadItemIndex = 0; shadItemIndex < items_.size(); shadItemIndex++)
     {
@@ -161,6 +170,12 @@ void Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
             bool tmpImpact = shadowingItem->intersect(lrImpactToLightSource, tmpPoint, tmpNormal, tmpDist);
             if(tmpImpact and tmpDist < distImpactToLightSource)
             {
+                if(verbose_)
+                {
+                    std::cout << "shadow intersection with Item: " << shadItemIndex << std::endl;
+                    std::cout << "tmpDist: " << tmpDist << std::endl;
+                    std::cout << "distImpactToLightSource: " << distImpactToLightSource << std::endl;
+                }
                 InterceptionData intData;
                 intData.itemIndex = shadItemIndex;
                 intData.intercept = true;
@@ -337,7 +352,10 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         if(impact)
         {
             std::cout << multiTab(depthIndex) << "impactItemIndex: " << impactItemIndex << std::endl;
-            std::cout << multiTab(depthIndex) << "items_[impactItemIndex]->name_: " << items_[impactItemIndex]->name_ << std::endl;
+            std::cout << multiTab(depthIndex) << "items_[" << impactItemIndex << "]->name_: " << items_[impactItemIndex]->name_ << std::endl;
+            std::cout << multiTab(depthIndex) << "impactPoint: " << impactPoint << std::endl;
+            std::cout << multiTab(depthIndex) << "impactNormal: " << impactNormal << std::endl;
+            std::cout << multiTab(depthIndex) << "impactDist: " << impactDist << std::endl;
         }
     }
 
@@ -427,6 +445,10 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             {
                 Vector3 impactPointRefr = impactPoint - impactNormal*1e-6;
                 LightRay lrRefraction(impactPointRefr, lrRefractDir, n2);
+                if(verbose_)
+                {
+                    std::cout << multiTab(depthIndex) << "Cast refraction ray" << std::endl;
+                }
                 castRay(refracPix, lrRefraction, depthIndex+1);
                 refracPix *= impactItem->material_->texture_->color(0,0);
             }
@@ -441,6 +463,10 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         lrSpecRefDir.normalize();
         Vector3 impactPointRefl = impactPoint + impactNormal*1e-6;
         LightRay lrSpecReflection(impactPointRefl, lrSpecRefDir, lr.refractiveIndex_);
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "Cast specular reflexion ray" << std::endl;
+        }
         castRay(specReflPix, lrSpecReflection, depthIndex+1);
 
         /************************
@@ -471,16 +497,40 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                     double distReductionFactor = getDistReductionFactor(distImpactToLightSource);
                     //TODO: there is a problem here, the setColor should contain some form of light intensity
                     //Contribution of diffuse reflexion
+                    if(verbose_)
+                    {
+                        std::cout << multiTab(depthIndex) << "cosAngleDiffuse: " << cosAngleDiffuse << std::endl;
+                        std::cout << multiTab(depthIndex) << "distReductionFactor: " << distReductionFactor << std::endl;
+                        std::cout << multiTab(depthIndex) << "lsItem->material_->lightIntensity_: " << lsItem->material_->lightIntensity_ << std::endl;
+                        std::cout << multiTab(depthIndex) << "impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_): " << impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_) << std::endl;
+                        std::cout << multiTab(depthIndex) << "lsItem->material_->texture_->color(0,0): " << lsItem->material_->texture_->color(0,0) << std::endl;
+
+                    }
                     pixIfNotInShadow.setColor(cosAngleDiffuse*distReductionFactor*lsItem->material_->lightIntensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_)*lsItem->material_->texture_->color(0,0));
                     //Contribution of specular phong reflexion
                     double phongCoeff = impactItem->material_->specularGain_ * std::pow(cosAnglePhong, impactItem->material_->specularExponent_);
                     pixPhongIfNotInShadow.setColor(phongCoeff*distReductionFactor*lsItem->material_->lightIntensity_, lsItem->material_->texture_->color(0,0));
+                    if(verbose_)
+                    {
+                        std::cout << multiTab(depthIndex) << "pixIfNotInShadow before transparency: " << pixIfNotInShadow << std::endl;
+                        std::cout << multiTab(depthIndex) << "pixPhongIfNotInShadow before transparency: " << pixPhongIfNotInShadow << std::endl;
+                    }
 
 
                     Vector3RGB transparencyColor(1,1,1);
                     isIntercepted(lrImpactToLightSource, distImpactToLightSource, impactItemIndex, itemIndex, transparencyColor);
+                    if(verbose_)
+                    {
+                        std::cout << multiTab(depthIndex) << "transparencyColor: " << transparencyColor << std::endl;
+                    }
+
                     pixIfNotInShadow *= transparencyColor;
                     pixPhongIfNotInShadow *= transparencyColor;
+                    if(verbose_)
+                    {
+                        std::cout << multiTab(depthIndex) << "pixIfNotInShadow: " << pixIfNotInShadow << std::endl;
+                        std::cout << multiTab(depthIndex) << "pixPhongIfNotInShadow: " << pixPhongIfNotInShadow << std::endl;
+                    }
                     diffuseRefPix += pixIfNotInShadow;
                     diffuseRefPix += pixPhongIfNotInShadow;
                 }
@@ -489,6 +539,10 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             {
                 cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
                 ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+                if(verbose_)
+                {
+                    std::cout << multiTab(depthIndex) << "ambiantPix: " << ambiantPix << std::endl;
+                }
                 diffuseRefPix += ambiantPix;
             }
         }
@@ -497,12 +551,26 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double FRspec = FR * impactItem->material_->reflectiveness_;
         double FRdiff = FR - FRspec;
 
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "FT: " << FT << std::endl;
+            std::cout << multiTab(depthIndex) << "FRspec: " << FRspec << std::endl;
+            std::cout << multiTab(depthIndex) << "FRdiff: " << FRdiff << std::endl;
+            std::cout << multiTab(depthIndex) << "refracPix: " << refracPix << std::endl;
+            std::cout << multiTab(depthIndex) << "specReflPix: " << specReflPix << std::endl;
+            std::cout << multiTab(depthIndex) << "diffuseRefPix: " << diffuseRefPix << std::endl;
+        }
+
         refracPix*=FT;
         specReflPix*=FRspec;
         diffuseRefPix*=FRdiff;
         pix += refracPix;
         pix += specReflPix;
         pix += diffuseRefPix;
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "pix: " << pix << std::endl;
+        }
 
         pix.applyGammaCorrection(exposition_, gammaPower_);
         pix.clamp();

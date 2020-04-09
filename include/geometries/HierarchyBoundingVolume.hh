@@ -31,11 +31,12 @@ struct NodeIntersection
 class Node
 {
 public:
-    Node (const Frame3& f, int depth, int maxDepth);
+    Node (const Frame3& f, int depth, int maxDepth, const std::string& name);
     Node(const Frame3& f, int depth, int maxDepth,
             const std::vector<Vector3>& normals,
             const std::vector<double>& pMin,
-            const std::vector<double>& pMax);
+            const std::vector<double>& pMax,
+            const std::string& name);
     ~Node () = default;
     void spawnChildren();
     void populateChildren(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
@@ -49,6 +50,7 @@ public:
     std::vector<int> includedIndices_;
     int depth_;
     int maxDepth_;
+    std::string name_;
 };
 
 class HierarchyBoundingVolume

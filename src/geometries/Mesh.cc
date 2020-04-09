@@ -173,8 +173,9 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
                 minIndex = tIndex;
             }
         }
-        if(impactNode)
-            break;
+        //TODO: The following optimization creates aberations, should fix it. Commented for now.
+        //if(impactNode)
+        //    break;
     }
     point = f_.pointToWorld(point);
     normal = f_.vecToWorld(normal);

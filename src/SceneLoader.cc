@@ -231,6 +231,8 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
         MeshData* mData = new MeshData();
         scanBaseGeometry(vIn, mData);
         mData->path = vIn.FindMember("path")->value.GetString();
+        Value::MemberIterator itr = vIn.FindMember("depthHBV");
+        if(itr != vIn.MemberEnd()) mData->depthHBV = itr->value.GetInt();
         return mData;
     }
     else

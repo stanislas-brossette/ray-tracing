@@ -28,7 +28,7 @@ Mesh::Mesh (MeshData* mData)
     triangles_(),
     path_(mData->path),
     bp_(f_),
-    hbv_(f_)
+    hbv_(f_, mData->depthHBV)
 {
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;

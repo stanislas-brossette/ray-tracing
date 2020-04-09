@@ -76,6 +76,7 @@
                 "pos": [0.0, 0.0, 0.0],
                 "rotAxis": [0, 0, 1],
                 "rotAngle": -35,
+                "depthHBV": 5,
                 "path": "RightSagittalHipLink.STL"
             }
         }

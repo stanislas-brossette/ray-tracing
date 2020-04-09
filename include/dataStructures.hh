@@ -92,6 +92,7 @@ struct SphereData : public GeometryData
 struct MeshData : public GeometryData
 {
     std::string path = "";
+    int depthHBV = 4;
     std::string describe() const;
 };
 

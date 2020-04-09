@@ -88,6 +88,16 @@ void Camera::castRandomRay(LightRay& lr, Pixel& px) const
     lr.dir_ = frame_.vecToWorld(pixelToDir(px));
 }
 
+void Camera::castRayAt(const int& pX, const int& pY, LightRay& lr, Pixel& px) const
+{
+    px.x_ = pX;
+    px.y_ = pY;
+
+    lr.origin_ = frame_.o_;
+    lr.dir_ = frame_.vecToWorld(pixelToDir(px));
+}
+
+
 void Camera::castOrderedRay(LightRay& lr, Pixel& px, size_t index) const
 {
     if (index >= allPixels_.size())

@@ -23,6 +23,7 @@ public:
     std::string describe() const;
     friend std::ostream& operator<<(std::ostream& os, const Camera& c);
     void castRandomRay(LightRay& lr, Pixel& px) const;
+    void castRayAt(const int& pX, const int& pY, LightRay& lr, Pixel& px) const;
     void castOrderedRay(LightRay& lr, Pixel& px, size_t index) const;
     Vector3 pixelToDir(const Pixel& px) const;
     int nPixels() const {return resX_*resY_;};

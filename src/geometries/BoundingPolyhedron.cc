@@ -125,5 +125,9 @@ std::string BoundingPolyhedron::describe() const
         ss << "dir[" << i << "]: " << planeNormals_[i];
         ss << ": " << pMin_[i] << "->" << pMax_[i] << "\n";
     }
+    for (size_t i = 0; i < verticesCube_.size(); i++)
+    {
+        std::cout << "verticesCube_[" << i << "]: " << verticesCube_[i] << std::endl;
+    }
     return ss.str();
 }

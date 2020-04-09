@@ -5,7 +5,8 @@ Scene::Scene()
     camera_(),
     ambiantLight_(),
     simplifiedRender_(false),
-    maxDepthIndex_(5)
+    maxDepthIndex_(5),
+    verbose_(false)
 {
 }
 
@@ -18,7 +19,8 @@ Scene::Scene(const SceneData& sData)
     maxNumThreads_(sData.sExData.maxNumThreads),
     powerDistReduction_(sData.sExData.powerDistReduction),
     exposition_(sData.sExData.exposition),
-    gammaPower_(sData.sExData.gammaPower)
+    gammaPower_(sData.sExData.gammaPower),
+    verbose_(false)
 {
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
@@ -288,12 +290,34 @@ void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
     castRay(pix, lr, 0);
 }
 
+void Scene::castPrimaryRayAt(int pX, int pY) const
+{
+    verbose_ = true;
+    std::cout << "\n====== CastPrimaryRayAt(" << pX << "," << pY << ") ======" << std::endl;
+    Pixel pix;
+    LightRay lr;
+    camera_.castRayAt(pX, camera_.resY_-pY, lr, pix);
+    castRay(pix, lr, 0);
+    verbose_ = false;
+}
+
 void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
 {
+    if(verbose_)
+    {
+        std::cout << multiTab(depthIndex) << "#### Scene::castRay depth:" << depthIndex << " ####" << std::endl;
+        std::cout << multiTab(depthIndex) << "pix: " << pix << std::endl;
+        std::cout << multiTab(depthIndex) << "lr: " << lr.origin_ << lr.dir_ << std::endl;
+    }
     PerformanceTracker::instance().incrementRays();
     if(depthIndex >= maxDepthIndex_)
     {
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "maxDepth" << std::endl;
+            std::cout << multiTab(depthIndex) << "return pix: " << pix << std::endl;
+        }
         return;
     }
 
@@ -307,10 +331,24 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
     double impactDist = INFINITY_d();
     size_t impactItemIndex = 0;
     bool impact = findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
+    if(verbose_)
+    {
+        std::cout << multiTab(depthIndex) << "impact: " << impact << std::endl;
+        if(impact)
+        {
+            std::cout << multiTab(depthIndex) << "impactItemIndex: " << impactItemIndex << std::endl;
+            std::cout << multiTab(depthIndex) << "items_[impactItemIndex]->name_: " << items_[impactItemIndex]->name_ << std::endl;
+        }
+    }
 
     if(not impact)
     {
         pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "no impact" << std::endl;
+            std::cout << multiTab(depthIndex) << "return pix: " << pix << std::endl;
+        }
         return;
     }
     else if(simplifiedRender_)
@@ -318,6 +356,11 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
         double cosAngleSimplified = std::abs(lr.dir_.dot(impactNormal));
         Vector3 impactPointInFrame = items_[impactItemIndex]->geometry_->f_.pointFromWorld(impactPoint);
         pix.setColor(cosAngleSimplified, items_[impactItemIndex]->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+        if(verbose_)
+        {
+            std::cout << multiTab(depthIndex) << "simplified" << std::endl;
+            std::cout << multiTab(depthIndex) << "return pix: " << pix << std::endl;
+        }
         return;
     }
     else
@@ -336,6 +379,11 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             else
                 pix.setColor(distReductionFactor*impactItem->material_->lightIntensity_, impactItem->material_->texture_->color(0,0));
             pix.clamp();
+            if(verbose_)
+            {
+                std::cout << multiTab(depthIndex) << "direct impact with light source" << std::endl;
+                std::cout << multiTab(depthIndex) << "return pix: " << pix << std::endl;
+            }
             return;
         }
 

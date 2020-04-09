@@ -31,6 +31,7 @@ public:
 
     void castPrimaryRay(Pixel& pix, size_t iOrderedRay) const;
     void castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const;
+    void castPrimaryRayAt(int pX, int pY) const;
 
     void translateCamera(double x, double y, double z);
     void translateCameraLocal(double x, double y, double z);
@@ -47,6 +48,8 @@ public:
     size_t powerDistReduction_;
     double exposition_;
     double gammaPower_;
+
+    mutable bool verbose_;
 
     friend std::ostream& operator<<(std::ostream& os, const Scene& s);
 };

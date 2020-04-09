@@ -26,6 +26,8 @@
 
 #include <vector>
 #include <limits>
+#include <sstream>
+#include <string>
 
 #include <SDL.h>
 
@@ -43,3 +45,5 @@ double INFINITY_d();
 float INFINITY_f();
 
 Uint32 getpixel(SDL_Surface *surface, int x, int y);
+
+std::string multiTab(int n);

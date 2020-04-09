@@ -113,3 +113,13 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
         return 0;       /* shouldn't happen, but avoids warnings */
     }
 }
+
+std::string multiTab(int n)
+{
+    std::stringstream ss;
+    for (size_t i = 0; i < n; i++)
+    {
+        ss << "\t";
+    }
+    return ss.str();
+}

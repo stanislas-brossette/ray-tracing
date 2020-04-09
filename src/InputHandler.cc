@@ -30,6 +30,11 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
     case SDL_QUIT:
         quit = true;
         break;
+    case SDL_MOUSEBUTTONDOWN:
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        scene.castPrimaryRayAt(mouseX, mouseY);
+        break;
     case SDL_KEYDOWN:
         switch (event.key.keysym.sym)
         {

@@ -37,7 +37,7 @@ void Node::spawnChildren()
     for (size_t i = 0; i < bp_.pMin_.size(); i++)
     {
         bp__pMid_[i] = (bp_.pMin_[i]+bp_.pMax_[i])/2.0;
-        eps[i] = std::abs(bp_.pMax_[i]-bp_.pMin_[i])/1000.0;
+        eps[i] = 1e-6*std::abs(bp_.pMax_[i]-bp_.pMin_[i]);
     }
     std::vector<Vector3> basicNormals{{1,0,0},{0,1,0},{0,0,1}};
     children_.push_back(new Node(bp_.f_, depth_+1, maxDepth_, basicNormals,

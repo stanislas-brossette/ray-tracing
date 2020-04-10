@@ -3,7 +3,7 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 1.0,
+        "gammaPower": 2.2,
         "simplifiedRender": false,
         "maxDepthRecursion": 4
     },

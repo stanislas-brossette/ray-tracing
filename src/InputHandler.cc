@@ -33,7 +33,25 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
     case SDL_MOUSEBUTTONDOWN:
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
-        scene.castPrimaryRayAt(mouseX, mouseY);
+        switch (event.button.button)
+        {
+            case SDL_BUTTON_LEFT:
+                scene.castPrimaryRayAt(mouseX, mouseY);
+                break;
+            case SDL_BUTTON_RIGHT:
+                Pixel pix;
+                LightRay lr;
+                scene.camera_.castRayAt(mouseX, scene.camera_.resY_-mouseY, lr, pix);
+                size_t impactItemIndex;
+                Vector3 impactPoint;
+                Vector3 impactNormal;
+                double impactDist = 1e9;
+                scene.findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
+                scene.camera_.target_ = impactPoint;
+                scene.camera_.rotateToTarget();
+                needRender = true;
+                break;
+        }
         break;
     case SDL_KEYDOWN:
         switch (event.key.keysym.sym)
@@ -60,6 +78,10 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
             case SDLK_r:
                 lockTarget = false;
                 rotationMode = not rotationMode;
+                if(rotationMode)
+                    std::cout << "=== Rotation mode activated ===" << std::endl;
+                else
+                    std::cout << "=== Rotation mode disabled ===" << std::endl;
                 break;
             // Reset camera to target
             case SDLK_t:
@@ -70,8 +92,10 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
             case SDLK_l:
                 rotationMode = false;
                 lockTarget = not lockTarget;
-                scene.camera_.rotateToTarget();
-                needRender = true;
+                if(lockTarget)
+                    std::cout << "=== Target Lock mode activated ===" << std::endl;
+                else
+                    std::cout << "=== Target Lock mode disabled ===" << std::endl;
                 break;
             // Move camera left right up down
             case SDLK_LEFT:

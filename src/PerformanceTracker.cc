@@ -55,6 +55,16 @@ void PerformanceTracker::endRenderTimer()
     endRender_ = std::chrono::steady_clock::now();
 }
 
+void PerformanceTracker::startPreprocessingTimer()
+{
+    beginPreprocessing_ = std::chrono::steady_clock::now();
+}
+
+void PerformanceTracker::endPreprocessingTimer()
+{
+    endPreprocessing_ = std::chrono::steady_clock::now();
+}
+
 void PerformanceTracker::resetAll()
 {
     nItems_ = 0;
@@ -86,6 +96,7 @@ std::string PerformanceTracker::describe()
     ss << "|nCallToIntersectPolygon_: " << std::right << std::setw(16) << nCallToIntersectPolygon_ << "|" << std::endl;
     ss << "|nCallToIntersect_:        " << std::right << std::setw(16) << nCallToIntersect_ << "|" << std::endl;
     ss << "|nIntersections_:          " << std::right << std::setw(16) << nIntersections_ << "|" << std::endl;
+    ss << "|preprocessingTime_:       " << std::right << std::setw(12) << std::chrono::duration_cast<std::chrono::milliseconds>(endPreprocessing_ - beginPreprocessing_).count() << "[ms]|" << std::endl;
     ss << "|totalRenderTime_:         " << std::right << std::setw(12) << std::chrono::duration_cast<std::chrono::milliseconds>(endRender_ - beginRender_).count() << "[ms]|" << std::endl;
     ss << "============================================" << std::endl;
     return ss.str();

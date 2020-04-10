@@ -22,12 +22,14 @@ Scene::Scene(const SceneData& sData)
     gammaPower_(sData.sExData.gammaPower),
     verbose_(false)
 {
+    PerformanceTracker::instance().startPreprocessingTimer();
     for (size_t i = 0; i < sData.itemsData.size(); i++)
     {
         PerformanceTracker::instance().incrementItems();
         items_.push_back(new Item(sData.itemsData.at(i)));
         items_[i]->geometry_->simplifiedRender_ = simplifiedRender_;
     }
+    PerformanceTracker::instance().endPreprocessingTimer();
 }
 
 Scene::~Scene()

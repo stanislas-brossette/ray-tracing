@@ -18,6 +18,8 @@ public:
     void incrementCallToIntersect();
     void incrementCallToIntersectPolygon();
     void incrementIntersections();
+    void startPreprocessingTimer();
+    void endPreprocessingTimer();
     void startRenderTimer();
     void endRenderTimer();
     void resetAll();
@@ -36,4 +38,5 @@ private:
     std::atomic<long> nCallToIntersectPolygon_{0};
     std::atomic<long> nIntersections_{0};
     std::chrono::steady_clock::time_point beginRender_, endRender_;
+    std::chrono::steady_clock::time_point beginPreprocessing_, endPreprocessing_;
 };

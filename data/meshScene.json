@@ -3,17 +3,17 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 2.2,
-        "simplifiedRender": false,
+        "gammaPower": 1.5,
+        "simplifiedRender": true,
         "maxDepthRecursion": 4
     },
     "camera": {
         "fov": 120,
-        "resX": 1000,
-        "target": [0.0, 0.0, -0.2],
+        "resX": 1500,
+        "target": [0.06, 0.05, -0.2],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [0.05, -0.35, -0.2],
+        "pos": [0.4, 0.01, -0.2],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [255, 255, 255],
-        "intensity": 0.3
+        "intensity": 0.5
     },
     "items": {
         "lightSource1": {
@@ -39,7 +39,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.03,
-                "pos": [0.1, -0.3, 0.1]
+                "pos": [0.0, 0.3, 0.1]
             }
         },
         "bottomPlane": {

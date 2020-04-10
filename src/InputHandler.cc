@@ -48,6 +48,7 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
                 double impactDist = 1e9;
                 scene.findFirstImpact(lr, impactItemIndex, impactPoint, impactNormal, impactDist);
                 scene.camera_.target_ = impactPoint;
+                std::cout << "=== new target: " << impactPoint << " ===" << std::endl;
                 scene.camera_.rotateToTarget();
                 needRender = true;
                 break;

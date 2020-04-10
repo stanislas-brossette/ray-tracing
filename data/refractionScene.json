@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [255,255,255],
-        "intensity": 0.1
+        "intensity": 0.3
     },
     "items": {
         "lightSource1": {
@@ -38,8 +38,8 @@
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 0.1,
-                "pos": [0.0, 1.0, 1.0]
+                "radius": 0.05,
+                "pos": [0.1, 1.4, 0.7]
             }
         },
         "redTransparentSphere": {
@@ -144,7 +144,7 @@
                 "color": [80, 80, 80],
                 "rugosity": 0.0,
                 "refraction": 0.0,
-                "reflectiveness": 0.1,
+                "reflectiveness": 0.3,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

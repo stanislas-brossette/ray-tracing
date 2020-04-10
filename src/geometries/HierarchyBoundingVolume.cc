@@ -264,6 +264,7 @@ std::string HierarchyBoundingVolume::describe() const
 {
     std::stringstream ss;
     ss << "HierarchyBoundingVolume\n";
+    ss << "HBV depth: " << maxDepth_ << "\n";
     ss << root_->describe();
     return ss.str();
 }

@@ -66,8 +66,8 @@ public:
     void finishFirstPass();
     void populateWithTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
 
+    int maxDepth_;
 private:
     Frame3 f_;
     Node* root_;
-    int maxDepth_;
 };

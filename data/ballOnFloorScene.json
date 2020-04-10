@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [135, 206, 235],
-        "intensity": 0.10
+        "intensity": 0.3
     },
     "items": {
         "lightSource": {

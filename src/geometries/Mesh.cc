@@ -120,6 +120,7 @@ std::string Mesh::describe() const
     ss << "=== Mesh ===\n";
     ss << "origin: " << f_.o_ << "\n";
     ss << "nTri: " << triangles_.size() << "\n";
+    ss << "depthHBV: " << hbv_.maxDepth_ << "\n";
     return ss.str();
 }
 
@@ -192,5 +193,7 @@ std::string MeshData::describe() const
     std::stringstream ss;
     ss << "=== MeshData ===\n";
     ss << GeometryData::describe();
+    ss << "path: " << path << "\n";
+    ss << "depthHBV: " << depthHBV << "\n";
     return ss.str();
 }

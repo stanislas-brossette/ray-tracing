@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [246,243,255],
-        "intensity": 0.05
+        "intensity": 0.3
     },
     "items": {
         "floorPlane": {

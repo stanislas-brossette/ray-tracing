@@ -54,6 +54,8 @@ void printManual()
     std::cout << "s: Toggle simplified render\n";
     std::cout << "+(number pad): Increase resolution by 20%\n";
     std::cout << "-(number pad): Decrease resolution by 20%\n";
+    std::cout << "leftClick: cast ray on pixel and get its trace\n";
+    std::cout << "rightClick: change target to clicked 3D point\n";
     std::cout << "==================================================" << std::endl;
 }
 

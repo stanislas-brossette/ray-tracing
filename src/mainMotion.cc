@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
 
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);
-    std::cout << sceneLoader.sceneData_.describe() << std::endl;
+    //std::cout << sceneLoader.sceneData_.describe() << std::endl;
+    std::cout << scene << std::endl;
     Window window(scene.camera_.resX_, scene.camera_.resY_);
     Renderer renderer(sceneLoader.sceneData_.rData);
     InputHandler inputHandler;

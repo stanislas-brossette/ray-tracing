@@ -5,15 +5,15 @@
         "exposition": 1.0,
         "gammaPower": 1.0,
         "simplifiedRender": false,
-        "maxDepthRecursion": 1
+        "maxDepthRecursion": 3
     },
     "camera": {
         "fov": 160,
-        "resX": 500,
-        "target": [-45.0, 50.0, 10.0],
+        "resX": 700,
+        "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [-30.0, 30.0, 25.0],
+        "pos": [0.6, -1.6, 0.6],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -38,8 +38,8 @@
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 1.0,
-                "pos": [-34.0, 35.0, 20.0]
+                "radius": 0.1,
+                "pos": [-3.0, 3.0, 2.0]
             }
         },
         "lightSource2": {
@@ -54,11 +54,11 @@
             },
             "geometry": {
                 "type": "Sphere",
-                "radius": 1.0,
-                "pos": [-56.0, 65.0, 0.0]
+                "radius": 0.1,
+                "pos": [0.0, -2.0, 3.0]
             }
         },
-        "cube": {
+        "monkey": {
             "material": {
                 "textureType": "SolidColor",
                 "color": [8, 220, 220],
@@ -74,7 +74,8 @@
                 "pos": [0.0, 0.0, 0.0],
                 "rotAxis": [0, 0, 1],
                 "rotAngle": 0,
-                "path": "cube.STL"
+                "depthHBV": 5,
+                "path": "monkey.stl"
             }
         }
     }

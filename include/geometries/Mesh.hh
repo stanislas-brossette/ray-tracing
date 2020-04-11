@@ -23,10 +23,18 @@ public:
     std::string describe() const;
     void readPath();
     void initTriangles();
+    void loadSTLMesh();
+    void loadOBJMesh();
     //The planes normal is f_.z_
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
     bool isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const;
 
+    struct FaceVertex
+    {
+        size_t vertex;
+        size_t texture;
+        size_t normal;
+    };
 
     enum MeshType
     {
@@ -36,9 +44,13 @@ public:
     MeshType meshType_;
     std::string to_string(const MeshType& mt) const;
 
-    std::vector<Polygon> polygons_;
     std::string path_;
 
+    std::vector<Polygon> polygons_;
+    std::vector<Vector3> vertices_;
+    std::vector<Vector3> vertexNormals_;
+    std::vector<Vector2> vertexTextures_;
+    std::vector<std::vector<FaceVertex> > faces_;
 
     HierarchyBoundingVolume hbv_;
 };

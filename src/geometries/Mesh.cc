@@ -48,47 +48,75 @@ void Mesh::readPath()
         std::cout << "ERROR, mesh file does not exist" << std::endl;
 }
 
-void Mesh::initTriangles()
+void Mesh::loadSTLMesh()
 {
     std::vector<float> coords, normals;
     std::vector<unsigned int> tris, solids;
     stl_reader::ReadStlFile (path_.c_str(), coords, normals, tris, solids);
 
     size_t numTris = tris.size() / 3;
-    polygons_.resize(numTris);
+
     for(size_t itri = 0; itri < numTris; ++itri)
     {
-        float* n = &normals [3 * itri];
-
+        // load vertices in vertices_
         float* c = &coords[3 * tris [3 * itri]];
-        Vector3 P0(c[0], c[1], c[2]);
+        vertices_.push_back({c[0], c[1], c[2]});
         c = &coords[3 * tris [3 * itri + 1]];
-        Vector3 P1(c[0], c[1], c[2]);
+        vertices_.push_back({c[0], c[1], c[2]});
         c = &coords[3 * tris [3 * itri + 2]];
-        Vector3 P2(c[0], c[1], c[2]);
+        vertices_.push_back({c[0], c[1], c[2]});
 
+        // Extend HBV0
+        const Vector3& P0(vertices_[3*itri]);
+        const Vector3& P1(vertices_[3 * itri + 1]);
+        const Vector3& P2(vertices_[3 * itri + 2]);
         hbv_.extendByTriangle(P0, P1, P2, itri);
 
-        Vector3 vz(n[0], n[1], n[2]);
-        vz.normalize();
+        // load normal in normals_
+        float* n = &normals [3 * itri];
+        vertexNormals_.push_back({n[0], n[1], n[2]});
+        vertexNormals_[itri].normalize();
+
+        // load texture in textures_
+        vertexTextures_.push_back({0,0});
+
+        // Compute polygon
+        const Vector3& vz(vertexNormals_[itri]);
         Vector3 vx = (P1 - P0).normalize();
         Vector3 vy = vz.cross(vx);
         Frame3 tFrame(f_.o_ + P0, vx, vy, vz);
-        std::vector<Vector2> points(3);
+        std::vector<Vector2> points(3); // only triangles in .stl
         points[0] = Vector2(0,0);
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));
         points[2] = Vector2((P1 - P0).dot(vx), (P1 - P0).dot(vy));
-        polygons_[itri] = Polygon(tFrame, points);
+        polygons_.push_back({tFrame, points});
+
+        // Fill faces_
+        faces_.push_back({{3*itri, itri, itri},{3*itri+1, itri, itri},{3*itri+2, itri, itri}});
+    }
+}
+
+void Mesh::loadOBJMesh()
+{
+}
+
+void Mesh::initTriangles()
+{
+    switch(meshType_)
+    {
+        case MeshType::stl:
+            loadSTLMesh();
+            break;
+        case MeshType::obj:
+            loadOBJMesh();
+            break;
     }
     hbv_.finishFirstPass();
-    for(size_t itri = 0; itri < numTris; ++itri)
+    for(size_t itri = 0; itri < faces_.size(); ++itri)
     {
-        float* c = &coords[3 * tris [3 * itri]];
-        Vector3 P0(c[0], c[1], c[2]);
-        c = &coords[3 * tris [3 * itri + 1]];
-        Vector3 P1(c[0], c[1], c[2]);
-        c = &coords[3 * tris [3 * itri + 2]];
-        Vector3 P2(c[0], c[1], c[2]);
+        const Vector3& P0(vertices_[3*itri]);
+        const Vector3& P1(vertices_[3 * itri + 1]);
+        const Vector3& P2(vertices_[3 * itri + 2]);
         hbv_.populateWithTriangle(P0, P1, P2, itri);
     }
 }

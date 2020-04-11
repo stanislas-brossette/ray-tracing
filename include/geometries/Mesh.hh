@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "stl_reader/stl_reader.h"
+#include "mesh_reader/stl_reader.h"
 
 #include "PerformanceTracker.hh"
 #include "dataStructures.hh"

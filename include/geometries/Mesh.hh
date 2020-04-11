@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <fstream>
 
 #include "mesh_reader/stl_reader.h"
 
@@ -31,9 +32,9 @@ public:
 
     struct FaceVertex
     {
-        size_t vertex;
-        size_t texture;
-        size_t normal;
+        int vertex;
+        int texture;
+        int normal;
     };
 
     enum MeshType

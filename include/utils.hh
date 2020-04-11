@@ -28,6 +28,7 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <regex>
 
 #include <SDL.h>
 
@@ -47,3 +48,5 @@ float INFINITY_f();
 Uint32 getpixel(SDL_Surface *surface, int x, int y);
 
 std::string multiTab(int n);
+
+std::vector<std::string> split(const std::string& input, const std::string& regex);

@@ -250,6 +250,14 @@ void HierarchyBoundingVolume::extendByTriangle(const Vector3& p0, const Vector3&
     root_->bp_.extendBy(p2);
 }
 
+void HierarchyBoundingVolume::extendByPolygon(const std::vector<Vector3>& points)
+{
+    for (size_t i = 0; i < points.size(); i++)
+    {
+        root_->bp_.extendBy(points.at(i));
+    }
+}
+
 void HierarchyBoundingVolume::finishFirstPass()
 {
     root_->spawnChildren();

@@ -62,6 +62,7 @@ public:
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersection) const;
     void extendBy(const Vector3& point);
     void extendByTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
+    void extendByPolygon(const std::vector<Vector3>& points);
     std::string describe() const;
     void finishFirstPass();
     void populateWithTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);

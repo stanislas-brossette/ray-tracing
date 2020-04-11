@@ -45,7 +45,7 @@ void Mesh::readPath()
     else if(extension.compare("stl") == 0)
         meshType_ = MeshType::stl;
     else
-        std::cout << "ERROR, mesh file does not exist" << std::endl;
+        std::cout << "ERROR, mesh type unknown" << std::endl;
 }
 
 void Mesh::loadSTLMesh()
@@ -54,9 +54,9 @@ void Mesh::loadSTLMesh()
     std::vector<unsigned int> tris, solids;
     stl_reader::ReadStlFile (path_.c_str(), coords, normals, tris, solids);
 
-    size_t numTris = tris.size() / 3;
+    int numTris = tris.size() / 3;
 
-    for(size_t itri = 0; itri < numTris; ++itri)
+    for(int itri = 0; itri < numTris; ++itri)
     {
         // load vertices in vertices_
         float* c = &coords[3 * tris [3 * itri]];
@@ -98,6 +98,45 @@ void Mesh::loadSTLMesh()
 
 void Mesh::loadOBJMesh()
 {
+    // Read obj file
+    std::ifstream objFile(path_);
+    std::string line;
+    while (std::getline(objFile, line))
+    {
+        std::vector<std::string> tokens = split(line, " ");
+        if(tokens[0].compare("v") == 0)
+            vertices_.push_back({std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
+        else if(tokens[0].compare("vn") == 0)
+            vertexNormals_.push_back({std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
+        else if(tokens[0].compare("vt") == 0)
+            vertexTextures_.push_back({std::stod(tokens[1]), std::stod(tokens[2])});
+        else if(tokens[0].compare("f") == 0)
+        {
+            faces_.push_back({});
+            for (size_t iVertex = 1; iVertex < tokens.size(); iVertex++)
+            {
+                std::vector<std::string> indices = split(tokens[iVertex], "/");
+                int vertex = std::stoi(indices[0]);
+                int texture = -1;
+                if(indices[1].size() > 0)
+                    texture = std::stoi(indices[1]);
+                int normal = std::stoi(indices[2]);
+                faces_.back().push_back({vertex, texture, normal});
+            }
+        }
+    }
+
+    // Extend HBV0
+    for (size_t iFace = 0; iFace < faces_.size(); iFace++)
+    {
+        const std::vector<FaceVertex>& face(faces_[iFace]);
+        std::vector<Vector3> points;
+        for (size_t iPoints = 0; iPoints < face.size(); iPoints++)
+        {
+            points.push_back(vertices_[face[iPoints].vertex]);
+        }
+        hbv_.extendByPolygon(points);
+    }
 }
 
 void Mesh::initTriangles()
@@ -110,11 +149,14 @@ void Mesh::initTriangles()
         case MeshType::obj:
             loadOBJMesh();
             break;
+        default:
+            std::cout << "ERROR, mesh type unknown" << std::endl;
+            break;
     }
     hbv_.finishFirstPass();
     for(size_t itri = 0; itri < faces_.size(); ++itri)
     {
-        const Vector3& P0(vertices_[3*itri]);
+        const Vector3& P0(vertices_[3 * itri]);
         const Vector3& P1(vertices_[3 * itri + 1]);
         const Vector3& P2(vertices_[3 * itri + 2]);
         hbv_.populateWithTriangle(P0, P1, P2, itri);

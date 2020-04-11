@@ -2,7 +2,7 @@
 
 Mesh::Mesh()
     : Geometry(),
-    triangles_(),
+    polygons_(),
     path_(),
     hbv_()
 {
@@ -10,32 +10,42 @@ Mesh::Mesh()
 
 Mesh::Mesh (const Frame3& f, std::string path)
     : Geometry(f),
-    triangles_(),
+    polygons_(),
     path_(path),
     hbv_(f)
 {
-    if(not fileExists(path_))
-        path_ = std::string(MESHES) + path_;
-    if(not fileExists(path_))
-        std::cout << "ERROR, mesh file does not exist: " << path << std::endl;
+    readPath();
     initTriangles();
 }
 
 Mesh::Mesh (MeshData* mData)
     : Geometry(mData),
-    triangles_(),
+    polygons_(),
     path_(mData->path),
     hbv_(f_, mData->depthHBV)
 {
-    if(not fileExists(path_))
-        path_ = std::string(MESHES) + path_;
-    if(not fileExists(path_))
-        std::cout << "ERROR, mesh file does not exist" << std::endl;
+    readPath();
     initTriangles();
 }
 
 Mesh::~Mesh ()
 {
+}
+
+void Mesh::readPath()
+{
+    if(not fileExists(path_))
+        path_ = std::string(MESHES) + path_;
+    if(not fileExists(path_))
+        std::cout << "ERROR, mesh file does not exist: " << path_ << std::endl;
+
+    std::string extension = path_.substr(path_.size() - 3);
+    if(extension.compare("obj") == 0)
+        meshType_ = MeshType::obj;
+    else if(extension.compare("stl") == 0)
+        meshType_ = MeshType::stl;
+    else
+        std::cout << "ERROR, mesh file does not exist" << std::endl;
 }
 
 void Mesh::initTriangles()
@@ -45,7 +55,7 @@ void Mesh::initTriangles()
     stl_reader::ReadStlFile (path_.c_str(), coords, normals, tris, solids);
 
     size_t numTris = tris.size() / 3;
-    triangles_.resize(numTris);
+    polygons_.resize(numTris);
     for(size_t itri = 0; itri < numTris; ++itri)
     {
         float* n = &normals [3 * itri];
@@ -68,7 +78,7 @@ void Mesh::initTriangles()
         points[0] = Vector2(0,0);
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));
         points[2] = Vector2((P1 - P0).dot(vx), (P1 - P0).dot(vy));
-        triangles_[itri] = Polygon(tFrame, points);
+        polygons_[itri] = Polygon(tFrame, points);
     }
     hbv_.finishFirstPass();
     for(size_t itri = 0; itri < numTris; ++itri)
@@ -88,8 +98,9 @@ std::string Mesh::describe() const
     std::stringstream ss;
     ss << "=== Mesh ===\n";
     ss << "origin: " << f_.o_ << "\n";
-    ss << "nTri: " << triangles_.size() << "\n";
+    ss << "nTri: " << polygons_.size() << "\n";
     ss << "depthHBV: " << hbv_.maxDepth_ << "\n";
+    ss << "meshType: " << to_string(meshType_) << "\n";
     return ss.str();
 }
 
@@ -132,7 +143,7 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
             Vector3 triNormal;
             double triDist;
             bool triImpact;
-            triImpact = triangles_[tIndex].intersect(lrInFrame, triPoint, triNormal, triDist);
+            triImpact = polygons_[tIndex].intersect(lrInFrame, triPoint, triNormal, triDist);
             if(triImpact and triDist < dist)
             {
                 impactNode = true;
@@ -165,4 +176,14 @@ std::string MeshData::describe() const
     ss << "path: " << path << "\n";
     ss << "depthHBV: " << depthHBV << "\n";
     return ss.str();
+}
+
+std::string Mesh::to_string(const MeshType& mt) const
+{
+    if(mt == MeshType::stl)
+        return std::string("stl");
+    else if(mt == MeshType::obj)
+        return std::string("obj");
+    else
+        return std::string("unknown");
 }

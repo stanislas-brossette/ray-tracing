@@ -21,14 +21,24 @@ public:
     Mesh (const Frame3& f, std::string path);
     virtual ~Mesh ();
     std::string describe() const;
+    void readPath();
     void initTriangles();
     //The planes normal is f_.z_
     bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const;
     bool isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const;
 
-    std::vector<Polygon> triangles_;
+
+    enum MeshType
+    {
+        stl,
+        obj
+    };
+    MeshType meshType_;
+    std::string to_string(const MeshType& mt) const;
+
+    std::vector<Polygon> polygons_;
     std::string path_;
 
-    HierarchyBoundingVolume hbv_;
 
+    HierarchyBoundingVolume hbv_;
 };

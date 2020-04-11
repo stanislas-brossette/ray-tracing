@@ -29,7 +29,6 @@ public:
     std::vector<Polygon> triangles_;
     std::string path_;
 
-    BoundingPolyhedron bp_;
     HierarchyBoundingVolume hbv_;
 
 };

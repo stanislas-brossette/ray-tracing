@@ -4,7 +4,6 @@ Mesh::Mesh()
     : Geometry(),
     triangles_(),
     path_(),
-    bp_(),
     hbv_()
 {
 }
@@ -13,7 +12,6 @@ Mesh::Mesh (const Frame3& f, std::string path)
     : Geometry(f),
     triangles_(),
     path_(path),
-    bp_(f),
     hbv_(f)
 {
     if(not fileExists(path_))
@@ -27,7 +25,6 @@ Mesh::Mesh (MeshData* mData)
     : Geometry(mData),
     triangles_(),
     path_(mData->path),
-    bp_(f_),
     hbv_(f_, mData->depthHBV)
 {
     if(not fileExists(path_))
@@ -47,30 +44,6 @@ void Mesh::initTriangles()
     std::vector<unsigned int> tris, solids;
     stl_reader::ReadStlFile (path_.c_str(), coords, normals, tris, solids);
 
-    Vector3 bary;
-    bary.x_ = 0;
-    bary.y_ = 0;
-    bary.z_ = 0;
-    for (size_t i = 0; i < coords.size()/3; i++)
-    {
-        bary.x_ += coords[3*i];
-        bary.y_ += coords[3*i + 1];
-        bary.z_ += coords[3*i + 2];
-    }
-    bary = bary * (3.0/coords.size());
-    double radiusBoundingSphere = -1;
-    for (size_t i = 0; i < coords.size()/3; i++)
-    {
-        Vector3 p(coords[3*i], coords[3*i + 1], coords[3*i + 2]);
-        double bd = (p-bary).squaredNorm();
-        if(bd > radiusBoundingSphere)
-            radiusBoundingSphere = bd;
-    }
-    radiusBoundingSphere = std::sqrt(radiusBoundingSphere);
-
-    Frame3 fBV(f_.o_ + bary, f_.vx_, f_.vy_, f_.vz_);
-    bs_ = BoundingSphere(fBV, radiusBoundingSphere);
-
     size_t numTris = tris.size() / 3;
     triangles_.resize(numTris);
     for(size_t itri = 0; itri < numTris; ++itri)
@@ -83,10 +56,6 @@ void Mesh::initTriangles()
         Vector3 P1(c[0], c[1], c[2]);
         c = &coords[3 * tris [3 * itri + 2]];
         Vector3 P2(c[0], c[1], c[2]);
-
-        bp_.extendBy(P0);
-        bp_.extendBy(P1);
-        bp_.extendBy(P2);
 
         hbv_.extendByTriangle(P0, P1, P2, itri);
 

@@ -39,7 +39,7 @@ public:
             const std::string& name);
     ~Node () = default;
     void spawnChildren();
-    void populateChildren(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
+    void populateChildren(const std::vector<Vector3>& points, int index);
     bool intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections) const;
     bool testIntersectionWithEdge(const Vector3& p0, const Vector3& p1);
 
@@ -65,7 +65,7 @@ public:
     void extendByPolygon(const std::vector<Vector3>& points);
     std::string describe() const;
     void finishFirstPass();
-    void populateWithTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
+    void populateWithPolygon(const std::vector<Vector3>& p, int index);
 
     int maxDepth_;
 private:

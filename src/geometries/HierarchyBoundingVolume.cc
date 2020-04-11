@@ -90,37 +90,54 @@ bool Node::testIntersectionWithEdge(const Vector3& p0, const Vector3& p1)
     Vector3 normal;
     double dist;
     bool intersection = bp_.intersect(lrEdge, point, normal, dist);
-    //std::cout << "intersection: " << intersection << std::endl;
-    //std::cout << "dist: " << dist << std::endl;
-    //std::cout << "edgeLength: " << edgeLength << std::endl;
     bool res = intersection and dist >= 0 and dist <= edgeLength;
-    //std::cout << "res: " << res << std::endl;
     return res;
 }
 
-void Node::populateChildren(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index)
+void Node::populateChildren(const std::vector<Vector3>& points, int index)
 {
     // By construction, the depth0 bounding volume is guaranteed to contain all the points of the mesh.
     // First, check if at least one vertex of the triangle is inside the boundingPolyhedron
-    if(depth_ == 0 or bp_.contains(p0) or bp_.contains(p1) or bp_.contains(p2))
+    bool containsPoint = false;
+    if(depth_ == 0)
+        containsPoint = true;
+    else
+    {
+        for (size_t i = 0; i < points.size(); i++)
+        {
+            if(bp_.contains(points[i]))
+            {
+                containsPoint = true;
+                break;
+            }
+        }
+    }
+    if(containsPoint)
     {
         includedIndices_.push_back(index);
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->populateChildren(p0, p1, p2, index);
+            children_[i]->populateChildren(points, index);
         }
         return;
     }
 
     // Second, check if any edge of the triangle intersectes the boundingPolyhedron
-    if(testIntersectionWithEdge(p0, p1) or
-        testIntersectionWithEdge(p1, p2) or
-        testIntersectionWithEdge(p2, p0))
+    bool intersectWithEdge = false;
+    for (size_t i = 0; i < points.size(); i++)
+    {
+        if(testIntersectionWithEdge(points[i], points[(i+1)%points.size()]))
+        {
+            intersectWithEdge = true;
+            break;
+        }
+    }
+    if(intersectWithEdge)
     {
         includedIndices_.push_back(index);
         for (size_t i = 0; i < children_.size(); i++)
         {
-            children_[i]->populateChildren(p0, p1, p2, index);
+            children_[i]->populateChildren(points, index);
         }
         return;
     }
@@ -128,9 +145,9 @@ void Node::populateChildren(const Vector3& p0, const Vector3& p1, const Vector3&
     // Third, check if any vertex of the boundingPolyhedron projected onto the triangle plane
     // is inside the triangle
     {
-        Vector3 triO = p0;
-        Vector3 triX = (p1-p0).normalize();
-        Vector3 triZ = (triX.cross(p2-p0)).normalize();
+        Vector3 triO = points[0];
+        Vector3 triX = (points[1]-points[0]).normalize();
+        Vector3 triZ = (triX.cross(points[2]-points[0])).normalize();
         Vector3 triY = triZ.cross(triX);
         //check if there are points above and below triangle plane
         bool pointAbove = false;
@@ -152,23 +169,32 @@ void Node::populateChildren(const Vector3& p0, const Vector3& p1, const Vector3&
 
 
         //check if at least one point of the bp projects inside the triangle
-        Vector2 p0P(0,0);
-        Vector2 p1P((p1-triO).dot(triX), (p1-triO).dot(triY));
-        Vector2 p2P((p2-triO).dot(triX), (p2-triO).dot(triY));
+        std::vector<Vector2> pP;
+        for (size_t i = 0; i < points.size(); i++)
+        {
+            pP.push_back({(points[i]-triO).dot(triX), (points[i]-triO).dot(triY)});
+        }
         for (size_t i = 0; i < bp_.verticesCube().size(); i++)
         {
             Vector3 p = bp_.verticesCube().at(i) - triO;
-            Vector2 pP(p.dot(triX), p.dot(triY));
-            bool rightOfp0p1 = pP.isRightOf(p0P, p1P);
-            bool rightOfp1p2 = pP.isRightOf(p1P, p2P);
-            bool rightOfp2p0 = pP.isRightOf(p2P, p0P);
-            bool onSameSideOfAllEdges = ((rightOfp0p1 == rightOfp1p2) and (rightOfp1p2 == rightOfp2p0));
+            Vector2 pProj(p.dot(triX), p.dot(triY));
+            bool onSameSideOfAllEdges = true;
+            bool rightOfp0p1 = pProj.isRightOf(pP[0], pP[1]);
+            for (size_t j = 0; j < pP.size(); j++)
+            {
+                bool rightOf = pProj.isRightOf(pP[j], pP[(j+1)%pP.size()]);
+                if(not(rightOf == rightOfp0p1))
+                {
+                    onSameSideOfAllEdges = false;
+                    break;
+                }
+            }
             if(onSameSideOfAllEdges)
             {
                 includedIndices_.push_back(index);
                 for (size_t i = 0; i < children_.size(); i++)
                 {
-                    children_[i]->populateChildren(p0, p1, p2, index);
+                    children_[i]->populateChildren(points, index);
                 }
                 return;
             }
@@ -216,6 +242,11 @@ std::string Node::describe() const
     ss << "name: " << name_ << "\n";
     ss << bp_.describe();
     ss << "nTriangles: " << includedIndices_.size() << "\n";
+    for (size_t i = 0; i < includedIndices_.size(); i++)
+    {
+        ss << includedIndices_[i] << ", ";
+    }
+    ss << "\n";
     for (size_t i = 0; i < children_.size(); i++)
     {
         ss << children_[i]->describe();
@@ -263,9 +294,9 @@ void HierarchyBoundingVolume::finishFirstPass()
     root_->spawnChildren();
 }
 
-void HierarchyBoundingVolume::populateWithTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index)
+void HierarchyBoundingVolume::populateWithPolygon(const std::vector<Vector3>& points, int index)
 {
-    root_->populateChildren( p0, p1, p2, index);
+    root_->populateChildren(points, index);
 }
 
 std::string HierarchyBoundingVolume::describe() const

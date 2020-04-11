@@ -116,17 +116,17 @@ void Mesh::loadOBJMesh()
             for (size_t iVertex = 1; iVertex < tokens.size(); iVertex++)
             {
                 std::vector<std::string> indices = split(tokens[iVertex], "/");
-                int vertex = std::stoi(indices[0]);
+                int vertex = std::stoi(indices[0]) - 1;
                 int texture = -1;
                 if(indices[1].size() > 0)
-                    texture = std::stoi(indices[1]);
-                int normal = std::stoi(indices[2]);
+                    texture = std::stoi(indices[1]) - 1;
+                int normal = std::stoi(indices[2]) - 1;
                 faces_.back().push_back({vertex, texture, normal});
             }
         }
     }
 
-    // Extend HBV0
+    // Extend HBV0 and compute 2D polygons
     for (size_t iFace = 0; iFace < faces_.size(); iFace++)
     {
         const std::vector<FaceVertex>& face(faces_[iFace]);
@@ -136,6 +136,19 @@ void Mesh::loadOBJMesh()
             points.push_back(vertices_[face[iPoints].vertex]);
         }
         hbv_.extendByPolygon(points);
+
+        Vector3 vz = ((points[2] - points[0]).cross(points[1] - points[0])).normalize();
+        Vector3 vx = (points[1] - points[0]).normalize();
+        Vector3 vy = vz.cross(vx);
+        Frame3 tFrame(f_.o_ + points[0], vx, vy, vz);
+        std::vector<Vector2> points2D;
+        points2D.push_back({0,0});
+        for (size_t iPoints = 1; iPoints < points.size(); iPoints++)
+        {
+            points2D.push_back({(points[iPoints]-points[0]).dot(vx),
+                    (points[iPoints]-points[0]).dot(vy)});
+        }
+        polygons_.push_back({tFrame, points2D});
     }
 }
 
@@ -154,12 +167,15 @@ void Mesh::initTriangles()
             break;
     }
     hbv_.finishFirstPass();
-    for(size_t itri = 0; itri < faces_.size(); ++itri)
+    for(size_t iFace = 0; iFace < faces_.size(); ++iFace)
     {
-        const Vector3& P0(vertices_[3 * itri]);
-        const Vector3& P1(vertices_[3 * itri + 1]);
-        const Vector3& P2(vertices_[3 * itri + 2]);
-        hbv_.populateWithTriangle(P0, P1, P2, itri);
+        std::vector<Vector3> points;
+        const std::vector<FaceVertex>& face(faces_[iFace]);
+        for (size_t iPoints = 0; iPoints < face.size(); iPoints++)
+        {
+            points.push_back(vertices_[face[iPoints].vertex]);
+        }
+        hbv_.populateWithPolygon(points, iFace);
     }
 }
 

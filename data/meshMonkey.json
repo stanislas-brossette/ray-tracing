@@ -1,7 +1,7 @@
 {
     "scene": {
         "maxNumThreads": 8,
-        "powerDistReduction": 0,
+        "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.0,
         "simplifiedRender": false,
@@ -75,7 +75,7 @@
                 "rotAxis": [0, 0, 1],
                 "rotAngle": 0,
                 "depthHBV": 5,
-                "path": "monkey.stl"
+                "path": "monkey.obj"
             }
         }
     }

@@ -42,7 +42,7 @@ void Mesh::readPath()
     std::string extension = path_.substr(path_.size() - 3);
     if(extension.compare("obj") == 0)
         meshType_ = MeshType::obj;
-    else if(extension.compare("stl") == 0)
+    else if(extension.compare("STL") == 0 or extension.compare("stl") == 0)
         meshType_ = MeshType::stl;
     else
         std::cout << "ERROR, mesh type unknown" << std::endl;

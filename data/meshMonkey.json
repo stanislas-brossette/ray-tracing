@@ -3,17 +3,17 @@
         "maxNumThreads": 8,
         "powerDistReduction": 2,
         "exposition": 1.0,
-        "gammaPower": 1.0,
+        "gammaPower": 1.7,
         "simplifiedRender": false,
-        "maxDepthRecursion": 3
+        "maxDepthRecursion": 5
     },
     "camera": {
         "fov": 160,
         "resX": 1200,
         "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
-        "aspectRatio": 1.5,
-        "pos": [0.2, -1.8, 0.3],
+        "aspectRatio": 1.4,
+        "pos": [1.03289,-1.73323,0.306595],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -23,7 +23,7 @@
     },
     "ambiantLight": {
         "color": [255, 255, 255],
-        "intensity": 0.3
+        "intensity": 0.5
     },
     "items": {
         "lightSource1": {
@@ -34,12 +34,12 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 0.8
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [0.0, -1.0, 2.0]
+                "pos": [0.7, -1.0, 0.7]
             }
         },
         "monkeyOBJ": {
@@ -59,7 +59,25 @@
                 "rotAxis": [0, 0, 1],
                 "rotAngle": 0,
                 "depthHBV": 5,
-                "path": "monkey/monkey.obj"
+                "path": "monkey/monkeyHD.obj"
+            }
+        },
+        "bottomPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color0": [0, 0, 0],
+                "color1": [255, 255, 255],
+                "squareSizeX": 1.0,
+                "squareSizeY": 1.0,
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.3,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -1.0]
             }
         }
     }

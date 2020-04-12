@@ -13,6 +13,7 @@ public:
     Polygon ();
     Polygon (PolygonData* pData);
     Polygon(const Frame3& f, const std::vector<Vector2>& p);
+    Polygon(const Frame3& f, const std::vector<Vector2>& p, const std::vector<Vector3>& n);
     virtual ~Polygon ();
     std::string describe() const;
     //The planes normal is f_.z_
@@ -20,5 +21,7 @@ public:
     bool isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const;
 
     std::vector<Vector2> points_;
+    std::vector<Vector3> normals_;
+    double a0, a1, b0, b1, c0, c1;
 };
 

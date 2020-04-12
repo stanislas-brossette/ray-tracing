@@ -12,6 +12,24 @@ Polygon::Polygon(const Frame3& f, const std::vector<Vector2>& p)
     points_ = p;
 }
 
+Polygon::Polygon(const Frame3& f, const std::vector<Vector2>& p, const std::vector<Vector3>& n)
+    : Polygon(f,p)
+{
+    normals_ = n;
+    // compute the terms used to compute the smooth normals
+    // TODO: do that with eigen
+    if(normals_.size() == 3)
+    {
+        double det = points_[1].x_ * points_[2].y_ - points_[2].x_ * points_[1].y_;
+        a0 = ( points_[2].y_ * (normals_[1].x_ - normals_[0].x_) - points_[1].y_ * (normals_[2].x_ - normals_[0].x_))/det;
+        a1 = (-points_[2].x_ * (normals_[1].x_ - normals_[0].x_) + points_[1].x_ * (normals_[2].x_ - normals_[0].x_))/det;
+        b0 = ( points_[2].y_ * (normals_[1].y_ - normals_[0].y_) - points_[1].y_ * (normals_[2].y_ - normals_[0].y_))/det;
+        b1 = (-points_[2].x_ * (normals_[1].y_ - normals_[0].y_) + points_[1].x_ * (normals_[2].y_ - normals_[0].y_))/det;
+        c0 = ( points_[2].y_ * (normals_[1].z_ - normals_[0].z_) - points_[1].y_ * (normals_[2].z_ - normals_[0].z_))/det;
+        c1 = (-points_[2].x_ * (normals_[1].z_ - normals_[0].z_) + points_[1].x_ * (normals_[2].z_ - normals_[0].z_))/det;
+    }
+}
+
 Polygon::Polygon(PolygonData* pData)
   : Geometry(pData)
 {
@@ -54,15 +72,15 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     bool lrSameDirNormal = (vzScalDir > 0);
 
     bool impact = false;
+    int normalMultiplier = 1;
     if (pointAbovePolygon and not lrSameDirNormal)
     {
         impact = true;
-        normal = f_.vz_;
     }
     else if (not pointAbovePolygon and lrSameDirNormal)
     {
         impact = true;
-        normal = f_.vz_ * -1.0;
+        normalMultiplier = -1;
     }
     else
     {
@@ -81,6 +99,24 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
         if(not impact)
             return false;
     }
+
+    //Compute normal
+    if( normals_.size() == points_.size())
+    {
+        normal = Vector3(0,0,0);
+
+        normal.x_ = normals_[0].x_ + a0 * Pp.x_ + a1 * Pp.y_;
+        normal.y_ = normals_[0].y_ + b0 * Pp.x_ + b1 * Pp.y_;
+        normal.z_ = normals_[0].z_ + c0 * Pp.x_ + c1 * Pp.y_;
+
+        normal *= -normalMultiplier;
+    }
+    else
+    {
+        normal = f_.vz_;
+        normal *= normalMultiplier;
+    }
+
 
     return impact;
 }

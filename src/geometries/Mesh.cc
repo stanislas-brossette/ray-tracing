@@ -107,7 +107,7 @@ void Mesh::loadOBJMesh()
         if(tokens[0].compare("v") == 0)
             vertices_.push_back({std::stod(tokens[1]), -std::stod(tokens[3]), std::stod(tokens[2])});
         else if(tokens[0].compare("vn") == 0)
-            vertexNormals_.push_back({std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
+            vertexNormals_.push_back({std::stod(tokens[1]), -std::stod(tokens[3]), std::stod(tokens[2])});
         else if(tokens[0].compare("vt") == 0)
             vertexTextures_.push_back({std::stod(tokens[1]), std::stod(tokens[2])});
         else if(tokens[0].compare("f") == 0)
@@ -131,9 +131,11 @@ void Mesh::loadOBJMesh()
     {
         const std::vector<FaceVertex>& face(faces_[iFace]);
         std::vector<Vector3> points;
+        std::vector<Vector3> normals;
         for (size_t iPoints = 0; iPoints < face.size(); iPoints++)
         {
             points.push_back(vertices_[face[iPoints].vertex]);
+            normals.push_back(vertexNormals_[face[iPoints].normal]);
         }
         hbv_.extendByPolygon(points);
 
@@ -148,7 +150,7 @@ void Mesh::loadOBJMesh()
             points2D.push_back({(points[iPoints]-points[0]).dot(vx),
                     (points[iPoints]-points[0]).dot(vy)});
         }
-        polygons_.push_back({tFrame, points2D});
+        polygons_.push_back({tFrame, points2D, normals});
     }
 }
 

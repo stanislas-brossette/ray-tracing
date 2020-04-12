@@ -16,6 +16,11 @@ Vector2::~Vector2()
 {
 }
 
+double Vector2::norm() const
+{
+    return std::sqrt(x_*x_ + y_*y_);
+}
+
 bool Vector2::isRightOf(const Vector2& p0, const Vector2& p1) const
 {
     double prodVec = (x_ - p0.x_)*(p1.y_ - p0.y_) - (y_ - p0.y_)*(p1.x_ - p0.x_);

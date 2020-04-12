@@ -19,6 +19,8 @@ public:
     Vector2& operator-=(const Vector2&);
     Vector2& operator*=(double);
 
+    double norm() const;
+
     bool isRightOf(const Vector2& p0, const Vector2& p1) const;
     friend std::ostream& operator<<(std::ostream& os, const Vector2& v);
 };

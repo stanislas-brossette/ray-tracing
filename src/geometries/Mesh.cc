@@ -105,7 +105,7 @@ void Mesh::loadOBJMesh()
     {
         std::vector<std::string> tokens = split(line, " ");
         if(tokens[0].compare("v") == 0)
-            vertices_.push_back({std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
+            vertices_.push_back({std::stod(tokens[1]), -std::stod(tokens[3]), std::stod(tokens[2])});
         else if(tokens[0].compare("vn") == 0)
             vertexNormals_.push_back({std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
         else if(tokens[0].compare("vt") == 0)

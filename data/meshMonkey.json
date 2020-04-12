@@ -9,11 +9,11 @@
     },
     "camera": {
         "fov": 160,
-        "resX": 700,
+        "resX": 1200,
         "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
-        "pos": [0.6, -1.6, 0.6],
+        "pos": [0.2, -1.8, 0.3],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -39,26 +39,10 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.1,
-                "pos": [-3.0, 3.0, 2.0]
+                "pos": [0.0, -1.0, 2.0]
             }
         },
-        "lightSource2": {
-            "material": {
-                "textureType": "SolidColor",
-                "color": [255, 255, 255],
-                "rugosity": 0.0,
-                "refraction": 0.0,
-                "reflectiveness": 0.0,
-                "lightEmitter": true,
-                "lightIntensity": 0.8
-            },
-            "geometry": {
-                "type": "Sphere",
-                "radius": 0.1,
-                "pos": [0.0, -2.0, 3.0]
-            }
-        },
-        "monkey": {
+        "monkeyOBJ": {
             "material": {
                 "textureType": "SolidColor",
                 "color": [8, 220, 220],
@@ -75,7 +59,7 @@
                 "rotAxis": [0, 0, 1],
                 "rotAngle": 0,
                 "depthHBV": 5,
-                "path": "monkey.obj"
+                "path": "monkey/monkey.obj"
             }
         }
     }

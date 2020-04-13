@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
     Window window(scene.camera_.resX_, scene.camera_.resY_);
     Renderer renderer(sceneLoader.sceneData_.rData);
     InputHandler inputHandler;
-    window.save("../images/" + sceneJsonName + ".bmp");
 
     while (!inputHandler.quit)
     {
@@ -57,6 +56,7 @@ int main(int argc, char *argv[])
         {
             PerformanceTracker::instance().resetRays();
             renderer.renderParallel(scene, window, "");
+            window.save("../images/" + sceneJsonName + ".bmp");
             inputHandler.needRender = false;
             std::cout << PerformanceTracker::instance().describe();
         }

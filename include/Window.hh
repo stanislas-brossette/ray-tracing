@@ -1,5 +1,9 @@
 #pragma once
 #include <iostream>
+#include <cstdio>
+#include <string>
+#include <cstring>
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -7,6 +11,7 @@
 #include <vector>
 
 #include "Pixel.hh"
+#include "BitmapWriter.hh"
 
 class Window
 {
@@ -21,9 +26,10 @@ public:
     int resX() const{return resX_;};
     int resY() const{return resY_;};
     int nPixels() const{return resX_*resY_;};
-    bool save(std::string filepath = "image.bmp");
+    void save(std::string filepath = "image.bmp");
     SDL_Window* win(){return window_;};
     void changeResolution(int resX, int resY);
+    void resizeImage(int resX, int resY);
 
 private:
     SDL_Window *window_;
@@ -31,5 +37,6 @@ private:
     int resX_;
     int resY_;
     int renderCounter_;
+    std::vector<std::vector<std::vector<unsigned char>>> image_;
 };
 

@@ -7,6 +7,7 @@ Window::Window()
       resY_(10),
       renderCounter_(0)
 {
+    resizeImage(resX_, resY_);
 }
 
 Window::Window(int resX, int resY)
@@ -15,6 +16,8 @@ Window::Window(int resX, int resY)
       resX_(resX),
       resY_(resY)
 {
+    resizeImage(resX_, resY_);
+
     Uint32 flags = SDL_WINDOW_SHOWN;
 
     // Set up window
@@ -38,6 +41,9 @@ void Window::addPixel(const Pixel& p)
 {
     SDL_SetRenderDrawColor(renderer_, 255*p.r(), 255*p.g(), 255*p.b(), 255);
     SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
+    image_[p.x_][resY_-p.y_][0] = (unsigned char)(255*p.r());
+    image_[p.x_][resY_-p.y_][1] = (unsigned char)(255*p.g());
+    image_[p.x_][resY_-p.y_][2] = (unsigned char)(255*p.b());
 }
 
 void Window::addPixels(const std::vector<Pixel>& v)
@@ -46,6 +52,9 @@ void Window::addPixels(const std::vector<Pixel>& v)
     {
         SDL_SetRenderDrawColor(renderer_, 255*v[i].r(), 255*v[i].g(), 255*v[i].b(), 255);
         SDL_RenderDrawPoint(renderer_, v[i].x_, resY_-v[i].y_);
+        image_[v[i].x_][resY_-v[i].y_][0] = (unsigned char)(255*v[i].r());
+        image_[v[i].x_][resY_-v[i].y_][1] = (unsigned char)(255*v[i].g());
+        image_[v[i].x_][resY_-v[i].y_][2] = (unsigned char)(255*v[i].b());
     }
 }
 
@@ -75,50 +84,22 @@ Window::~Window()
     SDL_DestroyWindow(window_);
 }
 
-bool Window::save(std::string filepath)
+void Window::save(std::string filepath)
 {
-    SDL_Surface* saveSurface = NULL;
-    SDL_Surface* infoSurface = NULL;
-    infoSurface = SDL_GetWindowSurface(window_);
-    if (infoSurface == NULL)
+    unsigned char imageData[resY_][resX_][3];
+    for (size_t i = 0; i < resX_; i++)
     {
-        std::cerr << "Failed to create info surface from window in saveScreenshotBMP(string), SDL_GetError() - " << SDL_GetError() << "\n";
-    }
-    else
-    {
-        unsigned char * pixels = new (std::nothrow) unsigned char[infoSurface->w * infoSurface->h * infoSurface->format->BytesPerPixel];
-        if (pixels == 0)
+        for (size_t j = 0; j < resY_; j++)
         {
-            std::cerr << "Unable to allocate memory for screenshot pixel data buffer!\n";
-            return false;
+            imageData[j][i][2] = image_[i][j][0];
+            imageData[j][i][1] = image_[i][j][1];
+            imageData[j][i][0] = image_[i][j][2];
         }
-        else
-        {
-            if (SDL_RenderReadPixels(renderer_, &infoSurface->clip_rect, infoSurface->format->format, pixels, infoSurface->w * infoSurface->format->BytesPerPixel) != 0)
-            {
-                std::cerr << "Failed to read pixel data from SDL_Renderer object. SDL_GetError() - " << SDL_GetError() << "\n";
-                delete[] pixels;
-                return false;
-            }
-            else
-            {
-                saveSurface = SDL_CreateRGBSurfaceFrom(pixels, infoSurface->w, infoSurface->h, infoSurface->format->BitsPerPixel, infoSurface->w * infoSurface->format->BytesPerPixel, infoSurface->format->Rmask, infoSurface->format->Gmask, infoSurface->format->Bmask, infoSurface->format->Amask);
-                if (saveSurface == NULL)
-                {
-                    std::cerr << "Couldn't create SDL_Surface from renderer pixel data. SDL_GetError() - " << SDL_GetError() << "\n";
-                    delete[] pixels;
-                    return false;
-                }
-                SDL_SaveBMP(saveSurface, filepath.c_str());
-                SDL_FreeSurface(saveSurface);
-                saveSurface = NULL;
-            }
-            delete[] pixels;
-        }
-        SDL_FreeSurface(infoSurface);
-        infoSurface = NULL;
     }
-    return true;
+
+    char fpath[filepath.size() + 1];
+    strcpy(fpath, filepath.c_str());
+    generateBitmapImage((unsigned char *)imageData, resY_, resX_, fpath);
 }
 
 void Window::changeResolution(int resX, int resY)
@@ -126,4 +107,22 @@ void Window::changeResolution(int resX, int resY)
     resX_ = resX;
     resY_ = resY;
     SDL_SetWindowSize(window_, resX_, resY_);
+    resizeImage(resX_, resY);
+}
+
+void Window::resizeImage(int resX, int resY)
+{
+    image_.resize(resX + 1);
+    for (size_t i = 0; i < resX + 1; i++)
+    {
+        image_[i].resize(resY + 1);
+        for (size_t j = 0; j < resY + 1; j++)
+        {
+            image_[i][j].resize(3);
+            for (size_t k = 0; k < 3; k++)
+            {
+                image_[i][j][k] = (unsigned char)(0);
+            }
+        }
+    }
 }

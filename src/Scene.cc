@@ -206,7 +206,7 @@ void Scene::isIntercepted(const LightRay& lrImpactToLightSource, double distImpa
                 intItem->intersect(lrTransparent, impactPointTransparent, impactNormalTransparent, distTransparent);
             }
             transparencyColor *= intItem->material_->texture_->color(intData.pointInFrame.x_, intData.pointInFrame.y_);
-            transparencyColor *= std::exp(-intItem->material_->absorption_*distTransparent);
+            //transparencyColor *= std::exp(-intItem->material_->absorption_*distTransparent);
         }
     }
 }

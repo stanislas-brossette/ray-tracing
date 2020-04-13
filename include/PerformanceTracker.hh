@@ -21,6 +21,8 @@ public:
     void startPreprocessingTimer();
     void endPreprocessingTimer();
     void startRenderTimer();
+    void currentRenderTimer();
+    std::string currentRenderTime();
     void endRenderTimer();
     void resetAll();
     void resetRays();
@@ -37,6 +39,6 @@ private:
     std::atomic<long> nCallToIntersect_{0};
     std::atomic<long> nCallToIntersectPolygon_{0};
     std::atomic<long> nIntersections_{0};
-    std::chrono::steady_clock::time_point beginRender_, endRender_;
+    std::chrono::steady_clock::time_point beginRender_, currentRender_, endRender_;
     std::chrono::steady_clock::time_point beginPreprocessing_, endPreprocessing_;
 };

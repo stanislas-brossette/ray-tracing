@@ -50,6 +50,11 @@ void PerformanceTracker::startRenderTimer()
     beginRender_ = std::chrono::steady_clock::now();
 }
 
+void PerformanceTracker::currentRenderTimer()
+{
+    currentRender_ = std::chrono::steady_clock::now();
+}
+
 void PerformanceTracker::endRenderTimer()
 {
     endRender_ = std::chrono::steady_clock::now();
@@ -83,6 +88,13 @@ void PerformanceTracker::resetRays()
 PerformanceTracker& PerformanceTracker::instance()
 {
     return instance_;
+}
+
+std::string PerformanceTracker::currentRenderTime()
+{
+    std::stringstream ss;
+    ss << std::chrono::duration_cast<std::chrono::milliseconds>(currentRender_ - beginRender_).count() << "[ms]";
+    return ss.str();
 }
 
 std::string PerformanceTracker::describe()

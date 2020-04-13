@@ -32,6 +32,7 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
     int nLightRay = win.nPixels()*percentLightRay_/100;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     PerformanceTracker::instance().startRenderTimer();
+    std::cout << "0%" << std::endl;
     while(iter < nLightRay)
     {
         size_t nPixToRender = nPixPerRender_;
@@ -42,6 +43,8 @@ void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s
         win.addPixels(pixs);
         win.render();
         iter+=nPixPerRender_;
+        PerformanceTracker::instance().currentRenderTimer();
+        std::cout << (int)(100*(double)iter/(double)nLightRay) << "%\t" << PerformanceTracker::instance().currentRenderTime() << std::endl;
     }
     PerformanceTracker::instance().endRenderTimer();
 }

@@ -1,6 +1,6 @@
 #include "BitmapWriter.hh"
 
-void generateBitmapImage(std::vector<std::vector<std::vector<unsigned char>>>& image, int height, int width, char* imageFileName){
+void generateBitmapImage(std::vector<std::vector<std::vector<unsigned char>>>& image, int width, int height, char* imageFileName){
 
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (width*bytesPerPixel) % 4) % 4;
@@ -14,9 +14,9 @@ void generateBitmapImage(std::vector<std::vector<std::vector<unsigned char>>>& i
     fwrite(fileHeader, 1, fileHeaderSize, imageFile);
     fwrite(infoHeader, 1, infoHeaderSize, imageFile);
 
-    for(int i = 0; i < height; i++)
+    for (int j = height-1; j >= 0; --j)
     {
-        for (int j = 0; j < width; ++j)
+        for(int i = 0; i < width; i++)
         {
             unsigned char* pixPtr = &image[i][j][0];
             fwrite(pixPtr, bytesPerPixel, 1, imageFile);

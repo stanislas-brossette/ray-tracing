@@ -5,7 +5,8 @@
         "exposition": 1.0,
         "gammaPower": 2.2,
         "simplifiedRender": false,
-        "maxDepthRecursion": 5
+        "maxDepthRecursion": 5,
+        "display": false
     },
     "camera": {
         "fov": 175,

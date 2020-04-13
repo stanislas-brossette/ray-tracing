@@ -17,7 +17,7 @@ class Window
 {
 public:
     Window ();
-    Window (int resX, int resY);
+    Window (int resX, int resY, bool display);
     void addPixel(const Pixel& p);
     void addPixels(const std::vector<Pixel>& v);
     void render();
@@ -37,6 +37,7 @@ private:
     int resX_;
     int resY_;
     int renderCounter_;
+    bool display_;
     std::vector<std::vector<std::vector<unsigned char>>> image_;
 };
 

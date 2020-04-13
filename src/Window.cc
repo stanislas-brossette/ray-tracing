@@ -5,42 +5,50 @@ Window::Window()
       renderer_(nullptr),
       resX_(10),
       resY_(10),
-      renderCounter_(0)
+      renderCounter_(0),
+      display_(true)
 {
     resizeImage(resX_, resY_);
 }
 
-Window::Window(int resX, int resY)
+Window::Window(int resX, int resY, bool display)
     : window_(nullptr),
       renderer_(nullptr),
       resX_(resX),
-      resY_(resY)
+      resY_(resY),
+      display_(display)
 {
     resizeImage(resX_, resY_);
 
-    Uint32 flags = SDL_WINDOW_SHOWN;
+    if(display_)
+    {
+        Uint32 flags = SDL_WINDOW_SHOWN;
 
-    // Set up window
-    window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX_, resY_, flags);
-    if(!window_) {
-        std::cerr << SDL_GetError() << std::endl;
-    }
+        // Set up window
+        window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX_, resY_, flags);
+        if(!window_) {
+            std::cerr << SDL_GetError() << std::endl;
+        }
 
-    // Set up renderer
-    flags = 0;
-    flags |= SDL_RENDERER_ACCELERATED;
-    renderer_ = SDL_CreateRenderer(window_, -1, flags);
-    SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+        // Set up renderer
+        flags = 0;
+        flags |= SDL_RENDERER_ACCELERATED;
+        renderer_ = SDL_CreateRenderer(window_, -1, flags);
+        SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 
-    if(renderer_ == nullptr) {
-        std::cerr << SDL_GetError() << std::endl;
+        if(renderer_ == nullptr) {
+            std::cerr << SDL_GetError() << std::endl;
+        }
     }
 }
 
 void Window::addPixel(const Pixel& p)
 {
-    SDL_SetRenderDrawColor(renderer_, 255*p.r(), 255*p.g(), 255*p.b(), 255);
-    SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
+    if(display_)
+    {
+        SDL_SetRenderDrawColor(renderer_, 255*p.r(), 255*p.g(), 255*p.b(), 255);
+        SDL_RenderDrawPoint(renderer_, p.x_, resY_-p.y_);
+    }
     image_[p.x_][resY_-p.y_][0] = (unsigned char)(255*p.b());
     image_[p.x_][resY_-p.y_][1] = (unsigned char)(255*p.g());
     image_[p.x_][resY_-p.y_][2] = (unsigned char)(255*p.r());
@@ -50,8 +58,11 @@ void Window::addPixels(const std::vector<Pixel>& v)
 {
     for (size_t i = 0; i < v.size(); i++)
     {
-        SDL_SetRenderDrawColor(renderer_, 255*v[i].r(), 255*v[i].g(), 255*v[i].b(), 255);
-        SDL_RenderDrawPoint(renderer_, v[i].x_, resY_-v[i].y_);
+        if(display_)
+        {
+            SDL_SetRenderDrawColor(renderer_, 255*v[i].r(), 255*v[i].g(), 255*v[i].b(), 255);
+            SDL_RenderDrawPoint(renderer_, v[i].x_, resY_-v[i].y_);
+        }
         image_[v[i].x_][resY_-v[i].y_][0] = (unsigned char)(255*v[i].b());
         image_[v[i].x_][resY_-v[i].y_][1] = (unsigned char)(255*v[i].g());
         image_[v[i].x_][resY_-v[i].y_][2] = (unsigned char)(255*v[i].r());
@@ -60,28 +71,35 @@ void Window::addPixels(const std::vector<Pixel>& v)
 
 void Window::clear()
 {
-    for (size_t i = 0; i < resX_; i++)
+    if(display_)
     {
-        for (size_t j = 0; j < resY_; j++)
+        for (size_t i = 0; i < resX_; i++)
         {
-            SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
-            SDL_RenderDrawPoint(renderer_, i, j);
+            for (size_t j = 0; j < resY_; j++)
+            {
+                SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
+                SDL_RenderDrawPoint(renderer_, i, j);
+            }
         }
+        SDL_RenderClear(renderer_);
+        render();
     }
-    SDL_RenderClear(renderer_);
-    render();
 }
 
 void Window::render()
 {
     // Render to screen
-    SDL_RenderPresent(renderer_);
+    if(display_)
+        SDL_RenderPresent(renderer_);
 }
 
 Window::~Window()
 {
-    SDL_DestroyRenderer(renderer_);
-    SDL_DestroyWindow(window_);
+    if(display_)
+    {
+        SDL_DestroyRenderer(renderer_);
+        SDL_DestroyWindow(window_);
+    }
 }
 
 void Window::save(std::string filepath)
@@ -95,7 +113,8 @@ void Window::changeResolution(int resX, int resY)
 {
     resX_ = resX;
     resY_ = resY;
-    SDL_SetWindowSize(window_, resX_, resY_);
+    if(display_)
+        SDL_SetWindowSize(window_, resX_, resY_);
     resizeImage(resX_, resY);
 }
 

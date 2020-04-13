@@ -14,6 +14,7 @@ struct SceneExtraData
     double exposition = 1.0;
     double gammaPower = 2.2;
     bool simplifiedRender = false;
+    bool display = true;
 };
 
 struct RenderData

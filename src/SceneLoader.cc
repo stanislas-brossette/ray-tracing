@@ -77,6 +77,8 @@ SceneExtraData SceneLoader::scanScene(Value& vIn)
     sData.gammaPower = vIn.FindMember("gammaPower")->value.GetDouble();
     sData.simplifiedRender = vIn.FindMember("simplifiedRender")->value.GetBool();
     sData.maxDepthRecursion = vIn.FindMember("maxDepthRecursion")->value.GetInt();
+    Value::MemberIterator itr = vIn.FindMember("display");
+    if(itr != vIn.MemberEnd()) sData.display = itr->value.GetBool();
     return sData;
 }
 

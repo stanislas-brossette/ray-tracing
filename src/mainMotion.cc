@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
     Scene scene(sceneLoader.sceneData_);
     //std::cout << sceneLoader.sceneData_.describe() << std::endl;
     std::cout << scene << std::endl;
-    Window window(scene.camera_.resX_, scene.camera_.resY_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
     Renderer renderer(sceneLoader.sceneData_.rData);
     InputHandler inputHandler;
 
@@ -56,11 +57,14 @@ int main(int argc, char *argv[])
         {
             PerformanceTracker::instance().resetRays();
             renderer.renderParallel(scene, window, "");
-            window.save("../images/" + sceneJsonName + ".bmp");
+            window.save("../images/" + sceneJsonName + std::to_string(scene.camera_.resX_) + ".bmp");
             inputHandler.needRender = false;
             std::cout << PerformanceTracker::instance().describe();
         }
-        inputHandler.handleInputs(window, scene);
+        if(not display)
+            inputHandler.quit = true;
+        else
+            inputHandler.handleInputs(window, scene);
     }
     SDL_Quit();
     

@@ -71,19 +71,26 @@ void Window::addPixels(const std::vector<Pixel>& v)
 
 void Window::clear()
 {
-    if(display_)
+    for (size_t i = 0; i < resX_; i++)
     {
-        for (size_t i = 0; i < resX_; i++)
+        for (size_t j = 0; j < resY_; j++)
         {
-            for (size_t j = 0; j < resY_; j++)
+            if(display_)
             {
                 SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 0);
                 SDL_RenderDrawPoint(renderer_, i, j);
             }
+            for (size_t k = 0; k < 3; k++)
+            {
+                image_[i][j][k] = (unsigned char)(0);
+            }
         }
-        SDL_RenderClear(renderer_);
-        render();
     }
+    if(display_)
+    {
+        SDL_RenderClear(renderer_);
+    }
+    render();
 }
 
 void Window::render()

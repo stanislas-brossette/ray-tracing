@@ -95,5 +95,13 @@ target_include_directories(Main${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(Main${PROJECT_NAME} ${PROJECT_NAME})
 
+set(SRC_VIDEO
+    "${CMAKE_SOURCE_DIR}/src/mainVideo.cc"
+    )
+add_executable(Video${PROJECT_NAME} ${SRC_VIDEO})
+target_include_directories(Video${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(Video${PROJECT_NAME} ${PROJECT_NAME})
+
 # Build unit tests
 #add_subdirectory("unit")

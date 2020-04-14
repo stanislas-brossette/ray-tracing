@@ -30,6 +30,7 @@ public:
     void changeResolution(int resX, int resY);
 
     void rotateToTarget();
+    void moveToDistanceToTarget(double d);
 
     Frame3 frame_;
     double fov_;

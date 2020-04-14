@@ -49,6 +49,12 @@ void Camera::rotateToTarget()
     frame_.vz_ = frame_.vx_.cross(frame_.vy_);
 }
 
+void Camera::moveToDistanceToTarget(double d)
+{
+    Vector3 tp = frame_.o_ - target_;
+    frame_.o_ = tp * (d/tp.norm()) + target_;
+}
+
 Camera::~Camera()
 {
 }

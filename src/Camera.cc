@@ -41,7 +41,7 @@ void Camera::rotateToTarget()
     frame_.vx_ = frame_.vy_.cross(upGuide_);
     if(frame_.vx_.squaredNorm() <= 0.9) // equivalent to if(vx and upGuide_ are parallel)
     {
-        upGuide_ = Vector3(0, 0.1, 1.0);
+        upGuide_ = Vector3(0, 0.001, 1.0);
         upGuide_.normalize();
         frame_.vx_ = frame_.vy_.cross(upGuide_);
     }

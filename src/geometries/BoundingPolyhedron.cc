@@ -39,8 +39,8 @@ bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vec
     size_t impactIndex;
     for (size_t i = 0; i < planeNormals_.size(); i++)
     {
-        double tMin = (-pMin_[i] - planeNormals_[i].dot(incident.origin_-f_.o_))/(planeNormals_[i].dot(incident.dir_));
-        double tMax = (-pMax_[i] - planeNormals_[i].dot(incident.origin_-f_.o_))/(planeNormals_[i].dot(incident.dir_));
+        double tMin = (-pMin_[i] - planeNormals_[i].dot(incident.origin_))/(planeNormals_[i].dot(incident.dir_));
+        double tMax = (-pMax_[i] - planeNormals_[i].dot(incident.origin_))/(planeNormals_[i].dot(incident.dir_));
         if(tMax < tMin)
         {
             double tmp = tMin;

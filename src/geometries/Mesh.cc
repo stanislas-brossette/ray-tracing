@@ -231,7 +231,7 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
             Vector3 triNormal;
             double triDist;
             bool triImpact;
-            triImpact = polygons_[tIndex].intersect(lrInFrame, triPoint, triNormal, triDist);
+            triImpact = polygons_[tIndex].intersect(lr, triPoint, triNormal, triDist);
             if(triImpact and triDist < dist)
             {
                 impactNode = true;

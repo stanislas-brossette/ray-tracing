@@ -11,8 +11,8 @@ CheckerBoard::CheckerBoard(const Vector3RGB& color0, const Vector3RGB color1, do
 
 Vector3RGB CheckerBoard::color(double x, double y) const
 {
-    if((std::remainder(x, squareSizeX_) < 0 and std::remainder(y, squareSizeY_) < 0)
-            or (std::remainder(x, squareSizeX_) > 0 and std::remainder(y, squareSizeY_) > 0))
+    if((std::remainder(x, 2*squareSizeX_) < 0 and std::remainder(y, 2*squareSizeY_) < 0)
+            or (std::remainder(x, 2*squareSizeX_) > 0 and std::remainder(y, 2*squareSizeY_) > 0))
     {
         return color0_;
     }

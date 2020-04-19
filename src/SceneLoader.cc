@@ -169,10 +169,23 @@ void SceneLoader::scanBaseGeometry(Value& vIn, GeometryData* gData)
     scanVector3(vIn.FindMember("pos")->value, gData->pos);
 
     Value::MemberIterator itr = vIn.FindMember("rotAxis");
-    if(itr != vIn.MemberEnd()) scanVector3(itr->value, gData->rotAxis);
+    if(itr != vIn.MemberEnd())
+    {
+        scanVector3(itr->value, gData->rotAxis);
+        itr = vIn.FindMember("rotAngle");
+        if(itr != vIn.MemberEnd()) gData->rotAngle = itr->value.GetDouble();
+        gData->usingAngleAxis = true;
+    }
 
-    itr = vIn.FindMember("rotAngle");
-    if(itr != vIn.MemberEnd()) gData->rotAngle = itr->value.GetDouble();
+    if(not gData->usingAngleAxis)
+    {
+        itr = vIn.FindMember("vx");
+        if(itr != vIn.MemberEnd()) scanVector3(itr->value, gData->vx);
+        itr = vIn.FindMember("vy");
+        if(itr != vIn.MemberEnd()) scanVector3(itr->value, gData->vy);
+        itr = vIn.FindMember("vz");
+        if(itr != vIn.MemberEnd()) scanVector3(itr->value, gData->vz);
+    }
 }
 
 GeometryData* SceneLoader::scanGeometry(Value& vIn)

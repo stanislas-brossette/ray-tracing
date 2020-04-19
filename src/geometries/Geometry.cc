@@ -20,7 +20,14 @@ Geometry::Geometry(GeometryData* gData)
     simplifiedRender_(false)
 {
     f_.translate(gData->pos);
-    f_.rotate(gData->rotAxis, gData->rotAngle);
+    if(gData->usingAngleAxis)
+        f_.rotate(gData->rotAxis, gData->rotAngle);
+    else
+    {
+        f_.vx_ = gData->vx.normalize();
+        f_.vy_ = gData->vy.normalize();
+        f_.vz_ = gData->vz.normalize();
+    }
 }
 
 Geometry::~Geometry()

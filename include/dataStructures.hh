@@ -48,8 +48,12 @@ struct GeometryData
 {
     std::string type = "";
     Vector3 pos = Vector3(0,0,0);
+    Vector3 vx = Vector3(1,0,0);
+    Vector3 vy = Vector3(0,1,0);
+    Vector3 vz = Vector3(0,0,1);
     Vector3 rotAxis = Vector3(1,0,0);
     double rotAngle = 0;
+    bool usingAngleAxis = false;
     virtual std::string describe() const;
 };
 

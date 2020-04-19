@@ -36,7 +36,7 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
         switch (event.button.button)
         {
             case SDL_BUTTON_LEFT:
-                scene.castPrimaryRayAt(mouseX, mouseY);
+                scene.castPrimaryRayAt(mouseX, mouseY, true);
                 break;
             case SDL_BUTTON_RIGHT:
                 Pixel pix;

@@ -30,7 +30,7 @@ std::string Plane::describe() const
 }
 
 bool Plane::intersect(const LightRay& lr, Vector3& point,
-                      Vector3& normal, double& dist) const
+                      Vector3& normal, double& dist, bool verbose) const
 {
     bool pointAbovePlane = ((lr.origin_ - f_.o_).dot(f_.vz_) > 0);
     bool lrSameDirNormal = (f_.vz_.dot(lr.dir_) > 0);

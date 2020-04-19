@@ -31,7 +31,7 @@ std::string Sphere::describe() const
     return ss.str();
 }
 
-bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
+bool Sphere::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist, bool verbose) const
 {
     // Compute dist between light ray and sphere center
     Vector3 va = lr.origin_ - f_.o_;

@@ -80,9 +80,9 @@ std::string Cube::describe() const
     return ss.str();
 }
 
-bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
+bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist, bool verbose) const
 {
-    if(not bs_.intersect(lr))
+    if(not bs_.intersect(lr, verbose))
         return false;
 
     Vector3 impactPointTop, impactPointBottom, impactPointRight, impactPointLeft, impactPointFront, impactPointBack;
@@ -91,42 +91,42 @@ bool Cube::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, 
     bool impact = false;
 
     double distTop = INFINITY_d();
-    bool impactTop = topPlane_.intersect(lr, impactPointTop, normalTop, distTop);
+    bool impactTop = topPlane_.intersect(lr, impactPointTop, normalTop, distTop, verbose);
     if(not impactTop)
         distTop = INFINITY_d();
     else
         impact = true;
 
     double distBottom = INFINITY_d();
-    bool impactBottom = bottomPlane_.intersect(lr, impactPointBottom, normalBottom, distBottom);
+    bool impactBottom = bottomPlane_.intersect(lr, impactPointBottom, normalBottom, distBottom, verbose);
     if(not impactBottom)
         distBottom = INFINITY_d();
     else
         impact = true;
 
     double distRight = INFINITY_d();
-    bool impactRight = rightPlane_.intersect(lr, impactPointRight, normalRight, distRight);
+    bool impactRight = rightPlane_.intersect(lr, impactPointRight, normalRight, distRight, verbose);
     if(not impactRight)
         distRight = INFINITY_d();
     else
         impact = true;
 
     double distLeft = INFINITY_d();
-    bool impactLeft = leftPlane_.intersect(lr, impactPointLeft, normalLeft, distLeft);
+    bool impactLeft = leftPlane_.intersect(lr, impactPointLeft, normalLeft, distLeft, verbose);
     if(not impactLeft)
         distLeft = INFINITY_d();
     else
         impact = true;
 
     double distFront = INFINITY_d();
-    bool impactFront = frontPlane_.intersect(lr, impactPointFront, normalFront, distFront);
+    bool impactFront = frontPlane_.intersect(lr, impactPointFront, normalFront, distFront, verbose);
     if(not impactFront)
         distFront = INFINITY_d();
     else
         impact = true;
 
     double distBack = INFINITY_d();
-    bool impactBack = backPlane_.intersect(lr, impactPointBack, normalBack, distBack);
+    bool impactBack = backPlane_.intersect(lr, impactPointBack, normalBack, distBack, verbose);
     if(not impactBack)
         distBack = INFINITY_d();
     else

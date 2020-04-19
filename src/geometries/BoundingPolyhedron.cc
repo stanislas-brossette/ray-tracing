@@ -32,8 +32,9 @@ BoundingPolyhedron::BoundingPolyhedron (const Frame3& f, const std::vector<Vecto
 {
 }
 
-bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
+bool BoundingPolyhedron::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, bool verbose) const
 {
+    //incident is assumed to be defined in bp's frame
     double t0 = -INFINITY_d();
     double t1 = INFINITY_d();
     size_t impactIndex;
@@ -127,7 +128,7 @@ std::string BoundingPolyhedron::describe() const
     }
     for (size_t i = 0; i < verticesCube_.size(); i++)
     {
-        std::cout << "verticesCube_[" << i << "]: " << verticesCube_[i] << std::endl;
+        ss << "verticesCube_[" << i << "]: " << verticesCube_[i] << "\n";
     }
     return ss.str();
 }

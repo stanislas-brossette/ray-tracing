@@ -62,7 +62,7 @@ std::string Polygon::describe() const
 }
 
 bool Polygon::intersect(const LightRay& lr, Vector3& point,
-                      Vector3& normal, double& dist) const
+                      Vector3& normal, double& dist, bool verbose) const
 {
     PerformanceTracker::instance().incrementCallToIntersectPolygon();
     double verticalDist = (lr.origin_ - f_.o_).dot(f_.vz_);

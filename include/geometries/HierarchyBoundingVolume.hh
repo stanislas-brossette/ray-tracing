@@ -40,8 +40,8 @@ public:
     ~Node () = default;
     void spawnChildren();
     void populateChildren(const std::vector<Vector3>& points, int index);
-    bool intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections) const;
-    bool testIntersectionWithEdge(const Vector3& p0, const Vector3& p1);
+    bool intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections, bool verbose = false) const;
+    bool testIntersectionWithEdge(const Vector3& p0, const Vector3& p1, bool verbose = false);
 
     std::string describe() const;
 
@@ -59,7 +59,7 @@ public:
     HierarchyBoundingVolume () = default;
     HierarchyBoundingVolume (const Frame3& f, int maxDepth = 5);
     ~HierarchyBoundingVolume () = default;
-    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersection) const;
+    bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersection, bool verbose = false) const;
     void extendBy(const Vector3& point);
     void extendByTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, int index);
     void extendByPolygon(const std::vector<Vector3>& points);

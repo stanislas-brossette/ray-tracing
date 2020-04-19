@@ -16,7 +16,7 @@ public:
     Geometry (GeometryData* gData);
     virtual ~Geometry ();
     virtual std::string describe() const = 0;
-    virtual bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const = 0;
+    virtual bool intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, bool verbose = false) const = 0;
     virtual bool isInHalfSpace(const Vector3& point, const Vector3& normal, const Vector3& specDir, double& cosAngleDiffuse, double& cosAnglePhong) const = 0;
 
     Frame3 f_;

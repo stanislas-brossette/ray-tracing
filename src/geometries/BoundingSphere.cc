@@ -16,7 +16,7 @@ BoundingSphere::~BoundingSphere()
 {
 }
 
-bool BoundingSphere::intersect(const LightRay& lr) const
+bool BoundingSphere::intersect(const LightRay& lr, bool verbose) const
 {
     Vector3 OmSo = lr.origin_ - f_.o_;
     double dist = (OmSo - lr.dir_ * (lr.dir_.dot(OmSo))).squaredNorm() - radius_*radius_;

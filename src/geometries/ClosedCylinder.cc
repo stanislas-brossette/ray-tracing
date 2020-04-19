@@ -53,7 +53,7 @@ std::string ClosedCylinder::describe() const
     return ss.str();
 }
 
-bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist) const
+bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3& normal, double& dist, bool verbose) const
 {
     if(not bs_.intersect(lr))
         return false;
@@ -61,14 +61,14 @@ bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3
     Vector3 impactPointCyl;
     Vector3 normalCyl;
     double distCyl = INFINITY_d();
-    bool impactCyl = cylinder_.intersect(lr, impactPointCyl, normalCyl, distCyl);
+    bool impactCyl = cylinder_.intersect(lr, impactPointCyl, normalCyl, distCyl, verbose);
     if(not impactCyl)
         distCyl = INFINITY_d();
 
     Vector3 impactPointBP;
     Vector3 normalBP;
     double distBP = INFINITY_d();
-    bool impactBP = bottomPlane_.intersect(lr, impactPointBP, normalBP, distBP);
+    bool impactBP = bottomPlane_.intersect(lr, impactPointBP, normalBP, distBP, verbose);
     impactBP = impactBP and ((impactPointBP - f_.o_ + (f_.vz_ * (length_/2))).squaredNorm() < radius_*radius_);
     if(not impactBP)
         distBP = INFINITY_d();
@@ -76,7 +76,7 @@ bool ClosedCylinder::intersect(const LightRay& lr, Vector3& impactPoint, Vector3
     Vector3 impactPointTP;
     Vector3 normalTP;
     double distTP = INFINITY_d();
-    bool impactTP = topPlane_.intersect(lr, impactPointTP, normalTP, distTP);
+    bool impactTP = topPlane_.intersect(lr, impactPointTP, normalTP, distTP, verbose);
     impactTP = impactTP and ((impactPointTP - f_.o_ - (f_.vz_ * (length_/2))).squaredNorm() < radius_*radius_);
     if(not impactTP)
         distTP = INFINITY_d();

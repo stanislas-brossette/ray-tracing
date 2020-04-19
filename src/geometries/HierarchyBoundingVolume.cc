@@ -79,7 +79,7 @@ void Node::spawnChildren()
     }
 }
 
-bool Node::testIntersectionWithEdge(const Vector3& p0, const Vector3& p1)
+bool Node::testIntersectionWithEdge(const Vector3& p0, const Vector3& p1, bool verbose)
 {
     Vector3 edge = p1 - p0;
     double edgeLength = edge.norm();
@@ -89,7 +89,7 @@ bool Node::testIntersectionWithEdge(const Vector3& p0, const Vector3& p1)
     Vector3 point;
     Vector3 normal;
     double dist;
-    bool intersection = bp_.intersect(lrEdge, point, normal, dist);
+    bool intersection = bp_.intersect(lrEdge, point, normal, dist, verbose);
     bool res = intersection and dist >= 0 and dist <= edgeLength;
     return res;
 }
@@ -204,7 +204,7 @@ void Node::populateChildren(const std::vector<Vector3>& points, int index)
 }
 
 
-bool Node::intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections) const
+bool Node::intersect(const LightRay& incident, std::vector<NodeIntersection>& nodeIntersections, bool verbose) const
 {
     if(includedIndices_.size() == 0)
         return false;
@@ -213,10 +213,11 @@ bool Node::intersect(const LightRay& incident, std::vector<NodeIntersection>& no
     Vector3 normal(0,0,0);
     double dist = 0;
 
-    if(bp_.intersect(incident, point, normal, dist))
+    if(bp_.intersect(incident, point, normal, dist, verbose))
     {
         if(depth_ == maxDepth_)
         {
+            // Adding point and normal in nodeIntersection, they are in the item's frame
             nodeIntersections.push_back(NodeIntersection(point, normal, dist, this));
             return true;
         }
@@ -225,7 +226,7 @@ bool Node::intersect(const LightRay& incident, std::vector<NodeIntersection>& no
             bool intersectWithAnyChild = false;
             for (size_t i = 0; i < children_.size(); i++)
             {
-                bool childIntersect = children_[i]->intersect(incident, nodeIntersections);
+                bool childIntersect = children_[i]->intersect(incident, nodeIntersections, verbose);
                 intersectWithAnyChild = intersectWithAnyChild or childIntersect;
             }
             return intersectWithAnyChild;
@@ -263,9 +264,9 @@ HierarchyBoundingVolume::HierarchyBoundingVolume(const Frame3& f, int maxDepth)
     root_ = new Node(f_, depth, maxDepth_, std::to_string(0));
 }
 
-bool HierarchyBoundingVolume::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersections) const
+bool HierarchyBoundingVolume::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, std::vector<NodeIntersection>& nodeIntersections, bool verbose) const
 {
-    bool intersection = root_->intersect(incident, nodeIntersections);
+    bool intersection = root_->intersect(incident, nodeIntersections, verbose);
     return intersection;
 }
 

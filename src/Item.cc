@@ -32,10 +32,10 @@ Item::~Item()
 {
 }
 
-bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist) const
+bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, bool verbose) const
 {
     PerformanceTracker::instance().incrementCallToIntersect();
-    bool intersection = geometry_->intersect(incident, point, normal, dist);
+    bool intersection = geometry_->intersect(incident, point, normal, dist, verbose);
     if(intersection)
         PerformanceTracker::instance().incrementIntersections();
     return intersection;

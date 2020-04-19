@@ -197,13 +197,13 @@ bool compareByDist(const NodeIntersection& a, const NodeIntersection& b)
     return a.dist_ < b.dist_;
 }
 
-bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist) const
+bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist, bool verbose) const
 {
     LightRay lrInFrame;
     lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
     lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
     std::vector<NodeIntersection> nodeIntersections;
-    if(not hbv_.intersect(lrInFrame, point, normal, dist, nodeIntersections))
+    if(not hbv_.intersect(lrInFrame, point, normal, dist, nodeIntersections, verbose))
     {
         return false;
     }

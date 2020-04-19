@@ -31,7 +31,7 @@ public:
 
     void castPrimaryRay(Pixel& pix, size_t iOrderedRay) const;
     void castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const;
-    void castPrimaryRayAt(int pX, int pY) const;
+    void castPrimaryRayAt(int pX, int pY, bool verbose = false) const;
 
     void translateCamera(double x, double y, double z);
     void translateCameraLocal(double x, double y, double z);

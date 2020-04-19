@@ -219,7 +219,7 @@ bool Scene::findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3
         Vector3 tmpPoint;
         Vector3 tmpNormal;
         double tmpDist;
-        bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist);
+        bool tmpImpact = items_[itemIndex]->intersect(lr, tmpPoint, tmpNormal, tmpDist, verbose_);
         if (tmpImpact && tmpDist < impactDist && tmpDist > 1e-9)
         {
             impact = true;
@@ -296,9 +296,9 @@ void Scene::castPrimaryRay(Pixel& pix, size_t iOrderedRay) const
     castRay(pix, lr, 0);
 }
 
-void Scene::castPrimaryRayAt(int pX, int pY) const
+void Scene::castPrimaryRayAt(int pX, int pY, bool verbose) const
 {
-    verbose_ = true;
+    verbose_ = verbose;
     std::cout << "\n====== CastPrimaryRayAt(" << pX << "," << pY << ") ======" << std::endl;
     Pixel pix;
     LightRay lr;

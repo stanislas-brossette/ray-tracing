@@ -14,7 +14,7 @@
         "target": [1.1049239055167268, 0.018879594327545518, 1.0610844651927502],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.2,
-        "pos": [0.0,0.3,1.7],
+        "pos": [1.81618,0.400902,1.35617],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
@@ -45,40 +45,17 @@
         },
         "bottomPlane": {
             "material": {
-                "textureType": "CheckerBoard",
-                "color0": [250, 0, 0],
-                "color1": [0, 0, 250],
-                "squareSizeX": 1.0,
-                "squareSizeY": 1.0,
+                "textureType": "SolidColor",
+                "color": [20, 20, 20],
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.0,
+                "reflectiveness": 0.9,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
             "geometry": {
                 "type": "Plane",
                 "pos": [0.0, 0.0, 0.0]
-            }
-        },
-        "backPlane": {
-            "material": {
-                "textureType": "CheckerBoard",
-                "color0": [250, 0, 0],
-                "color1": [0, 0, 250],
-                "squareSizeX": 1.0,
-                "squareSizeY": 1.0,
-                "rugosity": 0.1,
-                "refraction": 0.0,
-                "reflectiveness": 0.0,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [-1.0, 0.0, 0.0],
-                "rotAxis": [0, 1, 0],
-                "rotAngle": 90
             }
         },
         "Pelvis": {

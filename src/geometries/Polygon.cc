@@ -64,6 +64,13 @@ std::string Polygon::describe() const
 bool Polygon::intersect(const LightRay& lr, Vector3& point,
                       Vector3& normal, double& dist, bool verbose) const
 {
+    if(verbose)
+    {
+        std::cout << "Polygon::intersect" << std::endl;
+        std::cout << "describe(): " << describe() << std::endl;
+        std::cout << "lr: " << lr << std::endl;
+    }
+    // lr is supposed to be in world's frame
     PerformanceTracker::instance().incrementCallToIntersectPolygon();
     double verticalDist = (lr.origin_ - f_.o_).dot(f_.vz_);
     bool pointAbovePolygon = (verticalDist > 0);
@@ -84,6 +91,8 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     }
     else
     {
+        if(verbose)
+            std::cout << "No impact with polygons plane" << std::endl;
         return false;
     }
 
@@ -91,27 +100,53 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
     point = lr.origin_ + lr.dir_ * dist;
     Vector3 Pimpact = f_.pointFromWorld(point); // In planes frame
     Vector2 Pp(Pimpact.x_, Pimpact.y_); // In planes frame
+    if(verbose)
+    {
+        std::cout << "impact point in world frame: " << point << std::endl;
+        std::cout << "Pimpact in polygons frame: " << Pimpact << std::endl;
+        std::cout << "Pp in polygons frame: " << Pp << std::endl;
+    }
 
     for (size_t i = 0; i < points_.size(); i++)
     {
         size_t i1 = (i+1)%(points_.size());
         impact = impact and Pp.isRightOf(points_.at(i), points_.at(i1));
         if(not impact)
+        {
+            if(verbose)
+                std::cout << "Pp not in triangle" << std::endl;
             return false;
+        }
     }
+    if(verbose)
+        std::cout << "Pp in triangle" << std::endl;
 
     //Compute normal
     if( normals_.size() == points_.size())
     {
+        if(verbose)
+        {
+            std::cout << "===CALCUL NORMAL FROM 3 NORMALS===" << std::endl;
+            std::cout << "normals_[0]: " << normals_[0] << std::endl;
+            std::cout << "normals_[1]: " << normals_[1] << std::endl;
+            std::cout << "normals_[2]: " << normals_[2] << std::endl;
+            std::cout << "f_: " << f_ << std::endl;
+        }
         normal = Vector3(0,0,0);
 
         normal.x_ = normals_[0].x_ + a0 * Pp.x_ + a1 * Pp.y_;
         normal.y_ = normals_[0].y_ + b0 * Pp.x_ + b1 * Pp.y_;
         normal.z_ = normals_[0].z_ + c0 * Pp.x_ + c1 * Pp.y_;
 
+        if(verbose)
+            std::cout << "normal: " << normal << std::endl;
 
         normal *= -normalMultiplier;
-
+        if(verbose)
+        {
+            std::cout << "normal: " << normal << std::endl;
+            std::cout << "==================================" << std::endl;
+        }
     }
     else
     {

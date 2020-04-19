@@ -156,6 +156,7 @@ void Mesh::loadOBJMesh()
 
 void Mesh::initTriangles()
 {
+    std::cout << "Mesh::initTriangles" << std::endl;
     switch(meshType_)
     {
         case MeshType::stl:
@@ -168,7 +169,12 @@ void Mesh::initTriangles()
             std::cout << "ERROR, mesh type unknown" << std::endl;
             break;
     }
+    std::cout << "Mesh contains " << faces_.size() << " faces" << std::endl;
+    std::cout << "finished loading" << std::endl;
+    std::cout << "Generating HBV" << std::endl;
     hbv_.finishFirstPass();
+    std::cout << "Generated HBV" << std::endl;
+    std::cout << "Populating HBV" << std::endl;
     for(size_t iFace = 0; iFace < faces_.size(); ++iFace)
     {
         std::vector<Vector3> points;
@@ -179,6 +185,7 @@ void Mesh::initTriangles()
         }
         hbv_.populateWithPolygon(points, iFace);
     }
+    std::cout << "Finished populating HBV" << std::endl;
 }
 
 std::string Mesh::describe() const
@@ -225,12 +232,22 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     dist = INFINITY_d();
     size_t minIndex = -1;
     bool impact = false;
+    if(verbose)
+        std::cout << "nodeIntersections.size(): " << nodeIntersections.size() << std::endl;
     for (size_t nIndex = 0; nIndex < nodeIntersections.size(); nIndex++)
     {
         bool impactNode = false;
+        if(verbose)
+        {
+            std::cout << "nIndex: " << nIndex << std::endl;
+            std::cout << "node name: " << nodeIntersections[nIndex].node_->name_ << std::endl;
+            std::cout << "nodeIntersections[" << nIndex << "].node_->includedIndices_.size(): " << nodeIntersections[nIndex].node_->includedIndices_.size() << std::endl;
+        }
         for (size_t j = 0; j < nodeIntersections[nIndex].node_->includedIndices_.size(); j++)
         {
             int tIndex = nodeIntersections[nIndex].node_->includedIndices_[j];
+            if(verbose)
+                std::cout << "tIndex: " << tIndex << std::endl;
             Vector3 triPoint;
             Vector3 triNormal;
             double triDist;

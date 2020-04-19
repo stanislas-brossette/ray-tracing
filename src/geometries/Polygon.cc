@@ -89,8 +89,8 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
 
     dist = -verticalDist/vzScalDir;
     point = lr.origin_ + lr.dir_ * dist;
-    Vector3 Pimpact = point - f_.o_; // In planes frame
-    Vector2 Pp(Pimpact.dot(f_.vx_), Pimpact.dot(f_.vy_)); // In planes frame
+    Vector3 Pimpact = f_.pointFromWorld(point); // In planes frame
+    Vector2 Pp(Pimpact.x_, Pimpact.y_); // In planes frame
 
     for (size_t i = 0; i < points_.size(); i++)
     {
@@ -109,12 +109,15 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
         normal.y_ = normals_[0].y_ + b0 * Pp.x_ + b1 * Pp.y_;
         normal.z_ = normals_[0].z_ + c0 * Pp.x_ + c1 * Pp.y_;
 
+        normal = f_.vecToWorld(normal);
+
         normal *= -normalMultiplier;
+
     }
     else
     {
-        normal = f_.vz_;
-        normal *= normalMultiplier;
+      normal = f_.vz_;
+      normal *= normalMultiplier;
     }
 
 

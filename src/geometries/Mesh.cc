@@ -84,7 +84,7 @@ void Mesh::loadSTLMesh()
         const Vector3& vz(vertexNormals_[itri]);
         Vector3 vx = (P1 - P0).normalize();
         Vector3 vy = vz.cross(vx);
-        Frame3 tFrame(f_.o_ + P0, vx, vy, vz);
+        Frame3 tFrame(P0, vx, vy, vz);
         std::vector<Vector2> points(3); // only triangles in .stl
         points[0] = Vector2(0,0);
         points[1] = Vector2((P2 - P0).dot(vx), (P2 - P0).dot(vy));
@@ -142,7 +142,7 @@ void Mesh::loadOBJMesh()
         Vector3 vz = ((points[2] - points[0]).cross(points[1] - points[0])).normalize();
         Vector3 vx = (points[1] - points[0]).normalize();
         Vector3 vy = vz.cross(vx);
-        Frame3 tFrame(f_.o_ + points[0], vx, vy, vz);
+        Frame3 tFrame(points[0], vx, vy, vz);
         std::vector<Vector2> points2D;
         points2D.push_back({0,0});
         for (size_t iPoints = 1; iPoints < points.size(); iPoints++)
@@ -231,7 +231,8 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
             Vector3 triNormal;
             double triDist;
             bool triImpact;
-            triImpact = polygons_[tIndex].intersect(lr, triPoint, triNormal, triDist);
+            //Polygon::intersect receives lr in meshes frame and computes triPoint and triNormal in meshes frame
+            triImpact = polygons_[tIndex].intersect(lrInFrame, triPoint, triNormal, triDist, verbose);
             if(triImpact and triDist < dist)
             {
                 impactNode = true;

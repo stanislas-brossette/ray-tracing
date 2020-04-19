@@ -109,7 +109,6 @@ bool Polygon::intersect(const LightRay& lr, Vector3& point,
         normal.y_ = normals_[0].y_ + b0 * Pp.x_ + b1 * Pp.y_;
         normal.z_ = normals_[0].z_ + c0 * Pp.x_ + c1 * Pp.y_;
 
-        normal = f_.vecToWorld(normal);
 
         normal *= -normalMultiplier;
 

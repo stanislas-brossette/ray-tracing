@@ -478,7 +478,8 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
                 distImpactToLightSource = (impactPoint - lsItem->geometry_->f_.o_).norm();
                 lrImpactToLightSource.dir_ = lsItem->geometry_->f_.o_ - impactPoint;
                 lrImpactToLightSource.dir_.normalize();
-                lrImpactToLightSource.origin_ = impactPoint + lrImpactToLightSource.dir_ * 1e-9;
+                //lrImpactToLightSource.origin_ = impactPoint + lrImpactToLightSource.dir_ * 1e-9;
+                lrImpactToLightSource.origin_ = impactPointRefl;// + lrImpactToLightSource.dir_ * 1e-9;
 
                 //Check if the diffusion light ray is intercepted by another object, that would cast a shadow
                 if(inHalfSpace)

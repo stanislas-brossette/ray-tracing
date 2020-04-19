@@ -199,6 +199,8 @@ bool compareByDist(const NodeIntersection& a, const NodeIntersection& b)
 
 bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double& dist, bool verbose) const
 {
+    if(verbose)
+        std::cout << "Mesh::intersect" << std::endl;
     LightRay lrInFrame;
     lrInFrame.dir_ = f_.vecFromWorld(lr.dir_);
     lrInFrame.origin_ = f_.pointFromWorld(lr.origin_);
@@ -207,6 +209,8 @@ bool Mesh::intersect(const LightRay& lr, Vector3& point, Vector3& normal, double
     {
         return false;
     }
+    if(verbose)
+        std::cout << "Intersection with hbv" << std::endl;
 
     std::sort(nodeIntersections.begin(), nodeIntersections.end(), compareByDist);
 

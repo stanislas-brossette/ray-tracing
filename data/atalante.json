@@ -1,0 +1,361 @@
+{
+    "scene": {
+        "maxNumThreads": 8,
+        "powerDistReduction": 2,
+        "exposition": 1.0,
+        "gammaPower": 1.0,
+        "simplifiedRender": true,
+        "maxDepthRecursion": 4,
+        "display": true
+    },
+    "camera": {
+        "fov": 120,
+        "resX": 1200,
+        "target": [1.1049239055167268, 0.018879594327545518, 1.0610844651927502],
+        "upGuide": [0.0, 0.0, 1.0],
+        "aspectRatio": 1.2,
+        "pos": [0.0,0.3,1.7],
+        "rotAxis": [0, 0, 1],
+        "rotAngle": 0
+    },
+    "render": {
+        "nPixPerRender": 10000,
+        "percentLightRay": 100
+    },
+    "ambiantLight": {
+        "color": [255, 255, 255],
+        "intensity": 0.4
+    },
+    "items": {
+        "lightSource1": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [200, 226, 234],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": true,
+                "lightIntensity": 1.0
+            },
+            "geometry": {
+                "type": "Sphere",
+                "radius": 0.08,
+                "pos": [1.3, 0.3, 2.0]
+            }
+        },
+        "bottomPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color0": [250, 0, 0],
+                "color1": [0, 0, 250],
+                "squareSizeX": 1.0,
+                "squareSizeY": 1.0,
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, 0.0]
+            }
+        },
+        "backPlane": {
+            "material": {
+                "textureType": "CheckerBoard",
+                "color0": [250, 0, 0],
+                "color1": [0, 0, 250],
+                "squareSizeX": 1.0,
+                "squareSizeY": 1.0,
+                "rugosity": 0.1,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [-1.0, 0.0, 0.0],
+                "rotAxis": [0, 1, 0],
+                "rotAngle": 90
+            }
+        },
+        "Pelvis": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.1049239055167268, 0.018879594327545518, 1.0610844651927502],
+                "vx": [0.9769957968218819, -0.04628539862687441, -0.20817510625991653],
+                "vy": [0.038101648523936694, 0.9983416435855001, -0.0431535289722717],
+                "vz": [0.20982725602774915, 0.034229001693792234, 0.9771391395655543],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/PelvisLink.STL"
+            }
+        },
+        "LFH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.108314952235357, 0.10773200060665403, 1.057243801114218],
+                "vx": [0.9769957968218819, -0.04628539862687441, -0.20817510625991653],
+                "vy": [0.05896006922887448, 0.9967388403698068, 0.05509441291800057],
+                "vz": [0.20494614714334722, -0.06610102852606872, 0.9765386478777445],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftFrontalHipLink.STL"
+            }
+        },
+        "LTH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [0.9863847713640828, 0.2824293934437794, 1.0946583962424488],
+                "vx": [0.9777942202978318, -0.030786858903348188, -0.20729358907361442],
+                "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
+                "vz": [0.20494614714334722, -0.06610102852606872, 0.9765386478777445],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftTransverseHipLink.STL"
+            }
+        },
+        "LSH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.11838699110429, 0.27827316749182734, 1.0666737617175108],
+                "vx": [0.9505346443469171, -0.05954087677700909, 0.3048586129485349],
+                "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
+                "vz": [-0.30751967477387027, -0.04209585069770938, 0.9506101140746448],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftSagittalHipLink.STL"
+            }
+        },
+        "LSK": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.2390851727253704, 0.2982035563474564, 0.6942351115006318],
+                "vx": [0.9990305556469968, -0.04341511547156813, -0.007285371112227268],
+                "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
+                "vz": [0.004733852595912413, -0.05858587203353061, 0.9982711486553495],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftSagittalKneeLink.STL"
+            }
+        },
+        "LSA": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.2297388217234817, 0.153138639598555, 0.2770593662512485],
+                "vx": [0.9954012348709329, 0.09578397686276013, 0.0013458802978190585],
+                "vy": [-0.09569723961120713, 0.9936740608744333, 0.05876988238977795],
+                "vz": [0.004291846714064857, -0.058628410533352854, 0.9982706494383753],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftSagittalAnkleLink.STL"
+            }
+        },
+        "LHA": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.2297388217234817, 0.153138639598555, 0.2770593662512485],
+                "vx": [0.7870292019115601, 0.039383550066110384, 0.6156573489552796],
+                "vy": [-0.04997878027453974, 0.9987502798606799, 6.950319851803388e-07],
+                "vz": [-0.6148879221945427, -0.030770350378310177, 0.7880139774628836],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/LeftHenkeAnkleLink.STL"
+            }
+        },
+        "RFH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.1015328587980964, -0.06997281195156399, 1.0649251292712825],
+                "vx": [0.9769957968218819, -0.04628539862687441, -0.20817510625991653],
+                "vy": [0.022127403386619938, 0.9928957308944057, -0.1169121276473473],
+                "vz": [0.2121074987164339, 0.109616282757696, 0.9710791314525521],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightFrontalHipLink.STL"
+            }
+        },
+        "RTH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [0.9658988950548035, -0.23152366165809055, 1.1127869181887728],
+                "vx": [0.9772263653044153, -0.01743797406557142, -0.21148179121241156],
+                "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
+                "vz": [0.2121074987164339, 0.109616282757696, 0.9710791314525521],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightTransverseHipLink.STL"
+            }
+        },
+        "RSH": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.0978244543708997, -0.23387778815694268, 1.0842368763750974],
+                "vx": [0.9994094191530558, 0.009950885366936727, 0.03289061854945935],
+                "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
+                "vz": [-0.033790131191997225, 0.11054769226691613, 0.9932962472336675],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightSagittalHipLink.STL"
+            }
+        },
+        "RSK": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [1.1110916668911803, -0.2806292080415044, 0.695245738387788],
+                "vx": [0.8550351577998146, -0.05215567813805766, -0.5159405626273298],
+                "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
+                "vz": [0.5185323895226477, 0.09797753631871971, 0.8494260199645685],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightSagittalKneeLink.STL"
+            }
+        },
+        "RSA": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [0.8984396949722881, -0.15222995006459078, 0.32992456793568953],
+                "vx": [0.9367122976434975, -0.16550421770282972, -0.3085100085345923],
+                "vy": [0.11281050623245686, 0.9768905386590664, -0.18154521519989492],
+                "vz": [0.33142700723842156, 0.1352524654155098, 0.9337359955961909],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightSagittalAnkleLink.STL"
+            }
+        },
+        "RHA": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [30, 30, 30],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "absorption": 0.0,
+                "reflectiveness": 0.01,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Mesh",
+                "pos": [0.8984396949722881, -0.15222995006459078, 0.32992456793568953],
+                "vx": [0.9421862038179123, -0.04714937091795357, 0.3317560762928582],
+                "vy": [0.04997936023166385, 0.9987502508373917, 1.7553415104787362e-06],
+                "vz": [-0.33134154717756875, 0.016579302587529918, 0.9433652027924744],
+                "depthHBV": 5,
+                "path": "/home/dynwalk/.simulation/exo_meshes/exo_empty/RightHenkeAnkleLink.STL"
+            }
+        }
+    }
+}
+
+
+

@@ -43,13 +43,14 @@ int main(int argc, char *argv[])
     Renderer renderer(sceneLoader.sceneData_.rData);
 
     std::string imageFolderPath("../images/videoMeshMonkey/");
-    for (size_t i = 0; i < 30; i++)
+    for (size_t i = 0; i < 180; i++)
     {
-        scene.camera_.frame_.translateLocal(-0.035, 0, 0);
-        scene.camera_.rotateToTarget();
-        scene.camera_.moveToDistanceToTarget(2.0);
-        Vector3 rotAxis(1,0,1);
-        scene.items_[1]->geometry_->f_.rotate(rotAxis, 1);
+        //scene.camera_.frame_.translateLocal(0.035, 0, 0);
+        //scene.camera_.rotateToTarget();
+        //scene.camera_.moveToDistanceToTarget(2.0);
+        Vector3 rotAxis(0,0,1);
+        scene.items_[2]->geometry_->f_.rotate(rotAxis, 2);
+        scene.items_[1]->geometry_->f_.rotate(rotAxis, -0.1);
         window.clear();
         PerformanceTracker::instance().resetRays();
         renderer.renderParallel(scene, window, "");

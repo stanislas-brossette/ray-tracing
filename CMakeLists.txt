@@ -47,6 +47,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/Renderer.cc"
     "${CMAKE_SOURCE_DIR}/src/Scene.cc"
     "${CMAKE_SOURCE_DIR}/src/SceneLoader.cc"
+    "${CMAKE_SOURCE_DIR}/src/MotionLoader.cc"
     "${CMAKE_SOURCE_DIR}/src/Vector3.cc"
     "${CMAKE_SOURCE_DIR}/src/Window.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/Texture.cc"
@@ -102,6 +103,15 @@ add_executable(Video${PROJECT_NAME} ${SRC_VIDEO})
 target_include_directories(Video${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(Video${PROJECT_NAME} ${PROJECT_NAME})
+
+set(SRC_ROBOT_VIDEO
+    "${CMAKE_SOURCE_DIR}/src/mainRobotVideo.cc"
+    )
+add_executable(RobotVideo${PROJECT_NAME} ${SRC_ROBOT_VIDEO})
+target_include_directories(RobotVideo${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(RobotVideo${PROJECT_NAME} ${PROJECT_NAME})
+
 
 # Build unit tests
 #add_subdirectory("unit")

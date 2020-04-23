@@ -1,12 +1,4 @@
-#include <iostream>
-#include <cstdio>
-
-#include "rapidjson/filereadstream.h"
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-
 #include "SceneLoader.hh"
-#include "Vector3.hh"
 
 using namespace rapidjson;
 

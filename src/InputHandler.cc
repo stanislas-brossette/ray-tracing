@@ -23,7 +23,7 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
     SDL_Delay(5);
 
     double rotIncrement = 5;
-    double transIncrement = 0.5;
+    double transIncrement = 0.1;
 
     switch (event.type)
     {

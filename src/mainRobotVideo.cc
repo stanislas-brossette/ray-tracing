@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     if(argc > 1)
         sceneJsonName = std::string(argv[1]);
 
-    std::string motionJsonName("foot_rolling_0");
     std::string path = std::string(DATA) + sceneJsonName + ".json";
     if(not fileExists(path))
     {
@@ -35,9 +34,6 @@ int main(int argc, char *argv[])
     }
 
     SDL_Init(SDL_INIT_VIDEO);
-    std::string motionPath = std::string(DATA) + motionJsonName + ".json";
-
-    MotionLoader motionLoader(motionPath);
 
     SceneLoader sceneLoader(path);
     Scene scene(sceneLoader.sceneData_);
@@ -48,9 +44,15 @@ int main(int argc, char *argv[])
     Renderer renderer(sceneLoader.sceneData_.rData);
 
     std::string imageFolderPath("../images/videoAtalante/");
-    for (int frameId = 0; frameId < 110; frameId++)
+
+    std::string motionJsonName("foot_rolling_0_100");
+    std::string motionPath = std::string(DATA) + motionJsonName + ".json";
+    MotionLoader motionLoader(motionPath);
+
+    for (int frameId = 0; frameId < 100; frameId++)
     {
-        for (size_t i = 2; i < 15; i++)
+        std::cout << "frameId: " << frameId << std::endl;
+        for (size_t i = 4; i < 17; i++)
         {
             scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
             scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
@@ -62,23 +64,78 @@ int main(int argc, char *argv[])
         window.clear();
         PerformanceTracker::instance().resetRays();
         renderer.renderParallel(scene, window, "");
-        std::string imageFilePath(imageFolderPath + sceneJsonName + std::to_string(frameId) + ".bmp"); 
+        std::string imageFilePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_" + std::to_string(frameId) + ".bmp");
         window.save(imageFilePath);
         std::cout << PerformanceTracker::instance().describe();
     }
+
+    motionJsonName = "foot_rolling_100_200";
+    motionPath = std::string(DATA) + motionJsonName + ".json";
+    MotionLoader motionLoader1(motionPath);
+
+    for (int frameId = 100; frameId < 200; frameId++)
+    {
+        //if(frameId == 115)
+        //    continue;
+        std::cout << "frameId: " << frameId << std::endl;
+        for (size_t i = 4; i < 17; i++)
+        {
+            scene.items_[i]->geometry_->f_.o_  = motionLoader1.get(frameId, scene.items_[i]->name_, "pos");
+            scene.items_[i]->geometry_->f_.vx_ = motionLoader1.get(frameId, scene.items_[i]->name_, "vx");
+            scene.items_[i]->geometry_->f_.vy_ = motionLoader1.get(frameId, scene.items_[i]->name_, "vy");
+            scene.items_[i]->geometry_->f_.vz_ = motionLoader1.get(frameId, scene.items_[i]->name_, "vz");
+        }
+
+
+        window.clear();
+        PerformanceTracker::instance().resetRays();
+        renderer.renderParallel(scene, window, "");
+        std::string imageFilePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_" + std::to_string(frameId) + ".bmp");
+        window.save(imageFilePath);
+        std::cout << PerformanceTracker::instance().describe();
+    }
+
+    motionJsonName = "foot_rolling_200_300";
+    motionPath = std::string(DATA) + motionJsonName + ".json";
+    MotionLoader motionLoader2(motionPath);
+
+    for (int frameId = 200; frameId < 284; frameId++)
+    {
+        //if(frameId == 115)
+        //    continue;
+        std::cout << "frameId: " << frameId << std::endl;
+        for (size_t i = 4; i < 17; i++)
+        {
+            scene.items_[i]->geometry_->f_.o_  = motionLoader2.get(frameId, scene.items_[i]->name_, "pos");
+            scene.items_[i]->geometry_->f_.vx_ = motionLoader2.get(frameId, scene.items_[i]->name_, "vx");
+            scene.items_[i]->geometry_->f_.vy_ = motionLoader2.get(frameId, scene.items_[i]->name_, "vy");
+            scene.items_[i]->geometry_->f_.vz_ = motionLoader2.get(frameId, scene.items_[i]->name_, "vz");
+        }
+
+
+        window.clear();
+        PerformanceTracker::instance().resetRays();
+        renderer.renderParallel(scene, window, "");
+        std::string imageFilePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_" + std::to_string(frameId) + ".bmp");
+        window.save(imageFilePath);
+        std::cout << PerformanceTracker::instance().describe();
+    }
+    std::cout << "out of render" << std::endl;
     SDL_Quit();
 
-    //std::string videoCreationCommand("ffmpeg -f image2 -r 30 -i " + imageFolderPath
-    //        + sceneJsonName + std::to_string(scene.camera_.resX_) + "%d.bmp "
-    //        + imageFolderPath + "out.mov");
-    //std::system(videoCreationCommand.c_str());
-    //std::cout << "Video saved in " << imageFolderPath << "out.mov" << std::endl;
+    std::string imageFileBasePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_");
+    std::string videoName(sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 30 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
 
     //std::string cleanupCommand("rm " + imageFolderPath
     //        + sceneJsonName + std::to_string(scene.camera_.resX_) + "*.bmp");
     //std::system(cleanupCommand.c_str());
 
-    //std::string playCommand("vlc " + imageFolderPath + "out.mov");
+    //std::string playCommand("vlc " + videoName);
     //std::system(playCommand.c_str());
 
 

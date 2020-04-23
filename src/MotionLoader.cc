@@ -26,7 +26,7 @@ void MotionLoader::scanVector3(Value& vIn, Vector3& vRes)
 void MotionLoader::load(const std::string& path)
 {
     FILE* fp = fopen(path.c_str(), "r");
-    char readBuffer[655536];
+    char readBuffer[1055536];
     FileReadStream is(fp, readBuffer, sizeof(readBuffer));
     document.Parse(readBuffer);
     fclose(fp);

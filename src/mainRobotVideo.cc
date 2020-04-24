@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     Window window(scene.camera_.resX_, scene.camera_.resY_, display);
     Renderer renderer(sceneLoader.sceneData_.rData);
 
-    std::string imageFolderPath("../images/videoAtalante/");
+    std::string imageFolderPath("/home/dynwalk/wdc_workspace/src/ray-tracing/images/videoAtalante/");
 
     std::string motionJsonName("foot_rolling_0_100");
     std::string motionPath = std::string(DATA) + motionJsonName + ".json";
@@ -52,6 +52,8 @@ int main(int argc, char *argv[])
     for (int frameId = 0; frameId < 100; frameId++)
     {
         std::cout << "frameId: " << frameId << std::endl;
+        scene.camera_.target_.x_ = frameId*2.1/283.0;
+        scene.camera_.rotateToTarget();
         for (size_t i = 4; i < 17; i++)
         {
             scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
@@ -75,9 +77,9 @@ int main(int argc, char *argv[])
 
     for (int frameId = 100; frameId < 200; frameId++)
     {
-        //if(frameId == 115)
-        //    continue;
         std::cout << "frameId: " << frameId << std::endl;
+        scene.camera_.target_.x_ = frameId*2.1/283.0;
+        scene.camera_.rotateToTarget();
         for (size_t i = 4; i < 17; i++)
         {
             scene.items_[i]->geometry_->f_.o_  = motionLoader1.get(frameId, scene.items_[i]->name_, "pos");
@@ -101,9 +103,9 @@ int main(int argc, char *argv[])
 
     for (int frameId = 200; frameId < 284; frameId++)
     {
-        //if(frameId == 115)
-        //    continue;
         std::cout << "frameId: " << frameId << std::endl;
+        scene.camera_.target_.x_ = frameId*2.1/283.0;
+        scene.camera_.rotateToTarget();
         for (size_t i = 4; i < 17; i++)
         {
             scene.items_[i]->geometry_->f_.o_  = motionLoader2.get(frameId, scene.items_[i]->name_, "pos");

@@ -4,12 +4,13 @@
         "powerDistReduction": 0,
         "exposition": 1.0,
         "gammaPower": 1.0,
-        "simplifiedRender": true,
-        "maxDepthRecursion": 8
+        "simplifiedRender": false,
+        "maxDepthRecursion": 8,
+	"display": false
     },
     "camera": {
         "fov": 160,
-        "resX": 1200,
+        "resX": 1500,
         "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.4,

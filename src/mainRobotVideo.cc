@@ -22,7 +22,7 @@
 int main(int argc, char *argv[])
 {
     printManual();
-    std::string sceneJsonName("atalante");
+    std::string sceneJsonName("atalanteObj");
     if(argc > 1)
         sceneJsonName = std::string(argv[1]);
 
@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
     Window window(scene.camera_.resX_, scene.camera_.resY_, display);
     Renderer renderer(sceneLoader.sceneData_.rData);
 
-    std::string imageFolderPath("/home/dynwalk/wdc_workspace/src/ray-tracing/images/videoAtalante/");
+    std::string imageFolderPath("/home/stanislas/wdc_workspace/src/ray-tracing/images/videoAtalante/");
 
-    std::string motionJsonName("foot_rolling_0_100");
+    std::string motionJsonName("trajectories/patient_000052/foot_rolling_0_100");
     std::string motionPath = std::string(DATA) + motionJsonName + ".json";
     MotionLoader motionLoader(motionPath);
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         std::cout << PerformanceTracker::instance().describe();
     }
 
-    motionJsonName = "foot_rolling_100_200";
+    motionJsonName = "trajectories/patient_000052/foot_rolling_100_200";
     motionPath = std::string(DATA) + motionJsonName + ".json";
     MotionLoader motionLoader1(motionPath);
 
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         std::cout << PerformanceTracker::instance().describe();
     }
 
-    motionJsonName = "foot_rolling_200_300";
+    motionJsonName = "trajectories/patient_000052/foot_rolling_200_300";
     motionPath = std::string(DATA) + motionJsonName + ".json";
     MotionLoader motionLoader2(motionPath);
 

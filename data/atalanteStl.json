@@ -1,16 +1,16 @@
 {
     "scene": {
-        "maxNumThreads": 7,
+        "maxNumThreads": 30,
         "powerDistReduction": 2,
         "exposition": 1.0,
         "gammaPower": 1.0,
         "simplifiedRender": false,
         "maxDepthRecursion": 8,
-        "display": true
+        "display": false
     },
     "camera": {
         "fov": 160,
-        "resX": 200,
+        "resX": 1080,
         "target": [0.0, 0.0, 1.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 2.0,
@@ -19,7 +19,7 @@
         "rotAngle": 0
     },
     "render": {
-        "nPixPerRender": 50000,
+        "nPixPerRender": 100000,
         "percentLightRay": 100
     },
     "ambiantLight": {
@@ -112,7 +112,7 @@
                 "vy": [0.038101648523936694, 0.9983416435855001, -0.0431535289722717],
                 "vz": [0.20982725602774915, 0.034229001693792234, 0.9771391395655543],
                 "depthHBV": 5,
-                "path": "atalante/obj/PelvisLink.obj"
+                "path": "atalante/stl/PelvisLink.STL"
             }
         },
         "LeftFrontalHipLink": {
@@ -133,7 +133,7 @@
                 "vy": [0.05896006922887448, 0.9967388403698068, 0.05509441291800057],
                 "vz": [0.20494614714334722, -0.06610102852606872, 0.9765386478777445],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftFrontalHipLink.obj"
+                "path": "atalante/stl/LeftFrontalHipLink.STL"
             }
         },
         "LeftTransverseHipLink": {
@@ -154,7 +154,7 @@
                 "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
                 "vz": [0.20494614714334722, -0.06610102852606872, 0.9765386478777445],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftTransverseHipLink.obj"
+                "path": "atalante/stl/LeftTransverseHipLink.STL"
             }
         },
         "LeftSagittalHipLink": {
@@ -175,7 +175,7 @@
                 "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
                 "vz": [-0.30751967477387027, -0.04209585069770938, 0.9506101140746448],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftSagittalHipLink.obj"
+                "path": "atalante/stl/LeftSagittalHipLink.STL"
             }
         },
         "LeftSagittalKneeLink": {
@@ -196,7 +196,7 @@
                 "vy": [0.0437668770105047, 0.9973378682004715, 0.05832355553364504],
                 "vz": [0.004733852595912413, -0.05858587203353061, 0.9982711486553495],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftSagittalKneeLink.obj"
+                "path": "atalante/stl/LeftSagittalKneeLink.STL"
             }
         },
         "LeftSagittalAnkleLink": {
@@ -217,7 +217,7 @@
                 "vy": [-0.09569723961120713, 0.9936740608744333, 0.05876988238977795],
                 "vz": [0.004291846714064857, -0.058628410533352854, 0.9982706494383753],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftSagittalAnkleLink.obj"
+                "path": "atalante/stl/LeftSagittalAnkleLink.STL"
             }
         },
         "LeftHenkeAnkleLink": {
@@ -238,7 +238,7 @@
                 "vy": [-0.04997878027453974, 0.9987502798606799, 6.950319851803388e-07],
                 "vz": [-0.6148879221945427, -0.030770350378310177, 0.7880139774628836],
                 "depthHBV": 5,
-                "path": "atalante/obj/LeftHenkeAnkleLink.obj"
+                "path": "atalante/stl/LeftHenkeAnkleLink.STL"
             }
         },
         "RightFrontalHipLink": {
@@ -259,7 +259,7 @@
                 "vy": [0.022127403386619938, 0.9928957308944057, -0.1169121276473473],
                 "vz": [0.2121074987164339, 0.109616282757696, 0.9710791314525521],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightFrontalHipLink.obj"
+                "path": "atalante/stl/RightFrontalHipLink.STL"
             }
         },
         "RightTransverseHipLink": {
@@ -280,7 +280,7 @@
                 "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
                 "vz": [0.2121074987164339, 0.109616282757696, 0.9710791314525521],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightTransverseHipLink.obj"
+                "path": "atalante/stl/RightTransverseHipLink.STL"
             }
         },
         "RightSagittalHipLink": {
@@ -301,7 +301,7 @@
                 "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
                 "vz": [-0.033790131191997225, 0.11054769226691613, 0.9932962472336675],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightSagittalHipLink.obj"
+                "path": "atalante/stl/RightSagittalHipLink.STL"
             }
         },
         "RightSagittalKneeLink": {
@@ -322,7 +322,7 @@
                 "vy": [-0.006248195113756506, 0.9938210038104817, -0.1108186466392147],
                 "vz": [0.5185323895226477, 0.09797753631871971, 0.8494260199645685],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightSagittalKneeLink.obj"
+                "path": "atalante/stl/RightSagittalKneeLink.STL"
             }
         },
         "RightSagittalAnkleLink": {
@@ -343,7 +343,7 @@
                 "vy": [0.11281050623245686, 0.9768905386590664, -0.18154521519989492],
                 "vz": [0.33142700723842156, 0.1352524654155098, 0.9337359955961909],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightSagittalAnkleLink.obj"
+                "path": "atalante/stl/RightSagittalAnkleLink.STL"
             }
         },
         "RightHenkeAnkleLink": {
@@ -364,10 +364,11 @@
                 "vy": [0.04997936023166385, 0.9987502508373917, 1.7553415104787362e-06],
                 "vz": [-0.33134154717756875, 0.016579302587529918, 0.9433652027924744],
                 "depthHBV": 5,
-                "path": "atalante/obj/RightHenkeAnkleLink.obj"
+                "path": "atalante/stl/RightHenkeAnkleLink.STL"
             }
         }
     }
 }
+
 
 

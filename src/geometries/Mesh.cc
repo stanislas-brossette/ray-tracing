@@ -156,7 +156,7 @@ void Mesh::loadOBJMesh()
 
 void Mesh::initTriangles()
 {
-    //std::cout << "Mesh::initTriangles" << std::endl;
+    std::cout << "Mesh::initTriangles" << std::endl;
     switch(meshType_)
     {
         case MeshType::stl:
@@ -169,12 +169,10 @@ void Mesh::initTriangles()
             std::cout << "ERROR, mesh type unknown" << std::endl;
             break;
     }
-    //std::cout << "Mesh contains " << faces_.size() << " faces" << std::endl;
-    //std::cout << "finished loading" << std::endl;
-    //std::cout << "Generating HBV" << std::endl;
+    std::cout << "loading mesh containing " << faces_.size() << " faces" << std::endl;
+    std::cout << "Generating HBV" << std::endl;
     hbv_.finishFirstPass();
-    //std::cout << "Generated HBV" << std::endl;
-    //std::cout << "Populating HBV" << std::endl;
+    std::cout << "Populating HBV" << std::endl;
     for(size_t iFace = 0; iFace < faces_.size(); ++iFace)
     {
         std::vector<Vector3> points;
@@ -185,7 +183,7 @@ void Mesh::initTriangles()
         }
         hbv_.populateWithPolygon(points, iFace);
     }
-    //std::cout << "Finished populating HBV" << std::endl;
+    std::cout << "Finished loading mesh" << std::endl;
 }
 
 std::string Mesh::describe() const

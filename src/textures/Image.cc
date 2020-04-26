@@ -39,3 +39,8 @@ void Image::switchColors()
 {
     return;
 }
+
+void Image::setColor(const Vector3RGB& c)
+{
+    return;
+}

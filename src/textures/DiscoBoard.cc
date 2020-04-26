@@ -49,3 +49,7 @@ void DiscoBoard::switchColors()
     std::random_shuffle(colors_.begin(), colors_.end());
 }
 
+void DiscoBoard::setColor(const Vector3RGB& c)
+{
+    return;
+}

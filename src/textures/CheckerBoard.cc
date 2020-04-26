@@ -29,3 +29,8 @@ void CheckerBoard::switchColors()
 {
     reversedColors_ = not reversedColors_;
 }
+
+void CheckerBoard::setColor(const Vector3RGB& c)
+{
+    return;
+}

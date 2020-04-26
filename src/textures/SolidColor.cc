@@ -19,3 +19,8 @@ void SolidColor::switchColors()
 {
     return;
 }
+
+void SolidColor::setColor(const Vector3RGB& c)
+{
+    color_ = c;
+}

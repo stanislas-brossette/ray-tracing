@@ -9,7 +9,7 @@
     },
     "camera": {
         "fov": 175,
-        "resX": 1500,
+        "resX": 1000,
         "target": [0.0, 0.1, 0.099],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,

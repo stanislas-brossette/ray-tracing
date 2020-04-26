@@ -30,7 +30,7 @@
         "lightSource0": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [250, 0, 0],
+                "color": [250, 250, 250],
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
@@ -46,7 +46,7 @@
         "lightSource1": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [0, 250, 0],
+                "color": [250, 250, 250],
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
@@ -62,7 +62,7 @@
         "lightSource2": {
             "material": {
                 "textureType": "SolidColor",
-                "color": [0, 0, 250],
+                "color": [250, 250, 250],
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
@@ -82,7 +82,7 @@
                 "squareSizeY": 0.5,
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.01,
+                "reflectiveness": 0.05,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

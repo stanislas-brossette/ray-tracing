@@ -27,7 +27,7 @@ Renderer::~Renderer()
 
 void Renderer::renderParallel(const Scene& sc, Window& win, const std::string& s)
 {
-    win.clear();
+    //win.clear();
     int iter = 0;
     int nLightRay = win.nPixels()*percentLightRay_/100;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();

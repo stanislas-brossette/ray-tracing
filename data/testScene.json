@@ -9,7 +9,7 @@
     },
     "camera": {
         "fov": 175,
-        "resX": 1500,
+        "resX": 1000,
         "target": [0.0, 2.5, -0.5],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.5,
@@ -18,7 +18,7 @@
         "rotAngle": 0
     },
     "render": {
-        "nPixPerRender": 100000,
+        "nPixPerRender": 30000,
         "percentLightRay": 100
     },
     "ambiantLight": {

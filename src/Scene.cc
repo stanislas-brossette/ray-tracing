@@ -10,6 +10,11 @@ Scene::Scene()
 {
 }
 
+void Scene::populateItem(Item* item, const ItemData& itemData)
+{
+    item->load(itemData);
+}
+
 Scene::Scene(const SceneData& sData)
   : items_(),
     camera_(sData.cData),
@@ -23,12 +28,50 @@ Scene::Scene(const SceneData& sData)
     verbose_(false)
 {
     PerformanceTracker::instance().startPreprocessingTimer();
-    for (size_t i = 0; i < sData.itemsData.size(); i++)
+    numThreads_ = std::thread::hardware_concurrency() - 1;
+    if(numThreads_ > maxNumThreads_)
+        numThreads_ = maxNumThreads_;
+
+    bool parallelPreprocessing = true;
+
+    if(not parallelPreprocessing)
     {
-        PerformanceTracker::instance().incrementItems();
-        items_.push_back(new Item(sData.itemsData.at(i)));
-        items_[i]->geometry_->simplifiedRender_ = simplifiedRender_;
+        for (size_t i = 0; i < sData.itemsData.size(); i++)
+        {
+            PerformanceTracker::instance().incrementItems();
+            items_.push_back(new Item(sData.itemsData.at(i)));
+            items_[i]->geometry_->simplifiedRender_ = simplifiedRender_;
+        }
     }
+    else
+    {
+        std::vector<std::thread*> pool(numThreads_, nullptr);
+
+        size_t itemIndex = 0;
+        size_t threadIndex = 0;
+        while(itemIndex < sData.itemsData.size())
+        {
+            PerformanceTracker::instance().incrementItems();
+            items_.push_back(new Item);
+            pool[threadIndex] = new std::thread(&Scene::populateItem, this, items_[itemIndex], sData.itemsData.at(itemIndex));
+            threadIndex ++;
+            if(threadIndex == numThreads_ or itemIndex == sData.itemsData.size()-1)
+            {
+                for (size_t i = 0; i < threadIndex; i++)
+                {
+                    pool[i]->join();
+                    delete pool[i];
+                }
+                threadIndex = 0;
+            }
+            itemIndex++;
+        }
+        for (size_t itemIndex = 0; itemIndex < items_.size(); itemIndex++)
+        {
+            items_[itemIndex]->geometry_->simplifiedRender_ = simplifiedRender_;
+        }
+    }
+
     PerformanceTracker::instance().endPreprocessingTimer();
 }
 
@@ -43,21 +86,18 @@ Scene::~Scene()
 void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute, size_t nPointsRendered) const
 {
     int nPix = res.size();
-    int numThreads = std::thread::hardware_concurrency() - 1;
-    if(numThreads > maxNumThreads_)
-        numThreads = maxNumThreads_;
 
-    std::vector<int> pixPerThread(numThreads);
-    for (size_t i = 0; i < numThreads; i++)
+    std::vector<int> pixPerThread(numThreads_);
+    for (size_t i = 0; i < numThreads_; i++)
     {
-        pixPerThread[i] = nPix/numThreads;
+        pixPerThread[i] = nPix/numThreads_;
     }
-    pixPerThread[0] += nPix%numThreads;
+    pixPerThread[0] += nPix%numThreads_;
 
-    std::vector<std::thread*> pool(numThreads, nullptr);
+    std::vector<std::thread*> pool(numThreads_, nullptr);
 
     size_t index = 0;
-    for (size_t i = 0; i < numThreads; i++)
+    for (size_t i = 0; i < numThreads_; i++)
     {
         std::vector<Pixel> threadPix(pixPerThread[i]);
         size_t beginIndex = index;
@@ -65,7 +105,7 @@ void Scene::renderParallel(std::vector<Pixel>& res, const size_t& nPixToCompute,
         pool[i] = new std::thread(&Scene::castMultipleRandomRays, this, std::ref(res), beginIndex, endIndex, nPointsRendered);
         index += pixPerThread[i];
     }
-    for (size_t i = 0; i < numThreads; i++)
+    for (size_t i = 0; i < numThreads_; i++)
     {
         pool[i]->join();
         delete pool[i];

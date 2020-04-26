@@ -29,6 +29,8 @@ public:
     bool findFirstImpact(const LightRay& lr, size_t& impactItemIndex, Vector3& impactPoint, Vector3& impactNormal, double& impactDist) const;
     double getDistReductionFactor(double dist) const;
 
+    void populateItem(Item* item, const ItemData& itemData);
+
     void castPrimaryRay(Pixel& pix, size_t iOrderedRay) const;
     void castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const;
     void castPrimaryRayAt(int pX, int pY, bool verbose = false) const;
@@ -45,6 +47,7 @@ public:
     bool simplifiedRender_;
     size_t maxDepthIndex_;
     size_t maxNumThreads_;
+    size_t numThreads_;
     size_t powerDistReduction_;
     double exposition_;
     double gammaPower_;

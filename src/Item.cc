@@ -1,5 +1,11 @@
 #include "Item.hh"
 
+Item::Item ()
+    : geometry_(nullptr),
+      material_(nullptr)
+{
+}
+
 Item::Item (Geometry* g, Material* m)
     : geometry_(g),
       material_(m)
@@ -7,8 +13,17 @@ Item::Item (Geometry* g, Material* m)
 }
 
 Item::Item (const ItemData& iData)
-    : name_(iData.name)
 {
+    load(iData);
+}
+
+Item::~Item()
+{
+}
+
+void Item::load(const ItemData& iData)
+{
+    name_ = iData.name;
     material_ = new Material(iData.mData);
     if(SphereData* sData = dynamic_cast<SphereData*>(iData.gData))
         geometry_ = new Sphere(sData);
@@ -26,10 +41,6 @@ Item::Item (const ItemData& iData)
         geometry_ = new Mesh(sData);
     else
         std::cout << "Unrecognized geometry" << std::endl;
-}
-
-Item::~Item()
-{
 }
 
 bool Item::intersect(const LightRay& incident, Vector3& point, Vector3& normal, double& dist, bool verbose) const

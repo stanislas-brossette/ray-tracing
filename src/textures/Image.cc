@@ -34,3 +34,8 @@ Vector3RGB Image::color(double x, double y) const
     c.b_ = double(b)/255.0;
     return c;
 }
+
+void Image::switchColors()
+{
+    return;
+}

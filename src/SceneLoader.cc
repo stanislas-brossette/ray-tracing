@@ -141,6 +141,13 @@ TextureData* SceneLoader::scanTexture(Value& vIn)
         tData->squareSizeY = vIn.FindMember("squareSizeY")->value.GetDouble();
         return tData;
     }
+    if(type == "DiscoBoard")
+    {
+        DiscoBoardData* tData = new DiscoBoardData();
+        tData->squareSizeX = vIn.FindMember("squareSizeX")->value.GetDouble();
+        tData->squareSizeY = vIn.FindMember("squareSizeY")->value.GetDouble();
+        return tData;
+    }
     if(type == "Image")
     {
         ImageData* tData = new ImageData();

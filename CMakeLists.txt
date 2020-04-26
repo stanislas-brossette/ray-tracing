@@ -53,6 +53,7 @@ set(SRC
     "${CMAKE_SOURCE_DIR}/src/textures/Texture.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/SolidColor.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/CheckerBoard.cc"
+    "${CMAKE_SOURCE_DIR}/src/textures/DiscoBoard.cc"
     "${CMAKE_SOURCE_DIR}/src/textures/Image.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/ClosedCylinder.cc"
     "${CMAKE_SOURCE_DIR}/src/geometries/Cube.cc"
@@ -111,6 +112,14 @@ add_executable(RobotVideo${PROJECT_NAME} ${SRC_ROBOT_VIDEO})
 target_include_directories(RobotVideo${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(RobotVideo${PROJECT_NAME} ${PROJECT_NAME})
+
+set(SRC_DISCO_VIDEO
+    "${CMAKE_SOURCE_DIR}/src/mainDiscoVideo.cc"
+    )
+add_executable(DiscoVideo${PROJECT_NAME} ${SRC_DISCO_VIDEO})
+target_include_directories(DiscoVideo${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(DiscoVideo${PROJECT_NAME} ${PROJECT_NAME})
 
 
 # Build unit tests

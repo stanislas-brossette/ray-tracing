@@ -8,6 +8,7 @@ public:
     SolidColor (const Vector3RGB& c);
     virtual ~SolidColor ();
     Vector3RGB color(double x, double y) const;
+    void switchColors();
 
 private:
     Vector3RGB color_;

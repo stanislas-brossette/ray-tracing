@@ -121,6 +121,13 @@ struct CheckerBoardData : public TextureData
     std::string describe() const;
 };
 
+struct DiscoBoardData : public TextureData
+{
+    double squareSizeX = 0;
+    double squareSizeY = 0;
+    std::string describe() const;
+};
+
 struct ImageData : public TextureData
 {
     std::string path = "";

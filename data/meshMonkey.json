@@ -6,11 +6,11 @@
         "gammaPower": 1.0,
         "simplifiedRender": false,
         "maxDepthRecursion": 8,
-	"display": false
+        "display": true
     },
     "camera": {
         "fov": 160,
-        "resX": 1500,
+        "resX": 500,
         "target": [0.0, 0.0, 0.0],
         "upGuide": [0.0, 0.0, 1.0],
         "aspectRatio": 1.4,

@@ -22,7 +22,7 @@
 int main(int argc, char *argv[])
 {
     printManual();
-    std::string sceneJsonName("atalanteObj");
+    std::string sceneJsonName("atalanteStlDisco");
     if(argc > 1)
         sceneJsonName = std::string(argv[1]);
 
@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
 
     for (int frameId = 0; frameId < 100; frameId++)
     {
+        if (frameId%20 == 5)
+            scene.items_[3]->material_->texture_->switchColors();
         std::cout << "frameId: " << frameId << std::endl;
         scene.camera_.target_.x_ = frameId*2.1/283.0;
         scene.camera_.rotateToTarget();
@@ -77,6 +79,8 @@ int main(int argc, char *argv[])
 
     for (int frameId = 100; frameId < 200; frameId++)
     {
+        if (frameId%20 == 5)
+            scene.items_[3]->material_->texture_->switchColors();
         std::cout << "frameId: " << frameId << std::endl;
         scene.camera_.target_.x_ = frameId*2.1/283.0;
         scene.camera_.rotateToTarget();
@@ -103,6 +107,8 @@ int main(int argc, char *argv[])
 
     for (int frameId = 200; frameId < 284; frameId++)
     {
+        if (frameId%20 == 5)
+            scene.items_[3]->material_->texture_->switchColors();
         std::cout << "frameId: " << frameId << std::endl;
         scene.camera_.target_.x_ = frameId*2.1/283.0;
         scene.camera_.rotateToTarget();

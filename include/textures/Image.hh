@@ -9,6 +9,7 @@ public:
     Image (const std::string& path, double sizeX, double sizeY);
     virtual ~Image () = default;
     Vector3RGB color(double x, double y) const;
+    void switchColors();
 
 private:
     SDL_Surface* image_;

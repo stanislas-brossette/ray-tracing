@@ -506,8 +506,16 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
             }
         }
         {
-            double cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
-            ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+            bool flatAmbiant = false;
+            if(flatAmbiant)
+            {
+                ambiantPix.setColor(ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+            }
+            else
+            {
+                double cosAngleDiffuse = std::abs(- lr.dir_.dot(impactNormal));
+                ambiantPix.setColor(cosAngleDiffuse*ambiantLight_.intensity_, impactItem->material_->texture_->color(impactPointInFrame.x_, impactPointInFrame.y_));
+            }
             if(verbose_)
             {
                 std::cout << multiTab(depthIndex) << "ambiantPix: " << ambiantPix << std::endl;

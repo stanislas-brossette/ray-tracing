@@ -6,7 +6,7 @@
         "gammaPower": 2.2,
         "simplifiedRender": false,
         "maxDepthRecursion": 5,
-        "display": false
+        "display": true
     },
     "camera": {
         "fov": 175,

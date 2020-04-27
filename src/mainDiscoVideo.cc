@@ -41,8 +41,11 @@ int main(int argc, char *argv[])
     Window window(scene.camera_.resX_, scene.camera_.resY_, display);
     Renderer renderer(sceneLoader.sceneData_.rData);
 
-    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/");
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
 
+    /******************
+    *  Foot Rolling  *
+    ******************/
     //std::vector<std::string> motionJsonNames{
     //    "trajectories/patient_000052/foot_rolling_0_100",
     //    "trajectories/patient_000052/foot_rolling_100_200",
@@ -50,16 +53,48 @@ int main(int argc, char *argv[])
     //};
     //std::vector<int> frameStartFile{0, 100, 200};
     //std::vector<int> frameEndFile{100, 200, 284};
+
+    /****************
+    *  Turnaround  *
+    ****************/
+    //std::vector<std::string> motionJsonNames{
+    //    "trajectories/patient_000052/turnaround_right_0_100",
+    //    "trajectories/patient_000052/turnaround_right_100_200",
+    //    "trajectories/patient_000052/turnaround_right_200_300",
+    //    "trajectories/patient_000052/turnaround_right_300_400",
+    //    "trajectories/patient_000052/turnaround_right_400_500",
+    //    "trajectories/patient_000052/turnaround_right_500_600"
+    //};
+    //std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
+    //std::vector<int> frameEndFile{100, 200, 300, 400, 500, 569};
+
+    /***************
+    *  Flat Foot  *
+    ***************/
+    //std::vector<std::string> motionJsonNames{
+    //    "trajectories/patient_000052/flat_foot_0_100",
+    //    "trajectories/patient_000052/flat_foot_100_200"
+    //};
+    //std::vector<int> frameStartFile{0, 100};
+    //std::vector<int> frameEndFile{100, 149};
+
+    /**************
+    *  Stand Up  *
+    **************/
     std::vector<std::string> motionJsonNames{
-        "trajectories/patient_000052/turnaround_right_0_100",
-        "trajectories/patient_000052/turnaround_right_100_200",
-        "trajectories/patient_000052/turnaround_right_200_300",
-        "trajectories/patient_000052/turnaround_right_300_400",
-        "trajectories/patient_000052/turnaround_right_400_500",
-        "trajectories/patient_000052/turnaround_right_500_600"
+        "trajectories/patient_000052/stand_up",
     };
-    std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
-    std::vector<int> frameEndFile{100, 200, 300, 400, 500, 569};
+    std::vector<int> frameStartFile{0};
+    std::vector<int> frameEndFile{49};
+
+    /**************
+    *  Sit Down  *
+    **************/
+    //std::vector<std::string> motionJsonNames{
+    //    "trajectories/patient_000052/sit_down",
+    //};
+    //std::vector<int> frameStartFile{0};
+    //std::vector<int> frameEndFile{99};
 
     for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
     {

@@ -54,6 +54,20 @@ int main(int argc, char *argv[])
     //std::vector<int> frameStartFile{0, 100, 200};
     //std::vector<int> frameEndFile{100, 200, 284};
 
+    /**********************
+    *  Long Foot Rolling  *
+    **********************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/long_foot_rolling_0_100",
+        "trajectories/patient_000052/long_foot_rolling_100_200",
+        "trajectories/patient_000052/long_foot_rolling_200_300",
+        "trajectories/patient_000052/long_foot_rolling_300_400",
+        "trajectories/patient_000052/long_foot_rolling_400_500",
+        "trajectories/patient_000052/long_foot_rolling_500_600"
+    };
+    std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
+    std::vector<int> frameEndFile{100, 200, 300, 400, 500, 554};
+
     /****************
     *  Turnaround  *
     ****************/
@@ -81,11 +95,11 @@ int main(int argc, char *argv[])
     /**************
     *  Stand Up  *
     **************/
-    std::vector<std::string> motionJsonNames{
-        "trajectories/patient_000052/stand_up",
-    };
-    std::vector<int> frameStartFile{0};
-    std::vector<int> frameEndFile{49};
+    //std::vector<std::string> motionJsonNames{
+    //    "trajectories/patient_000052/stand_up",
+    //};
+    //std::vector<int> frameStartFile{0};
+    //std::vector<int> frameEndFile{49};
 
     /**************
     *  Sit Down  *

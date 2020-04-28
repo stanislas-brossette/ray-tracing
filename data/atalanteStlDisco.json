@@ -10,8 +10,8 @@
     },
     "camera": {
         "fov": 100,
-        "resX": 720,
-        "target": [1.0,0.0,0.8],
+        "resX": 360,
+        "target": [0.04473088918756667, -0.023698960694729244, 0.9304836521315684],
         "upGuide": [0,0,1],
         "aspectRatio": 2.0,
         "pos": [2.44062,1.26289,1.47621],
@@ -35,7 +35,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 2.0
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -51,7 +51,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 2.0
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -67,7 +67,7 @@
                 "refraction": 0.0,
                 "reflectiveness": 0.0,
                 "lightEmitter": true,
-                "lightIntensity": 2.0
+                "lightIntensity": 1.0
             },
             "geometry": {
                 "type": "Sphere",
@@ -88,7 +88,7 @@
             },
             "geometry": {
                 "type": "Plane",
-                "pos": [100.0, 100.0, 0.0]
+                "pos": [100.0, 100.0, -1.0]
             }
         },
         "PelvisLink": {
@@ -364,38 +364,22 @@
                 "path": "atalante/stl/RightHenkeAnkleLink.STL"
             }
         },
-        "rightPlane": {
+        "bottomPlane": {
             "material": {
-                "textureType": "SolidColor",
-                "color": [150, 150, 150],
+                "textureType": "CheckerBoard",
+                "color0": [5,5,5],
+                "color1": [250,250,250],
+                "squareSizeX": 0.5,
+                "squareSizeY": 0.5,
                 "rugosity": 0.1,
                 "refraction": 0.0,
-                "reflectiveness": 0.8,
+                "reflectiveness": 0.0,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
             "geometry": {
                 "type": "Plane",
-                "pos": [0.0, -2.02, 0.0],
-                "rotAxis": [1, 0, 0],
-                "rotAngle": 90
-            }
-        },
-        "backPlane": {
-            "material": {
-                "textureType": "SolidColor",
-                "color": [150, 150, 150],
-                "rugosity": 0.1,
-                "refraction": 0.0,
-                "reflectiveness": 0.8,
-                "lightEmitter": false,
-                "lightIntensity": 0
-            },
-            "geometry": {
-                "type": "Plane",
-                "pos": [-2.02, 0.0, 0.0],
-                "rotAxis": [0, 1, 0],
-                "rotAngle": 90
+                "pos": [100.0, 100.0, 0.0]
             }
         }
     }

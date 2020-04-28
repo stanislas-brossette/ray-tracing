@@ -121,6 +121,14 @@ target_include_directories(DiscoVideo${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(DiscoVideo${PROJECT_NAME} ${PROJECT_NAME})
 
+set(SRC_TRANSITION_VIDEO
+    "${CMAKE_SOURCE_DIR}/src/mainDiscoTransitionVideo.cc"
+    )
+add_executable(TransitionVideo${PROJECT_NAME} ${SRC_TRANSITION_VIDEO})
+target_include_directories(TransitionVideo${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+target_link_libraries(TransitionVideo${PROJECT_NAME} ${PROJECT_NAME})
+
 
 # Build unit tests
 #add_subdirectory("unit")

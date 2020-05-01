@@ -1,4 +1,5 @@
 #include "Window.hh"
+#include "StringException.hh"
 
 Window::Window()
     : window_(nullptr),
@@ -27,7 +28,8 @@ Window::Window(int resX, int resY, bool display)
         // Set up window
         window_ = SDL_CreateWindow("RayTracing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, resX_, resY_, flags);
         if(!window_) {
-            std::cerr << SDL_GetError() << std::endl;
+            StringException error("Error: In Window::Window, SDL window could not be created");
+            throw error;
         }
 
         // Set up renderer
@@ -37,7 +39,8 @@ Window::Window(int resX, int resY, bool display)
         SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 
         if(renderer_ == nullptr) {
-            std::cerr << SDL_GetError() << std::endl;
+            StringException error("Error: In Window::Window, SDL Renderer could not be created");
+            throw error;
         }
     }
 }

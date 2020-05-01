@@ -1,4 +1,5 @@
 #include "MotionLoader.hh"
+#include "StringException.hh"
 
 using namespace rapidjson;
 
@@ -32,7 +33,8 @@ void MotionLoader::load(const std::string& path)
     fclose(fp);
     if(document.HasParseError())
     {
-        std::cout << "ERROR: Json has errors" << std::endl;
+        StringException error("ERROR: Json file " + path + " has errors");
+        throw error;
     }
     else
         std::cout << "Correctly loaded json motion" << std::endl;

@@ -1,5 +1,6 @@
 #include "Camera.hh"
 #include "utils.hh"
+#include "StringException.hh"
 
 Camera::Camera()
   : frame_(),
@@ -108,8 +109,8 @@ void Camera::castOrderedRay(LightRay& lr, Pixel& px, size_t index) const
 {
     if (index >= allPixels_.size())
     {
-        std::cout << "Error, requesting index " << index << ", which out of allPixels(size: " << allPixels_.size() << ")" << std::endl;
-        return;
+        StringException error("Error, in Camera::castOrderedRay, requesting index " + std::to_string(index) + ", which out of allPixels(size: " + std::to_string(allPixels_.size()) + ")");
+        throw error;
     }
     px.x_ = allPixels_[index].first;
     px.y_ = allPixels_[index].second;

@@ -1,4 +1,5 @@
 #include "SceneLoader.hh"
+#include "StringException.hh"
 
 using namespace rapidjson;
 
@@ -25,7 +26,8 @@ SceneData SceneLoader::load(const std::string& path)
     fclose(fp);
     if(document.HasParseError())
     {
-        std::cout << "ERROR: Json has errors" << std::endl;
+        StringException error("Error: Json file " + path + " has errors");
+        throw error;
     }
 
     sceneData_.sExData = scanScene(document.FindMember("scene")->value);
@@ -251,7 +253,8 @@ GeometryData* SceneLoader::scanGeometry(Value& vIn)
     }
     else
     {
-        std::cout << "ERROR: wrong item type" << std::endl;
+        StringException error("ERROR: wrong item type: " + type);
+        throw error;
     }
 
     GeometryData* gData = new GeometryData();

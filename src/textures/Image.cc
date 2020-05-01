@@ -1,4 +1,5 @@
 #include "textures/Image.hh"
+#include "StringException.hh"
 
 Image::Image (const std::string& path, double sizeX, double sizeY)
     : Texture(),
@@ -11,7 +12,10 @@ Image::Image (const std::string& path, double sizeX, double sizeY)
     if(not image_)
         image_ = SDL_LoadBMP((IMAGES_FOLDER + path).c_str());
     if(not image_)
-        std::cout << "Failed to load " << path << std::endl;
+    {
+        StringException error("Failed to load " + path);
+        throw error;
+    }
 }
 
 Vector3RGB Image::color(double x, double y) const

@@ -1,4 +1,5 @@
 #include "geometries/Mesh.hh"
+#include "StringException.hh"
 
 Mesh::Mesh()
     : Geometry(),
@@ -37,7 +38,10 @@ void Mesh::readPath()
     if(not fileExists(path_))
         path_ = std::string(MESHES) + path_;
     if(not fileExists(path_))
-        std::cout << "ERROR, mesh file does not exist: " << path_ << std::endl;
+    {
+        StringException error("ERROR, mesh file does not exist: " + path_);
+        throw error;
+    }
 
     std::string extension = path_.substr(path_.size() - 3);
     if(extension.compare("obj") == 0)
@@ -45,7 +49,10 @@ void Mesh::readPath()
     else if(extension.compare("STL") == 0 or extension.compare("stl") == 0)
         meshType_ = MeshType::stl;
     else
-        std::cout << "ERROR, mesh type unknown" << std::endl;
+    {
+        StringException error("ERROR, mesh type unknown");
+        throw error;
+    }
 }
 
 void Mesh::loadSTLMesh()
@@ -166,7 +173,10 @@ void Mesh::initTriangles()
             loadOBJMesh();
             break;
         default:
-            std::cout << "ERROR, mesh type unknown" << std::endl;
+            {
+                StringException error("ERROR, mesh type unknown");
+                throw error;
+            }
             break;
     }
     std::cout << "loading mesh containing " << faces_.size() << " faces" << std::endl;

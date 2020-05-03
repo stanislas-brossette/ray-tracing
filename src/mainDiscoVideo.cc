@@ -49,13 +49,13 @@ int main(int argc, char *argv[])
         /******************
         *  Foot Rolling  *
         ******************/
-        //std::vector<std::string> motionJsonNames{
-        //    "trajectories/patient_000052/foot_rolling_0_100",
-        //    "trajectories/patient_000052/foot_rolling_100_200",
-        //    "trajectories/patient_000052/foot_rolling_200_300"
-        //};
-        //std::vector<int> frameStartFile{0, 100, 200};
-        //std::vector<int> frameEndFile{100, 200, 284};
+        std::vector<std::string> motionJsonNames{
+            "trajectories/patient_000052/foot_rolling_0_100",
+            "trajectories/patient_000052/foot_rolling_100_200",
+            "trajectories/patient_000052/foot_rolling_200_300"
+        };
+        std::vector<int> frameStartFile{0, 100, 200};
+        std::vector<int> frameEndFile{100, 200, 284};
 
         /**********************
         *  Long Foot Rolling  *
@@ -116,13 +116,13 @@ int main(int argc, char *argv[])
         /**************
         *  Repo Back  *
         **************/
-        std::vector<std::string> motionJsonNames{
-            "trajectories/patient_000052/repo_back_0_100",
-            "trajectories/patient_000052/repo_back_100_200",
-            "trajectories/patient_000052/repo_back_200_300"
-        };
-        std::vector<int> frameStartFile{0, 100, 200};
-        std::vector<int> frameEndFile{100, 200, 284};
+        //std::vector<std::string> motionJsonNames{
+        //    "trajectories/patient_000052/repo_back_0_100",
+        //    "trajectories/patient_000052/repo_back_100_200",
+        //    "trajectories/patient_000052/repo_back_200_300"
+        //};
+        //std::vector<int> frameStartFile{0, 100, 200};
+        //std::vector<int> frameEndFile{100, 200, 284};
 
         /*****************
         *  Repo Lateral  *
@@ -141,11 +141,12 @@ int main(int argc, char *argv[])
             MotionLoader motionLoader(motionPath);
             for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
             {
-                if (frameId%20 == 5)
-                    scene.items_[3]->material_->texture_->switchColors();
+                //if (frameId%20 == 5)
+                //    scene.items_[3]->material_->texture_->switchColors();
                 std::cout << "frameId: " << frameId << std::endl;
                 //scene.camera_.target_.x_ = frameId*2.1/283.0;
                 //scene.camera_.rotateToTarget();
+                scene.camera_.frame_.o_.x_ += 2.1/283.0;
                 for (size_t i = 4; i < 17; i++)
                 {
                     scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
@@ -166,7 +167,10 @@ int main(int argc, char *argv[])
         SDL_Quit();
 
         std::string imageFileBasePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_");
+
         std::string videoName(sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + ".mkv");
+        if(argc > 2)
+            videoName = std::string(argv[2]);
 
         std::string videoCreationCommand("ffmpeg -r 30 -i " + imageFileBasePath + "%d.bmp " + videoName);
         std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
@@ -177,8 +181,8 @@ int main(int argc, char *argv[])
         //        + sceneJsonName + std::to_string(scene.camera_.resX_) + "*.bmp");
         //std::system(cleanupCommand.c_str());
 
-        //std::string playCommand("vlc " + videoName);
-        //std::system(playCommand.c_str());
+        std::string playCommand("vlc " + videoName);
+        std::system(playCommand.c_str());
 
 
 

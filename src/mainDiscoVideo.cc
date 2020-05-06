@@ -145,8 +145,10 @@ int main(int argc, char *argv[])
                 //    scene.items_[3]->material_->texture_->switchColors();
                 std::cout << "frameId: " << frameId << std::endl;
                 //scene.camera_.target_.x_ = frameId*2.1/283.0;
-                //scene.camera_.rotateToTarget();
                 scene.camera_.frame_.o_.x_ += 2.1/283.0;
+                scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+                //scene.camera_.target_.z_ -= 1.4/283.0;
+                //scene.camera_.rotateToTarget();
                 for (size_t i = 4; i < 17; i++)
                 {
                     scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");

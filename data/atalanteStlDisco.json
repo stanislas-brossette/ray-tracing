@@ -14,17 +14,17 @@
         "target": [-0.0215913,-0.135237,0.762777],
         "upGuide": [0,0,1],
         "aspectRatio": 2.0,
-        "pos": [1.50819,0.262558,1.03534],
+        "pos": [1.45,0.49,1.1],
         "rotAxis": [0, 0, 1],
         "rotAngle": 0
     },
     "render": {
-        "nPixPerRender": 20000,
+        "nPixPerRender": 5000,
         "percentLightRay": 100
     },
     "ambiantLight": {
         "color": [255, 255, 255],
-        "intensity": 0.2
+        "intensity": 0.1
     },
     "items": {
         "lightSource0": {
@@ -40,7 +40,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.05,
-                "pos": [0.0, -1.0, 1.7]
+                "pos": [-1.0, 0.0, 1.8]
             }
         },
         "lightSource1": {
@@ -56,7 +56,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.05,
-                "pos": [1.3, -1.6, 0.4]
+                "pos": [0.7, -0.7, 1.8]
             }
         },
         "lightSource2": {
@@ -72,7 +72,7 @@
             "geometry": {
                 "type": "Sphere",
                 "radius": 0.05,
-                "pos": [1.0, -1.0, 1.0]
+                "pos": [0.7, 0.7, 1.8]
             }
         },
         "bottomPlane": {
@@ -98,7 +98,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -119,7 +119,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -140,7 +140,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -161,7 +161,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -182,7 +182,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -203,7 +203,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -224,7 +224,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -245,7 +245,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -266,7 +266,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -287,7 +287,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -308,7 +308,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -329,7 +329,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },
@@ -350,7 +350,7 @@
                 "rugosity": 0.0,
                 "refraction": 0.0,
                 "absorption": 0.0,
-                "reflectiveness": 0.3,
+                "reflectiveness": 0.5,
                 "lightEmitter": false,
                 "lightIntensity": 0
             },

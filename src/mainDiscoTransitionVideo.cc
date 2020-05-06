@@ -62,31 +62,55 @@ int main(int argc, char *argv[])
         MotionLoader motionLoader(motionPath);
         for (size_t i = 4; i < 17; i++)
         {
-            scene.items_[i]->geometry_->f_.o_  = motionLoader.get(50, scene.items_[i]->name_, "pos");
-            scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(50, scene.items_[i]->name_, "vx");
-            scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(50, scene.items_[i]->name_, "vy");
-            scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(50, scene.items_[i]->name_, "vz");
+            scene.items_[i]->geometry_->f_.o_  = motionLoader.get(0, scene.items_[i]->name_, "pos");
+            scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(0, scene.items_[i]->name_, "vx");
+            scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(0, scene.items_[i]->name_, "vy");
+            scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(0, scene.items_[i]->name_, "vz");
         }
 
-        for (int frameId = 0; frameId < 360; frameId++)
+        int nFrames = 720;
+        double deltaAngle = 2*3.14159/nFrames;
+        double percentFramesLightChange = 0.15; //percent of frame to go to or from dark
+        double percentFramesColorChange = 0.50; //total percent to change color
+        for (int frameId = 0; frameId < nFrames; frameId++)
         {
             //Disco switch
-            if (frameId%20 == 5)
+            if (frameId%60 == 5)
                 scene.items_[3]->material_->texture_->switchColors();
             std::cout << "frameId: " << frameId << std::endl;
 
             //Rotate camera
             scene.camera_.frame_.o_ = Vector3(0.04473088918756667, -0.023698960694729244, 0.9304836521315684)
-                + Vector3(1.5*std::cos(3.14159/180*2*frameId), 1.5*std::sin(3.14159/180*2*frameId), 0.2);
+                + Vector3(1.5*std::cos(deltaAngle*frameId), 1.5*std::sin(deltaAngle*frameId), 0.2);
             scene.camera_.rotateToTarget();
 
             //Change robot color
-            Vector3RGB c((30.0 + (230.0-30.0)*frameId/180.0)/255.0);
-            double reflec = 0.01 + (0.3-0.01)*frameId/180.0;
-            for (size_t i = 4; i < 17; i++)
+            int nFramesColorChange = nFrames*percentFramesColorChange;
+            int frameStartChangeColor = (0.5-percentFramesColorChange/2)*nFrames;
+            int frameEndChangeColor = (0.5+percentFramesColorChange/2)*nFrames;
+
+            //Initialize robot colors and floor
+            if(frameId == 0)
             {
-                scene.items_[i]->material_->texture_->setColor(c);
-                scene.items_[i]->material_->reflectiveness_ = reflec;
+                Vector3RGB c(20.0/255.0);
+                double reflec = 0.01;
+                scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                for (size_t i = 4; i < 17; i++)
+                {
+                    scene.items_[i]->material_->texture_->setColor(c);
+                    scene.items_[i]->material_->reflectiveness_ = reflec;
+                }
+            }
+            if(frameId > frameStartChangeColor and frameId < frameEndChangeColor)
+            {
+                Vector3RGB c((20.0 + (230.0-20.0)*(frameId-frameStartChangeColor)/nFramesColorChange)/255.0);
+                double reflec = 0.01 + (0.5-0.01)*(frameId-frameStartChangeColor)/nFramesColorChange;
+                for (size_t i = 4; i < 17; i++)
+                {
+                    scene.items_[i]->material_->texture_->setColor(c);
+                    scene.items_[i]->material_->reflectiveness_ = reflec;
+                }
             }
 
             if(frameId == 0)
@@ -96,34 +120,34 @@ int main(int argc, char *argv[])
                 scene.items_[2]->material_->texture_->setColor(Vector3RGB(240.0/255.0, 240.0/255.0, 240.0/255.0));
             }
             //Change lights
-            if(frameId > 140 and frameId < 220)
+            int nFramesLightChange = nFrames*percentFramesLightChange;
+            if(frameId > (0.5-percentFramesLightChange)*nFrames and frameId < (0.5+percentFramesLightChange)*nFrames)
             {
-                if(frameId < 180)
+                if(frameId < nFrames/2)
                 {
-                    scene.items_[0]->material_->lightIntensity_ -= 0.0225;
-                    scene.items_[1]->material_->lightIntensity_ -= 0.0225;
-                    scene.items_[2]->material_->lightIntensity_ -= 0.0225;
-                    scene.ambiantLight_.intensity_ -= 0.0045;
+                    scene.items_[0]->material_->lightIntensity_ -= 0.8*sceneLoader.sceneData_.itemsData[0].mData->lightIntensity/nFramesLightChange;
+                    scene.items_[1]->material_->lightIntensity_ -= 0.8*sceneLoader.sceneData_.itemsData[1].mData->lightIntensity/nFramesLightChange;
+                    scene.items_[2]->material_->lightIntensity_ -= 0.8*sceneLoader.sceneData_.itemsData[2].mData->lightIntensity/nFramesLightChange;
+                    scene.ambiantLight_.intensity_ -= 0.8*sceneLoader.sceneData_.aData.intensity/nFramesLightChange;
                 }
                 else
                 {
-                    scene.items_[0]->material_->lightIntensity_ += 0.0225;
-                    scene.items_[1]->material_->lightIntensity_ += 0.0225;
-                    scene.items_[2]->material_->lightIntensity_ += 0.0225;
-                    scene.ambiantLight_.intensity_ += 0.0045;
+                    scene.items_[0]->material_->lightIntensity_ += 0.8*sceneLoader.sceneData_.itemsData[0].mData->lightIntensity/nFramesLightChange;
+                    scene.items_[1]->material_->lightIntensity_ += 0.8*sceneLoader.sceneData_.itemsData[1].mData->lightIntensity/nFramesLightChange;
+                    scene.items_[2]->material_->lightIntensity_ += 0.8*sceneLoader.sceneData_.itemsData[2].mData->lightIntensity/nFramesLightChange;
+                    scene.ambiantLight_.intensity_ += 0.8*sceneLoader.sceneData_.aData.intensity/nFramesLightChange;
                 }
-                if(frameId == 180)
+                if(frameId == nFrames/2)
                 {
                     scene.items_[0]->material_->texture_->setColor(Vector3RGB(15.0/255.0, 192.0/255.0, 252.0/255.0));
                     scene.items_[1]->material_->texture_->setColor(Vector3RGB(255.0/255.0, 29.0/255.0, 175.0/255.0));
                     scene.items_[2]->material_->texture_->setColor(Vector3RGB(212.0/255.0, 255.0/255.0, 71.0/255));
                 }
-
             }
 
 
             //Exchange checker and disco floor
-            if(frameId == 180)
+            if(frameId == nFrames/2)
             {
                 scene.items_[3]->geometry_->f_.o_.z_ = 0.0;
                 scene.items_[17]->geometry_->f_.o_.z_ = -1.0;
@@ -140,9 +164,9 @@ int main(int argc, char *argv[])
         SDL_Quit();
 
         std::string imageFileBasePath(imageFolderPath + sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_");
-        std::string videoName(sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + ".mkv");
+        std::string videoName(sceneJsonName + "_" + std::to_string(scene.camera_.resX_) + "_60fps.mkv");
 
-        std::string videoCreationCommand("ffmpeg -r 30 -i " + imageFileBasePath + "%d.bmp " + videoName);
+        std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
         std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
         std::system(videoCreationCommand.c_str());
         std::cout << "Video saved in " << videoName << std::endl;

@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
     try
     {
         //transition(); //OK
-        footRollingTraveling();
+        //footRollingTraveling(); //OK
+        footRollingPan();
     }
     catch(StringException e)
     {

@@ -323,7 +323,7 @@ void footRollingTraveling()
             }
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
-            scene.camera_.frame_.o_.x_ += 2.3/frameEndFile.back();
+            scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
             //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
             //scene.camera_.target_.z_ -= 1.4/283.0;
             //scene.camera_.rotateToTarget();

@@ -390,7 +390,11 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
 
     if(not impact)
     {
-        pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+        if(depthIndex == 0)
+            pix.setColor(0.9, ambiantLight_.color_);
+        else
+            pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
+
         if(verbose_)
         {
             std::cout << multiTab(depthIndex) << "no impact" << std::endl;

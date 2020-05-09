@@ -73,7 +73,7 @@ void transition()
     for (int frameId = 0; frameId < nFrames; frameId++)
     {
         //Disco switch
-        if (frameId%60 == 5)
+        if (frameId%50 == 5)
             scene.items_[3]->material_->texture_->switchColors();
         std::cout << "frameId: " << frameId << std::endl;
   
@@ -192,17 +192,6 @@ void footRollingTraveling()
     std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
     std::string imageFileBasePath(imageFolderPath + "footRollingTraveling_" + std::to_string(scene.camera_.resX_) + "_");
 
-    /******************
-    *  Foot Rolling  *
-    ******************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/foot_rolling_0_100",
-    //    "trajectories/patient_000052/foot_rolling_100_200",
-    //    "trajectories/patient_000052/foot_rolling_200_300"
-    //};
-    //std::vector<int> frameStartFile{0, 100, 200};
-    //std::vector<int> frameEndFile{100, 200, 284};
-
     /**********************
     *  Foot Rolling 60fps *
     **********************/
@@ -215,84 +204,6 @@ void footRollingTraveling()
     };
     std::vector<int> frameStartFile{0, 100, 200, 300, 400};
     std::vector<int> frameEndFile{100, 200, 300, 400, 407};
-
-    /**********************
-    *  Long Foot Rolling  *
-    **********************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/long_foot_rolling_0_100",
-    //    "trajectories/patient_000052/long_foot_rolling_100_200",
-    //    "trajectories/patient_000052/long_foot_rolling_200_300",
-    //    "trajectories/patient_000052/long_foot_rolling_300_400",
-    //    "trajectories/patient_000052/long_foot_rolling_400_500",
-    //    "trajectories/patient_000052/long_foot_rolling_500_600"
-    //};
-    //std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
-    //std::vector<int> frameEndFile{100, 200, 300, 400, 500, 554};
-
-    /****************
-    *  Turnaround  *
-    ****************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/turnaround_right_0_100",
-    //    "trajectories/patient_000052/turnaround_right_100_200",
-    //    "trajectories/patient_000052/turnaround_right_200_300",
-    //    "trajectories/patient_000052/turnaround_right_300_400",
-    //    "trajectories/patient_000052/turnaround_right_400_500",
-    //    "trajectories/patient_000052/turnaround_right_500_600"
-    //};
-    //std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
-    //std::vector<int> frameEndFile{100, 200, 300, 400, 500, 569};
-
-    /***************
-    *  Flat Foot  *
-    ***************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/flat_foot_0_100",
-    //    "trajectories/patient_000052/flat_foot_100_200"
-    //};
-    //std::vector<int> frameStartFile{0, 100};
-    //std::vector<int> frameEndFile{100, 149};
-
-    /**************
-    *  Stand Up  *
-    **************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/stand_up",
-    //};
-    //std::vector<int> frameStartFile{0};
-    //std::vector<int> frameEndFile{49};
-
-    /**************
-    *  Sit Down  *
-    **************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/sit_down",
-    //};
-    //std::vector<int> frameStartFile{0};
-    //std::vector<int> frameEndFile{99};
-
-    /**************
-    *  Repo Back  *
-    **************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/repo_back_0_100",
-    //    "trajectories/patient_000052/repo_back_100_200",
-    //    "trajectories/patient_000052/repo_back_200_300"
-    //};
-    //std::vector<int> frameStartFile{0, 100, 200};
-    //std::vector<int> frameEndFile{100, 200, 284};
-
-    /*****************
-    *  Repo Lateral  *
-    *****************/
-    //std::vector<std::string> motionJsonNames{
-    //    "trajectories/patient_000052/repo_lateral_0_100",
-    //    "trajectories/patient_000052/repo_lateral_100_200",
-    //    "trajectories/patient_000052/repo_lateral_200_300"
-    //};
-    //std::vector<int> frameStartFile{0, 100, 200};
-    //std::vector<int> frameEndFile{100, 200, 284};
 
     for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
     {
@@ -496,6 +407,154 @@ void flatFootDisco()
         MotionLoader motionLoader(motionPath);
         for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
         {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-0.5, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(1.2, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(1.2, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/flatFootDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void footRollingDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "footRollingDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  Foot Rolling  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/foot_rolling_60fps_0_100",
+        "trajectories/patient_000052/foot_rolling_60fps_100_200",
+        "trajectories/patient_000052/foot_rolling_60fps_200_300",
+        "trajectories/patient_000052/foot_rolling_60fps_300_400",
+        "trajectories/patient_000052/foot_rolling_60fps_400_500"
+    };
+    std::vector<int> frameStartFile{0, 100, 200, 300, 400};
+    std::vector<int> frameEndFile{100, 200, 300, 400, 407};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
                 //Vector3RGB c(20.0/255.0);
@@ -587,7 +646,723 @@ void flatFootDisco()
     SDL_Quit();
 
 
-    std::string videoName("scenarios/flatFootDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+    std::string videoName("scenarios/footRollingDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void turnaroundDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "turnaroundDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  turnaround  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/turnaround_60fps_0_100",
+        "trajectories/patient_000052/turnaround_60fps_100_200",
+        "trajectories/patient_000052/turnaround_60fps_200_300",
+        "trajectories/patient_000052/turnaround_60fps_300_400",
+        "trajectories/patient_000052/turnaround_60fps_400_500",
+        "trajectories/patient_000052/turnaround_60fps_500_600"
+    };
+    std::vector<int> frameStartFile{0, 100, 200, 300, 400, 500};
+    std::vector<int> frameEndFile{100, 200, 300, 400, 500, 599};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/turnaroundDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void sideStepDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "sideStepDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  Side Step  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/repo_lateral_60fps_0_100",
+        "trajectories/patient_000052/repo_lateral_60fps_100_200",
+        "trajectories/patient_000052/repo_lateral_60fps_200_300",
+        "trajectories/patient_000052/repo_lateral_60fps_300_400"
+    };
+    std::vector<int> frameStartFile{0, 100, 200, 300};
+    std::vector<int> frameEndFile{100, 200, 300, 379};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/sideStepDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void backStepDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "backStepDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  Back Step  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/repo_back_60fps_0_100",
+        "trajectories/patient_000052/repo_back_60fps_100_200",
+        "trajectories/patient_000052/repo_back_60fps_200_300",
+        "trajectories/patient_000052/repo_back_60fps_300_400"
+    };
+    std::vector<int> frameStartFile{0, 100, 200, 300};
+    std::vector<int> frameEndFile{100, 200, 300, 379};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/backStepDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void sitDownDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "sitDownDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  Sit Down  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/sit_down",
+    };
+    std::vector<int> frameStartFile{0};
+    std::vector<int> frameEndFile{99};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/sitDownDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
+
+    std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
+    std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;
+    std::system(videoCreationCommand.c_str());
+    std::cout << "Video saved in " << videoName << std::endl;
+
+    return;
+}
+
+void standUpDisco()
+{
+    std::string sceneJsonName("atalanteStlDisco");
+
+    std::string path = std::string(DATA) + sceneJsonName + ".json";
+    if(not fileExists(path))
+    {
+        StringException error("Error: this file " + path + " does not exist");
+        throw error;
+    }
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SceneLoader sceneLoader(path);
+    Scene scene(sceneLoader.sceneData_);
+    bool display = sceneLoader.sceneData_.sExData.display;
+    Window window(scene.camera_.resX_, scene.camera_.resY_, display);
+    Renderer renderer(sceneLoader.sceneData_.rData);
+
+    std::string imageFolderPath(std::string(DATA) + "../images/videoAtalante/individualImages/");
+    std::string imageFileBasePath(imageFolderPath + "standUpDisco_" + std::to_string(scene.camera_.resX_) + "_");
+
+    /***************
+    *  Stand Up  *
+    ***************/
+    std::vector<std::string> motionJsonNames{
+        "trajectories/patient_000052/stand_up",
+    };
+    std::vector<int> frameStartFile{0};
+    std::vector<int> frameEndFile{49};
+
+    for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
+    {
+        std::string motionPath = std::string(DATA) + motionJsonNames[motionFileIndex] + ".json";
+        MotionLoader motionLoader(motionPath);
+        for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
+        {
+            //Disco switch
+            if (frameId%50 == 5)
+                scene.items_[3]->material_->texture_->switchColors();
+            if(frameId == 0)
+            {
+                //Vector3RGB c(20.0/255.0);
+                //double reflec = 0.01;
+                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
+                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
+                //for (size_t i = 4; i < 17; i++)
+                //{
+                //    scene.items_[i]->material_->texture_->setColor(c);
+                //    scene.items_[i]->material_->reflectiveness_ = reflec;
+                //}
+                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
+                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.rotateToTarget();
+
+                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+
+                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+
+                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 60)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 120)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 0.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
+            }
+            else if (frameId == 180)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 0.0;
+                scene.items_[1]->material_->lightIntensity_ = 0.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+            else if (frameId == 240)
+            {
+                scene.items_[0]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+            }
+
+
+            std::cout << "frameId: " << frameId << std::endl;
+            //scene.camera_.target_.x_ = frameId*2.1/283.0;
+            //scene.camera_.frame_.o_.x_ += 2.4/frameEndFile.back();
+            //scene.camera_.frame_.o_.z_ -= 1.4/283.0;
+            //scene.camera_.target_.z_ -= 1.4/283.0;
+            //scene.camera_.rotateToTarget();
+            for (size_t i = 4; i < 17; i++)
+            {
+                scene.items_[i]->geometry_->f_.o_  = motionLoader.get(frameId, scene.items_[i]->name_, "pos");
+                scene.items_[i]->geometry_->f_.vx_ = motionLoader.get(frameId, scene.items_[i]->name_, "vx");
+                scene.items_[i]->geometry_->f_.vy_ = motionLoader.get(frameId, scene.items_[i]->name_, "vy");
+                scene.items_[i]->geometry_->f_.vz_ = motionLoader.get(frameId, scene.items_[i]->name_, "vz");
+            }
+
+            window.clear();
+            PerformanceTracker::instance().resetRays();
+            renderer.renderParallel(scene, window, "");
+            std::string imageFilePath(imageFileBasePath + std::to_string(frameId) + ".bmp");
+            window.save(imageFilePath);
+            std::cout << PerformanceTracker::instance().describe();
+        }
+    }
+    std::cout << "out of render" << std::endl;
+    SDL_Quit();
+
+
+    std::string videoName("scenarios/standUpDisco_" + std::to_string(scene.camera_.resX_) + ".mkv");
 
     std::string videoCreationCommand("ffmpeg -r 60 -i " + imageFileBasePath + "%d.bmp " + videoName);
     std::cout << "videoCreationCommand.c_str(): " << videoCreationCommand.c_str() << std::endl;

@@ -103,6 +103,7 @@ AmbiantData SceneLoader::scanAmbiant(Value& vIn)
     AmbiantData aData;
     aData.intensity = vIn.FindMember("intensity")->value.GetDouble();
     scanVector3RGB(vIn.FindMember("color")->value, aData.color);
+    scanVector3RGB(vIn.FindMember("backGroundColor")->value, aData.backGroundColor);
     return aData;
 }
 

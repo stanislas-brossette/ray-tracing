@@ -27,6 +27,7 @@ struct RenderData
 struct AmbiantData
 {
     Vector3RGB color = Vector3RGB(0, 0, 0);
+    Vector3RGB backGroundColor = Vector3RGB(0, 0, 0);
     double intensity = 0;
     std::string describe() const;
 };

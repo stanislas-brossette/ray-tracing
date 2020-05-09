@@ -18,4 +18,5 @@ public:
 
     double intensity_;
     Vector3RGB color_;
+    Vector3RGB backGroundColor_;
 };

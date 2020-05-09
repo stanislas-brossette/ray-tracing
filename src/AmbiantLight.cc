@@ -2,19 +2,22 @@
 
 AmbiantLight::AmbiantLight()
   : intensity_(0),
-    color_()
+    color_(),
+    backGroundColor_()
 {
 }
 
 AmbiantLight::AmbiantLight(const AmbiantData& aData)
   : intensity_(aData.intensity),
-    color_(aData.color)
+    color_(aData.color),
+    backGroundColor_(aData.backGroundColor)
 {
 }
 
 AmbiantLight::AmbiantLight (double a, const Vector3RGB& v)
   : intensity_(a),
-    color_(v)
+    color_(v),
+    backGroundColor_()
 {
 }
 

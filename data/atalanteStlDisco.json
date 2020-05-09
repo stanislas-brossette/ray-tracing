@@ -24,7 +24,8 @@
     },
     "ambiantLight": {
         "color": [255, 255, 255],
-        "intensity": 0.1
+        "intensity": 0.1,
+        "backGroundColor": [0, 0, 0]
     },
     "items": {
         "lightSource0": {
@@ -380,6 +381,40 @@
             "geometry": {
                 "type": "Plane",
                 "pos": [100.0, 100.0, -1.0]
+            }
+        },
+        "backMirror": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [150, 150, 150],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -1.0],
+                "rotAxis": [0,1,0],
+                "rotAngle": 0
+            }
+        },
+        "sideMirror": {
+            "material": {
+                "textureType": "SolidColor",
+                "color": [150, 150, 150],
+                "rugosity": 0.0,
+                "refraction": 0.0,
+                "reflectiveness": 0.0,
+                "lightEmitter": false,
+                "lightIntensity": 0
+            },
+            "geometry": {
+                "type": "Plane",
+                "pos": [0.0, 0.0, -1.0],
+                "rotAxis": [1,0,0],
+                "rotAngle": 0
             }
         }
     }

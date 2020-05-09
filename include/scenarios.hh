@@ -99,6 +99,7 @@ void transition()
                 scene.items_[i]->material_->texture_->setColor(c);
                 scene.items_[i]->material_->reflectiveness_ = reflec;
             }
+            scene.ambiantLight_.backGroundColor_ = Vector3RGB(1.0, 1.0, 1.0);
         }
         if(frameId > frameStartChangeColor and frameId < frameEndChangeColor)
         {
@@ -127,6 +128,10 @@ void transition()
                 scene.items_[1]->material_->lightIntensity_ -= 0.8*sceneLoader.sceneData_.itemsData[1].mData->lightIntensity/nFramesLightChange;
                 scene.items_[2]->material_->lightIntensity_ -= 0.8*sceneLoader.sceneData_.itemsData[2].mData->lightIntensity/nFramesLightChange;
                 scene.ambiantLight_.intensity_ -= 0.8*sceneLoader.sceneData_.aData.intensity/nFramesLightChange;
+                scene.ambiantLight_.backGroundColor_.r_ -= 1.0/nFramesLightChange;
+                scene.ambiantLight_.backGroundColor_.g_ -= 1.0/nFramesLightChange;
+                scene.ambiantLight_.backGroundColor_.b_ -= 1.0/nFramesLightChange;
+                scene.ambiantLight_.backGroundColor_.clamp();
             }
             else
             {
@@ -213,6 +218,7 @@ void footRollingTraveling()
         {
             if(frameId == 0)
             {
+                scene.ambiantLight_.backGroundColor_ = Vector3RGB(0.9, 0.9, 0.9);
                 Vector3RGB c(20.0/255.0);
                 double reflec = 0.01;
                 scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
@@ -311,6 +317,7 @@ void footRollingPan()
         {
             if(frameId == 0)
             {
+                scene.ambiantLight_.backGroundColor_ = Vector3RGB(0.9, 0.9, 0.9);
                 Vector3RGB c(20.0/255.0);
                 double reflec = 0.01;
                 scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
@@ -553,72 +560,41 @@ void footRollingDisco()
         for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
         {
             //Disco switch
-            if (frameId%50 == 5)
+            if (frameId%50 == 25)
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                //Vector3RGB c(20.0/255.0);
-                //double reflec = 0.01;
-                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
-                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
-                //for (size_t i = 4; i < 17; i++)
-                //{
-                //    scene.items_[i]->material_->texture_->setColor(c);
-                //    scene.items_[i]->material_->reflectiveness_ = reflec;
-                //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.frame_.o_ = Vector3(1.5, 1.5, 1.5);
+                scene.camera_.target_ = Vector3(0.7, 0, 1.0);
                 scene.camera_.rotateToTarget();
 
-                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.ambiantLight_.intensity_ = 0.2;
 
-                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-
-                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 60)
-            {
+                //scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
+                scene.items_[0]->geometry_->f_.o_ = Vector3(0.0, 0.0, 1.7);
 
+                //scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[1]->material_->lightIntensity_ = 1.0;
+                scene.items_[1]->geometry_->f_.o_ = Vector3(1.2, 0.0, 1.7);
+
+                //scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                scene.items_[2]->material_->lightIntensity_ = 1.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.6, 1.0, 0.2);
+
+                //Reposition mirrors
+                scene.items_[18]->material_->reflectiveness_ = 1.0;
+                scene.items_[18]->geometry_->f_.o_ = Vector3(-1.02, 0.0, 0.0);
+                scene.items_[18]->geometry_->f_.vx_ = Vector3(0.0, 0.0, -1.0);
+                scene.items_[18]->geometry_->f_.vy_ = Vector3(0.0, 1.0, 0.0);
+                scene.items_[18]->geometry_->f_.vz_ = Vector3(1.0, 0.0, 0.0);
+
+                scene.items_[19]->material_->reflectiveness_ = 1.0;
+                scene.items_[19]->geometry_->f_.o_ = Vector3(0.0, -1.02, 0.0);
+                scene.items_[19]->geometry_->f_.vx_ = Vector3(1.0, 0.0, 0.0);
+                scene.items_[19]->geometry_->f_.vy_ = Vector3(0.0, 0.0, -1.0);
+                scene.items_[19]->geometry_->f_.vz_ = Vector3(0.0, 1.0, 0.0);
+            }
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
@@ -699,7 +675,7 @@ void turnaroundDisco()
         for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
         {
             //Disco switch
-            if (frameId%50 == 5)
+            if (frameId%50 == 17)
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
@@ -712,59 +688,22 @@ void turnaroundDisco()
                 //    scene.items_[i]->material_->texture_->setColor(c);
                 //    scene.items_[i]->material_->reflectiveness_ = reflec;
                 //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.frame_.o_ = Vector3(1.0, -1.2, 1.0);
+                scene.camera_.target_ = Vector3(0.0, 0, 0.5);
                 scene.camera_.rotateToTarget();
 
                 scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 0.3);
 
                 scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 0.3);
 
                 scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 0.3);
             }
-            else if (frameId == 60)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
@@ -843,72 +782,26 @@ void sideStepDisco()
         for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
         {
             //Disco switch
-            if (frameId%50 == 5)
+            if (frameId%50 == 40)
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                //Vector3RGB c(20.0/255.0);
-                //double reflec = 0.01;
-                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
-                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
-                //for (size_t i = 4; i < 17; i++)
-                //{
-                //    scene.items_[i]->material_->texture_->setColor(c);
-                //    scene.items_[i]->material_->reflectiveness_ = reflec;
-                //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.frame_.o_ = Vector3(1.5, 0.1, 1.2);
+                scene.camera_.target_ = Vector3(0.2, 0.0, 0.7);
                 scene.camera_.rotateToTarget();
 
-                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[0]->geometry_->f_.o_ = Vector3(-0.4, 1.0, 1.6);
 
-                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.3);
 
-                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.0);
             }
-            else if (frameId == 60)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
@@ -987,72 +880,26 @@ void backStepDisco()
         for (int frameId = frameStartFile[motionFileIndex]; frameId < frameEndFile[motionFileIndex]; frameId++)
         {
             //Disco switch
-            if (frameId%50 == 5)
+            if (frameId%50 == 25)
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                //Vector3RGB c(20.0/255.0);
-                //double reflec = 0.01;
-                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
-                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
-                //for (size_t i = 4; i < 17; i++)
-                //{
-                //    scene.items_[i]->material_->texture_->setColor(c);
-                //    scene.items_[i]->material_->reflectiveness_ = reflec;
-                //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.camera_.frame_.o_ = Vector3(1.5, 0.0, 1.2);
+                scene.camera_.target_ = Vector3(0.2, 0.0, 0.7);
                 scene.camera_.rotateToTarget();
 
-                scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
+                scene.items_[0]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.0);
 
-                scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[1]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
+                scene.items_[1]->geometry_->f_.o_ = Vector3(-0.4, 1.0, 1.6);
 
-                scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
+                //scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
+                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.3);
             }
-            else if (frameId == 60)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
@@ -1132,17 +979,10 @@ void sitDownDisco()
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                //Vector3RGB c(20.0/255.0);
-                //double reflec = 0.01;
-                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
-                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
-                //for (size_t i = 4; i < 17; i++)
-                //{
-                //    scene.items_[i]->material_->texture_->setColor(c);
-                //    scene.items_[i]->material_->reflectiveness_ = reflec;
-                //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.ambiantLight_.intensity_ = 0.4;
+
+                scene.camera_.frame_.o_ = Vector3(0.6, -1.2, 0.5);
+                scene.camera_.target_ = Vector3(-0.1, 0, 0.65);
                 scene.camera_.rotateToTarget();
 
                 scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
@@ -1157,43 +997,6 @@ void sitDownDisco()
                 scene.items_[2]->material_->lightIntensity_ = 1.0;
                 scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
             }
-            else if (frameId == 60)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;
@@ -1273,17 +1076,10 @@ void standUpDisco()
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                //Vector3RGB c(20.0/255.0);
-                //double reflec = 0.01;
-                //scene.items_[3]->geometry_->f_.o_.z_ = -1.0;
-                //scene.items_[17]->geometry_->f_.o_.z_ = 0.0;
-                //for (size_t i = 4; i < 17; i++)
-                //{
-                //    scene.items_[i]->material_->texture_->setColor(c);
-                //    scene.items_[i]->material_->reflectiveness_ = reflec;
-                //}
-                scene.camera_.frame_.o_ = Vector3(2.0, 0.0, 2.0);
-                scene.camera_.target_ = Vector3(0.2, 0, 0.5);
+                scene.ambiantLight_.intensity_ = 0.4;
+
+                scene.camera_.frame_.o_ = Vector3(0.6, -1.2, 0.5);
+                scene.camera_.target_ = Vector3(-0.1, 0, 0.65);
                 scene.camera_.rotateToTarget();
 
                 scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
@@ -1298,43 +1094,6 @@ void standUpDisco()
                 scene.items_[2]->material_->lightIntensity_ = 1.0;
                 scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
             }
-            else if (frameId == 60)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 120)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 0.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(100.7, 0.7, 1.8);
-            }
-            else if (frameId == 180)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 0.0;
-                scene.items_[1]->material_->lightIntensity_ = 0.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(100.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(100.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-            else if (frameId == 240)
-            {
-                scene.items_[0]->material_->lightIntensity_ = 1.0;
-                scene.items_[1]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[0]->geometry_->f_.o_ = Vector3(-1.0, 0.0, 1.8);
-                scene.items_[1]->geometry_->f_.o_ = Vector3(0.7, -0.7, 1.8);
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.7, 0.7, 1.8);
-            }
-
 
             std::cout << "frameId: " << frameId << std::endl;
             //scene.camera_.target_.x_ = frameId*2.1/283.0;

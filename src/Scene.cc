@@ -391,7 +391,7 @@ void Scene::castRay(Pixel& pix, const LightRay& lr, size_t depthIndex) const
     if(not impact)
     {
         if(depthIndex == 0)
-            pix.setColor(0.9, ambiantLight_.color_);
+            pix.setColor(1.0, ambiantLight_.backGroundColor_);
         else
             pix.setColor(ambiantLight_.intensity_, ambiantLight_.color_);
 

@@ -564,11 +564,11 @@ void footRollingDisco()
                 scene.items_[3]->material_->texture_->switchColors();
             if(frameId == 0)
             {
-                scene.camera_.frame_.o_ = Vector3(1.5, 1.5, 1.5);
+                scene.camera_.frame_.o_ = Vector3(2.65564,1.56392,1.26467);
                 scene.camera_.target_ = Vector3(0.7, 0, 1.0);
                 scene.camera_.rotateToTarget();
 
-                scene.ambiantLight_.intensity_ = 0.2;
+                scene.ambiantLight_.intensity_ = 0.0;
 
                 //scene.items_[0]->material_->texture_->setColor(Vector3RGB(1));
                 scene.items_[0]->material_->lightIntensity_ = 1.0;
@@ -579,17 +579,17 @@ void footRollingDisco()
                 scene.items_[1]->geometry_->f_.o_ = Vector3(1.2, 0.0, 1.7);
 
                 //scene.items_[2]->material_->texture_->setColor(Vector3RGB(1));
-                scene.items_[2]->material_->lightIntensity_ = 1.0;
-                scene.items_[2]->geometry_->f_.o_ = Vector3(0.6, 1.0, 0.2);
+                scene.items_[2]->material_->lightIntensity_ = 30.0;
+                scene.items_[2]->geometry_->f_.o_ = Vector3(5.0, 5.0, 7.0);
 
                 //Reposition mirrors
-                scene.items_[18]->material_->reflectiveness_ = 1.0;
+                scene.items_[18]->material_->reflectiveness_ = 0.9;
                 scene.items_[18]->geometry_->f_.o_ = Vector3(-1.02, 0.0, 0.0);
                 scene.items_[18]->geometry_->f_.vx_ = Vector3(0.0, 0.0, -1.0);
                 scene.items_[18]->geometry_->f_.vy_ = Vector3(0.0, 1.0, 0.0);
                 scene.items_[18]->geometry_->f_.vz_ = Vector3(1.0, 0.0, 0.0);
 
-                scene.items_[19]->material_->reflectiveness_ = 1.0;
+                scene.items_[19]->material_->reflectiveness_ = 0.9;
                 scene.items_[19]->geometry_->f_.o_ = Vector3(0.0, -1.02, 0.0);
                 scene.items_[19]->geometry_->f_.vx_ = Vector3(1.0, 0.0, 0.0);
                 scene.items_[19]->geometry_->f_.vy_ = Vector3(0.0, 0.0, -1.0);

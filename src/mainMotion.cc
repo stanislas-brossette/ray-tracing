@@ -11,6 +11,7 @@
 #include "StringException.hh"
 #include "SceneLoader.hh"
 #include "InputHandler.hh"
+#include "MotionLoader.hh"
 #include "Renderer.hh"
 #include "Window.hh"
 #include "Scene.hh"

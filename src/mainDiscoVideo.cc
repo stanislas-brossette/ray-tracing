@@ -24,16 +24,16 @@ int main(int argc, char *argv[])
 {
     try
     {
-        transition(); //OK
-        footRollingTraveling(); //OK
-        footRollingPan(); //OK
-        flatFootDisco(); //OK
+        //transition(); //OK
+        //footRollingTraveling(); //OK
+        //footRollingPan(); //OK
+        //flatFootDisco(); //OK
         footRollingDisco(); //OK
-        turnaroundDisco(); //OK
-        sideStepDisco(); //OK
-        backStepDisco(); //OK
-        sitDownDisco(); //OK
-        standUpDisco(); //OK
+        //turnaroundDisco(); //OK
+        //sideStepDisco(); //OK
+        //backStepDisco(); //OK
+        //sitDownDisco(); //OK
+        //standUpDisco(); //OK
     }
     catch(StringException e)
     {

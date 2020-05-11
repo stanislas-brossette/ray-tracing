@@ -28,12 +28,12 @@ int main(int argc, char *argv[])
         //footRollingTraveling(); //OK
         //footRollingPan(); //OK
         //flatFootDisco(); //OK
-        footRollingDisco(); //OK
+        //footRollingDisco(); //OK
         //turnaroundDisco(); //OK
         //sideStepDisco(); //OK
         //backStepDisco(); //OK
-        //sitDownDisco(); //OK
-        //standUpDisco(); //OK
+        sitDownDisco(); //OK
+        standUpDisco(); //OK
     }
     catch(StringException e)
     {

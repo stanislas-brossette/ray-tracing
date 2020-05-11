@@ -963,10 +963,10 @@ void sitDownDisco()
     *  Sit Down  *
     ***************/
     std::vector<std::string> motionJsonNames{
-        "trajectories/patient_000052/sit_down",
+        "trajectories/patient_000052/sit_down_60fps",
     };
-    std::vector<int> frameStartFile{0};
-    std::vector<int> frameEndFile{99};
+    std::vector<int> frameStartFile{0,100};
+    std::vector<int> frameEndFile{100,199};
 
     for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
     {
@@ -1060,10 +1060,10 @@ void standUpDisco()
     *  Stand Up  *
     ***************/
     std::vector<std::string> motionJsonNames{
-        "trajectories/patient_000052/stand_up",
+        "trajectories/patient_000052/stand_up_60fps",
     };
     std::vector<int> frameStartFile{0};
-    std::vector<int> frameEndFile{49};
+    std::vector<int> frameEndFile{99};
 
     for (size_t motionFileIndex = 0; motionFileIndex < motionJsonNames.size(); motionFileIndex++)
     {

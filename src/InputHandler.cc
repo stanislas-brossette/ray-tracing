@@ -155,11 +155,13 @@ void InputHandler::handleInputs(Window& window, Scene& scene)
                 break;
             // Change camera/windows resolution
             case SDLK_KP_MINUS:
+            case SDLK_m:
                 scene.multiplyResolution(0.8);
                 window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                 needRender = true;
                 break;
             case SDLK_KP_PLUS:
+            case SDLK_p:
                 scene.multiplyResolution(1.2);
                 window.changeResolution(scene.camera_.resX_, scene.camera_.resY_);
                 needRender = true;
